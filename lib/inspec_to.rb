@@ -1,5 +1,10 @@
 require 'inspec_to/inspec_to_ckl'
 require 'inspec_to/stig_checklist'
+
+require 'csv2inspec'
+#require 'inspec2ckl'
+require 'xccdf2inspec'
+require 'inspec2xccdf'
 #require 'require_all'
 #require "inspec_to"
 
