@@ -7,20 +7,20 @@
 require 'thor'
 require 'nokogiri'
 require_relative 'version'
+require_relative 'xccdf'
 
 class MyCLI < Thor
   
   desc 'xccdf2inspec', 'xccdf2inspec translates an xccdf file to an inspec profile'
   option :xccdf, required: true, aliases: '-x'
-  option :cci, require: true, aliases: '-c'
   option :output, required: false, aliases: '-o'
   option :format, required: false, aliases: '-f'
   option :seperate_files, required: false, aliases: '-s'
   option :replace_tags, require: false, aliases: '-r'
   def xccdf2inspec
-    profile = InspecTools::XCCDF.new(options[:xccdf]))
-    Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperated_files], options[:format])
-    Xccdf2Inspec.new(options[:xccdf], options[:cci], options[:output], options[:format], options[:seperate_files], options[:replace_tags])
+    profile = InspecTools::XCCDF.new(options[:xccdf]).to_inspec
+    Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
+    # Xccdf2Inspec.new(options[:xccdf], options[:cci], options[:output], options[:format], options[:seperate_files], options[:replace_tags])
   end
   
   desc 'inspec2xccdf', 'Inspec2xccdf convertes an Inspec profile into STIG XCCDF Document'
