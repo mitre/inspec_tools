@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'inspec_to/version'
+require 'inspec_tools/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "inspec_to"
-  spec.version       = InspecTo::VERSION
+  spec.name          = "inspec_tools"
+  spec.version       = InspecTools::VERSION
   spec.authors       = ["Robert Thew"]
   spec.email         = ["rthew@mitre.org"]
 
@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'word_wrap', '~> 0'
   spec.add_dependency 'inspec', '~> 2'
 
-  spec.add_dependency 'nokogiri-happymapper', '~> 0'#, :require => 'happymapper'
+  spec.add_dependency 'nokogiri-happymapper', '0.6.0'
   # spec.add_dependency 'happymapper', '~> 0.5'
   spec.add_dependency 'nokogiri', '~> 1.8'
   spec.add_dependency 'thor', '~> 0.19'

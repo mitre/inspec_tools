@@ -9,8 +9,13 @@ require 'inspec2xccdf'
 #require "inspec_to"
 
 module InspecTo
-  # Convert Inspec json to CKL XML
+  # Convert InSpec json to CKL XML
   def self.ckl(inspec_json, cklist=nil, title=nil, date=nil)
      InspecToCkl.new(inspec_json, cklist, title, date).to_ckl
+  end
+  
+  # Convert XCCDF to InSpec JSON
+  def self.xccdf2inspec(xccdf_path, cci_path=nil, output='/tmp/profile/', output_format='json', seperated=nil, replace_tags=nil)
+     Xccdf2Inspec.new(xccdf_path, cci_path, output, output_format, seperated, replace_tags)
   end
 end

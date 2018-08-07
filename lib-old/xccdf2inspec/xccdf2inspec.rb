@@ -4,8 +4,6 @@
 
 require 'nokogiri'
 require 'json'
-require_relative 'StigAttributes'
-require_relative 'CCIAttributes'
 require 'inspec/objects'
 require 'word_wrap'
 require 'pp'
@@ -14,6 +12,9 @@ WIDTH = 80
 
 module InspecTo
   class Xccdf2Inspec
+    include InspecTo::StigAttributes
+    include InspecTo::CCIAttributes
+
     def initialize(xccdf_path, cci_path, output, output_format, seperated, replace_tags)
       @cci_xml = File.read(cci_path)
       @xccdf_xml = File.read(xccdf_path)
@@ -31,30 +32,31 @@ module InspecTo
       generate_controls
       print_benchmark_info
     end
-  
+
     private
-  
+
     def wrap(s, width = WIDTH)
       s.gsub!("desc  \"\n    ", 'desc  "')
       s.gsub!(/\\r/, "\n")
       s.gsub!(/\\n/, "\n")
-  
+
       WordWrap.ww(s.to_s, width)
     end
-  
+
     def replace_tags_in_xml
       @replace_tags.each do |tag|
         @xccdf_xml = @xccdf_xml.gsub(/(&lt;|<)#{tag}(&gt;|>)/, "$#{tag}")
       end
     end
-  
+
     def parse_xmls
       @cci_items = CCI_List.parse(@cci_xml)
       @xccdf_controls = Benchmark.parse(@xccdf_xml)
     end
-  
+
     def parse_controls
       @xccdf_controls.group.each do |group|
+        puts group.rule.description.inspect
         control = Inspec::Control.new
         control.id     = group.id
         control.title  = group.rule.title
@@ -80,11 +82,11 @@ module InspecTo
         control.add_tag(Inspec::Tag.new('ia_controls', group.rule.description.ia_controls)) if group.rule.description.ia_controls != ''
         control.add_tag(Inspec::Tag.new('check', group.rule.check.check_content))
         control.add_tag(Inspec::Tag.new('fix', group.rule.fixtext))
-  
+
         @controls << control
       end
     end
-  
+
     def generate_controls
       Dir.mkdir @output.to_s unless Dir.exist?(@output.to_s)
       Dir.mkdir "#{@output}/controls" unless Dir.exist?("#{@output}/controls")
@@ -122,31 +124,25 @@ module InspecTo
         myfile.close
       end
     end
-  
+
     # @!method print_benchmark_info(info)
     # writes benchmark info to profile inspec.yml file
     #
     def print_benchmark_info
       benchmark_info =
-        "# encoding: utf-8 \n" \
-        "# \n" \
-        "=begin \n" \
-        "----------------- \n" \
-        "Benchmark: #{@xccdf_controls.title}  \n" \
-        "Status: #{@xccdf_controls.status} \n\n" \
-        'Description: ' + wrap(@xccdf_controls.description, width = WIDTH) + '' \
-        "Release Date: #{@xccdf_controls.release_date.release_date} \n" \
-        "Version: #{@xccdf_controls.version} \n" \
-        "Publisher: #{@xccdf_controls.reference.publisher} \n" \
-        "Source: #{@xccdf_controls.reference.source} \n" \
-        "uri: #{@xccdf_controls.reference.href} \n" \
-        "----------------- \n" \
-        "=end \n\n"
-  
+  "name: #{@output}
+  title: #{@xccdf_controls.title}
+  maintainer: The Authors
+  copyright: The Authors
+  copyright_email: you@example.com
+  license: Apache-2.0
+  summary: An InSpec Compliance Profile
+  version: 0.1.0"
+
       myfile = File.new("#{@output}/inspec.yml", 'w')
       myfile.puts benchmark_info
     end
-  
+
     # @!method get_impact(severity)
     #   Takes in the STIG severity tag and converts it to the InSpec #{impact}
     #   control tag.

@@ -1,4 +1,4 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'inspec_to'
+require 'inspec_tools'
 
 require 'minitest/autorun'
