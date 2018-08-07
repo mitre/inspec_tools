@@ -198,6 +198,7 @@ DEPENDENCIES
   nokogiri
   nokogiri-happymapper
   pry
+  rspec
   thor
   word_wrap
 
