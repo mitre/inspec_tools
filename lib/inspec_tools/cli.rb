@@ -19,6 +19,7 @@ class MyCLI < Thor
   option :replace_tags, require: false, aliases: '-r'
   def xccdf2inspec
     profile = InspecTools::XCCDF.new(options[:xccdf]))
+    Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperated_files], options[:format])
     Xccdf2Inspec.new(options[:xccdf], options[:cci], options[:output], options[:format], options[:seperate_files], options[:replace_tags])
   end
   

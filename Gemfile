@@ -11,7 +11,7 @@ gem 'nokogiri-happymapper', :require => 'happymapper'
 gem 'pry'
 gem 'thor'
 gem 'word_wrap'
-
+gem "rspec"
 # source 'https://rubygems.org'
 # 
 # # Specify your gem's dependencies in inspec_to.gemspec

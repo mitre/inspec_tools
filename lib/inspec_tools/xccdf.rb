@@ -9,6 +9,8 @@ module InspecTools
     def initialize(xccdf, replace_tags = nil)
       @xccdf = xccdf
       @xccdf = replace_tags_in_xccdf(replace_tags, @xccdf) unless replace_tags.nil?
+      @cci_items = HappyMapperTools::CCIAttributes::CCI_List.parse(File.read('./data/U_CCI_List.xml'))
+      @benchmark = HappyMapperTools::StigAttributes::Benchmark.parse(@xccdf)
     end
     
     def to_ckl
@@ -20,8 +22,6 @@ module InspecTools
     end
     
     def to_inspec
-      @cci_items = HappyMapperTools::CCIAttributes::CCI_List.parse(File.read('./data/U_CCI_List.xml'))
-      @benchmark = HappyMapperTools::StigAttributes::Benchmark.parse(@xccdf)
       @profile = {}
       @controls = []
       insert_json_metadata
