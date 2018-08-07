@@ -174,14 +174,14 @@ module Utils
     #
     def self.create_inspec_yml(directory, inspec_json)
       benchmark_info =
-  "name: #{inspec_json['name']}
-  title: #{inspec_json['title']}
-  maintainer: #{inspec_json['maintainer']}
-  copyright: #{inspec_json['copyright']}
-  copyright_email: #{inspec_json['copyright_email']}
-  license: #{inspec_json['license']}
-  summary: #{inspec_json['summary']}
-  version: #{inspec_json['version']}"
+"name: #{inspec_json['name']}
+title: #{inspec_json['title']}
+maintainer: #{inspec_json['maintainer']}
+copyright: #{inspec_json['copyright']}
+copyright_email: #{inspec_json['copyright_email']}
+license: #{inspec_json['license']}
+summary: #{inspec_json['summary']}
+version: #{inspec_json['version']}"
 
       myfile = File.new("#{directory}/inspec.yml", 'w')
       myfile.puts benchmark_info

@@ -20,7 +20,6 @@ class MyCLI < Thor
   def xccdf2inspec
     profile = InspecTools::XCCDF.new(options[:xccdf]).to_inspec
     Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
-    # Xccdf2Inspec.new(options[:xccdf], options[:cci], options[:output], options[:format], options[:seperate_files], options[:replace_tags])
   end
   
   desc 'inspec2xccdf', 'Inspec2xccdf convertes an Inspec profile into STIG XCCDF Document'
