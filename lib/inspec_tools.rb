@@ -1,8 +1,8 @@
-# require 'inspec_tools/ckl'
-# require 'inspec_tools/csv'
-# require 'inspec_tools/inspec'
-# require 'inspec_tools/xccdf'
-# require 'inspec_tools/version'
+require_relative 'inspec_tools/ckl'
+require_relative 'inspec_tools/csv'
+require_relative 'inspec_tools/inspec'
+require_relative 'inspec_tools/xccdf'
+require_relative 'inspec_tools/version'
 
 module InspecTools
   

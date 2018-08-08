@@ -8,14 +8,13 @@ module Utils
     WIDTH = 80
 
     def self.parse_inspec_json(json)
-      file = JSON.parse(json)
       controls = []
-      if file['profiles'].nil?
-        controls = file['controls']
-      elsif file['profiles'].length == 1
-        controls = file['profiles'].last['controls']
+      if json['profiles'].nil?
+        controls = json['controls']
+      elsif json['profiles'].length == 1
+        controls = json['profiles'].last['controls']
       else
-        file['profiles'].each do |profile|
+        json['profiles'].each do |profile|
           controls.concat(profile['controls'])
         end
       end
@@ -49,7 +48,7 @@ module Utils
         c_data[c_id]['code']           = control['code'].to_s || DATA_NOT_FOUND_MESSAGE
       end
 
-      @data['controls'] = c_data.values
+      c_data.values
     end 
     
     def self.parse_json(json)

@@ -1,12 +1,15 @@
 require_relative '../happy_mapper_tools/StigAttributes'
 require_relative '../happy_mapper_tools/StigChecklist'
 require_relative '../utils/inspec_util'
+require_relative 'csv'
+require 'csv'
+require 'json'
 
 module InspecTools
   class Inspec
     def initialize(inspec_json, attribute_yaml)
-      @json = JSON.parse(inspec_json)
-      @data = Util::InspecUtil.parse_json(json)
+      @data = JSON.parse(inspec_json)
+      # @data = Utils::InspecUtil.parse_inspec_json(@json)
       @attribute = attribute_yaml
     end
     
@@ -32,11 +35,45 @@ module InspecTools
       @branchmark.to_xml
     end
     
+    ####
+    # converts an InSpec JSON to a CSV file
+    ###
     def to_csv
-      
+      data = inspec_json_to_array(@data)
+      CSV.generate do |csv|
+        data.each do |row|
+          csv << row
+        end
+      end
     end
     
     private
+    
+    ###
+    #  This method converts an inspec json to an array of arrays
+    #
+    # @param inspec_json : an inspec profile formatted as a json object
+    ###
+    def inspec_json_to_array(inspec_json)
+      data = []
+      headers = {}
+      inspec_json['controls'].each do |control| 
+        control.each do |key,value| 
+          control['tags'].each {|tag, tag_value| headers[tag] = 0 } if key == 'tags'
+          headers[key] = 0 unless key == 'tags' 
+        end
+      end
+      data.push(headers.keys)
+      inspec_json['controls'].each do |json_control|
+        control = []
+        headers.each do |key, value|
+          control.push(json_control[key.to_s] || json_control['tags'][key.to_s] || nil) 
+        end
+        p control
+        data.push(control)
+      end
+      data
+    end
     
     def clk_status(control)
       status_list = control[:status].uniq
