@@ -1,0 +1,3 @@
+class InspecUtilTest
+  
+end 
