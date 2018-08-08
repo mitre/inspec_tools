@@ -50,7 +50,6 @@ module InspecTools
       controls = []
       @transformed_data.each do |contr|
         print '.'
-        puts contr
         nist = find_nist(contr[:cis]) unless contr[:cis] == "No CIS Control"
         control = {}
         control['id'] = 'M-' + contr[:title].split(' ')[0]

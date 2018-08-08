@@ -6,7 +6,7 @@ require 'yaml'
 require_relative '../utils/inspec_util'
 
 module InspecTools
-  class CSV
+  class CSVTool
     def initialize(csv, mapping, verbose, name)
       @name = name
       @csv = csv

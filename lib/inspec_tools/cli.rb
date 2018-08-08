@@ -12,6 +12,8 @@ require_relative 'version'
 require_relative 'xccdf'
 require_relative 'csv'
 require_relative 'pdf'
+require_relative 'inspec'
+require_relative '../utils/csv_util'
 
 class MyCLI < Thor
   
@@ -63,10 +65,22 @@ class MyCLI < Thor
   def csv2inspec
     csv = CSV.read(options[:csv], encoding: 'ISO8859-1')
     mapping = YAML.load_file(options[:mapping])
-    profile = InspecTools::CSV.new(csv, mapping, options[:verbose], options[:csv].split('/')[-1].split('.')[0]).to_inspec
+    profile = InspecTools::CSVTool.new(csv, mapping, options[:verbose], options[:csv].split('/')[-1].split('.')[0]).to_inspec
     Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
   rescue => e
     puts "Exception: #{e}"
+  end
+  
+  desc 'inspec2csv', 'inspec2csv translates CSV to Inspec controls'
+  option :inspec_json, required: true, aliases: '-j'
+  option :output, required: true, aliases: '-c'
+  option :verbose, type: :boolean, aliases: '-V'
+  option :output, required: false, aliases: '-o'
+  def inspec2csv
+    csv = InspecTools::Inspec.new(File.read(options[:inspec_json]), nil).to_csv
+    Utils::CSVUtil.unpack_csv(csv, options[:output])
+  # rescue => e
+  #   puts "Exception: #{e}"
   end
   
   desc 'pdf2inspec', 'pdf2inspec translates a PDF Security Control Speficication to Inspec Security Profile'
