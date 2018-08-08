@@ -1,3 +1,3 @@
 class InspecUtilTest
   
-end
+end 

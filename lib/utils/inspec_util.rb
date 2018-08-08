@@ -125,6 +125,15 @@ module Utils
       create_inspec_yml(directory || './profile', inspec_json)
     end
     
+    def self.create_skeleton
+      system("inspec init profile #{@name}")
+      system("rm #{@name}/controls/example.rb")
+    end
+
+    def self.create_json
+      system("inspec json #{@name} | jq . | tee #{@name}-overview.json")
+    end
+    
     private
     
     def self.wrap(s, width = WIDTH)

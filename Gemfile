@@ -12,6 +12,10 @@ gem 'pry'
 gem 'thor'
 gem 'word_wrap'
 gem "rspec"
+gem 'pdftotext'
+gem 'docsplit'
+gem 'roo'
+
 # source 'https://rubygems.org'
 # 
 # # Specify your gem's dependencies in inspec_to.gemspec
