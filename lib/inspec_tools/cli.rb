@@ -6,8 +6,11 @@
 
 require 'thor'
 require 'nokogiri'
+require 'csv'
+require 'yaml'
 require_relative 'version'
 require_relative 'xccdf'
+require_relative 'csv'
 
 class MyCLI < Thor
   
@@ -18,7 +21,7 @@ class MyCLI < Thor
   option :seperate_files, required: false, aliases: '-s'
   option :replace_tags, require: false, aliases: '-r'
   def xccdf2inspec
-    profile = InspecTools::XCCDF.new(options[:xccdf]).to_inspec
+    profile = InspecTools::XCCDF.new(File.read(options[:xccdf])).to_inspec
     Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
   end
   
@@ -46,8 +49,20 @@ class MyCLI < Thor
     date = options[:date] || attrib['date']
     Inspec2ckl.new(options[:inspec_json], options[:cklist], title, date, options[:output], options[:verbose])
   end
-
-
+  
+  desc 'csv2inspec', 'csv2inspec translates CSV to Inspec controls'
+  option :csv, required: true, aliases: '-c'
+  option :mapping, required: true, aliases: '-m'
+  option :verbose, type: :boolean, aliases: '-V'
+  option :output, required: false, aliases: '-o'
+  option :format, required: false, aliases: '-f'
+  option :seperate_files, required: false, aliases: '-s'
+  def csv2inspec
+    csv = CSV.read(options[:csv], encoding: 'ISO8859-1')
+    mapping = YAML.load_file(options[:mapping])
+    profile = InspecTools::CSV.new(csv, mapping, options[:verbose], options[:csv].split('/')[-1].split('.')[0]).to_inspec
+    Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
+  end
 
 
   # map %w[--help -h] => :help
