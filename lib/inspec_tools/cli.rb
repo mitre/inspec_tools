@@ -11,6 +11,7 @@ require 'yaml'
 require_relative 'version'
 require_relative 'xccdf'
 require_relative 'csv'
+require_relative 'pdf'
 
 class MyCLI < Thor
   
@@ -23,6 +24,8 @@ class MyCLI < Thor
   def xccdf2inspec
     profile = InspecTools::XCCDF.new(File.read(options[:xccdf])).to_inspec
     Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
+  rescue => e
+    puts "Exception: #{e}"
   end
   
   desc 'inspec2xccdf', 'Inspec2xccdf convertes an Inspec profile into STIG XCCDF Document'
@@ -62,6 +65,22 @@ class MyCLI < Thor
     mapping = YAML.load_file(options[:mapping])
     profile = InspecTools::CSV.new(csv, mapping, options[:verbose], options[:csv].split('/')[-1].split('.')[0]).to_inspec
     Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
+  rescue => e
+    puts "Exception: #{e}"
+  end
+  
+  desc 'pdf2inspec', 'pdf2inspec translates a PDF Security Control Speficication to Inspec Security Profile'
+  option :pdf, required: true, aliases: '-p'
+  option :name, required: true, aliases: '-n'
+  option :debug, required: false, aliases: '-d', :type => :boolean
+  option :format, required: false, aliases: '-f'
+  option :seperate_files, required: false, aliases: '-s'
+  def pdf2inspec
+    pdf = File.open(options[:pdf])
+    profile = InspecTools::PDF.new(pdf, options[:name], options[:debug]).to_inspec
+    Utils::InspecUtil.unpack_inspec_json(options[:name], profile, options[:seperate_files], options[:format])
+  # rescue => e
+  #   puts "Exception: #{e}"
   end
 
 
