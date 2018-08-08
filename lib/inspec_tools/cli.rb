@@ -6,8 +6,11 @@
 
 require 'thor'
 require 'nokogiri'
+require 'csv'
+require 'yaml'
 require_relative 'version'
 require_relative 'xccdf'
+require_relative 'csv'
 
 class MyCLI < Thor
   
@@ -55,9 +58,9 @@ class MyCLI < Thor
   option :format, required: false, aliases: '-f'
   option :seperate_files, required: false, aliases: '-s'
   def csv2inspec
-    csv = File.read(options[:csv])
-    mapping = File.read(options[:mapping])
-    profile = InspecTools::CSV.new(csv, mapping, options[:verbose]).to_inspec
+    csv = CSV.read(options[:csv], encoding: 'ISO8859-1')
+    mapping = YAML.load_file(options[:mapping])
+    profile = InspecTools::CSV.new(csv, mapping, options[:verbose], options[:csv].split('/')[-1].split('.')[0]).to_inspec
     Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
   end
 

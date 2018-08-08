@@ -1,9 +1,18 @@
+require 'csv'
+require 'nokogiri'
+require 'inspec/objects'
+require 'word_wrap'
+require 'yaml'
+require_relative '../utils/inspec_util'
+
 module InspecTools
   class CSV
-    def initialize(csv, mapping_file, verbose)
+    def initialize(csv, mapping, verbose, name)
+      @name = name
       @csv = csv
-      @mapping_file = mapping_file
+      @mapping = mapping
       @verbose = verbose
+      @csv.shift if @mapping['skip_csv_header']
     end
     
     def to_ckl
@@ -16,15 +25,12 @@ module InspecTools
     
     def to_inspec
       @controls = []
-      @csv_handle = nil
       @cci_xml = nil
-      @mapping = nil
       @profile = {}
-      read_mapping
-      read_csv
       read_cci_xml
       insert_json_metadata
-      @profile['controls'] = parse_controls
+      parse_controls
+      @profile['controls'] = @controls
       @profile['sha256'] = Digest::SHA256.hexdigest @profile.to_s
       @profile
     end
@@ -32,13 +38,13 @@ module InspecTools
     private
     
     def insert_json_metadata
-      @profile['name'] = @benchmark.title
-      @profile['title'] = @benchmark.title
+      @profile['name'] = @name
+      @profile['title'] = 'InSpec Profile'
       @profile['maintainer'] = "The Authors"
       @profile['copyright'] = "The Authors"
       @profile['copyright_email'] = "you@example.com"
       @profile['license'] = "Apache-2.0"
-      @profile['summary'] = @benchmark.description
+      @profile['summary'] = "An InSpec Compliance Profile"
       @profile['version'] = "0.1.0"
       @profile['supports'] = []
       @profile['attributes'] = []
@@ -64,24 +70,20 @@ module InspecTools
       [nist_ref, nist_ver]
     end
   
-    def wrap(s, width = WIDTH)
-      s.gsub!(/\\r/, "   \n")
-      WordWrap.ww(s.to_s, width)
-    end
-  
     def parse_controls
-      @csv_handle.each do |row|
+      @csv.each do |row|
         print '.'
-        control = Inspec::Control.new
-        control.id     = row[@mapping['control.id']]     unless @mapping['control.id'].nil? || row[@mapping['control.id']].nil?
-        control.title  = row[@mapping['control.title']]  unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
-        control.desc   = row[@mapping['control.desc']]   unless @mapping['control.desc'].nil? || row[@mapping['control.desc']].nil?
+        control = {}
+        control['id']     = row[@mapping['control.id']]     unless @mapping['control.id'].nil? || row[@mapping['control.id']].nil?
+        control['title']  = row[@mapping['control.title']]  unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
+        control['desc']   = row[@mapping['control.desc']]   unless @mapping['control.desc'].nil? || row[@mapping['control.desc']].nil?
+        control['tags'] = {}
         nist, nist_rev = get_nist_reference(row[@mapping['control.tags']['cci']]) unless @mapping['control.tags']['cci'].nil? || row[@mapping['control.tags']['cci']].nil?
-        control.add_tag(Inspec::Tag.new('nist', [nist, 'Rev_' + nist_rev])) unless nist.nil? || nist_rev.nil?
+        control['tags']['nist'] = [nist, 'Rev_' + nist_rev] unless nist.nil? || nist_rev.nil?
         @mapping['control.tags'].each do |tag|
-          control.add_tag(Inspec::Tag.new(tag.first.to_s, row[tag.last])) unless row[tag.last].nil?
+          control['tags'][tag.first.to_s] = row[tag.last] unless row[tag.last].nil?
         end
-        control.impact = get_impact(row[@mapping['control.tags']['severity']]) unless @mapping['control.tags']['severity'].nil? || row[@mapping['control.tags']['severity']].nil?
+        control['impact'] = Utils::InspecUtil.get_impact(row[@mapping['control.tags']['severity']]) unless @mapping['control.tags']['severity'].nil? || row[@mapping['control.tags']['severity']].nil?
         @controls << control
       end
     end
