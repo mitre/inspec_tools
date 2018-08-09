@@ -15,6 +15,7 @@ GEM
     azure_mgmt_resources (0.17.0)
       ms_rest_azure (~> 0.11.0)
     builder (3.2.3)
+    cliver (0.3.2)
     coderay (1.1.2)
     colorize (0.8.1)
     concurrent-ruby (1.0.5)
@@ -24,6 +25,7 @@ GEM
     docker-api (1.34.2)
       excon (>= 0.47.0)
       multi_json
+    docsplit (0.7.6)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
@@ -117,6 +119,8 @@ GEM
     os (1.0.0)
     parallel (1.12.1)
     parslet (1.8.2)
+    pdftotext (0.2.1)
+      cliver (~> 0.3)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -126,6 +130,9 @@ GEM
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
     retriable (3.1.2)
+    roo (2.7.1)
+      nokogiri (~> 1)
+      rubyzip (~> 1.1, < 2.0.0)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -193,11 +200,14 @@ PLATFORMS
 DEPENDENCIES
   OptionParser
   colorize
+  docsplit
   inspec
   json
   nokogiri
   nokogiri-happymapper
+  pdftotext
   pry
+  roo
   rspec
   thor
   word_wrap
