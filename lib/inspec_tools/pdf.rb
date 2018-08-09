@@ -112,10 +112,10 @@ module InspecTools
     def read_excl
       excel = Util::ExtractNistMappings.new('data/NIST_Map_09212017B_CSC-CIS_Critical_Security_Controls_VER_6.1_Excel_9.1.2016.xlsx')
       @nist_mapping = excel.full_excl
-    # rescue => e
-    #   puts "Exception: #{e.message}"
-    #   puts 'Existing...'
-    #   exit
+    rescue => e
+      puts "Exception: #{e.message}"
+      puts 'Existing...'
+      exit
     end
   end
 end
