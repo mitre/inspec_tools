@@ -30,13 +30,6 @@ module InspecTools
       @profile
     end
     
-    def replace_tags_in_xccdf(replace_tags, xccdf_xml)
-      replace_tags.each do |tag|
-        xccdf_xml = xccdf_xml.gsub(/(&lt;|<)#{tag}(&gt;|>)/, "$#{tag}")
-      end
-      xccdf_xml
-    end
-    
     def publisher
       @benchmark.reference.publisher
     end
@@ -46,6 +39,13 @@ module InspecTools
     end
 
     private
+    
+    def replace_tags_in_xccdf(replace_tags, xccdf_xml)
+      replace_tags.each do |tag|
+        xccdf_xml = xccdf_xml.gsub(/(&lt;|<)#{tag}(&gt;|>)/, "$#{tag}")
+      end
+      xccdf_xml
+    end
     
     def insert_json_metadata
       @profile['name'] = @benchmark.title

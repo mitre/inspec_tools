@@ -12,7 +12,7 @@ module Utils
 
       controls = []
       if json['profiles'].nil?
-        controls = file['controls']
+        controls = json['controls']
       elsif json['profiles'].length == 1
         controls = json['profiles'].last['controls']
       else
@@ -42,6 +42,7 @@ module Utils
         c_data[c_id]['checkref']       = control['tags']['checkref'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['fix']            = control['tags']['fix'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['fixref']         = control['tags']['fixref'] || DATA_NOT_FOUND_MESSAGE
+        c_data[c_id]['fix_id']         = control['tags']['fix_id'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['rationale']      = control['tags']['rationale'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['cis_family']     = control['tags']['cis_family'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['cis_rid']        = control['tags']['cis_rid'] || DATA_NOT_FOUND_MESSAGE
@@ -57,9 +58,12 @@ module Utils
     
     def self.parse_data_for_ckl(json)
       data = {}
+      
+      # Parse for inspec profile results json
       json['profiles'].each do |profile|
         profile['controls'].each do |control|
           c_id = control['id'].to_sym
+          
           data[c_id] = {}
           data[c_id][:vuln_num]       = control['id'] unless control['id'].nil?
           data[c_id][:rule_title]     = control['title'] unless control['title'].nil?
@@ -128,15 +132,6 @@ module Utils
       create_inspec_yml(directory || './profile', inspec_json)
     end
     
-    def self.create_skeleton
-      system("inspec init profile #{@name}")
-      system("rm #{@name}/controls/example.rb")
-    end
-
-    def self.create_json
-      system("inspec json #{@name} | jq . | tee #{@name}-overview.json")
-    end
-    
     private
     
     def self.wrap(s, width = WIDTH)
@@ -203,7 +198,7 @@ version: #{inspec_json['version']}"
       FileUtils.rm_rf(directory) if Dir.exist?(directory)
       Dir.mkdir directory unless Dir.exist?(directory)
       Dir.mkdir "#{directory}/controls" unless Dir.exist?("#{directory}/controls")
-      Dir.mkdir "#{directory}/libaries" unless Dir.exist?("#{directory}/libraries")
+      Dir.mkdir "#{directory}/libraries" unless Dir.exist?("#{directory}/libraries")
       myfile = File.new("#{directory}/README.md", 'w')
       myfile.puts "# Example InSpec Profile\n\nthis example shows the implementation of an InSpec profile."
       if seperated

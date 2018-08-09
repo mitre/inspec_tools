@@ -6,6 +6,7 @@ require_relative '../utils/text_cleaner'
 module InspecTools
   class PDF
     def initialize(pdf, profile_name, debug = false)
+      raise ArgumentError if pdf.nil?
       @pdf = pdf
       @name = profile_name
       @debug = debug

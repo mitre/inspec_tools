@@ -7,7 +7,7 @@ require_relative '../utils/inspec_util'
 
 module InspecTools
   class CSVTool
-    def initialize(csv, mapping, verbose, name)
+    def initialize(csv, mapping, verbose = false, name)
       @name = name
       @csv = csv
       @mapping = mapping

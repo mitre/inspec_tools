@@ -6,7 +6,7 @@ require_relative '../happy_mapper_tools/stig_checklist'
 require_relative '../utils/inspec_util'
 require_relative 'csv'
 require 'csv'
-require 'json'
+# require 'json'
 
 module InspecTools
   class Inspec
@@ -80,7 +80,6 @@ module InspecTools
         headers.each do |key, value|
           control.push(json_control[key.to_s] || json_control['tags'][key.to_s] || nil) 
         end
-        p control
         data.push(control)
       end
       data
