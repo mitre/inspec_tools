@@ -45,11 +45,7 @@ module InspecTools
     def to_csv
       @data = {}
       @data['controls'] = []
-      @json['profiles'].each do |profile|
-        profile['controls'].each do |control|
-          @data['controls'] << control
-        end
-      end
+      get_all_controls_from_json(@json)
       data = inspec_json_to_array(@data)
       CSV.generate do |csv|
         data.each do |row|
@@ -83,6 +79,17 @@ module InspecTools
         data.push(control)
       end
       data
+    end
+    
+    def get_all_controls_from_json(json)
+      json['profiles'].each do |profile|
+        profile['controls'].each do |control|
+          @data['controls'] << control
+        end
+      end unless json['profile'].nil?
+      json['controls'].each do |control|
+        @data['controls'] << control
+      end
     end
     
     def clk_status(control)
