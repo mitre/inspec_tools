@@ -1,43 +1,47 @@
+require 'date'
+require 'json'
+require 'cgi'
 require_relative '../happy_mapper_tools/StigAttributes'
-require_relative '../happy_mapper_tools/StigChecklist'
+require_relative '../happy_mapper_tools/stig_checklist'
 require_relative '../utils/inspec_util'
 
 module InspecTools
   class Inspec
-    def initialize(inspec_json, attribute_yaml)
+    def initialize(inspec_json)
       @json = JSON.parse(inspec_json)
-      @data = Util::InspecUtil.parse_json(json)
-      @attribute = attribute_yaml
     end
-    
-    def to_ckl
-      @checklist = Checklist.new
+
+    def to_ckl(title = nil, date = nil, cklist = nil)
+      @data = Utils::InspecUtil.parse_data_for_ckl(@json)
+      @title = generate_title title, @json, date
+      @cklist = cklist
+      @checklist = HappyMapperTools::StigChecklist::Checklist.new
       if @cklist.nil?
         generate_ckl
       else
-        update_ckl_file
+        update_ckl
       end
       CGI.unescapeHTML(@checklist.to_xml.encode('UTF-8')).gsub('<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8"?>').chomp
     end
-    
-    def to_xccdf
+
+    def to_xccdf(attributes, verbose = false)
+      @data = Utils::InspecUtil.parse_data_for_xccdf(@json)
+      @attribute = attributes
       @verbose = verbose
-  
       @benchmark = HappyMapperTools::Benchmark::Benchmark.new
-      @controls = []
       
       populate_header
-      # populate_profiles @todo populate profiles; not implemented now beacuse its use is depreciated
+      # populate_profiles @todo populate profiles; not implemented now because its use is deprecated
       populate_groups
-      @branchmark.to_xml
+      @benchmark.to_xml
     end
     
     def to_csv
       
     end
-    
+
     private
-    
+
     def clk_status(control)
       status_list = control[:status].uniq
       if status_list.include?('failed')
@@ -64,8 +68,8 @@ module InspecTools
       result
     end
 
-    def update_ckl_file
-      @checklist = Checklist.parse(@cklist.to_s)
+    def update_ckl
+      @checklist = HappyMapperTools::StigChecklist::Checklist.parse(@cklist.to_s)
       @data.keys.each do |control_id|
         vuln = @checklist.where('Vuln_Num', control_id.to_s)
         vuln.status = clk_status(@data[control_id])
@@ -74,20 +78,20 @@ module InspecTools
     end
 
     def generate_vuln_data(control)
-      vuln = Vuln.new
+      vuln = HappyMapperTools::StigChecklist::Vuln.new
       stig_data_list = []
 
       %w{
         Vuln_Num Severity Group_Title Rule_ID Rule_Ver Rule_Title Vuln_Discuss
         Check_Content Fix_Text CCI_REF
       }.each do |param|
-        stigdata = StigData.new
+        stigdata = HappyMapperTools::StigChecklist::StigData.new
         stigdata.attrib = param
         stigdata.data = control[param.downcase.to_sym]
         stig_data_list.push(stigdata)
       end
 
-      stigdata = StigData.new
+      stigdata = HappyMapperTools::StigChecklist::StigData.new
       stigdata.attrib = 'STIGRef'
       stigdata.data = @title
       stig_data_list.push(stigdata)
@@ -108,53 +112,53 @@ module InspecTools
     end
 
     def generate_ckl
-      stigs = Stigs.new
-      istig = IStig.new
+      stigs = HappyMapperTools::StigChecklist::Stigs.new
+      istig = HappyMapperTools::StigChecklist::IStig.new
       vuln_list = []
       @data.keys.each do |control_id|
         vuln_list.push(generate_vuln_data(@data[control_id]))
       end
-      istig.stig_info = StigInfo.new
+      istig.stig_info = HappyMapperTools::StigChecklist::StigInfo.new
       istig.vuln = vuln_list
       stigs.istig = istig
       @checklist.stig = stigs
-      asset = Asset.new
+      asset = HappyMapperTools::StigChecklist::Asset.new
       asset.type = 'Computing'
       @checklist.asset = asset
     end
-    
+
     def populate_header
       @benchmark.title = @attribute['benchmark.title']
-      @benchmark.id =  @attribute['benchmark.id'] 
-      @benchmark.description =  @attribute['benchmark.description']
-      @benchmark.version =  @attribute['benchmark.version']
+      @benchmark.id = @attribute['benchmark.id'] 
+      @benchmark.description = @attribute['benchmark.description']
+      @benchmark.version = @attribute['benchmark.version']
   
-      @benchmark.status = Status.new
-      @benchmark.status.status =  @attribute['benchmark.status'] 
-      @benchmark.status.date =  @attribute['benchmark.status.date']
+      @benchmark.status = HappyMapperTools::Benchmark::Status.new
+      @benchmark.status.status = @attribute['benchmark.status'] 
+      @benchmark.status.date = @attribute['benchmark.status.date']
   
-      @benchmark.notice = Notice.new
-      @benchmark.notice.id =  @attribute['benchmark.notice']
+      @benchmark.notice = HappyMapperTools::Benchmark::Notice.new
+      @benchmark.notice.id = @attribute['benchmark.notice']
   
-      @benchmark.plaintext = Plaintext.new
-      @benchmark.plaintext.plaintext =  @attribute['benchmark.plaintext']
-      @benchmark.plaintext.id =  @attribute['benchmark.plaintext.id']
+      @benchmark.plaintext = HappyMapperTools::Benchmark::Plaintext.new
+      @benchmark.plaintext.plaintext = @attribute['benchmark.plaintext']
+      @benchmark.plaintext.id = @attribute['benchmark.plaintext.id']
   
-      @benchmark.reference = ReferenceBenchmark.new
+      @benchmark.reference = HappyMapperTools::Benchmark::ReferenceBenchmark.new
       @benchmark.reference.href = @attribute['reference.href']
       @benchmark.reference.dc_publisher = @attribute['reference.href']
       @benchmark.reference.dc_source = @attribute['reference.dc.source']
     end
-    
+
     def populate_groups
       group_array = []
       @data['controls'].each do |control|
-        group = Group.new
+        group = HappyMapperTools::Benchmark::Group.new
         group.id = control['id']
         group.title = control['gtitle']
         group.description = "<GroupDescription>#{control['gdescription']}</GroupDescription>"
         
-        group.rule = Rule.new
+        group.rule = HappyMapperTools::Benchmark::Rule.new
         group.rule.id = control['rid']
         group.rule.severity = control['severity']
         group.rule.weight = control['rweight']
@@ -162,27 +166,27 @@ module InspecTools
         group.rule.title = control['title'].gsub(/\n/, ' ')
         group.rule.description = "<VulnDiscussion>#{control['desc'].gsub(/\n/, ' ')}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations></Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
   
-        group.rule.reference = ReferenceGroup.new
+        group.rule.reference = HappyMapperTools::Benchmark::ReferenceGroup.new
         group.rule.reference.dc_publisher = @attribute['reference.dc.publisher']
         group.rule.reference.dc_title = @attribute['reference.dc.title']
         group.rule.reference.dc_subject = @attribute['reference.dc.subject']
         group.rule.reference.dc_type = @attribute['reference.dc.type']
         group.rule.reference.dc_identifier = @attribute['reference.dc.identifier']
   
-        group.rule.ident = Ident.new
+        group.rule.ident = HappyMapperTools::Benchmark::Ident.new
         group.rule.ident.system = 'http://iase.disa.mil/cci'
         group.rule.ident.ident = control['cci']
   
-        group.rule.fixtext = Fixtext.new
+        group.rule.fixtext = HappyMapperTools::Benchmark::Fixtext.new
         group.rule.fixtext.fixref = control['fixref']
         group.rule.fixtext.fixtext = control['fix']
   
-        group.rule.fix = Fix.new
+        group.rule.fix = HappyMapperTools::Benchmark::Fix.new
         group.rule.fix.id = control['fixref']
   
-        group.rule.check = Check.new
+        group.rule.check = HappyMapperTools::Benchmark::Check.new
         group.rule.check.system = control['checkref']
-        group.rule.check.content_ref = ContentRef.new
+        group.rule.check.content_ref = HappyMapperTools::Benchmark::ContentRef.new
         group.rule.check.content_ref.name = @attribute['content_ref.name']
         group.rule.check.content_ref.href = @attribute['content_ref.href']
         group.rule.check.content = control['check']

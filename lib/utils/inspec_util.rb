@@ -7,15 +7,16 @@ module Utils
     DATA_NOT_FOUND_MESSAGE = 'N/A'
     WIDTH = 80
 
-    def self.parse_inspec_json(json)
-      file = JSON.parse(json)
+    def self.parse_data_for_xccdf(json)
+      data = {}
+
       controls = []
-      if file['profiles'].nil?
+      if json['profiles'].nil?
         controls = file['controls']
-      elsif file['profiles'].length == 1
-        controls = file['profiles'].last['controls']
+      elsif json['profiles'].length == 1
+        controls = json['profiles'].last['controls']
       else
-        file['profiles'].each do |profile|
+        json['profiles'].each do |profile|
           controls.concat(profile['controls'])
         end
       end
@@ -49,10 +50,12 @@ module Utils
         c_data[c_id]['code']           = control['code'].to_s || DATA_NOT_FOUND_MESSAGE
       end
 
-      @data['controls'] = c_data.values
+      data['controls'] = c_data.values
+      data['status'] = 'success'
+      data
     end 
     
-    def self.parse_json(json)
+    def self.parse_data_for_ckl(json)
       data = {}
       json['profiles'].each do |profile|
         profile['controls'].each do |control|
