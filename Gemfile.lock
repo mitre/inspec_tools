@@ -4,13 +4,13 @@ GEM
     OptionParser (0.5.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    aws-sdk (2.11.101)
-      aws-sdk-resources (= 2.11.101)
-    aws-sdk-core (2.11.101)
+    aws-sdk (2.11.105)
+      aws-sdk-resources (= 2.11.105)
+    aws-sdk-core (2.11.105)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.11.101)
-      aws-sdk-core (= 2.11.101)
+    aws-sdk-resources (2.11.105)
+      aws-sdk-core (= 2.11.105)
     aws-sigv4 (1.0.3)
     azure_mgmt_resources (0.17.0)
       ms_rest_azure (~> 0.11.0)
@@ -45,7 +45,7 @@ GEM
       mime-types (~> 3.0)
       representable (~> 3.0)
       retriable (>= 2.0, < 4.0)
-    googleauth (0.6.3)
+    googleauth (0.6.4)
       faraday (~> 0.12)
       jwt (>= 1.4, < 3.0)
       memoist (~> 0.12)
@@ -62,7 +62,7 @@ GEM
       domain_name (~> 0.5)
     httpclient (2.8.3)
     inifile (3.0.0)
-    inspec (2.2.55)
+    inspec (2.2.61)
       addressable (~> 2.4)
       faraday (>= 0.9.0)
       faraday_middleware (~> 0.12.2)
@@ -139,7 +139,7 @@ GEM
       rspec-mocks (~> 3.8.0)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
-    rspec-expectations (3.8.0)
+    rspec-expectations (3.8.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-its (1.2.0)
@@ -201,8 +201,7 @@ DEPENDENCIES
   OptionParser
   colorize
   docsplit
-  inspec
-  json
+  inspec (>= 2.2.61)
   nokogiri
   nokogiri-happymapper
   pdftotext
@@ -213,4 +212,4 @@ DEPENDENCIES
   word_wrap
 
 BUNDLED WITH
-   1.16.1
+   1.16.3

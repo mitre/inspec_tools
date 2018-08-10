@@ -3,7 +3,7 @@ require 'json'
 require 'cgi'
 require_relative '../happy_mapper_tools/StigAttributes'
 require_relative '../happy_mapper_tools/stig_checklist'
-require_relative '../utils/inspec_util'
+require_relative '../utilities/inspec_util'
 require_relative 'csv'
 require 'csv'
 # require 'json'
@@ -62,19 +62,22 @@ module InspecTools
     # @param inspec_json : an inspec profile formatted as a json object
     ###
     def inspec_json_to_array(inspec_json)
+      # require 'pry'
+      # binding.pry
       data = []
       headers = {}
       inspec_json['controls'].each do |control| 
-        control.each do |key,value| 
+        control.each do |key,value|
           control['tags'].each {|tag, tag_value| headers[tag] = 0 } if key == 'tags'
-          headers[key] = 0 unless key == 'tags' 
+          control['results'].each { |result| result.each {|result_key, result_value| headers[result_key] = 0 } } if key == 'results'
+          headers[key] = 0 unless key == 'tags' || key == 'results'
         end
       end
       data.push(headers.keys)
       inspec_json['controls'].each do |json_control|
         control = []
         headers.each do |key, value|
-          control.push(json_control[key.to_s] || json_control['tags'][key.to_s] || nil) 
+          control.push(json_control[key] || json_control['tags'][key] || json_control['results'].collect {|result| result[key] }.join(",") || nil) 
         end
         data.push(control)
       end
@@ -86,10 +89,10 @@ module InspecTools
         profile['controls'].each do |control|
           @data['controls'] << control
         end
-      end unless json['profile'].nil?
+      end unless json['profiles'].nil?
       json['controls'].each do |control|
         @data['controls'] << control
-      end
+      end if json['profiles'].nil?
     end
     
     def clk_status(control)

@@ -1,7 +1,7 @@
-require_relative '../utils/extract_pdf_text'
-require_relative '../utils/extract_nist_cis_mapping'
-require_relative '../utils/parser'
-require_relative '../utils/text_cleaner'
+require_relative '../utilities/extract_pdf_text'
+require_relative '../utilities/extract_nist_cis_mapping'
+require_relative '../utilities/parser'
+require_relative '../utilities/text_cleaner'
 
 module InspecTools
   class PDF

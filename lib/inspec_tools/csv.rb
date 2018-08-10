@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'inspec/objects'
 require 'word_wrap'
 require 'yaml'
-require_relative '../utils/inspec_util'
+require_relative '../utilities/inspec_util'
 
 module InspecTools
   class CSVTool

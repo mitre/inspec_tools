@@ -13,7 +13,7 @@ require 'yaml'
 # require_relative 'csv'
 # require_relative 'pdf'
 # require_relative 'inspec'
-require_relative '../utils/csv_util'
+require_relative '../utilities/csv_util'
 
 class MyCLI < Thor
   
@@ -80,7 +80,7 @@ class MyCLI < Thor
   option :seperate_files, required: false, aliases: '-s'
   def pdf2inspec
     pdf = File.open(options[:pdf])
-    profile = InspecTools::PDF.new(pdf, options[:name], options[:debug]).to_inspec
+    profile = InspecTools::PDF.new(pdf, options[:output], options[:output]).to_inspec
     Utils::InspecUtil.unpack_inspec_json(options[:name], profile, options[:seperate_files], options[:format])
   end
   

@@ -1,6 +1,6 @@
 require_relative '../happy_mapper_tools/StigAttributes'
 require_relative '../happy_mapper_tools/CCIAttributes'
-require_relative '../utils/inspec_util'
+require_relative '../utilities/inspec_util'
 
 require 'digest'
 

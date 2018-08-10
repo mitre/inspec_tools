@@ -2,11 +2,10 @@ source "https://rubygems.org"
 
 # frozen_string_literal: true
 gem "OptionParser"
-gem "inspec"
+gem "inspec", '>= 2.2.61'
 gem "nokogiri"
 gem 'colorize'
 #gem 'happymapper'
-gem 'json'
 gem 'nokogiri-happymapper', :require => 'happymapper'
 gem 'pry'
 gem 'thor'
