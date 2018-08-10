@@ -111,13 +111,13 @@ class MyCLI < Thor
   map %w[--help -h] => :help
   desc 'help', 'Help for using inspec_tools'
   def help
-    puts "\nxccdf2inspec translates an xccdf file to an inspec profile\n\n"
-    puts "\ninspec2xccdf translates an Inspec json to an xccdf file\n\n"
-    puts "\ncsv2inspec translates CSV to Inspec controls\n\n"
-    puts "\ninspec2csv translates CSV to Inspec controls'\n\n"
-    puts "\ninspec2ckl translates an inspec json file to a Checklist file'\n\n"
-    puts "\npdf2inspec translates a PDF Security Control Speficication to Inspec Security Profile\n\n"
-    puts "\nexample: ./inspec_tools xccdf2inspec exec -c cci_list.xml -x xccdf_file.xml -o myprofile -f ruby \n\n"
+    puts "\nxccdf2inspec : translates an xccdf file to an Inspec Security Profile\n\n"
+    puts "\ninspec2xccdf : translates an Inspec Security Profile to an xccdf file\n\n"
+    puts "\ncsv2inspec   : translates CSV to Inspec Security Profile\n\n"
+    puts "\ninspec2csv   : translates an Inspec Security Profile to a CSV file\n"
+    puts "\ninspec2ckl   : translates an inspec json file to a Checklist file\n\n"
+    puts "\npdf2inspec   : translates a PDF Security Control Specification to an Inspec Security Profile\n\n"
+    puts "\nexample      : ./inspec_tools xccdf2inspec exec -c cci_list.xml -x xccdf_file.xml -o myprofile -f ruby \n\n"
   end
 
   map %w[--version -v] => :print_version
