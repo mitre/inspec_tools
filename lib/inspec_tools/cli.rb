@@ -121,7 +121,7 @@ class MyCLI < Thor
   end
 
   map %w[--version -v] => :print_version
-  desc '--version, -v', "print's inspec2ckl version"
+  desc '--version, -v', "print's inspec_tools version"
   def print_version
     puts ::InspecTools::VERSION
   end
