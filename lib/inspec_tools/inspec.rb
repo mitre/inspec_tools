@@ -62,8 +62,6 @@ module InspecTools
     # @param inspec_json : an inspec profile formatted as a json object
     ###
     def inspec_json_to_array(inspec_json)
-      # require 'pry'
-      # binding.pry
       data = []
       headers = {}
       inspec_json['controls'].each do |control| 
@@ -77,7 +75,7 @@ module InspecTools
       inspec_json['controls'].each do |json_control|
         control = []
         headers.each do |key, value|
-          control.push(json_control[key] || json_control['tags'][key] || json_control['results'].collect {|result| result[key] }.join(",") || nil) 
+          control.push(json_control[key] || json_control['tags'][key] || json_control['results'].collect {|result| result[key] }.join(",\n") || nil) 
         end
         data.push(control)
       end
