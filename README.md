@@ -40,9 +40,9 @@ Convert a csv export of STIG controls to an inspec profile
 USAGE: inspec_tools csv2inspec -c a_stig.csv -m map.yml -o mydir
 
 FLAGS:
-	-c --csv            : Path to DISA Stig style csv
-	-m --mapping        : Path to yaml with mapping from CSV to Inspec Controls
-	-V --verbose        : verbose run [optional]
+  -c --csv            : Path to DISA Stig style csv
+  -m --mapping        : Path to yaml with mapping from CSV to Inspec Controls
+  -V --verbose        : verbose run [optional]
   -o --output         : path or name to output the inspec profile to
   -f --format         : format to output controls to [ruby, json]
   -s --seperate_files : seperate the controls into different files [true, false]
@@ -57,7 +57,7 @@ Convert an inspec json to a csv file
 USAGE: inspec_tools inspec2csv -j inspec_profile.json -o mycsv.csv
 
 FLAGS:
-	-j --inspec_json : Path to InSpec json file
+  -j --inspec_json : Path to InSpec json file
   -o --output      : path or name to output the csv file to
   -V --verbose     : Run in verbose mode
 
@@ -71,11 +71,11 @@ xccdf2inspec translates an xccdf file to an inspec profile in one or many files
 USAGE: inspec_tools xccdf2inxpec -x xccdf_file.xml -o myprofile -f ruby
 
 FLAGS:
-	-x --xccdf                               : Path to the disa stig xccdf file
-	-o --output                              : The name of the inspec file to generate [optional]
-	-f --format [ruby | hash]                : The format you would like (default: ruby) [optional]
-	-s --seperate-files [true | false]       : Output the resulting controls as one or mutiple files (default: true) [optional]
-	-r --replace-tags array (case sensitive) : A comma seperated list to replace tags with a $ if found in a group rules description tag [optional]  
+  -x --xccdf                               : Path to the disa stig xccdf file
+  -o --output                              : The name of the inspec file to generate [optional]
+  -f --format [ruby | hash]                : The format you would like (default: ruby) [optional]
+  -s --seperate-files [true | false]       : Output the resulting controls as one or mutiple files (default: true) [optional]
+  -r --replace-tags array (case sensitive) : A comma seperated list to replace tags with a $ if found in a group rules description tag [optional]  
 
 example: inspec_tools xccdf2inxpec -x xccdf_file.xml -o myprofile -f ruby -s false  # To map stig.csv to inspec via map.yml
 ```
@@ -87,10 +87,10 @@ inspec2xccdf convertes an Inspec profile in json format to a STIG XCCDF Document
 USAGE: inspec_tools inspec2xccdf -j example.json -a attributes.yml -t application_name
 
 FLAGS:
-	-j --inspec_json : Path to inspec Json file created using command 'inspec json <profile> > example.json'
-	-a --attributes  : Path to yml file that provides the required attributes for the XCCDF Document. Sample file can be generated using command 'inspec2xccdf generate_attribute_file'
-	-o --output      : name or path to create the xccdf and title to give the xccdf
-	-V --verbose     : verbose run [optional]
+  -j --inspec_json : Path to inspec Json file created using command 'inspec json <profile> > example.json'
+  -a --attributes  : Path to yml file that provides the required attributes for the XCCDF Document. Sample file can be generated using command 'inspec2xccdf generate_attribute_file'
+  -o --output      : name or path to create the xccdf and title to give the xccdf
+  -V --verbose     : verbose run [optional]
 
 example: inspec_tools inspec2xccdf -j example.json -a attributes.yml -o application_name 
 ```
@@ -118,11 +118,11 @@ pdf2inspec translates a pdf containing a CIS benchmark into an inspec profile
 USAGE: inspec_tools inspec2ckl -c checklist.ckl -j results.json -o output.ckl
 
 FLAGS:
-	-p --pdf                           : Path to CIS Benchmark pdf file
-	-o --output                        : Path where to write the inspec profile to
+  -p --pdf                           : Path to CIS Benchmark pdf file
+  -o --output                        : Path where to write the inspec profile to
   -f --format [ruby | hash]          : The format you would like (default: ruby) [optional]
   -s --seperate-files [true | false] : Output the resulting controls as one or mutiple files (default: true) [optional]
-	-d --debug                         : debug run [optional]
+  -d --debug                         : debug run [optional]
 
 example: inspec_tools pdf2inspec -p benchmark.pdf -o /path/to/myprofile -f ruby -s true
 ```
