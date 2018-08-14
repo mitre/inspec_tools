@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby
 # encoding: utf-8
 # author: Mohamed El-Sharkawi
 
@@ -65,6 +64,5 @@ module Util
       clean_data = clean_data.gsub(/\s\s/, ' ')
       clean_data.gsub(/(\n\n(?!^\d\.\d{1,}.*\n?.*?))/, '')
     end
-    
   end
 end

@@ -1,5 +1,3 @@
-#!/usr/local/bin/ruby
-
 # author: Aaron Lippold <lippold@gmail.com>
 # author: Rony Xavier <rx294@nyu.edu>
 # author: Matthew Dromazos <dromazmj@gmail.com>
@@ -23,11 +21,11 @@ module HappyMapperTools
 
       attribute :id, String, tag: 'id'
     end
-    
+
     class DescriptionDetails
       include HappyMapper
       tag 'Details'
-      
+
       element :vuln_discussion, String, tag: 'VulnDiscussion'
       element :false_positives, String, tag: 'FalsePositives'
       element :false_negatives, String, tag: 'FalseNegatives'
@@ -40,17 +38,16 @@ module HappyMapperTools
       element :responsibility, String, tag: 'Responsibility'
       element :ia_controls, String, tag: 'IAControls'
     end
-    
+
     class Description
       include HappyMapper
       tag 'description'
 
-      # content :raw_details, String
       content :details, DescriptionDetails
 
-      detail_tags = %i[vuln_discussion false_positives false_negatives documentable
+      detail_tags = %i(vuln_discussion false_positives false_negatives documentable
                        mitigations severity_override_guidance potential_impacts
-                       third_party_tools mitigation_controls responsibility ia_controls]
+                       third_party_tools mitigation_controls responsibility ia_controls)
 
       detail_tags.each do |name|
         define_method name do
@@ -121,12 +118,12 @@ module HappyMapperTools
       def self.apply(value)
         value = value.gsub('&', 'and')
         DescriptionDetails.parse "<Details>#{value}</Details>"
-      rescue Nokogiri::XML::SyntaxError => e
-        allowed_tags = %w[VulnDiscussion FalsePositives FalseNegatives Documentable
+      rescue Nokogiri::XML::SyntaxError
+        allowed_tags = %w{VulnDiscussion FalsePositives FalseNegatives Documentable
                           Mitigations SeverityOverrideGuidance PotentialImpacts
                           PotentialImpacts ThirdPartyTools MitigationControl
-                          Responsibility IAControls]
-                          
+                          Responsibility IAControls}
+
         tags_found = value.scan(%r{(?<=<)([^\/]*?)((?= \/>)|(?=>))}).to_a
 
         tags_found = tags_found.uniq.flatten.reject!(&:empty?)
@@ -160,7 +157,7 @@ module HappyMapperTools
         puts option_two
         # exit
       end
-      
+
       def self.apply?(value, _convert_to_type)
         value.is_a?(String)
       end

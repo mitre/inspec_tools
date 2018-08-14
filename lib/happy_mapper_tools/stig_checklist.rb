@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby
 # encoding: utf-8
 # author: Aaron Lippold
 # author: Rony Xavier rx294@nyu.edu
@@ -54,7 +53,7 @@ module HappyMapperTools
     class Vuln
       include HappyMapper
       tag 'VULN'
-      has_many :stig_data, StigData, tag:'STIG_DATA'
+      has_many :stig_data, StigData, tag: 'STIG_DATA'
       has_one :status, String, tag: 'STATUS'
       has_one :finding_details, String, tag: 'FINDING_DETAILS'
       has_one :comments, String, tag: 'COMMENTS'
@@ -86,8 +85,8 @@ module HappyMapperTools
 
       def where(attrib, data)
         stig.istig.vuln.each do |vuln|
-          if vuln.stig_data.any? { |element| element.attrib == attrib && element.data == data}
-            # todo Handle multiple objects that match the condition
+          if vuln.stig_data.any? { |element| element.attrib == attrib && element.data == data }
+            # TODO: Handle multiple objects that match the condition
             return vuln
           end
         end

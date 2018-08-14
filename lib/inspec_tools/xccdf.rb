@@ -1,10 +1,11 @@
-require_relative '../happy_mapper_tools/StigAttributes'
-require_relative '../happy_mapper_tools/CCIAttributes'
+require_relative '../happy_mapper_tools/stig_attributes'
+require_relative '../happy_mapper_tools/cci_attributes'
 require_relative '../utilities/inspec_util'
 
 require 'digest'
 
 module InspecTools
+  # Methods for converting from XCCDF to various formats
   class XCCDF
     def initialize(xccdf, replace_tags = nil)
       @xccdf = xccdf
@@ -12,15 +13,15 @@ module InspecTools
       @cci_items = HappyMapperTools::CCIAttributes::CCI_List.parse(File.read('./data/U_CCI_List.xml'))
       @benchmark = HappyMapperTools::StigAttributes::Benchmark.parse(@xccdf)
     end
-    
+
     def to_ckl
-      
+      # TODO: to_ckl
     end
-    
+
     def to_csv
-      
+      # TODO: to_csv
     end
-    
+
     def to_inspec
       @profile = {}
       @controls = []
@@ -29,41 +30,41 @@ module InspecTools
       @profile['sha256'] = Digest::SHA256.hexdigest @profile.to_s
       @profile
     end
-    
+
     def publisher
       @benchmark.reference.publisher
     end
-    
+
     def published
       @benchmark.release_date.release_date
     end
 
     private
-    
+
     def replace_tags_in_xccdf(replace_tags, xccdf_xml)
       replace_tags.each do |tag|
         xccdf_xml = xccdf_xml.gsub(/(&lt;|<)#{tag}(&gt;|>)/, "$#{tag}")
       end
       xccdf_xml
     end
-    
+
     def insert_json_metadata
       @profile['name'] = @benchmark.title
       @profile['title'] = @benchmark.title
-      @profile['maintainer'] = "The Authors"
-      @profile['copyright'] = "The Authors"
-      @profile['copyright_email'] = "you@example.com"
-      @profile['license'] = "Apache-2.0"
+      @profile['maintainer'] = 'The Authors'
+      @profile['copyright'] = 'The Authors'
+      @profile['copyright_email'] = 'you@example.com'
+      @profile['license'] = 'Apache-2.0'
       @profile['summary'] = @benchmark.description
-      @profile['version'] = "0.1.0"
+      @profile['version'] = '0.1.0'
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-          "name": "inspec",
-          "version": Gem.loaded_specs["inspec"].version
+        'name': 'inspec',
+        'version': Gem.loaded_specs['inspec'].version
       }
     end
-    
+
     def insert_controls
       @benchmark.group.each do |group|
         control = {}

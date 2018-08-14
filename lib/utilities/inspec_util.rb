@@ -4,7 +4,7 @@ require 'pp'
 
 module Utils
   class InspecUtil
-    DATA_NOT_FOUND_MESSAGE = 'N/A'
+    DATA_NOT_FOUND_MESSAGE = 'N/A'.freeze
     WIDTH = 80
 
     def self.parse_data_for_xccdf(json)
@@ -54,16 +54,15 @@ module Utils
       data['controls'] = c_data.values
       data['status'] = 'success'
       data
-    end 
-    
+    end
+
     def self.parse_data_for_ckl(json)
       data = {}
-      
+
       # Parse for inspec profile results json
       json['profiles'].each do |profile|
         profile['controls'].each do |control|
           c_id = control['id'].to_sym
-          
           data[c_id] = {}
           data[c_id][:vuln_num]       = control['id'] unless control['id'].nil?
           data[c_id][:rule_title]     = control['title'] unless control['title'].nil?
@@ -100,7 +99,7 @@ module Utils
       end
       data
     end
-    
+
     # @!method get_impact(severity)
     #   Takes in the STIG severity tag and converts it to the InSpec #{impact}
     #   control tag.
@@ -125,24 +124,22 @@ module Utils
                end
       impact
     end
-    
+
     def self.unpack_inspec_json(directory, inspec_json, seperated, output_format)
       controls = generate_controls(inspec_json)
-      unpack_profile(directory || './profile', inspec_json, controls, seperated || false, output_format || 'json')
+      unpack_profile(directory || './profile', controls, seperated || false, output_format || 'json')
       create_inspec_yml(directory || './profile', inspec_json)
     end
-    
-    private
-    
-    def self.wrap(s, width = WIDTH)
-      s.gsub!("desc  \"\n    ", 'desc  "')
-      s.gsub!(/\\r/, "\n")
-      s.gsub!(/\\n/, "\n")
 
-      WordWrap.ww(s.to_s, width)
+    private_class_method def self.wrap(str, width = WIDTH)
+      str.gsub!("desc  \"\n    ", 'desc  "')
+      str.gsub!(/\\r/, "\n")
+      str.gsub!(/\\n/, "\n")
+
+      WordWrap.ww(str.to_s, width)
     end
-    
-    def self.generate_controls(inspec_json)
+
+    private_class_method def self.generate_controls(inspec_json)
       controls = []
       inspec_json['controls'].each do |json_control|
         control = Inspec::Control.new
@@ -175,11 +172,11 @@ module Utils
       end
       controls
     end
-    
+
     # @!method print_benchmark_info(info)
     # writes benchmark info to profile inspec.yml file
     #
-    def self.create_inspec_yml(directory, inspec_json)
+    private_class_method def self.create_inspec_yml(directory, inspec_json)
       benchmark_info =
 "name: #{inspec_json['name']}
 title: #{inspec_json['title']}
@@ -193,8 +190,8 @@ version: #{inspec_json['version']}"
       myfile = File.new("#{directory}/inspec.yml", 'w')
       myfile.puts benchmark_info
     end
-    
-    def self.unpack_profile(directory, inspec_json, controls, seperated, output_format)
+
+    private_class_method def self.unpack_profile(directory, controls, seperated, output_format)
       FileUtils.rm_rf(directory) if Dir.exist?(directory)
       Dir.mkdir directory unless Dir.exist?(directory)
       Dir.mkdir "#{directory}/controls" unless Dir.exist?("#{directory}/controls")

@@ -1,14 +1,14 @@
 require 'date'
 require 'json'
 require 'cgi'
-require_relative '../happy_mapper_tools/StigAttributes'
+require_relative '../happy_mapper_tools/stig_attributes'
 require_relative '../happy_mapper_tools/stig_checklist'
 require_relative '../utilities/inspec_util'
 require_relative 'csv'
 require 'csv'
-# require 'json'
 
 module InspecTools
+  # Methods for converting from InSpec json to various formats
   class Inspec
     def initialize(inspec_json)
       @json = JSON.parse(inspec_json)
@@ -32,13 +32,12 @@ module InspecTools
       @attribute = attributes
       @verbose = verbose
       @benchmark = HappyMapperTools::Benchmark::Benchmark.new
-      
       populate_header
       # populate_profiles @todo populate profiles; not implemented now because its use is deprecated
       populate_groups
       @benchmark.to_xml
     end
-    
+
     ####
     # converts an InSpec JSON to a CSV file
     ###
@@ -55,7 +54,7 @@ module InspecTools
     end
 
     private
-    
+
     ###
     #  This method converts an inspec json to an array of arrays
     #
@@ -64,35 +63,35 @@ module InspecTools
     def inspec_json_to_array(inspec_json)
       data = []
       headers = {}
-      inspec_json['controls'].each do |control| 
-        control.each do |key,value|
-          control['tags'].each {|tag, tag_value| headers[tag] = 0 } if key == 'tags'
-          control['results'].each { |result| result.each {|result_key, result_value| headers[result_key] = 0 } } if key == 'results'
-          headers[key] = 0 unless key == 'tags' || key == 'results'
+      inspec_json['controls'].each do |control|
+        control.each do |key, _|
+          control['tags'].each { |tag, _| headers[tag] = 0 } if key == 'tags'
+          control['results'].each { |result| result.each { |result_key, _| headers[result_key] = 0 } } if key == 'results'
+          headers[key] = 0 unless ['tags', 'results'].include?(key)
         end
       end
       data.push(headers.keys)
       inspec_json['controls'].each do |json_control|
         control = []
-        headers.each do |key, value|
-          control.push(json_control[key] || json_control['tags'][key] || json_control['results'].collect {|result| result[key] }.join(",\n") || nil) 
+        headers.each do |key, _|
+          control.push(json_control[key] || json_control['tags'][key] || json_control['results'].collect { |result| result[key] }.join(",\n") || nil)
         end
         data.push(control)
       end
       data
     end
-    
+
     def get_all_controls_from_json(json)
-      json['profiles'].each do |profile|
+      json['profiles']&.each do |profile|
         profile['controls'].each do |control|
           @data['controls'] << control
         end
-      end unless json['profiles'].nil?
+      end
       json['controls'].each do |control|
         @data['controls'] << control
       end if json['profiles'].nil?
     end
-    
+
     def clk_status(control)
       status_list = control[:status].uniq
       if status_list.include?('failed')
@@ -180,21 +179,21 @@ module InspecTools
 
     def populate_header
       @benchmark.title = @attribute['benchmark.title']
-      @benchmark.id = @attribute['benchmark.id'] 
+      @benchmark.id = @attribute['benchmark.id']
       @benchmark.description = @attribute['benchmark.description']
       @benchmark.version = @attribute['benchmark.version']
-  
+
       @benchmark.status = HappyMapperTools::Benchmark::Status.new
-      @benchmark.status.status = @attribute['benchmark.status'] 
+      @benchmark.status.status = @attribute['benchmark.status']
       @benchmark.status.date = @attribute['benchmark.status.date']
-  
+
       @benchmark.notice = HappyMapperTools::Benchmark::Notice.new
       @benchmark.notice.id = @attribute['benchmark.notice']
-  
+
       @benchmark.plaintext = HappyMapperTools::Benchmark::Plaintext.new
       @benchmark.plaintext.plaintext = @attribute['benchmark.plaintext']
       @benchmark.plaintext.id = @attribute['benchmark.plaintext.id']
-  
+
       @benchmark.reference = HappyMapperTools::Benchmark::ReferenceBenchmark.new
       @benchmark.reference.href = @attribute['reference.href']
       @benchmark.reference.dc_publisher = @attribute['reference.href']
@@ -208,7 +207,7 @@ module InspecTools
         group.id = control['id']
         group.title = control['gtitle']
         group.description = "<GroupDescription>#{control['gdescription']}</GroupDescription>"
-        
+
         group.rule = HappyMapperTools::Benchmark::Rule.new
         group.rule.id = control['rid']
         group.rule.severity = control['severity']
@@ -216,32 +215,32 @@ module InspecTools
         group.rule.version = control['rversion']
         group.rule.title = control['title'].gsub(/\n/, ' ')
         group.rule.description = "<VulnDiscussion>#{control['desc'].gsub(/\n/, ' ')}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations></Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
-  
+
         group.rule.reference = HappyMapperTools::Benchmark::ReferenceGroup.new
         group.rule.reference.dc_publisher = @attribute['reference.dc.publisher']
         group.rule.reference.dc_title = @attribute['reference.dc.title']
         group.rule.reference.dc_subject = @attribute['reference.dc.subject']
         group.rule.reference.dc_type = @attribute['reference.dc.type']
         group.rule.reference.dc_identifier = @attribute['reference.dc.identifier']
-  
+
         group.rule.ident = HappyMapperTools::Benchmark::Ident.new
         group.rule.ident.system = 'http://iase.disa.mil/cci'
         group.rule.ident.ident = control['cci']
-  
+
         group.rule.fixtext = HappyMapperTools::Benchmark::Fixtext.new
         group.rule.fixtext.fixref = control['fixref']
         group.rule.fixtext.fixtext = control['fix']
-  
+
         group.rule.fix = HappyMapperTools::Benchmark::Fix.new
         group.rule.fix.id = control['fixref']
-  
+
         group.rule.check = HappyMapperTools::Benchmark::Check.new
         group.rule.check.system = control['checkref']
         group.rule.check.content_ref = HappyMapperTools::Benchmark::ContentRef.new
         group.rule.check.content_ref.name = @attribute['content_ref.name']
         group.rule.check.content_ref.href = @attribute['content_ref.href']
         group.rule.check.content = control['check']
-  
+
         group_array << group
       end
       @benchmark.group = group_array

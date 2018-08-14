@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby
 # encoding: utf-8
 # author: Aaron Lippold
 # author: Rony Xavier rx294@nyu.edu
@@ -16,7 +15,7 @@ module HappyMapperTools
       attribute :date, String, tag: 'date'
       content :status, String, tag: 'status'
     end
-    
+
     # Class Notice maps from the 'notice' from Benchmark XML file using HappyMapper
     class Notice
       include HappyMapper
@@ -25,7 +24,7 @@ module HappyMapperTools
       attribute :xml_lang, String, namespace: 'xml', tag: 'lang'
       content :notice, String, tag: 'notice'
     end
-    
+
     # Class ReferenceBenchmark maps from the 'reference' from Benchmark XML file using HappyMapper
     class ReferenceBenchmark
       include HappyMapper
@@ -34,7 +33,7 @@ module HappyMapperTools
       element :dc_publisher, String, namespace: 'dc', tag: 'publisher'
       element :dc_source, String, namespace: 'dc', tag: 'source'
     end
-    
+
     # Class ReferenceGroup maps from the 'reference' from Benchmark XML file using HappyMapper
     class ReferenceGroup
       include HappyMapper
@@ -45,7 +44,7 @@ module HappyMapperTools
       element :dc_subject, String, namespace: 'dc', tag: 'subject'
       element :dc_identifier, String, namespace: 'dc', tag: 'identifier'
     end
-    
+
     # Class Plaintext maps from the 'plain-text' from Benchmark XML file using HappyMapper
     class Plaintext
       include HappyMapper
@@ -53,7 +52,7 @@ module HappyMapperTools
       attribute :id, String, tag: 'id'
       content :plaintext, String
     end
-    
+
     # Class Select maps from the 'Select' from Benchmark XML file using HappyMapper
     class Select
       include HappyMapper
@@ -61,7 +60,7 @@ module HappyMapperTools
       attribute :idref, String, tag: 'idref'
       attribute :selected, String, tag: 'selected'
     end
-    
+
     # Class Ident maps from the 'ident' from Benchmark XML file using HappyMapper
     class Ident
       include HappyMapper
@@ -69,7 +68,7 @@ module HappyMapperTools
       attribute :system, String, tag: 'system'
       content :ident, String
     end
-    
+
     # Class Fixtext maps from the 'fixtext' from Benchmark XML file using HappyMapper
     class Fixtext
       include HappyMapper
@@ -77,14 +76,14 @@ module HappyMapperTools
       attribute :fixref, String, tag: 'fixref'
       content :fixtext, String
     end
-    
+
     # Class Fix maps from the 'fixtext' from Benchmark XML file using HappyMapper
     class Fix
       include HappyMapper
       tag 'fixtext'
       attribute :id, String, tag: 'id'
     end
-    
+
     # Class ContentRef maps from the 'check-content-ref' from Benchmark XML file using HappyMapper
     class ContentRef
       include HappyMapper
@@ -92,7 +91,7 @@ module HappyMapperTools
       attribute :name, String, tag: 'name'
       attribute :href, String, tag: 'href'
     end
-    
+
     # Class Check maps from the 'Check' from Benchmark XML file using HappyMapper
     class Check
       include HappyMapper
@@ -101,7 +100,7 @@ module HappyMapperTools
       element :content_ref, ContentRef, tag: 'check-content-ref'
       element :content, String, tag: 'check-content'
     end
-    
+
     # Class Profile maps from the 'Profile' from Benchmark XML file using HappyMapper
     class Profile
       include HappyMapper
@@ -111,7 +110,7 @@ module HappyMapperTools
       element :description, String, tag: 'description'
       has_many :select, Select, tag: 'select'
     end
-    
+
     # Class Rule maps from the 'Rule' from Benchmark XML file using HappyMapper
     class Rule
       include HappyMapper
@@ -128,7 +127,7 @@ module HappyMapperTools
       element :fix, Fix, tag: 'fix'
       element :check, Check, tag: 'check'
     end
-    
+
     # Class Group maps from the 'Group' from Benchmark XML file using HappyMapper
     class Group
       include HappyMapper
