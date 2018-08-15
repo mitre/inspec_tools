@@ -22,15 +22,31 @@ class InspecTest < Minitest::Test
     assert(ckl)
   end
   
-  def test_inspec_to_xccdf
+  def test_inspec_to_xccdf_results_json
     inspec_json = File.read('examples/sample_json/single_control_results.json')
+    attributes = File.read('examples/attribute.json')
     inspec_tools = InspecTools::Inspec.new(inspec_json)
-    xccdf = inspec_tools.to_xccdf(inspec_json['attributes'])
+    xccdf = inspec_tools.to_xccdf(attributes)
     assert(xccdf)
   end
   
-  def test_inspec_to_csv
+  def test_inspec_to_xccdf_profile_json
+    inspec_json = File.read('examples/sample_json/single_control_profile.json')
+    attributes = File.read('examples/attribute.json')
+    inspec_tools = InspecTools::Inspec.new(inspec_json)
+    xccdf = inspec_tools.to_xccdf(attributes)
+    assert(xccdf)
+  end
+  
+  def test_inspec_to_csv_results_json
     inspec_json = File.read('examples/sample_json/single_control_results.json')
+    inspec_tools = InspecTools::Inspec.new(inspec_json)
+    csv = inspec_tools.to_csv
+    assert(csv)
+  end
+  
+  def test_inspec_to_csv_profile_json
+    inspec_json = File.read('examples/sample_json/single_control_profile.json')
     inspec_tools = InspecTools::Inspec.new(inspec_json)
     csv = inspec_tools.to_csv
     assert(csv)

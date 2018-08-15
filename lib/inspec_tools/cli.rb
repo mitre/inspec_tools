@@ -30,7 +30,7 @@ class MyCLI < Thor
   def inspec2xccdf
     json = File.read(options[:inspec_json])
     inspec_tool = InspecTools::Inspec.new(json)
-    xccdf = inspec_tool.to_xccdf(json['attributes'])
+    xccdf = inspec_tool.to_xccdf(options['attributes'])
     File.write(options[:output], xccdf)
   end
 

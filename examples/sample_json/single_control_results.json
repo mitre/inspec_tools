@@ -36,6 +36,12 @@
                 "ref": "../elasticsearch-inspec/controls/V-26680.rb",
                 "line": 1
             },
+            "results": [{
+                "status": "passed",
+                "code_desc": "Linux Update should be uptodate",
+                "run_time": 0.62424,
+                "start_time": "2017-09-22 14:12:44 -0400"
+            }],
             "id": "V-26680"
         }],
         "groups": [{
