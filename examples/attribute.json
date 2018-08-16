@@ -1,0 +1,13 @@
+{
+  "benchmark.title": "example_title",
+  "benchmark.id": "example_id",
+  "benchmark.description": "some description",
+  "benchmark.version": "0.1.0",
+  "benchmark.status": "accepted",
+  "benchmark.status.date": "03-04-05",
+  "benchmark.notice": "some notice",
+  "benchmark.plaintext": "plaintext",
+  "benchmark.plaintext.id": "plaintext_id",
+  "reference.href": "https://someurl.com",
+  "reference.dc.source": "some source"
+}

@@ -6,23 +6,24 @@ require 'yaml'
 require_relative '../utilities/inspec_util'
 
 module InspecTools
+  # Methods for converting from CSV to various formats
   class CSVTool
-    def initialize(csv, mapping, verbose = false, name)
+    def initialize(csv, mapping, name, verbose = false)
       @name = name
       @csv = csv
       @mapping = mapping
       @verbose = verbose
       @csv.shift if @mapping['skip_csv_header']
     end
-    
+
     def to_ckl
-      
+      # TODO
     end
-    
+
     def to_xccdf
-      
+      # TODO
     end
-    
+
     def to_inspec
       @controls = []
       @cci_xml = nil
@@ -34,33 +35,33 @@ module InspecTools
       @profile['sha256'] = Digest::SHA256.hexdigest @profile.to_s
       @profile
     end
-    
+
     private
-    
+
     def insert_json_metadata
       @profile['name'] = @name
       @profile['title'] = 'InSpec Profile'
-      @profile['maintainer'] = "The Authors"
-      @profile['copyright'] = "The Authors"
-      @profile['copyright_email'] = "you@example.com"
-      @profile['license'] = "Apache-2.0"
-      @profile['summary'] = "An InSpec Compliance Profile"
-      @profile['version'] = "0.1.0"
+      @profile['maintainer'] = 'The Authors'
+      @profile['copyright'] = 'The Authors'
+      @profile['copyright_email'] = 'you@example.com'
+      @profile['license'] = 'Apache-2.0'
+      @profile['summary'] = 'An InSpec Compliance Profile'
+      @profile['version'] = '0.1.0'
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-          "name": "inspec",
-          "version": Gem.loaded_specs["inspec"].version
+        'name': 'inspec',
+        'version': Gem.loaded_specs['inspec'].version
       }
     end
-    
+
     def read_cci_xml
       @cci_xml = Nokogiri::XML(File.open('data/U_CCI_List.xml'))
       @cci_xml.remove_namespaces!
-    rescue => e
+    rescue StandardError => e
       puts "Exception: #{e.message}"
     end
-    
+
     def get_nist_reference(cci_number)
       item_node = @cci_xml.xpath("//cci_list/cci_items/cci_item[@id='#{cci_number}']")[0] unless @cci_xml.nil?
       unless item_node.nil?
@@ -69,7 +70,7 @@ module InspecTools
       end
       [nist_ref, nist_ver]
     end
-  
+
     def parse_controls
       @csv.each do |row|
         print '.'
