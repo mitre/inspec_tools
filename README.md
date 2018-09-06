@@ -45,7 +45,7 @@ FLAGS:
 	-V --verbose        : verbose run [optional]
 	-o --output         : path or name to output the inspec profile to
 	-f --format         : format to output controls to [ruby, json]
-	-s --seperate_files : seperate the controls into different files [true, false]
+	-s --separate_files : separate the controls into different files [true, false]
 
 example: inspec_tools csv2inspec -c stig.csv -m map.yml -o mydir -f ruby -s true   # To map stig.csv to inspec via map.yml
 ```
@@ -74,8 +74,8 @@ FLAGS:
 	-x --xccdf                               : Path to the disa stig xccdf file
 	-o --output                              : The name of the inspec file to generate [optional]
 	-f --format [ruby | hash]                : The format you would like (default: ruby) [optional]
-	-s --seperate-files [true | false]       : Output the resulting controls as one or mutiple files (default: true) [optional]
-	-r --replace-tags array (case sensitive) : A comma seperated list to replace tags with a $ if found in a group rules description tag [optional]  
+	-s --separate-files [true | false]       : Output the resulting controls as one or mutiple files (default: true) [optional]
+	-r --replace-tags array (case sensitive) : A comma separated list to replace tags with a $ if found in a group rules description tag [optional]  
 
 example: inspec_tools xccdf2inxpec -x xccdf_file.xml -o myprofile -f ruby -s false  # To map stig.csv to inspec via map.yml
 ```
@@ -121,7 +121,7 @@ FLAGS:
 	-p --pdf                           : Path to CIS Benchmark pdf file
 	-o --output                        : Path where to write the inspec profile to
 	-f --format [ruby | hash]          : The format you would like (default: ruby) [optional]
-	-s --seperate-files [true | false] : Output the resulting controls as one or mutiple files (default: true) [optional]
+	-s --separate-files [true | false] : Output the resulting controls as one or mutiple files (default: true) [optional]
 	-d --debug                         : debug run [optional]
 
 example: inspec_tools pdf2inspec -p benchmark.pdf -o /path/to/myprofile -f ruby -s true

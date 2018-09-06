@@ -125,9 +125,9 @@ module Utils
       impact
     end
 
-    def self.unpack_inspec_json(directory, inspec_json, seperated, output_format)
+    def self.unpack_inspec_json(directory, inspec_json, separated, output_format)
       controls = generate_controls(inspec_json)
-      unpack_profile(directory || './profile', controls, seperated || false, output_format || 'json')
+      unpack_profile(directory || './profile', controls, separated, output_format || 'json')
       create_inspec_yml(directory || './profile', inspec_json)
     end
 
@@ -191,14 +191,14 @@ version: #{inspec_json['version']}"
       myfile.puts benchmark_info
     end
 
-    private_class_method def self.unpack_profile(directory, controls, seperated, output_format)
+    private_class_method def self.unpack_profile(directory, controls, separated, output_format)
       FileUtils.rm_rf(directory) if Dir.exist?(directory)
       Dir.mkdir directory unless Dir.exist?(directory)
       Dir.mkdir "#{directory}/controls" unless Dir.exist?("#{directory}/controls")
       Dir.mkdir "#{directory}/libraries" unless Dir.exist?("#{directory}/libraries")
       myfile = File.new("#{directory}/README.md", 'w')
       myfile.puts "# Example InSpec Profile\n\nthis example shows the implementation of an InSpec profile."
-      if seperated
+      if separated
         if output_format == 'ruby'
           controls.each do |control|
             file_name = control.id.to_s
@@ -207,6 +207,7 @@ version: #{inspec_json['version']}"
             myfile.close
           end
         else
+          puts '1 - ELSE'
           controls.each do |control|
             file_name = control.id.to_s
             myfile = File.new("#{directory}/controls/#{file_name}.rb", 'w')
