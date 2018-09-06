@@ -15,11 +15,11 @@ class MyCLI < Thor
   option :xccdf, required: true, aliases: '-x'
   option :output, required: false, aliases: '-o'
   option :format, required: false, aliases: '-f'
-  option :seperate_files, required: false, aliases: '-s'
+  option :separate_files, type: :boolean, default: true,  aliases: '-s'
   option :replace_tags, require: false, aliases: '-r'
   def xccdf2inspec
     profile = InspecTools::XCCDF.new(File.read(options[:xccdf])).to_inspec
-    Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
+    Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
   end
 
   desc 'inspec2xccdf', 'xccdf2inspec translates an xccdf file to an inspec profile'
@@ -40,12 +40,12 @@ class MyCLI < Thor
   option :verbose, type: :boolean, aliases: '-V'
   option :output, required: false, aliases: '-o'
   option :format, required: false, aliases: '-f'
-  option :seperate_files, required: false, aliases: '-s'
+  option :separate_files, type: :boolean, default: true, aliases: '-s'
   def csv2inspec
     csv = CSV.read(options[:csv], encoding: 'ISO8859-1')
     mapping = YAML.load_file(options[:mapping])
     profile = InspecTools::CSVTool.new(csv, mapping, options[:csv].split('/')[-1].split('.')[0], options[:verbose]).to_inspec
-    Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:seperate_files], options[:format])
+    Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
   end
 
   desc 'inspec2csv', 'inspec2csv translates CSV to Inspec controls'
@@ -71,11 +71,11 @@ class MyCLI < Thor
   option :output, required: true, aliases: '-o'
   option :debug, required: false, aliases: '-d', type: :boolean
   option :format, required: false, aliases: '-f'
-  option :seperate_files, required: false, aliases: '-s'
+  option :separate_files, type: :boolean, default: true, aliases: '-s'
   def pdf2inspec
     pdf = File.open(options[:pdf])
     profile = InspecTools::PDF.new(pdf, options[:output], options[:output]).to_inspec
-    Utils::InspecUtil.unpack_inspec_json(options[:name], profile, options[:seperate_files], options[:format])
+    Utils::InspecUtil.unpack_inspec_json(options[:name], profile, options[:separate_files], options[:format])
   end
 
   desc 'generate_map', 'Generates mapping template from CSV to Inspec Controls'
