@@ -207,7 +207,6 @@ version: #{inspec_json['version']}"
             myfile.close
           end
         else
-          puts '1 - ELSE'
           controls.each do |control|
             file_name = control.id.to_s
             myfile = File.new("#{directory}/controls/#{file_name}.rb", 'w')
