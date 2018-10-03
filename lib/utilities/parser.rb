@@ -1,5 +1,5 @@
 # encoding: utf-8
-# author: Matthew Dromazos dromazmj@gmail.com
+# author: Matthew Dromazos (mdromazos@mitre.org)
 
 require 'parslet'
 require 'parslet/convenience'
