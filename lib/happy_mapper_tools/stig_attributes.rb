@@ -1,6 +1,6 @@
-# author: Aaron Lippold <lippold@gmail.com>
-# author: Rony Xavier <rx294@nyu.edu>
-# author: Matthew Dromazos <dromazmj@gmail.com>
+# author: Aaron Lippold (alippold@mitre.org)
+# author: Rony Xavier (rxavier@mitre.org)
+# author: Matthew Dromazos (mdromazos@mitre.org)
 
 module HappyMapperTools
   module StigAttributes
