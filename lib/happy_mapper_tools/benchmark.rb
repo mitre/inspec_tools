@@ -1,6 +1,6 @@
 # encoding: utf-8
-# author: Aaron Lippold
-# author: Rony Xavier rx294@nyu.edu
+# author: Aaron Lippold (alippold@mitre.org)
+# author: Rony Xavier (rxavier@mitre.org)
 
 require 'happymapper'
 require 'nokogiri'
