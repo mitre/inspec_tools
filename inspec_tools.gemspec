@@ -11,8 +11,8 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Converter utils for Inspec'
   spec.description   = 'Converter utils for Inspec that can be included as a gem or used from the command line'
-  spec.homepage      = 'http://gitlab.mitre.org'
-  spec.license       = 'MIT'
+  spec.homepage      = 'https://github.com/mitre/inspec_tools'
+  spec.license       = 'Apache 2.0'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
