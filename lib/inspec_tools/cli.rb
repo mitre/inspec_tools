@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-# author: Aaron Lippold
-# author: Rony Xavier rx294@nyu.edu
-# author: Matthew Dromazos
+# author: Aaron Lippold (alippold@mitre.org)
+# author: Rony Xavier rx294@nyu.edu (rxavier@mitre.org)
+# author: Matthew Dromazos (mdromazos@mitre.org)
 
 require 'thor'
 require 'nokogiri'
