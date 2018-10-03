@@ -18,7 +18,7 @@ Ensure happymapper is not installed, as it will take precedence over nokogiri-ha
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'inspec_tools', :git => "https://github.com/aaronlippold/inspec-tools"
+gem 'inspec_tools', :git => "https://github.com/mitre/inspec-tools"
 ```
 
 And then execute:
@@ -132,9 +132,9 @@ example: inspec_tools pdf2inspec -p benchmark.pdf -o /path/to/myprofile -f ruby 
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb` according to the [Semantic Versioning Policy](https://semver.org/). Then, run `bundle exec rake release` which will create a git tag for the specified version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 # License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT)
+The gem is available as open source under the terms of the [Apache 2.0 License](https://opensource.org/licenses/Apache-2.0)
 
