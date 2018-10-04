@@ -1,5 +1,5 @@
 # encoding: utf-8
-# author: Mohamed El-Sharkawi
+# author: Mohamed El-Sharkawi (melsharkawi@mitre.org)
 
 module Util
   class TextCleaner
