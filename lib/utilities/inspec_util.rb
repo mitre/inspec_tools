@@ -117,18 +117,18 @@ module Utils
     # values to numbers or to override our hard coded values.
     #
     def self.get_impact(severity)
-      impact = case severity
-               when 'low' then 0.3
-               when 'medium' then 0.5
-               else 0.7
-               end
-      impact
+      case severity
+      when 'low' then 0.3
+      when 'medium' then 0.5
+      when 'high' then 0.7
+      else severity
+      end
     end
 
     def self.unpack_inspec_json(directory, inspec_json, separated, output_format)
       controls = generate_controls(inspec_json)
-      unpack_profile(directory || './profile', controls, separated, output_format || 'json')
-      create_inspec_yml(directory || './profile', inspec_json)
+      unpack_profile(directory || 'profile', controls, separated, output_format || 'json')
+      create_inspec_yml(directory || 'profile', inspec_json)
     end
 
     private_class_method def self.wrap(str, width = WIDTH)
@@ -143,9 +143,13 @@ module Utils
       controls = []
       inspec_json['controls'].each do |json_control|
         control = Inspec::Control.new
+        if (defined? control.desc).nil?
+          control.descriptions[:default] = json_control['desc']
+        else
+          control.desc = json_control['desc']
+        end
         control.id     = json_control['id']
         control.title  = json_control['title']
-        control.desc   = json_control['desc']
         control.impact = get_impact(json_control['impact'])
         control.add_tag(Inspec::Tag.new('gtitle', json_control['tags']['gtitle']))
         control.add_tag(Inspec::Tag.new('satisfies', json_control['tags']['satisfies'])) if json_control['tags']['satisfies']
@@ -222,7 +226,12 @@ version: #{inspec_json['version']}"
           end
         else
           controls.each do |control|
-            control.desc = control.desc.strip
+            if (defined? control.desc).nil?
+              control.descriptions[:default].strip!
+            else
+              control.desc.strip!
+            end
+
             PP.pp(control.to_hash, myfile)
           end
         end

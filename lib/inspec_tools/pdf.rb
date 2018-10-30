@@ -23,6 +23,7 @@ module InspecTools
       @transformed_data = ''
       @profile = {}
       read_pdf
+      @title ||= extract_title
       clean_pdf_text
       transform_data
       read_excl
@@ -73,7 +74,7 @@ module InspecTools
 
     def insert_json_metadata
       @profile['name'] = @name
-      @profile['title'] = 'InSpec Profile'
+      @profile['title'] = @title
       @profile['maintainer'] = 'The Authors'
       @profile['copyright'] = 'The Authors'
       @profile['copyright_email'] = 'you@example.com'
@@ -88,8 +89,12 @@ module InspecTools
       }
     end
 
+    def extract_title
+      @pdf_text.match(%r{([^\n]*)\n}).captures[0]
+    end
+
     def read_pdf
-      @pdf_text = Util::ExtractPdfText.new(@pdf, @name).extracted_text
+      @pdf_text = Util::ExtractPdfText.new(@pdf).extracted_text
     end
 
     def clean_pdf_text

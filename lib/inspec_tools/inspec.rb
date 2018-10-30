@@ -6,6 +6,7 @@ require_relative '../happy_mapper_tools/stig_checklist'
 require_relative '../utilities/inspec_util'
 require_relative 'csv'
 require 'csv'
+require 'yaml'
 
 module InspecTools
   # Methods for converting from InSpec json to various formats
@@ -24,12 +25,13 @@ module InspecTools
       else
         update_ckl
       end
-      CGI.unescapeHTML(@checklist.to_xml.encode('UTF-8')).gsub('<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8"?>').chomp
+      @checklist.to_xml.encode('UTF-8').gsub('<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8"?>').chomp
     end
 
     def to_xccdf(attributes, verbose = false)
       @data = Utils::InspecUtil.parse_data_for_xccdf(@json)
-      @attribute = attributes
+      @attribute = YAML.load_file(attributes)
+      @attribute = {} if @attribute.eql? false
       @verbose = verbose
       @benchmark = HappyMapperTools::Benchmark::Benchmark.new
       populate_header
@@ -96,10 +98,10 @@ module InspecTools
       status_list = control[:status].uniq
       if status_list.include?('failed')
         result = 'Open'
-      elsif status_list.include?('passed')
-        result = 'NotAFinding'
       elsif status_list.include?('skipped')
         result = 'Not_Reviewed'
+      elsif status_list.include?('passed')
+        result = 'NotAFinding'
       else
         result = 'Not_Tested'
       end
@@ -188,7 +190,7 @@ module InspecTools
       @benchmark.status.date = @attribute['benchmark.status.date']
 
       @benchmark.notice = HappyMapperTools::Benchmark::Notice.new
-      @benchmark.notice.id = @attribute['benchmark.notice']
+      @benchmark.notice.id = @attribute['benchmark.notice.id']
 
       @benchmark.plaintext = HappyMapperTools::Benchmark::Plaintext.new
       @benchmark.plaintext.plaintext = @attribute['benchmark.plaintext']
@@ -196,7 +198,7 @@ module InspecTools
 
       @benchmark.reference = HappyMapperTools::Benchmark::ReferenceBenchmark.new
       @benchmark.reference.href = @attribute['reference.href']
-      @benchmark.reference.dc_publisher = @attribute['reference.href']
+      @benchmark.reference.dc_publisher = @attribute['reference.dc.publisher']
       @benchmark.reference.dc_source = @attribute['reference.dc.source']
     end
 

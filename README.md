@@ -33,95 +33,96 @@ Clone the repo and install it yourself as:
 
 All of the binaries will print their `help` statements when executed without any arguments. From there it should be 
 
-## csv2inspec 
-
-Convert a csv export of STIG controls to an inspec profile
-``` bash	
-USAGE: inspec_tools csv2inspec -c a_stig.csv -m map.yml -o mydir
-
-FLAGS:
-	-c --csv            : Path to DISA Stig style csv
-	-m --mapping        : Path to yaml with mapping from CSV to Inspec Controls
-	-V --verbose        : verbose run [optional]
-	-o --output         : path or name to output the inspec profile to
-	-f --format         : format to output controls to [ruby, json]
-	-s --separate_files : separate the controls into different files [true, false]
-
-example: inspec_tools csv2inspec -c stig.csv -m map.yml -o mydir -f ruby -s true   # To map stig.csv to inspec via map.yml
-```
-
-## inspec2csv 
-
-Convert an inspec json to a csv file
-``` bash	
-USAGE: inspec_tools inspec2csv -j inspec_profile.json -o mycsv.csv
-
-FLAGS:
-	-j --inspec_json : Path to InSpec json file
-	-o --output      : path or name to output the csv file to
-	-V --verbose     : Run in verbose mode
-
-example: inspec_tools inspec2csv -j inspec_profile.json -o mycsv.csv  # To map stig.csv to inspec via map.yml
-```
-
 ## xccdf2inspec
 
-xccdf2inspec translates an xccdf file to an inspec profile in one or many files
+xccdf2inspec translates an xccdf file to an InSpec profile in one or many files
 ``` bash
-USAGE: inspec_tools xccdf2inxpec -x xccdf_file.xml -o myprofile -f ruby
+USAGE: inspec_tools xccdf2inspec [OPTIONS] -x <xccdf-file>
 
 FLAGS:
-	-x --xccdf                               : Path to the disa stig xccdf file
-	-o --output                              : The name of the inspec file to generate [optional]
-	-f --format [ruby | hash]                : The format you would like (default: ruby) [optional]
-	-s --separate-files [true | false]       : Output the resulting controls as one or mutiple files (default: true) [optional]
-	-r --replace-tags array (case sensitive) : A comma separated list to replace tags with a $ if found in a group rules description tag [optional]  
+	-x --xccdf <xccdf-file>            : path to the disa stig xccdf file
+	-a --attributes <xccdf-attr-yml>   : path to yml file to save XCCDF values which do not fit into the InSpec schema. These are useful if you want to convert the resulting profile back into XCCDF [optional]
+	-o --output <profile-path>         : path to the InSpec profile output (default: profile) [optional]
+	-f --format [ruby | hash]          : the format you would like (default: ruby) [optional]
+	-s --separate-files [true | false] : output the resulting controls as one or mutiple files (default: true) [optional]
+	-r --replace-tags <array>          : A case-sensitive, comma separated list to replace tags with a $ if found in a group rules description tag [optional]
 
-example: inspec_tools xccdf2inxpec -x xccdf_file.xml -o myprofile -f ruby -s false  # To map stig.csv to inspec via map.yml
+example: inspec_tools xccdf2inspec -x xccdf_file.xml -a attributes.yml -o myprofile -f ruby -s false
 ```
 
 ## inspec2xccdf
 
-inspec2xccdf convertes an Inspec profile in json format to a STIG XCCDF Document
+inspec2xccdf converts an InSpec profile in json format to a STIG XCCDF Document
 ``` bash
-USAGE: inspec_tools inspec2xccdf -j example.json -a attributes.yml -t application_name
+USAGE: inspec_tools inspec2xccdf [OPTIONS] -j <inspec-json> -a <xccdf-attr-yml> -o <xccdf-xml>
 
 FLAGS:
-	-j --inspec_json : Path to inspec Json file created using command 'inspec json <profile> > example.json'
-	-a --attributes  : Path to yml file that provides the required attributes for the XCCDF Document. Sample file can be generated using command 'inspec2xccdf generate_attribute_file'
-	-o --output      : name or path to create the xccdf and title to give the xccdf
-	-V --verbose     : verbose run [optional]
+	-j --inspec-json <inspec-json>   : path to InSpec Json file created using command 'inspec json <profile> > example.json'
+	-a --attributes <xccdf-attr-yml> : path to yml file that provides the required attributes for the XCCDF Document. these attributes are parts of XCCDF document which do not fit into the InSpec schema
+	-o --output <xccdf-xml>          : name or path to create the xccdf and title to give the xccdf
+	-V --verbose                     : verbose run [optional]
 
-example: inspec_tools inspec2xccdf -j example.json -a attributes.yml -o application_name 
+example: inspec_tools inspec2xccdf -j example.json -a attributes.yml -o xccdf.xml 
+```
+
+## csv2inspec
+
+Convert a csv export of STIG controls to an InSpec profile
+``` bash
+USAGE: inspec_tools csv2inspec [OPTIONS] -c <stig-csv> -m <map-yml>
+
+FLAGS:
+	-c --csv <stig-csv>                : path to DISA Stig style csv
+	-m --mapping <map-yml>             : path to yaml with mapping from CSV to InSpec Controls
+	-V --verbose                       : verbose run [optional]
+	-o --output <profile-path>         : path to the InSpec profile output (default: profile) [optional]
+	-f --format [ruby | hash]          : the format you would like (default: ruby) [optional]
+	-s --separate-files [true | false] : separate the controls into different files (default: true) [optional]
+
+example: inspec_tools csv2inspec -c stig.csv -m map.yml -o mydir -f ruby -s true   # To map stig.csv to InSpec via map.yml
+```
+
+## inspec2csv
+
+Convert an InSpec json to a csv file
+``` bash
+USAGE: inspec_tools inspec2csv [OPTIONS] -j <inspec-json> -o <profile-csv>
+
+FLAGS:
+	-j --inspec-json <inspec-json> : path to InSpec json file
+	-o --output <profile-csv>      : path to output csv
+	-V --verbose                   : run in verbose mode [optional]
+
+example: inspec_tools inspec2csv -j inspec_profile.json -o mycsv.csv
 ```
 
 ## inspec2ckl
 
-inspec2ckl translates an Inspec results json into Stig Checklist
+inspec2ckl translates an InSpec results json into Stig Checklist
 
 ``` bash
-USAGE: inspec_tools inspec2ckl -c checklist.ckl -j results.json -o output.ckl
+USAGE: inspec_tools inspec2ckl [OPTIONS] -j <inspec-json> -o <results-ckl>
 
 FLAGS:
-	-j --inspec_json : Path to Inspec results json file
-	-o --output : Path to output checklist file
-	-V --verbose : verbose run [optional]
+	-j --inspec-json <inspec-json> : path to InSpec results json file
+	-o --output <results-ckl>      : path to output checklist file
+	-V --verbose                   : verbose run [optional]
 
-example: inspec_tools inspec2ckl -j example.json -o application_name 
+example: inspec_tools inspec2ckl -j results.json -o output.ckl 
 ```
 
 ## pdf2inspec
 
-pdf2inspec translates a pdf containing a CIS benchmark into an inspec profile
+pdf2inspec translates a pdf containing a CIS benchmark into an InSpec profile
 
 ``` bash
-USAGE: inspec_tools inspec2ckl -c checklist.ckl -j results.json -o output.ckl
+USAGE: inspec_tools pdf2inspec [OPTIONS] -p <cis-benchmark>
 
 FLAGS:
-	-p --pdf                           : Path to CIS Benchmark pdf file
-	-o --output                        : Path where to write the inspec profile to
-	-f --format [ruby | hash]          : The format you would like (default: ruby) [optional]
-	-s --separate-files [true | false] : Output the resulting controls as one or mutiple files (default: true) [optional]
+	-p --pdf <cis-benchmark>           : path to CIS Benchmark pdf file
+	-o --output <profile-path>         : path to the InSpec profile output (default: profile) [optional]
+	-f --format [ruby | hash]          : the format you would like (default: ruby) [optional]
+	-s --separate-files [true | false] : output the resulting controls as multiple files (default: true) [optional]
 	-d --debug                         : debug run [optional]
 
 example: inspec_tools pdf2inspec -p benchmark.pdf -o /path/to/myprofile -f ruby -s true

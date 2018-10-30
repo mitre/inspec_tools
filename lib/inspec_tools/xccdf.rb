@@ -31,8 +31,42 @@ module InspecTools
       @profile
     end
 
+    ####
+    # extracts non-InSpec attributes
+    ###
+    # TODO there may be more attributes we want to extract, see data/attributes.yml for example
+    def to_attributes
+      @attribute = {}
+
+      @attribute['benchmark.title'] = @benchmark.title
+      @attribute['benchmark.id'] = @benchmark.id
+      @attribute['benchmark.description'] = @benchmark.description
+      @attribute['benchmark.version'] = @benchmark.version
+
+      @attribute['benchmark.status'] = @benchmark.status
+      @attribute['benchmark.status.date'] = @benchmark.release_date.release_date
+
+      @attribute['benchmark.notice.id'] = @benchmark.notice.id
+
+      @attribute['benchmark.plaintext'] = @benchmark.plaintext.plaintext
+      @attribute['benchmark.plaintext.id'] = @benchmark.plaintext.id
+
+      @attribute['reference.href'] = @benchmark.reference.href
+      @attribute['reference.dc.publisher'] = @benchmark.reference.dc_publisher
+      @attribute['reference.dc.source'] = @benchmark.reference.dc_source
+      @attribute['reference.dc.title'] = @benchmark.group[0].rule.reference.dc_title if !@benchmark.group[0].nil?
+      @attribute['reference.dc.subject'] = @benchmark.group[0].rule.reference.dc_subject if !@benchmark.group[0].nil?
+      @attribute['reference.dc.type'] = @benchmark.group[0].rule.reference.dc_type if !@benchmark.group[0].nil?
+      @attribute['reference.dc.identifier'] = @benchmark.group[0].rule.reference.dc_identifier if !@benchmark.group[0].nil?
+
+      @attribute['content_ref.name'] = @benchmark.group[0].rule.check.content_ref.name if !@benchmark.group[0].nil?
+      @attribute['content_ref.href'] = @benchmark.group[0].rule.check.content_ref.href if !@benchmark.group[0].nil?
+
+      @attribute
+    end
+
     def publisher
-      @benchmark.reference.publisher
+      @benchmark.reference.dc_publisher
     end
 
     def published
@@ -55,7 +89,7 @@ module InspecTools
       @profile['copyright'] = 'The Authors'
       @profile['copyright_email'] = 'you@example.com'
       @profile['license'] = 'Apache-2.0'
-      @profile['summary'] = @benchmark.description
+      @profile['summary'] = "\"#{@benchmark.description.gsub('\\', '\\\\\\').gsub('"', '\"')}\""
       @profile['version'] = '0.1.0'
       @profile['supports'] = []
       @profile['attributes'] = []
@@ -91,7 +125,7 @@ module InspecTools
         control['tags']['mitigation_controls'] = group.rule.description.mitigation_controls if group.rule.description.mitigation_controls != ''
         control['tags']['responsibility'] = group.rule.description.responsibility if group.rule.description.responsibility != ''
         control['tags']['ia_controls'] = group.rule.description.ia_controls if group.rule.description.ia_controls != ''
-        control['tags']['check'] = group.rule.check.check_content
+        control['tags']['check'] = group.rule.check.content
         control['tags']['fix'] = group.rule.fixtext
         @controls << control
       end

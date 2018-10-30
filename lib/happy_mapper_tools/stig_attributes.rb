@@ -8,11 +8,19 @@ module HappyMapperTools
     require 'nokogiri'
     require 'colorize'
 
+    class ContentRef
+      include HappyMapper
+      tag 'check-content-ref'
+      attribute :name, String, tag: 'name'
+      attribute :href, String, tag: 'href'
+    end
+
     class Check
       include HappyMapper
       tag 'check'
 
-      element 'check-content', String, tag: 'check-content'
+      element :content_ref, ContentRef, tag: 'check-content-ref'
+      element :content, String, tag: 'check-content'
     end
 
     class Fix
@@ -56,6 +64,19 @@ module HappyMapperTools
       end
     end
 
+    class ReferenceInfo
+      include HappyMapper
+      tag 'reference'
+
+      attribute :href, String, tag: 'href'
+      element :dc_publisher, String, tag: 'publisher', namespace: 'dc'
+      element :dc_source, String, tag: 'source', namespace: 'dc'
+      element :dc_title, String, tag: 'title', namespace: 'dc'
+      element :dc_type, String, tag: 'type', namespace: 'dc'
+      element :dc_subject, String, tag: 'subject', namespace: 'dc'
+      element :dc_identifier, String, tag: 'identifier', namespace: 'dc'
+    end
+
     class Rule
       include HappyMapper
       tag 'Rule'
@@ -65,6 +86,7 @@ module HappyMapperTools
       element :version, String, tag: 'version'
       element :title, String, tag: 'title'
       has_one :description, Description, tag: 'description'
+      element :reference, ReferenceInfo, tag: 'reference'
       has_many :idents, String, tag: 'ident'
       element :fixtext, String, tag: 'fixtext'
       has_one :fix, Fix, tag: 'fix'
@@ -81,15 +103,6 @@ module HappyMapperTools
       has_one :rule, Rule, tag: 'Rule'
     end
 
-    class ReferenceInfo
-      include HappyMapper
-      tag 'reference'
-
-      attribute :href, String, tag: 'href'
-      element :publisher, String, tag: 'publisher', namespace: 'dc'
-      element :source, String, tag: 'source', namespace: 'dc'
-    end
-
     class ReleaseDate
       include HappyMapper
       tag 'status'
@@ -97,16 +110,34 @@ module HappyMapperTools
       attribute :release_date, String, tag: 'date'
     end
 
+    class Notice
+      include HappyMapper
+      tag 'notice'
+      attribute :id, String, tag: 'id'
+      attribute :xml_lang, String, namespace: 'xml', tag: 'lang'
+      content :notice, String, tag: 'notice'
+    end
+
+    class Plaintext
+      include HappyMapper
+      tag 'plain-text'
+      attribute :id, String, tag: 'id'
+      content :plaintext, String
+    end
+
     class Benchmark
       include HappyMapper
       tag 'Benchmark'
 
       has_one :release_date, ReleaseDate, tag: 'status'
+      attribute :id, String, tag: 'id'
       element :status, String, tag: 'status'
       element :title, String, tag: 'title'
       element :description, String, tag: 'description'
       element :version, String, tag: 'version'
+      element :notice, Notice, tag: 'notice'
       has_one :reference, ReferenceInfo, tag: 'reference'
+      element :plaintext, Plaintext, tag: 'plain-text'
       has_many :group, Group, tag: 'Group'
     end
 
