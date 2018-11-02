@@ -6,7 +6,7 @@ require 'inspec_tools/version'
 Gem::Specification.new do |spec|
   spec.name          = 'inspec_tools'
   spec.version       = InspecTools::VERSION
-  spec.authors       = ['Robert Thew']
+  spec.authors       = ['Robert Thew', 'Matthew Dromazos', 'Rony Xavier', 'Aaron Lippold']
   spec.email         = ['rthew@mitre.org']
 
   spec.summary       = 'Converter utils for Inspec'
@@ -22,10 +22,9 @@ Gem::Specification.new do |spec|
     raise 'RubyGems 2.0 or newer is required to protect against public gem pushes.'
   end
 
-  # spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.files         = Dir.glob('{lib,spec,exe}/**/*')
-  spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.bindir        = 'bin'
+  spec.executables   << 'inspec_tools'
   spec.require_paths = ['lib', 'exe']
   spec.add_dependency 'colorize', '~> 0'
   spec.add_dependency 'docsplit', '~> 0.7.6'

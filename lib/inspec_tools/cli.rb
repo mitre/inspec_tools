@@ -16,7 +16,7 @@ class MyCLI < Thor
   option :attributes, required: false, aliases: '-a'
   option :output, required: false, aliases: '-o', default: 'profile'
   option :format, required: false, aliases: '-f', enum: %w(ruby hash), default: 'ruby'
-  option :separate_files, required: false, type: :boolean,  default: true,  aliases: '-s'
+  option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
   option :replace_tags, required: false, aliases: '-r'
   def xccdf2inspec
     xccdf = InspecTools::XCCDF.new(File.read(options[:xccdf]))
@@ -35,7 +35,8 @@ class MyCLI < Thor
   def inspec2xccdf
     json = File.read(options[:inspec_json])
     inspec_tool = InspecTools::Inspec.new(json)
-    xccdf = inspec_tool.to_xccdf(options['attributes'])
+    attr_hsh = YAML.load_file(attributes)
+    xccdf = inspec_tool.to_xccdf(attr_hsh)
     File.write(options[:output], xccdf)
   end
 
@@ -110,7 +111,7 @@ class MyCLI < Thor
   map %w{--help -h} => :help
   desc 'help', 'Help for using inspec_tools'
   def help
-    puts "\nxccdf2inspec : translates an xccdf file to an Inspec Security Profile\n\n"
+    puts "\nxccdf2inspec : translates an xccdf file to an Inspect Security Profile\n\n"
     puts "\ninspec2xccdf : translates an Inspec Security Profile to an xccdf file\n\n"
     puts "\ncsv2inspec   : translates CSV to Inspec Security Profile\n\n"
     puts "\ninspec2csv   : translates an Inspec Security Profile to a CSV file\n"

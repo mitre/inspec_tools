@@ -1,5 +1,4 @@
 require 'docsplit'
-require 'pdftotext'
 
 module Util
   class ExtractPdfText
@@ -9,9 +8,7 @@ module Util
       read_text
     end
 
-    def extracted_text
-      @extracted_text
-    end
+    attr_reader :extracted_text
 
     def read_text
       Docsplit.extract_text([@pdf.path], ocr: false, output: Dir.tmpdir)

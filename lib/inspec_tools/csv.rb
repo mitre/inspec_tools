@@ -56,7 +56,8 @@ module InspecTools
     end
 
     def read_cci_xml
-      @cci_xml = Nokogiri::XML(File.open('data/U_CCI_List.xml'))
+      cci_list_path = File.join(File.dirname(__FILE__), '../data/U_CCI_List.xml')
+      @cci_xml = Nokogiri::XML(File.open(cci_list_path))
       @cci_xml.remove_namespaces!
     rescue StandardError => e
       puts "Exception: #{e.message}"
