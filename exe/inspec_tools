@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 
 # Trap ^C
-Signal.trap("INT") {
+Signal.trap('INT') {
   puts "\nCtrl-C detected. Exiting..."
   sleep 1
   exit
 }
 
-$:.unshift(File.expand_path("../../lib", __FILE__))
-require "inspec_tools"
-require "inspec_tools/cli"
+$LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
+require 'inspec_tools'
+require 'inspec_tools/cli'
 
 InspecTools::CLI.start(ARGV)

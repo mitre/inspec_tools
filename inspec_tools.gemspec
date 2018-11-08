@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "inspec_tools/version"
+require 'inspec_tools/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'inspec_tools'
@@ -21,11 +21,8 @@ Gem::Specification.new do |spec|
     raise 'RubyGems 2.0 or newer is required to protect against public gem pushes.'
   end
 
-  #spec.files         = `git ls-files`.split($/)
-  # spec.files = Dir.glob("{bin,lib}/**/*") + %w(LICENSE README.md)
-  spec.files         = Dir.glob('{lib,test,exe}/**/*') + %w(CHANGELOG.md Guardfile LICENSE.md Rakefile README.md)
+  spec.files         = Dir.glob('{lib,test,exe}/**/*') + %w{CHANGELOG.md Guardfile LICENSE.md Rakefile README.md}
   spec.bindir        = 'exe'
-  # spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.executables   << 'inspec_tools'
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']

@@ -4,14 +4,13 @@ require_relative '../utilities/csv_util'
 
 module InspecTools
   class CLI < Command
-
     desc 'xccdf2inspec', 'xccdf2inspec translates an xccdf file to an inspec profile'
     long_desc Help.text(:xccdf2inspec)
     option :xccdf, required: true, aliases: '-x'
     option :attributes, required: false, aliases: '-a'
     option :output, required: false, aliases: '-o', default: 'profile'
-    option :format, required: false, aliases: '-f', enum: %w(ruby hash), default: 'ruby'
-    option :separate_files, required: false, type: :boolean,  default: true, aliases: '-s'
+    option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
+    option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
     option :replace_tags, required: false, aliases: '-r'
     def xccdf2inspec
       xccdf = XCCDF.new(File.read(options[:xccdf]))
@@ -42,7 +41,7 @@ module InspecTools
     option :mapping, required: true, aliases: '-m'
     option :verbose, required: false, type: :boolean, aliases: '-V'
     option :output, required: false, aliases: '-o', default: 'profile'
-    option :format, required: false, aliases: '-f', enum: %w(ruby hash), default: 'ruby'
+    option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
     option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
     def csv2inspec
       csv = CSV.read(options[:csv], encoding: 'ISO8859-1')
@@ -76,7 +75,7 @@ module InspecTools
     option :pdf, required: true, aliases: '-p'
     option :output, required: false, aliases: '-o', default: 'profile'
     option :debug, required: false, aliases: '-d', type: :boolean
-    option :format, required: false, aliases: '-f', enum: %w(ruby hash), default: 'ruby'
+    option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
     option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
     def pdf2inspec
       pdf = File.open(options[:pdf])
@@ -86,7 +85,7 @@ module InspecTools
 
     desc 'generate_map', 'Generates mapping template from CSV to Inspec Controls'
     def generate_map
-      template = %q(
+      template = '
       # Setting csv_header to true will skip the csv file header
       skip_csv_header: true
       width   : 80
@@ -102,13 +101,13 @@ module InspecTools
               cci: 2
               check: 12
               fix: 10
-      )
+      '
       myfile = File.new('mapping.yml', 'w')
       myfile.puts template
       myfile.close
     end
 
-    desc "version", "prints version"
+    desc 'version', 'prints version'
     def version
       puts VERSION
     end

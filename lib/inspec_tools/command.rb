@@ -1,11 +1,11 @@
-require "thor"
+require 'thor'
 
 # Override thor's long_desc identation behavior
 # https://github.com/erikhuda/thor/issues/398
 class Thor
   module Shell
     class Basic
-      def print_wrapped(message, options = {})
+      def print_wrapped(message, _options = {})
         message = "\n#{message}" unless message[0] == "\n"
         stdout.puts message
       end
@@ -26,18 +26,18 @@ module InspecTools
         # as well thor's normal way:
         #
         #   inspec_tools help command
-        help_flags = Thor::HELP_MAPPINGS + ["help"]
+        help_flags = Thor::HELP_MAPPINGS + ['help']
         if args.length > 1 && !(args & help_flags).empty?
           args -= help_flags
-          args.insert(-2, "help")
+          args.insert(-2, 'help')
         end
 
         #   inspec_tools version
         #   inspec_tools --version
         #   inspec_tools -v
-        version_flags = ["--version", "-v"]
+        version_flags = ['--version', '-v']
         if args.length == 1 && !(args & version_flags).empty?
-          args = ["version"]
+          args = ['version']
         end
 
         super
