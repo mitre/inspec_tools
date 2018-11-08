@@ -9,7 +9,7 @@ InspecTools supplies several CLI tools to convert to and from InSpec format. The
 * inspec2ckl
 * pdf2inspec
 
-The Ruby API is defined in lib/inspec_to.rb
+It also includes an API that can be used in a ruby application. The Ruby API is defined in lib/inspec_tools/inspec.rb
 
 # Installation
 
@@ -31,7 +31,32 @@ Clone the repo and install it yourself as:
 
 # Usage
 
-All of the binaries will print their `help` statements when executed without any arguments. From there it should be
+## Ruby Usage
+
+The gem exposes methods for converting from an InSpec results JSON to three formats: CKL, XCCDF, and CSV. In the ruby file add a require statement:
+
+```
+require 'inspec_tools'
+```
+
+Pass in the results JSON object to the InspecTools class to get an object that can convert the results into the three formats:
+
+```
+tool = InspecTools.inspec(results_json)
+ckl_reuslts = tool.to_ckl
+csv_results = tool.to_ccsv
+```
+
+The XCCDF converter requires a parameter - a JSON object containing attributes that exist in the XCCDF format, but don't exist in the InSpec results JSON. There's an example of these attributes at [examples/attribute.json](examples/attribute.json).
+
+```
+xccdf_results = tool.to_xccdf(attribs_json)
+```
+
+## Command line Usage
+
+On the Command Line, `inspec_tools help` will print a listing of all the command with a short description.
+For detailed help on any command, run `inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `inspec_tools xccdf2inspec -h`.
 
 ## xccdf2inspec
 
@@ -82,6 +107,13 @@ FLAGS:
 example: inspec_tools csv2inspec -c stig.csv -m map.yml -o mydir -f ruby -s true   # To map stig.csv to InSpec via map.yml
 ```
 
+### generate_map
+
+This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
+```
+USAGE: inspec_tools generate_map
+```
+
 ## inspec2csv
 
 Convert an InSpec json to a csv file
@@ -128,11 +160,18 @@ FLAGS:
 example: inspec_tools pdf2inspec -p benchmark.pdf -o /path/to/myprofile -f ruby -s true
 ```
 
+## version
+Prints out the gem version
+```
+USAGE: inspec_tools version
+```
+
 # Development
+This gem was developed using the [CLI Template](https://github.com/tongueroo/cli-template), a generator tool that builds a starter CLI project.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+There are a set of unit tests. Run `rake test` to run the tests.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb` according to the [Semantic Versioning Policy](https://semver.org/). Then, run `bundle exec rake release` which will create a git tag for the specified version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To release a new version, update the version number in `version.rb` according to the [Semantic Versioning Policy](https://semver.org/). Then, run `bundle exec rake release` which will create a git tag for the specified version, push git commits and tags, and push the `.gem` file to [github.com](https://github.com/mitre/inspec_tools).
 
 # Notice
 

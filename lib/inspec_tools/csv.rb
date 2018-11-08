@@ -3,6 +3,8 @@ require 'nokogiri'
 require 'inspec/objects'
 require 'word_wrap'
 require 'yaml'
+require 'digest'
+
 require_relative '../utilities/inspec_util'
 
 module InspecTools

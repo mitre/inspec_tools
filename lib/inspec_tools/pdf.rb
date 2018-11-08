@@ -1,3 +1,6 @@
+require 'digest'
+
+require_relative '../utilities/inspec_util'
 require_relative '../utilities/extract_pdf_text'
 require_relative '../utilities/extract_nist_cis_mapping'
 require_relative '../utilities/parser'
