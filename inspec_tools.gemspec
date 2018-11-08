@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activesupport', '~> 0'
+  spec.add_dependency 'activesupport', '>= 4.2.3'
   spec.add_dependency 'colorize', '~> 0'
   spec.add_dependency 'docsplit', '~> 0.7.6'
   spec.add_dependency 'inspec', '~> 2.2'
@@ -42,7 +42,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor', '~> 0.19'
   spec.add_dependency 'word_wrap', '~> 0'
   spec.add_development_dependency 'bundler', '~> 1.12'
-  spec.add_development_dependency 'byebug', '~> 0'
   spec.add_development_dependency 'minitest', '~> 5.0'
   spec.add_development_dependency 'pry', '~> 0'
   spec.add_development_dependency 'rake', '~> 10.0'
