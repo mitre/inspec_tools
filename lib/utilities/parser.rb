@@ -1,4 +1,3 @@
-# encoding: utf-8
 # author: Matthew Dromazos (mdromazos@mitre.org)
 
 require 'parslet'
@@ -158,7 +157,7 @@ module Util
       (space? >> word >> (space | dot | hyphen).maybe).repeat(1) >> (newline >> (word >> space).repeat(1)).maybe
     end
 
-    def line_body(ending)
+    def line_body(_ending)
       (attribute_absent >> any).repeat(1)
     end
 
@@ -204,130 +203,130 @@ module Util
     rule(section_num: simple(:section), title: simple(:title), score: simple(:score)) { section + title + score }
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
          audit: sequence(:audit), remediation: sequence(:remediation), impact: sequence(:impact), default_value: sequence(:default_value),
-         references: sequence(:references), cis_controls: sequence(:cis_controls)) {
+         references: sequence(:references), cis_controls: sequence(:cis_controls)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              fix: remediation[0].to_s, impact: impact[0].to_s, default: default_value[0].to_s, ref: references[0].to_s, cis: cis_controls[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
          audit: sequence(:audit), remediation: sequence(:remediation),
-         references: sequence(:references)) {
+         references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              fix: remediation[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
          audit: sequence(:audit), remediation: sequence(:remediation), impact: sequence(:impact),
-         references: sequence(:references)) {
+         references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              fix: remediation[0].to_s, impact: impact[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), remediation: sequence(:remediation), impact: sequence(:impact)) {
+         audit: sequence(:audit), remediation: sequence(:remediation), impact: sequence(:impact)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              fix: remediation[0].to_s, impact: impact[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
          audit: sequence(:audit), remediation: sequence(:remediation), default_value: sequence(:default_value),
-         references: sequence(:references)) {
+         references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              fix: remediation[0].to_s, default: default_value[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
          audit: sequence(:audit), remediation: sequence(:remediation), impact: sequence(:impact), default_value: sequence(:default_value),
-         references: sequence(:references)) {
+         references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              fix: remediation[0].to_s, impact: impact[0].to_s, default: default_value[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), remediation: sequence(:remediation)) {
+         audit: sequence(:audit), remediation: sequence(:remediation)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s, fix: remediation[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), remediation: sequence(:remediation), default_value: sequence(:default_value)) {
+         audit: sequence(:audit), remediation: sequence(:remediation), default_value: sequence(:default_value)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              fix: remediation[0].to_s, default: default_value[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), remediation: sequence(:remediation)) {
+         audit: sequence(:audit), remediation: sequence(:remediation)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s, fix: remediation[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), references: sequence(:references)) {
+         audit: sequence(:audit), references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         remediation: sequence(:remediation), impact: sequence(:impact)) {
+         remediation: sequence(:remediation), impact: sequence(:impact)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", fix: remediation[0].to_s, impact: impact[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         remediation: sequence(:remediation), impact: sequence(:impact), references: sequence(:references)) {
+         remediation: sequence(:remediation), impact: sequence(:impact), references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", fix: remediation[0].to_s,
              impact: impact[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description),
          audit: sequence(:audit), remediation: sequence(:remediation), default_value: sequence(:default_value),
-         references: sequence(:references)) {
+         references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: description[0].to_s, check: audit[0].to_s, fix: remediation[0].to_s,
              default: default_value[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), impact: sequence(:impact), default_value: sequence(:default_value)) {
+         audit: sequence(:audit), impact: sequence(:impact), default_value: sequence(:default_value)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              impact: impact[0].to_s, default: default_value[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), rationale: sequence(:rationale),
-         audit: sequence(:audit), remediation: sequence(:remediation), references: sequence(:references)) {
+         audit: sequence(:audit), remediation: sequence(:remediation), references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: rationale[0].to_s, check: audit[0].to_s, fix: remediation[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         remediation: sequence(:remediation), references: sequence(:references)) {
+         remediation: sequence(:remediation), references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", fix: remediation[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), default_value: sequence(:default_value), references: sequence(:references)) {
+         audit: sequence(:audit), default_value: sequence(:default_value), references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              default: default_value[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), remediation: sequence(:remediation), impact: sequence(:impact), default_value: sequence(:default_value)) {
+         audit: sequence(:audit), remediation: sequence(:remediation), impact: sequence(:impact), default_value: sequence(:default_value)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s, fix: remediation[0].to_s,
              impact: impact[0].to_s, default: default_value[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), impact: sequence(:impact), references: sequence(:references)) {
+         audit: sequence(:audit), impact: sequence(:impact), references: sequence(:references)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s, impact: impact[0].to_s, ref: references[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit), impact: sequence(:impact)) {
+         audit: sequence(:audit), impact: sequence(:impact)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s, impact: impact[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
-         audit: sequence(:audit)) {
+         audit: sequence(:audit)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
          audit: sequence(:audit), remediation: sequence(:remediation), default_value: sequence(:default_value),
          references: sequence(:references),
-         cis_controls: sequence(:cis_controls)) {
+         cis_controls: sequence(:cis_controls)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s, fix: remediation[0].to_s,
              default: default_value[0].to_s, ref: references[0].to_s, cis: cis_controls[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
          audit: sequence(:audit), remediation: sequence(:remediation), impact: sequence(:impact),
          references: sequence(:references),
-         cis_controls: sequence(:cis_controls)) {
+         cis_controls: sequence(:cis_controls)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s, fix: remediation[0].to_s,
              impact: impact[0].to_s, ref: references[0].to_s, cis: cis_controls[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description), rationale: sequence(:rationale),
          audit: sequence(:audit), remediation: sequence(:remediation), references: sequence(:references),
-         cis_controls: sequence(:cis_controls)) {
+         cis_controls: sequence(:cis_controls)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}", check: audit[0].to_s,
              fix: remediation[0].to_s, ref: references[0].to_s, cis: cis_controls[0].to_s }
-         }
+         end
     rule(header: simple(:header), applicability: sequence(:applicability), description: sequence(:description),
-         rationale: sequence(:rationale)) {
+         rationale: sequence(:rationale)) do
            { title: header.to_s, level: applicability[0].to_s, descr: "#{description[0]}#{rationale[0]}" }
-         }
+         end
   end
 
   class PrepareData
@@ -338,18 +337,12 @@ module Util
       data = parse(clean_text)
 
       @transformed_data = Trans.new.apply(data)
-      # pp @transformed_data
       add_cis
     end
 
-    def transformed_data
-      @transformed_data
-    end
+    attr_reader :transformed_data
 
     def parse(clean_text)
-      # puts "############"
-      # puts "Parse Data"
-      # puts "############"
       @parser.parse(clean_text)
     rescue Parslet::ParseFailed => error
       puts error.parse_failure_cause.ascii_tree
@@ -361,21 +354,16 @@ module Util
 
     def add_cis
       @transformed_data.map do |ctrl|
-        if !ctrl[:cis] and ctrl[:ref]
+        if !ctrl[:cis] && ctrl[:ref]
           references = ctrl[:ref].split("\n")
           references.each do |ref|
-            match = ref.scan(/(?<=#)\d{1,}\.\d{1,}/).map(&:inspect).join(',').gsub(/\"/, '').gsub(/,/, ' ')
-            if !match.empty?
-              puts match
-              ctrl[:cis] = match.split(' ')
-            end
+            match = ref.scan(/(?<=#)\d{1,}\.\d{1,}/).map(&:inspect).join(',').delete('"').tr(',', ' ')
+            ctrl[:cis] = match.split(' ') unless match.empty?
           end
-          if !ctrl[:cis]
-            ctrl[:cis] = 'No CIS Control'
-          end
-        elsif !ctrl[:cis] and !ctrl[:ref]
+          ctrl[:cis] = 'No CIS Control' unless ctrl[:cis]
+        elsif !ctrl[:cis] && !ctrl[:ref]
           ctrl[:cis] = 'No CIS Control'
-        elsif ctrl[:cis] and ctrl[:ref]
+        elsif ctrl[:cis] && ctrl[:ref]
           ctrl[:cis] = ctrl[:cis].scan(/^\d{1,}[\.\d{1,}]*/)
         end
       end
