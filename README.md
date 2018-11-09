@@ -160,8 +160,10 @@ FLAGS:
 example: inspec_tools pdf2inspec -p benchmark.pdf -o /path/to/myprofile -f ruby -s true
 ```
 
-## version
+## version  
+
 Prints out the gem version
+
 ```
 USAGE: inspec_tools version
 ```
@@ -173,18 +175,16 @@ There are a set of unit tests. Run `rake test` to run the tests.
 
 To release a new version, update the version number in `version.rb` according to the [Semantic Versioning Policy](https://semver.org/). Then, run `bundle exec rake release` which will create a git tag for the specified version, push git commits and tags, and push the `.gem` file to [github.com](https://github.com/mitre/inspec_tools).
 
-# Notice
+### NOTICE
 
 © 2018 The MITRE Corporation.
 
-Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
-# NOTICE
+Approved for Public Release; Distribution Unlimited. Case Number 18-3678.  
+
+### NOTICE  
+
 This software was produced for the U. S. Government under Contract Number HHSM-500-2012-00008I, and is subject to Federal Acquisition Regulation Clause 52.227-14, Rights in Data-General.  
 
 No other use other than that granted to the U. S. Government, or to those acting on behalf of the U. S. Government under that Clause is authorized without the express written permission of The MITRE Corporation.
 
 For further information, please contact The MITRE Corporation, Contracts Management Office, 7515 Colshire Drive, McLean, VA  22102-7539, (703) 983-6000.
-
-# NOTICE
-
-DISA STIGs are published by DISA IASE, see: https://iase.disa.mil/Pages/privacy_policy.aspx
