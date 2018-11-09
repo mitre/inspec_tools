@@ -1,16 +1,13 @@
-require_relative 'inspec_tools/inspec'
-require_relative 'inspec_tools/xccdf'
-require_relative 'inspec_tools/csv'
-require_relative 'inspec_tools/pdf'
-require_relative 'inspec_tools/ckl'
-require_relative 'happy_mapper_tools/benchmark'
-require_relative 'happy_mapper_tools/stig_checklist'
-require_relative 'utilities/inspec_util'
-require_relative 'inspec_tools/version'
+$LOAD_PATH.unshift(File.expand_path(__dir__))
+require 'inspec_tools/version'
 
-# Converter tools for Inspec
 module InspecTools
-  def self.inspec(inspec_json)
-    Inspec.new(inspec_json)
-  end
+  autoload :Help, 'inspec_tools/help'
+  autoload :Command, 'inspec_tools/command'
+  autoload :CLI, 'inspec_tools/cli'
+  autoload :XCCDF, 'inspec_tools/xccdf'
+  autoload :PDF, 'inspec_tools/pdf'
+  autoload :CSV, 'inspec_tools/csv'
+  autoload :CKL, 'inspec_tools/ckl'
+  autoload :Inspec, 'inspec_tools/inspec'
 end

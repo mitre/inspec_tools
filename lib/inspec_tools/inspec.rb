@@ -3,6 +3,7 @@ require 'json'
 require 'cgi'
 require_relative '../happy_mapper_tools/stig_attributes'
 require_relative '../happy_mapper_tools/stig_checklist'
+require_relative '../happy_mapper_tools/benchmark'
 require_relative '../utilities/inspec_util'
 require_relative 'csv'
 require 'csv'
@@ -30,7 +31,7 @@ module InspecTools
 
     def to_xccdf(attributes, verbose = false)
       @data = Utils::InspecUtil.parse_data_for_xccdf(@json)
-      @attribute = YAML.load_file(attributes)
+      @attribute = attributes
       @attribute = {} if @attribute.eql? false
       @verbose = verbose
       @benchmark = HappyMapperTools::Benchmark::Benchmark.new

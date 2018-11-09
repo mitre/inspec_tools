@@ -1,3 +1,6 @@
+require 'digest'
+
+require_relative '../utilities/inspec_util'
 require_relative '../utilities/extract_pdf_text'
 require_relative '../utilities/extract_nist_cis_mapping'
 require_relative '../utilities/parser'
@@ -8,6 +11,7 @@ module InspecTools
   class PDF
     def initialize(pdf, profile_name, debug = false)
       raise ArgumentError if pdf.nil?
+
       @pdf = pdf
       @name = profile_name
       @debug = debug
@@ -107,11 +111,12 @@ module InspecTools
     end
 
     def write_clean_text
-      File.write('data/debug_text', @clean_text)
+      File.write('lib/data/debug_text', @clean_text)
     end
 
     def read_excl
-      excel = Util::ExtractNistMappings.new('data/NIST_Map_09212017B_CSC-CIS_Critical_Security_Controls_VER_6.1_Excel_9.1.2016.xlsx')
+      nist_map_path = File.join(File.dirname(__FILE__), '../data/NIST_Map_09212017B_CSC-CIS_Critical_Security_Controls_VER_6.1_Excel_9.1.2016.xlsx')
+      excel = Util::ExtractNistMappings.new(nist_map_path)
       @nist_mapping = excel.full_excl
     rescue StandardError => e
       puts "Exception: #{e.message}"
