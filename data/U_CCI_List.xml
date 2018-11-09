@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type='text/xsl' href='./cci2html.xsl'?>
+<?xml-stylesheet type='text/xsl' href='cci2html.xsl'?>
 <cci_list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://iase.disa.mil/cci cci.xsd" xmlns="http://iase.disa.mil/cci">
 	<metadata>
 		<version>2016-06-27</version>
@@ -5317,9 +5317,9 @@
 			<definition>The organization defines the frequency of conducting user-level information backups to support recovery time objectives and recovery point objectives.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9a" />
+				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (a)" />
 				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (6).1 (ii)" />
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9a" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (a)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-000535">
@@ -5329,9 +5329,9 @@
 			<definition>The organization conducts backups of user-level information contained in the information system per organization-defined frequency that is consistent with recovery time and recovery point objectives.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9a" />
+				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (a)" />
 				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9.1 (iv)" />
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9a" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (a)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-000536">
@@ -5341,9 +5341,9 @@
 			<definition>The organization defines the frequency of conducting system-level information backups to support recovery time objectives and recovery point objectives.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9b" />
+				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (b)" />
 				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9.1 (ii)" />
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9b" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (b)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-000537">
@@ -5353,9 +5353,9 @@
 			<definition>The organization conducts backups of system-level information contained in the information system per organization-defined frequency that is consistent with recovery time and recovery point objectives.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9b" />
+				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (b)" />
 				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9.1 (v)" />
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9b" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (b)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-000538">
@@ -5365,9 +5365,9 @@
 			<definition>The organization defines the frequency of conducting information system documentation backups, including security-related documentation, to support recovery time objectives and recovery point objectives.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9c" />
+				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (c)" />
 				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9.1 (iii)" />
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9c" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (c)  " />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-000539">
@@ -5377,9 +5377,9 @@
 			<definition>The organization conducts backups of information system documentation, including security-related documentation, per an organization-defined frequency that is consistent with recovery time and recovery point objectives.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9c" />
+				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (c)" />
 				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9.1 (vi)" />
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9c" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (c)  " />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-000540">
@@ -5389,9 +5389,9 @@
 			<definition>The organization protects the confidentiality, integrity, and availability of backup information at storage locations.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9d" />
+				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (d)" />
 				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9.2" />
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9d" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-9 (d)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-000541">
@@ -7288,7 +7288,7 @@
 			<type>policy</type>
 			<references>
 				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="RA-5 (1)" />
-				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="RA-5 (1).1" />
+				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="RA-5  (1).1" />
 				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="RA-5 (1)" />
 			</references>
 		</cci_item>
@@ -13696,7 +13696,7 @@
 			<references>
 				<reference creator="NIST" title="NIST SP 800-53" version="3" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-4 (4)" />
 				<reference creator="NIST" title="NIST SP 800-53A" version="1" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-4 (4).1" />
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-4 (4)" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CP-4 (4)4" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-000968">
@@ -19857,7 +19857,7 @@
 			<definition>The organization authorizes access to the information system based on a valid access authorization.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="AC-2 i 1" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="AC-2 i 1 " />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-002127">
@@ -19867,7 +19867,7 @@
 			<definition>The organization authorizes access to the information system based on intended system usage.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="AC-2 i 2" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="AC-2 i 2 " />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-002128">
@@ -19877,7 +19877,7 @@
 			<definition>The organization authorizes access to the information system based on other attributes as required by the organization or associated missions/business functions.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="AC-2 i 3" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="AC-2 i 3 " />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-002129">
@@ -23759,7 +23759,7 @@
 			<definition>The organization authorizes internal connections of organization-defined information system components or classes of components to the information system.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9a" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9 (a)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-002102">
@@ -23769,7 +23769,7 @@
 			<definition>The organization defines the information system components or classes of components that are authorized internal connections to the information system.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9a" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9 (a)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-002103">
@@ -23779,7 +23779,7 @@
 			<definition>The organization documents, for each internal connection, the interface characteristics.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9b" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9 (b)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-002104">
@@ -23789,7 +23789,7 @@
 			<definition>The organization documents, for each internal connection, the security requirements.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9b" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9 (b)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-002105">
@@ -23799,7 +23799,7 @@
 			<definition>The organization documents, for each internal connection, the nature of the information communicated.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9b" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="CA-9 (b)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-001820">
@@ -29722,7 +29722,7 @@ Deprecated By: CCI-000871</note>
 			<definition>The organization conducts an organizational assessment of risk prior to the acquisition or outsourcing of dedicated information security services.</definition>
 			<type>policy</type>
 			<references>
-				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="SA-9 (1) (a)" />
+				<reference creator="NIST" title="NIST SP 800-53 Revision 4" version="4" location="http://csrc.nist.gov/publications/PubsSPs.html" index="SA-9  (1) (a)" />
 			</references>
 		</cci_item>
 		<cci_item id="CCI-003141">

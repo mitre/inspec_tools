@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'docsplit', '~> 0.7.6'
   spec.add_dependency 'inspec', '~> 2.2'
   spec.add_dependency 'nokogiri', '~> 1.8'
-  spec.add_dependency 'nokogiri-happymapper', '0.6.0'
+  spec.add_dependency 'nokogiri-happymapper', '~> 0'
   spec.add_dependency 'OptionParser', '~> 0'
   spec.add_dependency 'pdftotext', '0.2.1'
   spec.add_dependency 'roo', '~> 2.7'
