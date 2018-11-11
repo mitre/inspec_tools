@@ -2,6 +2,9 @@ require 'thor'
 
 # Override thor's long_desc identation behavior
 # https://github.com/erikhuda/thor/issues/398
+
+# rubocop:disable Naming/UncommunicativeMethodParamName
+
 class Thor
   module Shell
     class Basic

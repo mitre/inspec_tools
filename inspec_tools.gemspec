@@ -1,9 +1,12 @@
 # coding: utf-8
+
+# rubocop:disable Style/GuardClause
+
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'inspec_tools/version'
 
-Gem::Specification.new do |spec|
+Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.name          = 'inspec_tools'
   spec.version       = InspecTools::VERSION
   spec.authors       = ['Robert Thew', 'Matthew Dromazos', 'Rony Xavier', 'Aaron Lippold']
@@ -37,7 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'pdftotext', '0.2.1'
   spec.add_dependency 'roo', '~> 2.7'
   spec.add_dependency 'thor', '~> 0.19'
-  spec.add_dependency 'word_wrap', '~> 0'
+  spec.add_dependency 'word_wrap', '~> 1.0.0'
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'minitest', '~> 5.0'
   spec.add_development_dependency 'pry', '~> 0'

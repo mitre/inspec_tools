@@ -1,6 +1,4 @@
-# author: Aaron Lippold (alippold@mitre.org)
-# author: Rony Xavier (rxavier@mitre.org)
-# author: Matthew Dromazos (mdromazos@mitre.org)
+# encoding: utf-8
 
 module HappyMapperTools
   module StigAttributes
@@ -146,7 +144,7 @@ module HappyMapperTools
         DescriptionDetails
       end
 
-      def self.apply(value)
+      def self.apply(value) # rubocop:disable Metrics/AbcSize
         value = value.gsub('&', 'and')
         DescriptionDetails.parse "<Details>#{value}</Details>"
       rescue Nokogiri::XML::SyntaxError
