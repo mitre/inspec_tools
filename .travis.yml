@@ -1,0 +1,21 @@
+---
+sudo: false
+branches:
+  only:
+    - master
+language: ruby
+cache: bundler
+
+bundler_args: --without integration --without tools --without development
+
+before_install:
+- gem update --system
+- gem update bundler
+- gem update rake
+- gem --version
+
+matrix:
+  include:
+  - rvm: 2.3
+  - rvm: 2.4
+  - rvm: 2.5
