@@ -15,10 +15,10 @@ class PDFTest < Minitest::Test
     assert_raises(StandardError) { InspecTools::PDF.new(pdf, 'test', false) }
   end
 
-  # def test_pdf_to_inspec
-  #   pdf = File.open('examples/CIS_Ubuntu_Linux_16.04_LTS_Benchmark_v1.0.0.pdf')
-  #   pdf_tool = InspecTools::PDF.new(pdf, 'test', false)
-  #   inspec_json = pdf_tool.to_inspec
-  #   assert(inspec_json)
-  # end
+  def test_pdf_to_inspec
+    pdf = File.open('examples/CIS_Ubuntu_Linux_16.04_LTS_Benchmark_v1.0.0.pdf')
+    pdf_tool = InspecTools::PDF.new(pdf, 'test', false)
+    inspec_json = pdf_tool.to_inspec
+    assert(inspec_json)
+  end
 end
