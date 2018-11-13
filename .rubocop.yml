@@ -1,83 +1,35 @@
 ---
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
   Exclude:
   - Gemfile
   - Rakefile
-  - 'docs/**/*'
-  # This is delicate; we want to include examples/plugins/*/lib
-  # but not anything else.
-  - 'examples/**/*'
-AlignParameters:
-  Enabled: true
-BlockDelimiters:
-  Enabled: false
+  - 'test/**/*'
+  - 'examples/plugins/train-*/test/**/*'
+  - 'vendor/**/*'
 Documentation:
   Enabled: false
-EmptyLinesAroundBlockBody:
-  Enabled: false
-FrozenStringLiteralComment:
+AlignParameters:
+  Enabled: true
+Encoding:
   Enabled: false
 HashSyntax:
   Enabled: true
 LineLength:
   Enabled: false
-Layout/AlignHash:
-  Enabled: false
-Layout/EmptyLineAfterMagicComment:
-  Enabled: false
-Layout/EndOfLine:
-  Enabled: true
-  EnforcedStyle: lf
-Layout/SpaceAroundOperators:
+EmptyLinesAroundBlockBody:
   Enabled: false
 MethodLength:
   Max: 40
-Metrics/AbcSize:
-  Max: 33
-Metrics/BlockLength:
-  Max: 50
-Metrics/ClassLength:
-  Enabled: false
+NumericLiterals:
+  MinDigits: 10
 Metrics/CyclomaticComplexity:
   Max: 10
 Metrics/PerceivedComplexity:
-  Max: 11
-NumericLiterals:
-  MinDigits: 10
-Security/YAMLLoad:
-  Enabled: false
-Style/AndOr:
-  Enabled: false
-Style/BracesAroundHashParameters:
-  Enabled: false
-Style/ClassAndModuleChildren:
-  Enabled: false
-Style/ConditionalAssignment:
-  Enabled: false
-Style/EmptyMethod:
-  Enabled: false
-Style/Encoding:
-  Enabled: false
-Style/FileName:
-  Enabled: false
-Style/GuardClause:
-  Enabled: false
-Style/IfUnlessModifier:
-  Enabled: false
-Style/MethodMissingSuper:
-  Enabled: false
-Style/MissingRespondToMissing:
-  Enabled: false
-Style/MultilineIfModifier:
-  Enabled: false
-Style/NegatedIf:
-  Enabled: false
-Style/Not:
-  Enabled: false
-Style/NumericLiteralPrefix:
-  Enabled: false
-Style/NumericPredicate:
+  Max: 10
+Metrics/AbcSize:
+  Max: 33
+Metrics/ModuleLength:
   Enabled: false
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
@@ -90,15 +42,37 @@ Style/PercentLiteralDelimiters:
     '%w': '{}'
     '%W': ()
     '%x': ()
-Style/PredicateName:
+Layout/AlignHash:
   Enabled: false
-Style/SymbolArray:
+Naming/PredicateName:
   Enabled: false
-Style/TrailingCommaInArguments:
-  EnforcedStyleForMultiline: comma
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/ConditionalAssignment:
+  Enabled: false
+Style/BracesAroundHashParameters:
+  Enabled: false
+Style/AndOr:
+  Enabled: false
+Style/Not:
+  Enabled: false
+Naming/FileName:
+  Enabled: false
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
-Style/TrailingCommaInHashLiteral:
+Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
+Style/NegatedIf:
+  Enabled: false
 Style/UnlessElse:
+  Enabled: false
+BlockDelimiters:
+  Enabled: false
+Layout/SpaceAroundOperators:
+  Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+SignalException:
   Enabled: false
