@@ -2,7 +2,7 @@
 sudo: false
 branches:
   only:
-    - master
+    - travis_test
 language: ruby
 cache: bundler
 

@@ -1,5 +1,6 @@
 require 'json'
 require_relative '../test_helper'
+require_relative '../../../lib/utilities/inspec_util'
 
 class InspecUtilTest < Minitest::Test
   def test_inspec_util_exists
