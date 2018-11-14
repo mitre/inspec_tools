@@ -23,7 +23,7 @@ class InspecUtilTest < Minitest::Test
       assert(Dir.exist?(dir + '/libraries'))
       assert(Dir.exist?(dir + '/controls'))
     ensure
-      FileUtils.remove_entry dir
+      FileUtils.rm_rf dir
     end
   end
 
