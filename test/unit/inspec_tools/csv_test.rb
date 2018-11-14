@@ -1,5 +1,7 @@
-require_relative '../test_helper'
 require 'csv'
+require 'yaml'
+require_relative '../test_helper'
+require_relative '../../../lib/inspec_tools/csv'
 
 class CSVTest < Minitest::Test
   def test_that_csv_exists

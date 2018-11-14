@@ -29,6 +29,22 @@ Clone the repo and install it yourself as:
 
     $ gem install inspec_tools
 
+## Poppler
+
+The pdf2inspec tools depends on the [poppler](https://poppler.freedesktop.org/) utility. Install this package before using pdf2inspec.
+
+### Mac OS X
+
+```
+brew install poppler
+```
+
+### Centos 7
+
+```
+sudo apt-get install -y poppler-utils
+```
+
 # Usage
 
 ## Ruby Usage
@@ -191,5 +207,4 @@ For further information, please contact The MITRE Corporation, Contracts Managem
 
 ### NOTICE
 
-DISA STIGs are published by DISA IASE, see: https://iase.disa.mil/Pages/privacy_policy.aspx 
-
+DISA STIGs are published by DISA IASE, see: https://iase.disa.mil/Pages/privacy_policy.aspx
