@@ -1,16 +1,20 @@
 require 'date'
 require 'json'
 require 'cgi'
+require 'csv'
+require 'yaml'
 require_relative '../happy_mapper_tools/stig_attributes'
 require_relative '../happy_mapper_tools/stig_checklist'
 require_relative '../happy_mapper_tools/benchmark'
 require_relative '../utilities/inspec_util'
 require_relative 'csv'
-require 'csv'
-require 'yaml'
+
+# rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/BlockLength
+# rubocop:disable Style/GuardClause
 
 module InspecTools
-  # Methods for converting from InSpec json to various formats
   class Inspec
     def initialize(inspec_json)
       @json = JSON.parse(inspec_json)
@@ -70,14 +74,14 @@ module InspecTools
         control.each do |key, _|
           control['tags'].each { |tag, _| headers[tag] = 0 } if key == 'tags'
           control['results'].each { |result| result.each { |result_key, _| headers[result_key] = 0 } } if key == 'results'
-          headers[key] = 0 unless ['tags', 'results'].include?(key)
+          headers[key] = 0 unless %w{tags results}.include?(key)
         end
       end
       data.push(headers.keys)
       inspec_json['controls'].each do |json_control|
         control = []
         headers.each do |key, _|
-          control.push(json_control[key] || json_control['tags'][key] || (json_control['results'].collect { |result| result[key] }.join(",\n") unless json_control['results'].nil?) || nil)
+          control.push(json_control[key] || json_control['tags'][key] || (json_control['results']&.collect { |result| result[key] }&.join(",\n")) || nil)
         end
         data.push(control)
       end
@@ -90,9 +94,11 @@ module InspecTools
           @data['controls'] << control
         end
       end
-      json['controls'].each do |control|
-        @data['controls'] << control
-      end if json['profiles'].nil?
+      if json['profiles'].nil?
+        json['controls'].each do |control|
+          @data['controls'] << control
+        end
+      end
     end
 
     def clk_status(control)
@@ -216,8 +222,8 @@ module InspecTools
         group.rule.severity = control['severity']
         group.rule.weight = control['rweight']
         group.rule.version = control['rversion']
-        group.rule.title = control['title'].gsub(/\n/, ' ')
-        group.rule.description = "<VulnDiscussion>#{control['desc'].gsub(/\n/, ' ')}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations></Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
+        group.rule.title = control['title'].tr("\n", ' ')
+        group.rule.description = "<VulnDiscussion>#{control['desc'].tr("\n", ' ')}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations></Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
 
         group.rule.reference = HappyMapperTools::Benchmark::ReferenceGroup.new
         group.rule.reference.dc_publisher = @attribute['reference.dc.publisher']

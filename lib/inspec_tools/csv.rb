@@ -7,6 +7,10 @@ require 'digest'
 
 require_relative '../utilities/inspec_util'
 
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/CyclomaticComplexity
+
 module InspecTools
   # Methods for converting from CSV to various formats
   class CSVTool

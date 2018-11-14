@@ -2,6 +2,8 @@ require 'yaml'
 require_relative '../utilities/inspec_util'
 require_relative '../utilities/csv_util'
 
+# rubocop:disable Style/GuardClause
+
 module InspecTools
   class CLI < Command
     desc 'xccdf2inspec', 'xccdf2inspec translates an xccdf file to an inspec profile'

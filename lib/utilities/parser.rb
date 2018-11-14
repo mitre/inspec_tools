@@ -1,9 +1,10 @@
-# author: Matthew Dromazos (mdromazos@mitre.org)
+# encoding: utf-8
 
 require 'parslet'
 require 'parslet/convenience'
 require 'pp'
 
+# rubocop:disable Metrics/ClassLength
 module Util
   class ControlParser < Parslet::Parser
     root :controls
