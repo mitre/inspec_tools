@@ -31,7 +31,7 @@ Clone the repo and install it yourself as:
 
 ## Poppler
 
-The pdf2inspec tools depends on the [poppler](https://poppler.freedesktop.org/) utility. Install this package before using pdf2inspec.
+The pdf2inspec tools depends on the [poppler](https://poppler.freedesktop.org/) utility, which is built for Linux-based systems only - there is no Windows package. Install this package before using pdf2inspec.
 
 ### Mac OS X
 
@@ -161,7 +161,7 @@ example: inspec_tools inspec2ckl -j results.json -o output.ckl
 
 ## pdf2inspec
 
-pdf2inspec translates a pdf containing a CIS benchmark into an InSpec profile
+pdf2inspec translates a pdf containing a CIS benchmark into an InSpec profile. Because of its dependency on the Linux-based Poppler package, this tool will not work on Windows systems.
 
 ```
 USAGE: inspec_tools pdf2inspec [OPTIONS] -p <cis-benchmark>
