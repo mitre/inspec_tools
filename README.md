@@ -1,6 +1,6 @@
 # InspecTools
 
-InspecTools supplies several CLI tools to convert to and from InSpec format. The Converters in version 0.2 are:
+InspecTools supplies several CLI tools to convert to and from InSpec format. The converters in version 0.2 are:
 
 * csv2inspec
 * inspec2csv

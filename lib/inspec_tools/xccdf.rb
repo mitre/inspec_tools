@@ -5,7 +5,11 @@ require_relative '../utilities/inspec_util'
 require 'digest'
 
 module InspecTools
-  # Methods for converting from XCCDF to various formats
+  # rubocop:disable Metrics/ClassLength
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/BlockLength
   class XCCDF
     def initialize(xccdf, replace_tags = nil)
       @xccdf = xccdf
@@ -37,7 +41,7 @@ module InspecTools
     # extracts non-InSpec attributes
     ###
     # TODO there may be more attributes we want to extract, see data/attributes.yml for example
-    def to_attributes
+    def to_attributes # rubocop:disable Metrics/AbcSize
       @attribute = {}
 
       @attribute['benchmark.title'] = @benchmark.title

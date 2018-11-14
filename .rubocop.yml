@@ -76,4 +76,3 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 SignalException:
   Enabled: false
-

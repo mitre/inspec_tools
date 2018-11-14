@@ -6,8 +6,11 @@ require_relative '../utilities/extract_nist_cis_mapping'
 require_relative '../utilities/parser'
 require_relative '../utilities/text_cleaner'
 
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/CyclomaticComplexity
+
 module InspecTools
-  # Methods for converting from PDF to various formats
   class PDF
     def initialize(pdf, profile_name, debug = false)
       raise ArgumentError if pdf.nil?
@@ -94,7 +97,7 @@ module InspecTools
     end
 
     def extract_title
-      @pdf_text.match(%r{([^\n]*)\n}).captures[0]
+      @pdf_text.match(/([^\n]*)\n/).captures[0]
     end
 
     def read_pdf

@@ -1,8 +1,9 @@
 # encoding: utf-8
-# author: Matthew Dromazos (mdromazos@mitre.org)
 
 require 'happymapper'
 require 'nokogiri'
+
+# rubocop: disable Naming/ClassAndModuleCamelCase
 
 module HappyMapperTools
   module CCIAttributes
