@@ -9,3 +9,6 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 ## [1.1.0]
 - This gem was refactored using the [CLI Template](https://github.com/tongueroo/cli-template), a generator tool that builds a starter CLI project.
 - Initial public release
+
+## [1.1.4]
+- Replaced Docsplit and pdf2text gems, which rely on command-line tools with pdf-reader gem, which does not

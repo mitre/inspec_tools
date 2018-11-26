@@ -102,6 +102,7 @@ module InspecTools
 
     def read_pdf
       @pdf_text = Util::ExtractPdfText.new(@pdf).extracted_text
+      write_pdf_text if @debug
     end
 
     def clean_pdf_text
@@ -111,6 +112,10 @@ module InspecTools
 
     def transform_data
       @transformed_data = Util::PrepareData.new(@clean_text).transformed_data
+    end
+
+    def write_pdf_text
+      File.write('lib/data/pdf_text', @pdf_text)
     end
 
     def write_clean_text
