@@ -30,7 +30,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activesupport', '~> 4.2', '>= 4.2.3'
+  #spec.add_dependency 'activesupport', '~> 4.2', '>= 4.2.3'
   spec.add_dependency 'colorize', '~> 0'
   spec.add_dependency 'inspec', '~> 2.2'
   spec.add_dependency 'nokogiri', '~> 1.8'
