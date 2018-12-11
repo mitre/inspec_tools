@@ -12,3 +12,6 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 
 ## [1.1.4]
 - Replaced Docsplit and pdf2text gems, which rely on command-line tools with pdf-reader gem, which does not
+
+## [1.1.5]
+- Updated gemspec to make some required gem versions more permissive
