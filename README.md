@@ -29,22 +29,6 @@ Clone the repo and install it yourself as:
 
     $ gem install inspec_tools
 
-## Poppler
-
-The pdf2inspec tools depends on the [poppler](https://poppler.freedesktop.org/) utility, which is built for Linux-based systems only - there is no Windows package. Install this package before using pdf2inspec.
-
-### Mac OS X
-
-```
-brew install poppler
-```
-
-### Centos 7
-
-```
-sudo apt-get install -y poppler-utils
-```
-
 # Usage
 
 ## Ruby Usage
@@ -58,7 +42,7 @@ require 'inspec_tools'
 Pass in the results JSON object to the InspecTools class to get an object that can convert the results into the three formats:
 
 ```
-tool = InspecTools.inspec(results_json)
+tool = InspecTools::Inspec.new(results_json)
 ckl_reuslts = tool.to_ckl
 csv_results = tool.to_ccsv
 ```
@@ -161,7 +145,7 @@ example: inspec_tools inspec2ckl -j results.json -o output.ckl
 
 ## pdf2inspec
 
-pdf2inspec translates a pdf containing a CIS benchmark into an InSpec profile. Because of its dependency on the Linux-based Poppler package, this tool will not work on Windows systems.
+pdf2inspec translates a pdf containing a CIS benchmark into an InSpec profile.
 
 ```
 USAGE: inspec_tools pdf2inspec [OPTIONS] -p <cis-benchmark>

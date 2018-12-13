@@ -76,12 +76,12 @@ module InspecTools
     long_desc Help.text(:pdf2inspec)
     option :pdf, required: true, aliases: '-p'
     option :output, required: false, aliases: '-o', default: 'profile'
-    option :debug, required: false, aliases: '-d', type: :boolean
+    option :debug, required: false, aliases: '-d', type: :boolean, default: false
     option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
     option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
     def pdf2inspec
       pdf = File.open(options[:pdf])
-      profile = InspecTools::PDF.new(pdf, options[:output], options[:output]).to_inspec
+      profile = InspecTools::PDF.new(pdf, options[:output], options[:debug]).to_inspec
       Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
     end
 
