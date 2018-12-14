@@ -2,10 +2,7 @@ require 'json'
 require 'yaml'
 require_relative '../utilities/inspec_util'
 
-# rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
-# rubocop:disable Metrics/BlockLength
-# rubocop:disable Style/GuardClause
 
 # Impact Definitions
 CRITICAL = 0.9
@@ -24,11 +21,11 @@ module InspecTools
       @json = JSON.parse(inspec_json)
     end
 
-    def to_summary(type = nil)
+    def to_summary
       @data = Utils::InspecUtil.parse_data_for_ckl(@json)
       @summary = {}
       @data.keys.each do |control_id|
-        current_control =  @data[control_id]
+        current_control = @data[control_id]
         current_control[:compliance_status] = Utils::InspecUtil.control_status(current_control)
         current_control[:finding_details] = Utils::InspecUtil.control_finding_details(current_control, current_control[:compliance_status])
       end
