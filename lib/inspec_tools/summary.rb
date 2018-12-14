@@ -34,7 +34,7 @@ module InspecTools
     end
 
     def threshold(threshold = nil)
-      @summary = to_summary(@json)
+      @summary = to_summary
       @threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
       parse_threshold(Utils::InspecUtil.to_dotted_hash(threshold))
       threshold_compliance

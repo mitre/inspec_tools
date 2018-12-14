@@ -39,6 +39,5 @@ class SummaryTest < Minitest::Test
     inspec_tools = InspecTools::Summary.new(inspec_json)
     assert_output(%r{Expected compliance.min:80 got:77.3
 Expected failed.high.max:0 got:3}) { inspec_tools.threshold(threshold) }
-    assert_raises(StandardError) { inspec_tools.threshold(threshold) }
   end
 end
