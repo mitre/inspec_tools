@@ -354,18 +354,18 @@ module Util
     end
 
     def add_cis
-      @transformed_data.map do |ctrl|
+      @transformed_data&.map do |ctrl|
         if !ctrl[:cis] && ctrl[:ref]
           references = ctrl[:ref].split("\n")
           references.each do |ref|
-            match = ref.scan(/(?<=#)\d{1,}\.\d{1,}/).map(&:inspect).join(',').delete('"').tr(',', ' ')
+            match = ref.scan(/(?<=#)\d+\.\d+/).map(&:inspect).join(',').delete('"').tr(',', ' ')
             ctrl[:cis] = match.split(' ') unless match.empty?
           end
           ctrl[:cis] = 'No CIS Control' unless ctrl[:cis]
         elsif !ctrl[:cis] && !ctrl[:ref]
           ctrl[:cis] = 'No CIS Control'
         elsif ctrl[:cis] && ctrl[:ref]
-          ctrl[:cis] = ctrl[:cis].scan(/^\d{1,}[\.\d{1,}]*/)
+          ctrl[:cis] = ctrl[:cis].scan(/^\d+[\.\d+]*/)
         end
       end
     end

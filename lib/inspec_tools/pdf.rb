@@ -115,11 +115,11 @@ module InspecTools
     end
 
     def write_pdf_text
-      File.write('lib/data/pdf_text', @pdf_text)
+      File.write('pdf_text', @pdf_text)
     end
 
     def write_clean_text
-      File.write('lib/data/debug_text', @clean_text)
+      File.write('debug_text', @clean_text)
     end
 
     def read_excl
