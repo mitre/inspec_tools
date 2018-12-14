@@ -101,38 +101,12 @@ module InspecTools
       end
     end
 
-    def clk_status(control)
-      status_list = control[:status].uniq
-      if status_list.include?('failed')
-        result = 'Open'
-      elsif status_list.include?('skipped')
-        result = 'Not_Reviewed'
-      elsif status_list.include?('passed')
-        result = 'NotAFinding'
-      else
-        result = 'Not_Tested'
-      end
-      if control[:impact].to_f.zero?
-        result = 'Not_Applicable'
-      end
-      result
-    end
-
-    def clk_finding_details(control, control_clk_status)
-      result = "One or more of the automated tests failed or was inconclusive for the control \n\n #{control[:message].sort.join}" if control_clk_status == 'Open'
-      result = "All Automated tests passed for the control \n\n #{control[:message].join}" if control_clk_status == 'NotAFinding'
-      result = "Automated test skipped due to known accepted condition in the control : \n\n#{control[:message].join}" if control_clk_status == 'Not_Reviewed'
-      result = "Justification: \n #{control[:message].split.join(' ')}" if control_clk_status == 'Not_Applicable'
-      result = 'No test available for this control' if control_clk_status == 'Not_Tested'
-      result
-    end
-
     def update_ckl
       @checklist = HappyMapperTools::StigChecklist::Checklist.parse(@cklist.to_s)
       @data.keys.each do |control_id|
         vuln = @checklist.where('Vuln_Num', control_id.to_s)
-        vuln.status = clk_status(@data[control_id])
-        vuln.finding_details << clk_finding_details(@data[control_id], vuln.status)
+        vuln.status = Utils::InspecUtil.control_status(@data[control_id])
+        vuln.finding_details << Utils::InspecUtil.control_finding_details(@data[control_id], vuln.status)
       end
     end
 
@@ -156,9 +130,9 @@ module InspecTools
       stig_data_list.push(stigdata)
 
       vuln.stig_data = stig_data_list
-      vuln.status = clk_status(control)
+      vuln.status = Utils::InspecUtil.control_status(control)
       vuln.comments = "\nAutomated compliance tests brought to you by the MITRE corporation and the InSpec project.\n\nInspec Profile: #{control[:profile_name]}\nProfile shasum: #{control[:profile_shasum]}"
-      vuln.finding_details = clk_finding_details(control, vuln.status)
+      vuln.finding_details = Utils::InspecUtil.control_finding_details(control, vuln.status)
       vuln.severity_override = ''
       vuln.severity_justification = ''
 

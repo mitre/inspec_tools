@@ -107,6 +107,43 @@ module Utils
       data
     end
 
+    def self.to_dotted_hash(hash, recursive_key = "")
+      hash.each_with_object({}) do |(k, v), ret|
+        key = recursive_key + k.to_s
+        if v.is_a? Hash
+          ret.merge! to_dotted_hash(v, key + ".")
+        else
+          ret[key] = v
+        end
+      end
+    end
+
+    def self.control_status(control)
+      status_list = control[:status].uniq
+      if status_list.include?('failed')
+        result = 'Open'
+      elsif status_list.include?('skipped')
+        result = 'Not_Reviewed'
+      elsif status_list.include?('passed')
+        result = 'NotAFinding'
+      else
+        result = 'Not_Tested'
+      end
+      if control[:impact].to_f.zero?
+        result = 'Not_Applicable'
+      end
+      result
+    end
+
+    def self.control_finding_details(control, control_clk_status)
+      result = "One or more of the automated tests failed or was inconclusive for the control \n\n #{control[:message].sort.join}" if control_clk_status == 'Open'
+      result = "All Automated tests passed for the control \n\n #{control[:message].join}" if control_clk_status == 'NotAFinding'
+      result = "Automated test skipped due to known accepted condition in the control : \n\n#{control[:message].join}" if control_clk_status == 'Not_Reviewed'
+      result = "Justification: \n #{control[:message].split.join(' ')}" if control_clk_status == 'Not_Applicable'
+      result = 'No test available for this control' if control_clk_status == 'Not_Tested'
+      result
+    end
+
     # @!method get_impact(severity)
     #   Takes in the STIG severity tag and converts it to the InSpec #{impact}
     #   control tag.
