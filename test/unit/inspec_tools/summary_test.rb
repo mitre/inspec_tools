@@ -28,16 +28,15 @@ class SummaryTest < Minitest::Test
 
   def test_inspec_results_compliance_pass
     inspec_json = File.read('examples/sample_json/rhel-simp.json')
-    threshold = YAML.safe_load("{compliance.min: 77, failed.critical.max: 0, failed.high.max: 3}")
+    threshold = YAML.safe_load('{compliance.min: 77, failed.critical.max: 0, failed.high.max: 3}')
     inspec_tools = InspecTools::Summary.new(inspec_json)
     assert_output(/Compliance threshold met/) { inspec_tools.threshold(threshold) }
   end
 
   def test_inspec_results_compliance_fail
     inspec_json = File.read('examples/sample_json/rhel-simp.json')
-    threshold = YAML.safe_load("{compliance.min: 80, failed.critical.max: 0, failed.high.max: 0}")
+    threshold = YAML.safe_load('{compliance.min: 80, failed.critical.max: 0, failed.high.max: 0}')
     inspec_tools = InspecTools::Summary.new(inspec_json)
-    assert_output(%r{Expected compliance.min:80 got:77.3
-Expected failed.high.max:0 got:3}) { inspec_tools.threshold(threshold) }
+    assert_output(%r{Expected compliance.min:80 got:77.3(\r\n|\r|\n)Expected failed.high.max:0 got:3}) { inspec_tools.threshold(threshold) }
   end
 end
