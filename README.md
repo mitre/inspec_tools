@@ -2,6 +2,8 @@
 
 InspecTools supplies several CLI tools to convert to and from InSpec format. The converters in version 0.2 are:
 
+* compliance
+* summary
 * csv2inspec
 * inspec2csv
 * xccdf2inspec
@@ -57,6 +59,69 @@ xccdf_results = tool.to_xccdf(attribs_json)
 
 On the Command Line, `inspec_tools help` will print a listing of all the command with a short description.
 For detailed help on any command, run `inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `inspec_tools xccdf2inspec -h`.
+
+
+## compliance
+
+  compliance parses an inspec results json to check if the compliance level meets a specified threshold.
+
+  If the specified threshold is not met, an error code (1) is returned along with non-compliant elements.
+
+```
+USAGE:  inspec_tools compliance [OPTIONS] -j <inspec-json> -i <threshold-inline>
+	inspec_tools compliance [OPTIONS] -j <inspec-json> -f <threshold-file>
+FLAGS:
+	-j --inspec-json <inspec-json>          : path to InSpec results Json
+	-i --template-inline <threshold-inline> : inline compliance threshold definition
+	-f --template-file <threshold-file>     : yaml file with compliance threshold definition
+Examples:
+
+  inspec_tools compliance -j examples/sample_json/rhel-simp.json -i '{compliance.min: 80, failed.critical.max: 0, failed.high.max: 0}'
+
+  inspec_tools compliance -j examples/sample_json/rhel-simp.json -f examples/sample_yaml/threshold.yaml
+```
+
+
+##### Possible In-line and yaml file threshold definition styles:
+```# -----------------------
+failed:
+  critical:
+    max: 0
+  high:
+    max: 1
+compliance:
+  min: 81
+
+```
+```
+{compliance: {min: 80}, failed: {critical: {max: 0}, high: {max: 0}}}
+```
+
+```
+{compliance.min: 81, failed.critical.max: 10, failed.high.max: 0}
+```
+```
+compliance.min: 81
+failed.critical.max: 10
+failed.high.max: 1
+```
+
+## summary
+
+  summary parses an inspec results json to create a summary json
+  
+```
+USAGE: inspec_tools summary [OPTIONS] -j <inspec-json> -o <summary-csv>
+
+FLAGS:
+	-j --inspec-json <inspec-json>  : path to InSpec results Json
+	-o --output <output-json> 		: path to summary json
+
+Examples:
+
+  inspec_tools summary -j examples/sample_json/rhel-simp.json -o summary.json
+```
+
 
 ## xccdf2inspec
 

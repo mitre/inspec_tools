@@ -1,0 +1,18 @@
+failed:
+  critical:
+    max: 0
+  high:
+    max: 1
+compliance:
+  min: 81
+
+
+# Alternate Definitions
+# -----------------------
+# {compliance: {min: 80}, failed: {critical: {max: 0}, high: {max: 0}}}
+# -----------------------
+# {compliance.min: 81, failed.critical.max: 10, failed.high.max: 0}
+# -----------------------
+# compliance.min: 81
+# failed.critical.max: 10
+# failed.high.max: 1

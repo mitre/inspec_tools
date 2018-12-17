@@ -1,4 +1,5 @@
 require 'yaml'
+require 'json'
 require_relative '../utilities/inspec_util'
 require_relative '../utilities/csv_util'
 
@@ -107,6 +108,35 @@ module InspecTools
       myfile = File.new('mapping.yml', 'w')
       myfile.puts template
       myfile.close
+    end
+
+    desc 'summary', 'summary parses an inspec results json to create a summary json'
+    long_desc Help.text(:summary)
+    option :inspec_json, required: true, aliases: '-j'
+    option :output, required: true, aliases: '-o'
+    option :verbose, type: :boolean, aliases: '-V'
+
+    def summary
+      summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
+      File.write(options[:output], summary.to_json)
+    end
+
+    desc 'compliance', 'compliance parses an inspec results json to check if the compliance level meets a specified threshold'
+    long_desc Help.text(:compliance)
+    option :inspec_json, required: true, aliases: '-j'
+    option :threshold_file, required: false, aliases: '-f'
+    option :threshold_inline, required: false, aliases: '-i'
+    option :verbose, type: :boolean, aliases: '-V'
+
+    def compliance
+      if options[:threshold_file].nil? && options[:threshold_inline].nil?
+        puts 'Please provide threshold as a yaml file or inline yaml'
+        exit(1)
+      end
+      threshold = YAML.load_file(options[:threshold_file]) unless options[:threshold_file].nil?
+      threshold = YAML.safe_load(options[:threshold_inline]) unless options[:threshold_inline].nil?
+      compliance = InspecTools::Summary.new(File.read(options[:inspec_json])).threshold(threshold)
+      compliance ? exit(0) : exit(1)
     end
 
     desc 'version', 'prints version'

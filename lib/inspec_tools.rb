@@ -10,4 +10,6 @@ module InspecTools
   autoload :CSV, 'inspec_tools/csv'
   autoload :CKL, 'inspec_tools/ckl'
   autoload :Inspec, 'inspec_tools/inspec'
+  autoload :Summary, 'inspec_tools/summary'
+  autoload :Threshold, 'inspec_tools/threshold'
 end

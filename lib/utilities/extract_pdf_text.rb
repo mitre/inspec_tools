@@ -1,4 +1,4 @@
-require "pdf-reader"
+require 'pdf-reader'
 
 module Util
   class ExtractPdfText
@@ -16,6 +16,5 @@ module Util
         @extracted_text += page.text
       end
     end
-
   end
 end
