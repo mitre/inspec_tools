@@ -13,7 +13,7 @@ LOW = 0.3
 BUCKETS = %w{failed passed no_impact skipped error}.freeze
 TALLYS = %w{total critical high medium low}.freeze
 
-THRESHOLD_TEMPLATE = './lib/data/threshold.yaml'.freeze
+THRESHOLD_TEMPLATE = File.expand_path('../data/threshold.yaml', File.dirname(__FILE__))
 
 module InspecTools
   class Summary

@@ -30,10 +30,10 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'colorize', '>= 0'
+  spec.add_dependency 'colorize', '~> 0'
   spec.add_dependency 'inspec', '~> 2.2'
   spec.add_dependency 'nokogiri', '~> 1.8'
-  spec.add_dependency 'nokogiri-happymapper', '>= 0'
+  spec.add_dependency 'nokogiri-happymapper', '~> 0'
   spec.add_dependency 'OptionParser', '~> 0'
   spec.add_dependency 'pdf-reader', '~> 2.1', '>= 2.1.0'
   spec.add_dependency 'roo', '~> 2.7'
@@ -41,6 +41,6 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_dependency 'word_wrap', '~> 1.0', '~> 1.0.0'
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'minitest', '~> 5.0'
-  spec.add_development_dependency 'pry', '>= 0'
-  spec.add_dependency 'rake', '>= 10.0'
+  spec.add_development_dependency 'pry', '~> 0'
+  spec.add_development_dependency 'rake', '~> 10.0'
 end

@@ -7,6 +7,9 @@ Signal.trap('INT') {
   exit
 }
 
+require 'rubygems'
+require 'bundler/setup'
+
 $LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
 require 'inspec_tools'
 require 'inspec_tools/cli'
