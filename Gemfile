@@ -5,3 +5,4 @@ gemspec
 
 gem "codeclimate-test-reporter", group: :test, require: nil
 gem "minitest"
+gem "nokogiri-happymapper"
