@@ -2,6 +2,7 @@ $LOAD_PATH.unshift(File.expand_path(__dir__))
 require 'inspec_tools/version'
 require 'rubygems'
 require 'bundler/setup'
+Bundler.setup(:default)
 
 module InspecTools
   autoload :Help, 'inspec_tools/help'
