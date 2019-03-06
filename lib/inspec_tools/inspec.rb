@@ -2,12 +2,16 @@ require 'date'
 require 'json'
 require 'cgi'
 require 'csv'
+require 'macaddr'
+require 'socket'
 require 'yaml'
 require_relative '../happy_mapper_tools/stig_attributes'
 require_relative '../happy_mapper_tools/stig_checklist'
 require_relative '../happy_mapper_tools/benchmark'
 require_relative '../utilities/inspec_util'
 require_relative 'csv'
+
+include Socket::Constants
 
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
@@ -16,8 +20,9 @@ require_relative 'csv'
 
 module InspecTools
   class Inspec
-    def initialize(inspec_json)
+    def initialize(inspec_json, metadata = '{}')
       @json = JSON.parse(inspec_json)
+			@metadata = JSON.parse(metadata)
     end
 
     def to_ckl(title = nil, date = nil, cklist = nil)
@@ -147,16 +152,62 @@ module InspecTools
     def generate_ckl
       stigs = HappyMapperTools::StigChecklist::Stigs.new
       istig = HappyMapperTools::StigChecklist::IStig.new
+
       vuln_list = []
       @data.keys.each do |control_id|
         vuln_list.push(generate_vuln_data(@data[control_id]))
       end
-      istig.stig_info = HappyMapperTools::StigChecklist::StigInfo.new
+
+      siData = HappyMapperTools::StigChecklist::SiData.new
+      siData.name = "stigid"
+			siData.data = ""
+			if !@metadata['stigid'].nil?
+      	siData.data = @metadata['stigid']
+			end
+
+      stigInfo = HappyMapperTools::StigChecklist::StigInfo.new
+      stigInfo.si_data = siData
+      istig.stig_info = stigInfo
+
       istig.vuln = vuln_list
       stigs.istig = istig
       @checklist.stig = stigs
+
+			hostname = @metadata['hostname']
+			if hostname.nil?
+      	hostname = Socket.gethostname
+			end
+
+			ip = @metadata['ip']
+			if ip.nil?
+      	ips = Socket.ip_address_list
+      	ips.each do |addr_info|
+      	  if addr_info.ip_address != "127.0.0.1"
+      	    ip = addr_info.ip_address
+      	    break
+      	 	end
+      	end
+			end
+
+		 	fqdn = @metadata['fqdn']
+			if fqdn.nil?	
+      	fqdnHostname = %x[hostname].gsub("\n",'')
+      	fqdnDomainname = %x[hostname -f].gsub("\n",'')
+      	fqdn = fqdnHostname + fqdnDomainname
+			end
+
       asset = HappyMapperTools::StigChecklist::Asset.new
-      asset.type = 'Computing'
+			asset.role = !@metadata['role'].nil? ? @metadata['role'] : 'Workstation'
+			asset.type = !@metadata['type'].nil? ? @metadata['type'] : 'Computing'
+      asset.host_name = hostname
+      asset.host_ip = ip
+			asset.host_mac = !@metadata['mac'].nil? ? @metadata['mac'] : Mac.addr
+      asset.host_fqdn = fqdn
+			asset.tech_area = !@metadata['tech_area'].nil? ? @metadata['tech_area'] : ''
+			asset.target_key = !@metadata['target_key'].nil? ? @metadata['target_key'] : ''
+			asset.web_or_database = !@metadata['web_or_databae'].nil? ? @metadata['web_or_database'] : '0'
+			asset.web_db_site = !@metadata['web_db_site'].nil? ? @metadata['web_db_site'] : ''
+			asset.web_db_instance = !@metadata['web_db_instance'].nil? ? @metadata['web_db_instance'] : ''
       @checklist.asset = asset
     end
 
