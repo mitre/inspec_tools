@@ -15,6 +15,7 @@ require_relative 'csv'
 # rubocop:disable Metrics/BlockLength
 # rubocop:disable Style/GuardClause
 
+
 module InspecTools
   class Inspec
     def initialize(inspec_json, metadata = '{}')
