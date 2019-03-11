@@ -130,7 +130,7 @@ module Utils
       elsif status_list.include?('passed')
         result = 'NotAFinding'
       else
-        #result = 'Not_Tested' ## STIGViewer does not allow Not_Tested as a possible status.
+        # result = 'Not_Tested' ## STIGViewer does not allow Not_Tested as a possible status.
         result = 'Not_Reviewed'
       end
       if control[:impact].to_f.zero?
@@ -204,7 +204,7 @@ module Utils
         control.id     = json_control['id']
         control.title  = json_control['title']
         control.impact = get_impact(json_control['impact'])
-        control.add_tag(Inspec::Tag.new('severity',json_control['tags']['severity']))
+        control.add_tag(Inspec::Tag.new('severity', json_control['tags']['severity']))
         control.add_tag(Inspec::Tag.new('gtitle', json_control['tags']['gtitle']))
         control.add_tag(Inspec::Tag.new('satisfies', json_control['tags']['satisfies'])) if json_control['tags']['satisfies']
         control.add_tag(Inspec::Tag.new('gid',      json_control['tags']['gid']))
@@ -250,7 +250,7 @@ module Utils
     end
 
     private_class_method def self.create_license(directory, inspec_json)
-      license_content = ""
+      license_content = '' 
       if !inspec_json['license'].nil?
         response = Net::HTTP.get_response(URI(inspec_json['license']))
         if response.code == '200'

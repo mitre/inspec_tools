@@ -16,7 +16,7 @@ module InspecTools
     option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
     option :replace_tags, required: false, aliases: '-r'
     option :metadata, required: false, aliases: '-m'
-		def xccdf2inspec
+    def xccdf2inspec
       xccdf = XCCDF.new(File.read(options[:xccdf]), options[:replace_tags])
       profile = xccdf.to_inspec
 
@@ -36,7 +36,7 @@ module InspecTools
     option :inspec_json, required: true, aliases: '-j'
     option :attributes,  required: true, aliases: '-a'
     option :output, required: true, aliases: '-o'
-		def inspec2xccdf
+    def inspec2xccdf
       json = File.read(options[:inspec_json])
       inspec_tool = InspecTools::Inspec.new(json)
       attr_hsh = YAML.load_file(options[:attributes])

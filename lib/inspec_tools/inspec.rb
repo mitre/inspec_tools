@@ -10,8 +10,6 @@ require_relative '../happy_mapper_tools/benchmark'
 require_relative '../utilities/inspec_util'
 require_relative 'csv'
 
-include Socket::Constants
-
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/BlockLength
@@ -159,24 +157,28 @@ module InspecTools
         end
       end
 
-      siData = HappyMapperTools::StigChecklist::SiData.new
-      siData.name = "stigid"
-      siData.data = ""
+      si_data = HappyMapperTools::StigChecklist::SiData.new
+      si_data.name = 'stigid'
+      si_data.data = ''
       if !@metadata['stigid'].nil?
-        siData.data = @metadata['stigid']
+        si_data.data = @metadata['stigid']
       end
 
-      stigInfo = HappyMapperTools::StigChecklist::StigInfo.new
-      stigInfo.si_data = siData
-      istig.stig_info = stigInfo
+      stig_info = HappyMapperTools::StigChecklist::StigInfo.new
+      stig_info.si_data = si_data
+      istig.stig_info = stig_info
 
       istig.vuln = vuln_list
       stigs.istig = istig
       @checklist.stig = stigs
 
-      hostname = @metadata['hostname']
+      @checklist.asset = generate_asset
+    end
+
+		def generate_asset
+	    hostname = @metadata['hostname']
       if hostname.nil? && @data[:platform].nil?
-        hostname = ""
+        hostname = ''
       elsif hostname.nil?
         hostname = @data[:platform][:hostname]
       end
@@ -185,24 +187,24 @@ module InspecTools
       mac = @metadata[:mac]
 
       nics = @data[:platform].nil? ? [] : @data[:platform][:network]
-      nicsIPs = []
-      nicsMacs = []
+      nics_ips = []
+      nics_macs = []
       nics.each do |nic|
-        nicsIPs.push(*nic[:ips])
-        nicsMacs.push(nic[:mac])
+        nics_ips.push(*nic[:ips])
+        nics_macs.push(nic[:mac])
       end
 
       if ip.nil?
-        ip = nicsIPs.join(',')
+        ip = nics_ips.join(',')
       end
 
       if mac.nil?
-        mac = nicsMacs.join(',')
+        mac = nics_macs.join(',')
       end
 
       fqdn = @metadata['fqdn']
       if fqdn.nil? && @data[:platform].nil?
-        fqdn = ""
+        fqdn = ''
       elsif fqdn.nil?
         fqdn = @data[:platform][:fqdn]
       end
@@ -219,8 +221,8 @@ module InspecTools
       asset.web_or_database = !@metadata['web_or_databae'].nil? ? @metadata['web_or_database'] : '0'
       asset.web_db_site = !@metadata['web_db_site'].nil? ? @metadata['web_db_site'] : ''
       asset.web_db_instance = !@metadata['web_db_instance'].nil? ? @metadata['web_db_instance'] : ''
-      @checklist.asset = asset
-    end
+			asset
+		end
 
     def populate_header
       @benchmark.title = @attribute['benchmark.title']
