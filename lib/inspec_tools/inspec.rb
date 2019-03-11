@@ -198,7 +198,7 @@ module InspecTools
       elsif hostname.nil?
         hostname = @data[:platform][:hostname]
       end
-			hostname
+      hostname
     end
 
     def generate_mac
@@ -206,7 +206,7 @@ module InspecTools
       if mac.nil?
         mac = nics_macs.join(',')
       end
-			mac
+      mac
     end
 
     def generate_fqdn
@@ -216,7 +216,7 @@ module InspecTools
       elsif fqdn.nil?
         fqdn = @data[:platform][:fqdn]
       end
-			fqdn
+      fqdn
     end
 
     def generate_ip
@@ -232,7 +232,7 @@ module InspecTools
       if ip.nil?
         ip = nics_ips.join(',')
       end
-			ip
+      ip
     end
 
     def populate_header

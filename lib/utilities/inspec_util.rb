@@ -250,7 +250,7 @@ module Utils
     end
 
     private_class_method def self.create_license(directory, inspec_json)
-      license_content = '' 
+      license_content = ''
       if !inspec_json['license'].nil?
         response = Net::HTTP.get_response(URI(inspec_json['license']))
         if response.code == '200'

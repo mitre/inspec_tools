@@ -81,8 +81,8 @@ module InspecTools
     end
 
     def inject_metadata(metadata = '{}')
-      jMetadata = JSON.parse(metadata)
-      jMetadata.each do |key, value|
+      json_metadata = JSON.parse(metadata)
+      json_metadata.each do |key, value|
         @profile[key] = value
       end
     end
