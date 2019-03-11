@@ -175,7 +175,7 @@ module InspecTools
       @checklist.asset = generate_asset
     end
 
-		def generate_asset
+    def generate_asset
 	    hostname = @metadata['hostname']
       if hostname.nil? && @data[:platform].nil?
         hostname = ''
@@ -222,7 +222,7 @@ module InspecTools
       asset.web_db_site = !@metadata['web_db_site'].nil? ? @metadata['web_db_site'] : ''
       asset.web_db_instance = !@metadata['web_db_instance'].nil? ? @metadata['web_db_instance'] : ''
 			asset
-		end
+	  end
 
     def populate_header
       @benchmark.title = @attribute['benchmark.title']
