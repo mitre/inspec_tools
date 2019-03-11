@@ -80,12 +80,12 @@ module InspecTools
       @benchmark.release_date.release_date
     end
 
-		def inject_metadata(metadata = '{}')
-			jMetadata = JSON.parse(metadata)
-			jMetadata.each do |key, value|
-				@profile[key] = value
-			end
-		end
+    def inject_metadata(metadata = '{}')
+      jMetadata = JSON.parse(metadata)
+      jMetadata.each do |key, value|
+        @profile[key] = value
+      end
+    end
 
     private
 
@@ -99,7 +99,7 @@ module InspecTools
     def insert_json_metadata
       @profile['name'] = @benchmark.id
       @profile['title'] = @benchmark.title
-			!@profile['maintainer'].nil? ? true : @profile['maintainer'] = 'The Authors'
+      !@profile['maintainer'].nil? ? true : @profile['maintainer'] = 'The Authors'
       !@profile['copyright'].nil? ? true : @profile['copyright'] = 'The Authors'
       !@profile['copyright_email'].nil? ? true : @profile['copyright_email'] = 'you@example.com'
       !@profile['license'].nil? ? true : @profile['license'] = 'Apache-2.0'
@@ -111,11 +111,11 @@ module InspecTools
         'name': 'inspec',
         'version': Gem.loaded_specs['inspec'].version
       }
-			@profile['plaintext'] = @benchmark.plaintext.plaintext
-			@profile['status'] = "#{@benchmark.status} on #{@benchmark.release_date.release_date}"
-			@profile['reference_href'] = @benchmark.reference.href
-			@profile['reference_publisher'] = @benchmark.reference.dc_publisher
-			@profile['reference_source'] = @benchmark.reference.dc_source
+      @profile['plaintext'] = @benchmark.plaintext.plaintext
+      @profile['status'] = "#{@benchmark.status} on #{@benchmark.release_date.release_date}"
+      @profile['reference_href'] = @benchmark.reference.href
+      @profile['reference_publisher'] = @benchmark.reference.dc_publisher
+      @profile['reference_source'] = @benchmark.reference.dc_source
     end
 
     def insert_controls
@@ -146,7 +146,7 @@ module InspecTools
         control['tags']['ia_controls'] = group.rule.description.ia_controls if group.rule.description.ia_controls != ''
         control['tags']['check'] = group.rule.check.content
         control['tags']['fix'] = group.rule.fixtext
-				control['tags']['severity'] = group.rule.severity
+        control['tags']['severity'] = group.rule.severity
         @controls << control
       end
       @profile['controls'] = @controls
