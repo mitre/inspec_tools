@@ -70,6 +70,7 @@ module Utils
 
       # Parse for inspec profile results json
       json['profiles'].each do |profile|
+        data[:platform] = profile[:platform]
         profile['controls'].each do |control|
           c_id = control['id'].to_sym
           data[c_id] = {}
@@ -102,7 +103,7 @@ module Utils
             end
           end
           if data[c_id][:impact].to_f.zero?
-						data[c_id][:message].unshift("NOT_APPLICABLE -- Description: #{control['desc']}\n\n")
+            data[c_id][:message].unshift("NOT_APPLICABLE -- Description: #{control['desc']}\n\n")
           end
         end
       end
@@ -129,8 +130,8 @@ module Utils
       elsif status_list.include?('passed')
         result = 'NotAFinding'
       else
-				#result = 'Not_Tested' ## STIGViewer does not allow Not_Tested as a possible status.
-				result = 'Not_Reviewed'
+        #result = 'Not_Tested' ## STIGViewer does not allow Not_Tested as a possible status.
+        result = 'Not_Reviewed'
       end
       if control[:impact].to_f.zero?
         result = 'Not_Applicable'
@@ -173,14 +174,14 @@ module Utils
     end
 
     def self.unpack_inspec_json(directory, inspec_json, separated, output_format)
-			if directory == 'id'
-				directory = inspec_json['name']
-			end
+      if directory == 'id'
+        directory = inspec_json['name']
+      end
       controls = generate_controls(inspec_json)
       unpack_profile(directory || 'profile', controls, separated, output_format || 'json')
       create_inspec_yml(directory || 'profile', inspec_json)
-			create_license(directory || 'profile', inspec_json)
-			create_readme_md(directory || 'profile', inspec_json)
+      create_license(directory || 'profile', inspec_json)
+      create_readme_md(directory || 'profile', inspec_json)
     end
 
     private_class_method def self.wrap(str, width = WIDTH)
@@ -203,7 +204,7 @@ module Utils
         control.id     = json_control['id']
         control.title  = json_control['title']
         control.impact = get_impact(json_control['impact'])
-				control.add_tag(Inspec::Tag.new('severity',json_control['tags']['severity']))
+        control.add_tag(Inspec::Tag.new('severity',json_control['tags']['severity']))
         control.add_tag(Inspec::Tag.new('gtitle', json_control['tags']['gtitle']))
         control.add_tag(Inspec::Tag.new('satisfies', json_control['tags']['satisfies'])) if json_control['tags']['satisfies']
         control.add_tag(Inspec::Tag.new('gid',      json_control['tags']['gid']))
@@ -248,40 +249,40 @@ module Utils
       myfile.puts benchmark_info
     end
 
-		private_class_method def self.create_license(directory, inspec_json)
-			license_content = ""
-			if !inspec_json['license'].nil?
-				response = Net::HTTP.get_response(URI(inspec_json['license']))
-				if response.code == '200'
-					license_content = response.body
-				else 
-					license_content = inspec_json['license']
-				end
-			end
+    private_class_method def self.create_license(directory, inspec_json)
+      license_content = ""
+      if !inspec_json['license'].nil?
+        response = Net::HTTP.get_response(URI(inspec_json['license']))
+        if response.code == '200'
+          license_content = response.body
+        else
+          license_content = inspec_json['license']
+        end
+      end
 
       myfile = File.new("#{directory}/LICENSE", 'w')
       myfile.puts license_content
-		end
+    end
 
-		private_class_method def self.create_readme_md(directory, inspec_json)
-			readme_contents = 
-				"\# #{inspec_json['title']}\n" \
-				"#{inspec_json['summary']}\n" \
-				"---\n" \
-				"Name: #{inspec_json['name']}\n" \
-				"Author: #{inspec_json['maintainer']}\n" \
-				"Status: #{inspec_json['status']}\n" \
-				"Copyright: #{inspec_json['copyright']}\n" \
-				"Copyright Email: #{inspec_json['copyright_email']}\n" \
-				"Version: #{inspec_json['version']}\n" \
-				"#{inspec_json['plaintext']}\n" \
-				"Reference: #{inspec_json['reference_href']}\n" \
-				"Reference by: #{inspec_json['reference_publisher']}\n" \
-				"Reference source: #{inspec_json['reference_source']}\n"
+    private_class_method def self.create_readme_md(directory, inspec_json)
+      readme_contents =
+        "\# #{inspec_json['title']}\n" \
+        "#{inspec_json['summary']}\n" \
+        "---\n" \
+        "Name: #{inspec_json['name']}\n" \
+        "Author: #{inspec_json['maintainer']}\n" \
+        "Status: #{inspec_json['status']}\n" \
+        "Copyright: #{inspec_json['copyright']}\n" \
+        "Copyright Email: #{inspec_json['copyright_email']}\n" \
+        "Version: #{inspec_json['version']}\n" \
+        "#{inspec_json['plaintext']}\n" \
+        "Reference: #{inspec_json['reference_href']}\n" \
+        "Reference by: #{inspec_json['reference_publisher']}\n" \
+        "Reference source: #{inspec_json['reference_source']}\n"
 
       myfile = File.new("#{directory}/README.md", 'w')
       myfile.puts readme_contents
-		end
+    end
 
     private_class_method def self.unpack_profile(directory, controls, separated, output_format)
       FileUtils.rm_rf(directory) if Dir.exist?(directory)

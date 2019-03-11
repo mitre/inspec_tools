@@ -2,9 +2,8 @@ require 'date'
 require 'json'
 require 'cgi'
 require 'csv'
-require 'macaddr'
-require 'socket'
 require 'yaml'
+require 'pp'
 require_relative '../happy_mapper_tools/stig_attributes'
 require_relative '../happy_mapper_tools/stig_checklist'
 require_relative '../happy_mapper_tools/benchmark'
@@ -22,7 +21,7 @@ module InspecTools
   class Inspec
     def initialize(inspec_json, metadata = '{}')
       @json = JSON.parse(inspec_json)
-			@metadata = JSON.parse(metadata)
+      @metadata = JSON.parse(metadata)
     end
 
     def to_ckl(title = nil, date = nil, cklist = nil)
@@ -155,15 +154,17 @@ module InspecTools
 
       vuln_list = []
       @data.keys.each do |control_id|
-        vuln_list.push(generate_vuln_data(@data[control_id]))
+        if control_id != :platform
+          vuln_list.push(generate_vuln_data(@data[control_id]))
+        end
       end
 
       siData = HappyMapperTools::StigChecklist::SiData.new
       siData.name = "stigid"
-			siData.data = ""
-			if !@metadata['stigid'].nil?
-      	siData.data = @metadata['stigid']
-			end
+      siData.data = ""
+      if !@metadata['stigid'].nil?
+        siData.data = @metadata['stigid']
+      end
 
       stigInfo = HappyMapperTools::StigChecklist::StigInfo.new
       stigInfo.si_data = siData
@@ -173,41 +174,51 @@ module InspecTools
       stigs.istig = istig
       @checklist.stig = stigs
 
-			hostname = @metadata['hostname']
-			if hostname.nil?
-      	hostname = Socket.gethostname
-			end
+      hostname = @metadata['hostname']
+      if hostname.nil? && @data[:platform].nil?
+        hostname = ""
+      elsif hostname.nil?
+        hostname = @data[:platform][:hostname]
+      end
 
-			ip = @metadata['ip']
-			if ip.nil?
-      	ips = Socket.ip_address_list
-      	ips.each do |addr_info|
-      	  if addr_info.ip_address != "127.0.0.1"
-      	    ip = addr_info.ip_address
-      	    break
-      	 	end
-      	end
-			end
+      ip = @metadata['ip']
+      mac = @metadata[:mac]
 
-		 	fqdn = @metadata['fqdn']
-			if fqdn.nil?	
-      	fqdnHostname = %x[hostname].gsub("\n",'')
-      	fqdnDomainname = %x[hostname -f].gsub("\n",'')
-      	fqdn = fqdnHostname + fqdnDomainname
-			end
+      nics = @data[:platform].nil? ? [] : @data[:platform][:network]
+      nicsIPs = []
+      nicsMacs = []
+      nics.each do |nic|
+        nicsIPs.push(*nic[:ips])
+        nicsMacs.push(nic[:mac])
+      end
+
+      if ip.nil?
+        ip = nicsIPs.join(',')
+      end
+
+      if mac.nil?
+        mac = nicsMacs.join(',')
+      end
+
+      fqdn = @metadata['fqdn']
+      if fqdn.nil? && @data[:platform].nil?
+        fqdn = ""
+      elsif fqdn.nil?
+        fqdn = @data[:platform][:fqdn]
+      end
 
       asset = HappyMapperTools::StigChecklist::Asset.new
-			asset.role = !@metadata['role'].nil? ? @metadata['role'] : 'Workstation'
-			asset.type = !@metadata['type'].nil? ? @metadata['type'] : 'Computing'
+      asset.role = !@metadata['role'].nil? ? @metadata['role'] : 'Workstation'
+      asset.type = !@metadata['type'].nil? ? @metadata['type'] : 'Computing'
       asset.host_name = hostname
       asset.host_ip = ip
-			asset.host_mac = !@metadata['mac'].nil? ? @metadata['mac'] : Mac.addr
+      asset.host_mac = mac
       asset.host_fqdn = fqdn
-			asset.tech_area = !@metadata['tech_area'].nil? ? @metadata['tech_area'] : ''
-			asset.target_key = !@metadata['target_key'].nil? ? @metadata['target_key'] : ''
-			asset.web_or_database = !@metadata['web_or_databae'].nil? ? @metadata['web_or_database'] : '0'
-			asset.web_db_site = !@metadata['web_db_site'].nil? ? @metadata['web_db_site'] : ''
-			asset.web_db_instance = !@metadata['web_db_instance'].nil? ? @metadata['web_db_instance'] : ''
+      asset.tech_area = !@metadata['tech_area'].nil? ? @metadata['tech_area'] : ''
+      asset.target_key = !@metadata['target_key'].nil? ? @metadata['target_key'] : ''
+      asset.web_or_database = !@metadata['web_or_databae'].nil? ? @metadata['web_or_database'] : '0'
+      asset.web_db_site = !@metadata['web_db_site'].nil? ? @metadata['web_db_site'] : ''
+      asset.web_db_instance = !@metadata['web_db_instance'].nil? ? @metadata['web_db_instance'] : ''
       @checklist.asset = asset
     end
 
