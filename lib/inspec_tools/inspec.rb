@@ -176,16 +176,50 @@ module InspecTools
     end
 
     def generate_asset
-	    hostname = @metadata['hostname']
+      asset = HappyMapperTools::StigChecklist::Asset.new
+      asset.role = !@metadata['role'].nil? ? @metadata['role'] : 'Workstation'
+      asset.type = !@metadata['type'].nil? ? @metadata['type'] : 'Computing'
+      asset.host_name = generate_hostname
+      asset.host_ip = generate_ip
+      asset.host_mac = generate_mac
+      asset.host_fqdn = generate_fqdn
+      asset.tech_area = !@metadata['tech_area'].nil? ? @metadata['tech_area'] : ''
+      asset.target_key = !@metadata['target_key'].nil? ? @metadata['target_key'] : ''
+      asset.web_or_database = !@metadata['web_or_databae'].nil? ? @metadata['web_or_database'] : '0'
+      asset.web_db_site = !@metadata['web_db_site'].nil? ? @metadata['web_db_site'] : ''
+      asset.web_db_instance = !@metadata['web_db_instance'].nil? ? @metadata['web_db_instance'] : ''
+      asset
+    end
+
+    def generate_hostname
+      hostname = @metadata['hostname']
       if hostname.nil? && @data[:platform].nil?
         hostname = ''
       elsif hostname.nil?
         hostname = @data[:platform][:hostname]
       end
+			hostname
+    end
 
-      ip = @metadata['ip']
+    def generate_mac
       mac = @metadata[:mac]
+      if mac.nil?
+        mac = nics_macs.join(',')
+      end
+			mac
+    end
 
+    def generate_fqdn
+      fqdn = @metadata['fqdn']
+      if fqdn.nil? && @data[:platform].nil?
+        fqdn = ''
+      elsif fqdn.nil?
+        fqdn = @data[:platform][:fqdn]
+      end
+			fqdn
+    end
+
+    def generate_ip
       nics = @data[:platform].nil? ? [] : @data[:platform][:network]
       nics_ips = []
       nics_macs = []
@@ -194,34 +228,11 @@ module InspecTools
         nics_macs.push(nic[:mac])
       end
 
+      ip = @metadata['ip']
       if ip.nil?
         ip = nics_ips.join(',')
       end
-
-      if mac.nil?
-        mac = nics_macs.join(',')
-      end
-
-      fqdn = @metadata['fqdn']
-      if fqdn.nil? && @data[:platform].nil?
-        fqdn = ''
-      elsif fqdn.nil?
-        fqdn = @data[:platform][:fqdn]
-      end
-
-      asset = HappyMapperTools::StigChecklist::Asset.new
-      asset.role = !@metadata['role'].nil? ? @metadata['role'] : 'Workstation'
-      asset.type = !@metadata['type'].nil? ? @metadata['type'] : 'Computing'
-      asset.host_name = hostname
-      asset.host_ip = ip
-      asset.host_mac = mac
-      asset.host_fqdn = fqdn
-      asset.tech_area = !@metadata['tech_area'].nil? ? @metadata['tech_area'] : ''
-      asset.target_key = !@metadata['target_key'].nil? ? @metadata['target_key'] : ''
-      asset.web_or_database = !@metadata['web_or_databae'].nil? ? @metadata['web_or_database'] : '0'
-      asset.web_db_site = !@metadata['web_db_site'].nil? ? @metadata['web_db_site'] : ''
-      asset.web_db_instance = !@metadata['web_db_instance'].nil? ? @metadata['web_db_instance'] : ''
-			asset
+			ip
     end
 
     def populate_header
