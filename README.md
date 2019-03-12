@@ -1,6 +1,8 @@
 # InspecTools
 
-InspecTools supplies several CLI tools to convert to and from InSpec format. The converters in version 0.2 are:
+InspecTools supplies several CLI tools to convert to and from InSpec format.
+
+The inspec_tools support the following modules:
 
 - compliance
 - summary
