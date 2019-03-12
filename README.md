@@ -244,7 +244,7 @@ This gem was developed using the [CLI Template](https://github.com/tongueroo/cli
 9. (opt) gem build inspec_tools.gemspec
 10. (opt) gem install inspec_tools
 11. (opt) test via the installed gem
-12. git commit -a -s your branch
+12. git commit -a -s `<your_branch>`
 13. Open a PRs aginst the MITRE inspec_tools repo
 
 There are a set of unit tests. Run `rake test` to run the tests.
