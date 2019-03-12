@@ -15,21 +15,13 @@ It also includes an API that can be used in a ruby application. The Ruby API is 
 
 # Installation
 
-Ensure happymapper is not installed, as it will take precedence over nokogiri-happymapper.
+Ensure `happymapper` is not installed, as it will take precedence over `nokogiri-happymapper`.
 
 Add this line to your application's Gemfile:
 
 ```
 gem 'inspec_tools'
 ```
-
-And then execute:
-
-    $ bundle
-
-Clone the repo and install it yourself as:
-
-    $ gem install inspec_tools
 
 # Usage
 
@@ -237,13 +229,29 @@ Prints out the gem version
 USAGE: inspec_tools version
 ```
 
-# Development
+# Development / PR process
 
 This gem was developed using the [CLI Template](https://github.com/tongueroo/cli-template), a generator tool that builds a starter CLI project.
 
+1. open an issue on the main inspec_tools website noting the issues your PR will address
+2. fork the repo
+3. checkout your repo
+4. cd to the repo
+5. git co -b `<your_branch>`
+6. bundle install
+7. hack as you will
+8. test via rake
+9. (opt) gem build inspec_tools.gemspec
+10. (opt) gem install inspec_tools
+11. (opt) test via the installed gem
+12. git commit -a -s your branch
+13. Open a PRs aginst the MITRE inspec_tools repo
+
 There are a set of unit tests. Run `rake test` to run the tests.
 
-To release a new version, update the version number in `version.rb` according to the [Semantic Versioning Policy](https://semver.org/). Then, run `bundle exec rake release` which will create a git tag for the specified version, push git commits and tags, and push the `.gem` file to [github.com](https://github.com/mitre/inspec_tools).
+To release a new version, update the version number in `version.rb` according to the [Semantic Versioning Policy](https://semver.org/).
+
+Then, run `bundle exec rake release` which will create a git tag for the specified version, push git commits and tags, and push the `.gem` file to [github.com](https://github.com/mitre/inspec_tools).
 
 ### NOTICE
 
