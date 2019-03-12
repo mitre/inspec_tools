@@ -20,7 +20,7 @@ Ensure happymapper is not installed, as it will take precedence over nokogiri-ha
 Add this line to your application's Gemfile:
 
 ```
-gem 'inspec_tools', :git => "https://github.com/mitre/inspec_tools"
+gem 'inspec_tools'
 ```
 
 And then execute:
