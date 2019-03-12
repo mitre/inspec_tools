@@ -2,14 +2,14 @@
 
 InspecTools supplies several CLI tools to convert to and from InSpec format. The converters in version 0.2 are:
 
-* compliance
-* summary
-* csv2inspec
-* inspec2csv
-* xccdf2inspec
-* inspec2xccdf
-* inspec2ckl
-* pdf2inspec
+- compliance
+- summary
+- csv2inspec
+- inspec2csv
+- xccdf2inspec
+- inspec2xccdf
+- inspec2ckl
+- pdf2inspec
 
 It also includes an API that can be used in a ruby application. The Ruby API is defined in lib/inspec_tools/inspec.rb
 
@@ -60,12 +60,11 @@ xccdf_results = tool.to_xccdf(attribs_json)
 On the Command Line, `inspec_tools help` will print a listing of all the command with a short description.
 For detailed help on any command, run `inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `inspec_tools xccdf2inspec -h`.
 
-
 ## compliance
 
-  compliance parses an inspec results json to check if the compliance level meets a specified threshold.
+compliance parses an inspec results json to check if the compliance level meets a specified threshold.
 
-  If the specified threshold is not met, an error code (1) is returned along with non-compliant elements.
+If the specified threshold is not met, an error code (1) is returned along with non-compliant elements.
 
 ```
 USAGE:  inspec_tools compliance [OPTIONS] -j <inspec-json> -i <threshold-inline>
@@ -81,9 +80,9 @@ Examples:
   inspec_tools compliance -j examples/sample_json/rhel-simp.json -f examples/sample_yaml/threshold.yaml
 ```
 
-
 ##### Possible In-line and yaml file threshold definition styles:
-```# -----------------------
+
+```
 failed:
   critical:
     max: 0
@@ -91,8 +90,8 @@ failed:
     max: 1
 compliance:
   min: 81
-
 ```
+
 ```
 {compliance: {min: 80}, failed: {critical: {max: 0}, high: {max: 0}}}
 ```
@@ -100,6 +99,7 @@ compliance:
 ```
 {compliance.min: 81, failed.critical.max: 10, failed.high.max: 0}
 ```
+
 ```
 compliance.min: 81
 failed.critical.max: 10
@@ -108,8 +108,8 @@ failed.high.max: 1
 
 ## summary
 
-  summary parses an inspec results json to create a summary json
-  
+summary parses an inspec results json to create a summary json
+
 ```
 USAGE: inspec_tools summary [OPTIONS] -j <inspec-json> -o <summary-csv>
 
@@ -122,10 +122,10 @@ Examples:
   inspec_tools summary -j examples/sample_json/rhel-simp.json -o summary.json
 ```
 
-
 ## xccdf2inspec
 
 xccdf2inspec translates an xccdf file to an InSpec profile in one or many files
+
 ```
 USAGE: inspec_tools xccdf2inspec [OPTIONS] -x <xccdf-file>
 
@@ -143,6 +143,7 @@ example: inspec_tools xccdf2inspec -x xccdf_file.xml -a attributes.yml -o myprof
 ## inspec2xccdf
 
 inspec2xccdf converts an InSpec profile in json format to a STIG XCCDF Document
+
 ```
 USAGE: inspec_tools inspec2xccdf [OPTIONS] -j <inspec-json> -a <xccdf-attr-yml> -o <xccdf-xml>
 
@@ -158,6 +159,7 @@ example: inspec_tools inspec2xccdf -j example.json -a attributes.yml -o xccdf.xm
 ## csv2inspec
 
 Convert a csv export of STIG controls to an InSpec profile
+
 ```
 USAGE: inspec_tools csv2inspec [OPTIONS] -c <stig-csv> -m <map-yml>
 
@@ -175,6 +177,7 @@ example: inspec_tools csv2inspec -c stig.csv -m map.yml -o mydir -f ruby -s true
 ### generate_map
 
 This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
+
 ```
 USAGE: inspec_tools generate_map
 ```
@@ -182,6 +185,7 @@ USAGE: inspec_tools generate_map
 ## inspec2csv
 
 Convert an InSpec json to a csv file
+
 ```
 USAGE: inspec_tools inspec2csv [OPTIONS] -j <inspec-json> -o <profile-csv>
 
@@ -225,7 +229,7 @@ FLAGS:
 example: inspec_tools pdf2inspec -p benchmark.pdf -o /path/to/myprofile -f ruby -s true
 ```
 
-## version  
+## version
 
 Prints out the gem version
 
@@ -234,6 +238,7 @@ USAGE: inspec_tools version
 ```
 
 # Development
+
 This gem was developed using the [CLI Template](https://github.com/tongueroo/cli-template), a generator tool that builds a starter CLI project.
 
 There are a set of unit tests. Run `rake test` to run the tests.
@@ -244,19 +249,14 @@ To release a new version, update the version number in `version.rb` according to
 
 © 2018 The MITRE Corporation.
 
-Approved for Public Release; Distribution Unlimited. Case Number 18-3678.  
+Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
 
 ## NOTICE
+
 MITRE hereby grants express written permission to use, reproduce, distribute, modify, and otherwise leverage this software to the extent permitted by the licensed terms provided in the LICENSE.md file included with this project.
-
-### NOTICE  
-
-This software was produced for the U. S. Government under Contract Number HHSM-500-2012-00008I, and is subject to Federal Acquisition Regulation Clause 52.227-14, Rights in Data-General.  
-
-No other use other than that granted to the U. S. Government, or to those acting on behalf of the U. S. Government under that Clause is authorized without the express written permission of The MITRE Corporation.
-
-For further information, please contact The MITRE Corporation, Contracts Management Office, 7515 Colshire Drive, McLean, VA  22102-7539, (703) 983-6000.
 
 ### NOTICE
 
-DISA STIGs are published by DISA IASE, see: https://iase.disa.mil/Pages/privacy_policy.aspx
+This software was produced for the U. S. Government under Contract Number HHSM-500-2012-00008I, and is subject to Federal Acquisition Regulation Clause 52.227-14, Rights in Data-General.
+
+No other use other than that granted to the U. S. Government, or to those acting on behalf of the U. S. Government under that Clause is authorized without the express written permission of The MITRE Corporation.DISA STIGs are published by DISA IASE, see: https://iase.disa.mil/Pages/privacy_policy.aspx
