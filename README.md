@@ -235,19 +235,37 @@ USAGE: inspec_tools version
 
 This gem was developed using the [CLI Template](https://github.com/tongueroo/cli-template), a generator tool that builds a starter CLI project.
 
+## A complete PR should include 7 core elements:  
+
+- A signed PR ( aka `git commit -a -s` )
+- Code for the new functionality
+- Updates to the CLI
+- New unit tests for the functionality
+- Updates to the docs and examples in `README.md` and `./docs/*`
+- (if needed) Example / Template files ( `metadata.yml`,`example.yml`, etc )
+  - Scripts / Scaffolding code for the Example / Template files ( `generate_map` is an example )
+- Example Output of the new functionality if it produces an artifact
+
 1. open an issue on the main inspec_tools website noting the issues your PR will address
 2. fork the repo
 3. checkout your repo
 4. cd to the repo
 5. git co -b `<your_branch>`
 6. bundle install
-7. hack as you will
+7. `hack as you will`
 8. test via rake
-9. (opt) gem build inspec_tools.gemspec
-10. (opt) gem install inspec_tools
-11. (opt) test via the installed gem
-12. git commit -a -s `<your_branch>`
-13. Open a PRs aginst the MITRE inspec_tools repo
+9. ensure unit tests still function and add unit tests for your new feature
+10. add new docs to the `README.md` and to `./docs/examples`
+11. update the CLI as needed and add in `usage` example
+12. (if needed) create and document any example or templates
+13. (if needed) create any supporing scripts
+14. (opt) gem build inspec_tools.gemspec
+15. (opt) gem install inspec_tools
+16. (opt) test via the installed gem
+17. git commit -a -s `<your_branch>`
+18. Open a PRs aginst the MITRE inspec_tools repo
+
+# Testing  
 
 There are a set of unit tests. Run `rake test` to run the tests.
 
