@@ -29,7 +29,7 @@ class XCCDFTest < Minitest::Test
   def test_to_inspec_metadata
     xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_Red_Hat_Enterprise_Linux_7_STIG_V1R4_Manual-xccdf.xml'))
     inspec_json = xccdf.to_inspec
-    assert_equal(inspec_json['name'], "Red Hat Enterprise Linux 7 Security Technical Implementation Guide")
+    assert_equal(inspec_json['name'], "RHEL_7_STIG")
     assert_equal(inspec_json['title'], "Red Hat Enterprise Linux 7 Security Technical Implementation Guide")
     assert_equal(inspec_json['maintainer'], "The Authors")
     assert_equal(inspec_json['copyright'], "The Authors")

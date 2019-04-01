@@ -24,6 +24,7 @@ module InspecTools
 
     def to_ckl(title = nil, date = nil, cklist = nil)
       @data = Utils::InspecUtil.parse_data_for_ckl(@json)
+      @platform = Utils::InspecUtil.get_platform(@json)
       @title = generate_title title, @json, date
       @cklist = cklist
       @checklist = HappyMapperTools::StigChecklist::Checklist.new
@@ -152,9 +153,7 @@ module InspecTools
 
       vuln_list = []
       @data.keys.each do |control_id|
-        if control_id != :platform
-          vuln_list.push(generate_vuln_data(@data[control_id]))
-        end
+        vuln_list.push(generate_vuln_data(@data[control_id]))
       end
 
       si_data = HappyMapperTools::StigChecklist::SiData.new
@@ -193,17 +192,22 @@ module InspecTools
 
     def generate_hostname
       hostname = @metadata['hostname']
-      if hostname.nil? && @data[:platform].nil?
+      if hostname.nil? && @platform.nil?
         hostname = ''
       elsif hostname.nil?
-        hostname = @data[:platform][:hostname]
+        hostname = @platform[:hostname]
       end
       hostname
     end
 
     def generate_mac
-      mac = @metadata[:mac]
+      mac = @metadata['mac']
       if mac.nil?
+        nics = @platform.nil? ? [] : @platform[:network]
+        nics_macs = []
+        nics.each do |nic|
+          nics_macs.push(nic[:mac])
+        end
         mac = nics_macs.join(',')
       end
       mac
@@ -211,25 +215,22 @@ module InspecTools
 
     def generate_fqdn
       fqdn = @metadata['fqdn']
-      if fqdn.nil? && @data[:platform].nil?
+      if fqdn.nil? && @platform.nil?
         fqdn = ''
       elsif fqdn.nil?
-        fqdn = @data[:platform][:fqdn]
+        fqdn = @platform[:fqdn]
       end
       fqdn
     end
 
     def generate_ip
-      nics = @data[:platform].nil? ? [] : @data[:platform][:network]
-      nics_ips = []
-      nics_macs = []
-      nics.each do |nic|
-        nics_ips.push(*nic[:ips])
-        nics_macs.push(nic[:mac])
-      end
-
       ip = @metadata['ip']
       if ip.nil?
+        nics = @platform.nil? ? [] : @platform[:network]
+        nics_ips = []
+        nics.each do |nic|
+          nics_ips.push(*nic[:ip])
+        end
         ip = nics_ips.join(',')
       end
       ip

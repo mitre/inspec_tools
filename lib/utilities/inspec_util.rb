@@ -70,7 +70,6 @@ module Utils
 
       # Parse for inspec profile results json
       json['profiles'].each do |profile|
-        data[:platform] = profile[:platform]
         profile['controls'].each do |control|
           c_id = control['id'].to_sym
           data[c_id] = {}
@@ -108,6 +107,10 @@ module Utils
         end
       end
       data
+    end
+
+    def self.get_platform(json)
+      json['profiles'].find { |profile| !profile[:platform].nil? }
     end
 
     def self.to_dotted_hash(hash, recursive_key = '')
@@ -252,10 +255,14 @@ module Utils
     private_class_method def self.create_license(directory, inspec_json)
       license_content = ''
       if !inspec_json['license'].nil?
-        response = Net::HTTP.get_response(URI(inspec_json['license']))
-        if response.code == '200'
-          license_content = response.body
-        else
+        begin
+          response = Net::HTTP.get_response(URI(inspec_json['license']))
+          if response.code == '200'
+            license_content = response.body
+          else
+            license_content = inspec_json['license']
+          end
+        rescue StandardError => e
           license_content = inspec_json['license']
         end
       end

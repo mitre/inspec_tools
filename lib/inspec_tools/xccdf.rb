@@ -99,12 +99,12 @@ module InspecTools
     def insert_json_metadata
       @profile['name'] = @benchmark.id
       @profile['title'] = @benchmark.title
-      !@profile['maintainer'].nil? ? true : @profile['maintainer'] = 'The Authors'
-      !@profile['copyright'].nil? ? true : @profile['copyright'] = 'The Authors'
-      !@profile['copyright_email'].nil? ? true : @profile['copyright_email'] = 'you@example.com'
-      !@profile['license'].nil? ? true : @profile['license'] = 'Apache-2.0'
+      @profile['maintainer'] = 'The Authors' if @profile['maintainer'].nil?
+      @profile['copyright'] = 'The Authors' if @profile['copyright'].nil?
+      @profile['copyright_email'] = 'you@example.com' if @profile['copyright_email'].nil?
+      @profile['license'] = 'Apache-2.0' if @profile['license'].nil?
       @profile['summary'] = "\"#{@benchmark.description.gsub('\\', '\\\\\\').gsub('"', '\"')}\""
-      !@profile['version'].nil? ? true : @profile['version'] = '0.1.0'
+      @profile['version'] = '0.1.0' if @profile['version'].nil?
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
