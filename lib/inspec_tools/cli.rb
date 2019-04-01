@@ -15,9 +15,15 @@ module InspecTools
     option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
     option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
     option :replace_tags, required: false, aliases: '-r'
+    option :metadata, required: false, aliases: '-m'
     def xccdf2inspec
-      xccdf = XCCDF.new(File.read(options[:xccdf]))
+      xccdf = XCCDF.new(File.read(options[:xccdf]), options[:replace_tags])
       profile = xccdf.to_inspec
+
+      if !options[:metadata].nil?
+        xccdf.inject_metadata(File.read(options[:metadata]))
+      end
+
       Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
       if !options[:attributes].nil?
         attributes = xccdf.to_attributes
@@ -68,8 +74,13 @@ module InspecTools
     option :inspec_json, required: true, aliases: '-j'
     option :output, required: true, aliases: '-o'
     option :verbose, type: :boolean, aliases: '-V'
+    option :metadata, required: false, aliases: '-m'
     def inspec2ckl
-      ckl = InspecTools::Inspec.new(File.read(options[:inspec_json])).to_ckl
+      metadata = '{}'
+      if !options[:metadata].nil?
+        metadata = File.read(options[:metadata])
+      end
+      ckl = InspecTools::Inspec.new(File.read(options[:inspec_json]), metadata).to_ckl
       File.write(options[:output], ckl)
     end
 

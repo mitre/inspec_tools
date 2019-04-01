@@ -3,6 +3,7 @@ require_relative '../happy_mapper_tools/cci_attributes'
 require_relative '../utilities/inspec_util'
 
 require 'digest'
+require 'json'
 
 module InspecTools
   # rubocop:disable Metrics/ClassLength
@@ -79,6 +80,13 @@ module InspecTools
       @benchmark.release_date.release_date
     end
 
+    def inject_metadata(metadata = '{}')
+      json_metadata = JSON.parse(metadata)
+      json_metadata.each do |key, value|
+        @profile[key] = value
+      end
+    end
+
     private
 
     def replace_tags_in_xccdf(replace_tags, xccdf_xml)
@@ -89,20 +97,25 @@ module InspecTools
     end
 
     def insert_json_metadata
-      @profile['name'] = @benchmark.title
+      @profile['name'] = @benchmark.id
       @profile['title'] = @benchmark.title
-      @profile['maintainer'] = 'The Authors'
-      @profile['copyright'] = 'The Authors'
-      @profile['copyright_email'] = 'you@example.com'
-      @profile['license'] = 'Apache-2.0'
+      !@profile['maintainer'].nil? ? true : @profile['maintainer'] = 'The Authors'
+      !@profile['copyright'].nil? ? true : @profile['copyright'] = 'The Authors'
+      !@profile['copyright_email'].nil? ? true : @profile['copyright_email'] = 'you@example.com'
+      !@profile['license'].nil? ? true : @profile['license'] = 'Apache-2.0'
       @profile['summary'] = "\"#{@benchmark.description.gsub('\\', '\\\\\\').gsub('"', '\"')}\""
-      @profile['version'] = '0.1.0'
+      !@profile['version'].nil? ? true : @profile['version'] = '0.1.0'
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
         'name': 'inspec',
         'version': Gem.loaded_specs['inspec'].version
       }
+      @profile['plaintext'] = @benchmark.plaintext.plaintext
+      @profile['status'] = "#{@benchmark.status} on #{@benchmark.release_date.release_date}"
+      @profile['reference_href'] = @benchmark.reference.href
+      @profile['reference_publisher'] = @benchmark.reference.dc_publisher
+      @profile['reference_source'] = @benchmark.reference.dc_source
     end
 
     def insert_controls
@@ -133,6 +146,7 @@ module InspecTools
         control['tags']['ia_controls'] = group.rule.description.ia_controls if group.rule.description.ia_controls != ''
         control['tags']['check'] = group.rule.check.content
         control['tags']['fix'] = group.rule.fixtext
+        control['tags']['severity'] = group.rule.severity
         @controls << control
       end
       @profile['controls'] = @controls
