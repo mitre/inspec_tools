@@ -1,6 +1,8 @@
 require 'inspec/objects'
 require 'word_wrap'
 require 'pp'
+require 'uri'
+require 'net/http'
 
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
@@ -94,17 +96,21 @@ module Utils
           if control.key?('results')
             control['results'].each do |result|
               data[c_id][:status].push(result['status'])
-              data[c_id][:message].push(result['skip_message']) if result['status'] == 'skipped'
+              data[c_id][:message].push("SKIPPED -- Test: #{result['code_desc']}\nMessage: #{result['skip_message']}\n") if result['status'] == 'skipped'
               data[c_id][:message].push("FAILED -- Test: #{result['code_desc']}\nMessage: #{result['message']}\n") if result['status'] == 'failed'
               data[c_id][:message].push("PASS -- #{result['code_desc']}\n") if result['status'] == 'passed'
             end
           end
           if data[c_id][:impact].to_f.zero?
-            data[c_id][:message] = control['desc']
+            data[c_id][:message].unshift("NOT_APPLICABLE -- Description: #{control['desc']}\n\n")
           end
         end
       end
       data
+    end
+
+    def self.get_platform(json)
+      json['profiles'].find { |profile| !profile[:platform].nil? }
     end
 
     def self.to_dotted_hash(hash, recursive_key = '')
@@ -127,7 +133,8 @@ module Utils
       elsif status_list.include?('passed')
         result = 'NotAFinding'
       else
-        result = 'Not_Tested'
+        # result = 'Not_Tested' ## STIGViewer does not allow Not_Tested as a possible status.
+        result = 'Not_Reviewed'
       end
       if control[:impact].to_f.zero?
         result = 'Not_Applicable'
@@ -139,7 +146,7 @@ module Utils
       result = "One or more of the automated tests failed or was inconclusive for the control \n\n #{control[:message].sort.join}" if control_clk_status == 'Open'
       result = "All Automated tests passed for the control \n\n #{control[:message].join}" if control_clk_status == 'NotAFinding'
       result = "Automated test skipped due to known accepted condition in the control : \n\n#{control[:message].join}" if control_clk_status == 'Not_Reviewed'
-      result = "Justification: \n #{control[:message].split.join(' ')}" if control_clk_status == 'Not_Applicable'
+      result = "Justification: \n #{control[:message].join}" if control_clk_status == 'Not_Applicable'
       result = 'No test available for this control' if control_clk_status == 'Not_Tested'
       result
     end
@@ -170,9 +177,14 @@ module Utils
     end
 
     def self.unpack_inspec_json(directory, inspec_json, separated, output_format)
+      if directory == 'id'
+        directory = inspec_json['name']
+      end
       controls = generate_controls(inspec_json)
       unpack_profile(directory || 'profile', controls, separated, output_format || 'json')
       create_inspec_yml(directory || 'profile', inspec_json)
+      create_license(directory || 'profile', inspec_json)
+      create_readme_md(directory || 'profile', inspec_json)
     end
 
     private_class_method def self.wrap(str, width = WIDTH)
@@ -195,6 +207,7 @@ module Utils
         control.id     = json_control['id']
         control.title  = json_control['title']
         control.impact = get_impact(json_control['impact'])
+        control.add_tag(Inspec::Tag.new('severity', json_control['tags']['severity']))
         control.add_tag(Inspec::Tag.new('gtitle', json_control['tags']['gtitle']))
         control.add_tag(Inspec::Tag.new('satisfies', json_control['tags']['satisfies'])) if json_control['tags']['satisfies']
         control.add_tag(Inspec::Tag.new('gid',      json_control['tags']['gid']))
@@ -226,17 +239,56 @@ module Utils
     #
     private_class_method def self.create_inspec_yml(directory, inspec_json)
       benchmark_info =
-        "name: #{inspec_json['name']}
-        title: #{inspec_json['title']}
-        maintainer: #{inspec_json['maintainer']}
-        copyright: #{inspec_json['copyright']}
-        copyright_email: #{inspec_json['copyright_email']}
-        license: #{inspec_json['license']}
-        summary: #{inspec_json['summary']}
-        version: #{inspec_json['version']}"
+        "name: #{inspec_json['name']}\n" \
+        "title: #{inspec_json['title']}\n" \
+        "maintainer: #{inspec_json['maintainer']}\n" \
+        "copyright: #{inspec_json['copyright']}\n" \
+        "copyright_email: #{inspec_json['copyright_email']}\n" \
+        "license: #{inspec_json['license']}\n" \
+        "summary: #{inspec_json['summary']}\n" \
+        "version: #{inspec_json['version']}\n"
 
       myfile = File.new("#{directory}/inspec.yml", 'w')
       myfile.puts benchmark_info
+    end
+
+    private_class_method def self.create_license(directory, inspec_json)
+      license_content = ''
+      if !inspec_json['license'].nil?
+        begin
+          response = Net::HTTP.get_response(URI(inspec_json['license']))
+          if response.code == '200'
+            license_content = response.body
+          else
+            license_content = inspec_json['license']
+          end
+        rescue StandardError => e
+          license_content = inspec_json['license']
+        end
+      end
+
+      myfile = File.new("#{directory}/LICENSE", 'w')
+      myfile.puts license_content
+    end
+
+    private_class_method def self.create_readme_md(directory, inspec_json)
+      readme_contents =
+        "\# #{inspec_json['title']}\n" \
+        "#{inspec_json['summary']}\n" \
+        "---\n" \
+        "Name: #{inspec_json['name']}\n" \
+        "Author: #{inspec_json['maintainer']}\n" \
+        "Status: #{inspec_json['status']}\n" \
+        "Copyright: #{inspec_json['copyright']}\n" \
+        "Copyright Email: #{inspec_json['copyright_email']}\n" \
+        "Version: #{inspec_json['version']}\n" \
+        "#{inspec_json['plaintext']}\n" \
+        "Reference: #{inspec_json['reference_href']}\n" \
+        "Reference by: #{inspec_json['reference_publisher']}\n" \
+        "Reference source: #{inspec_json['reference_source']}\n"
+
+      myfile = File.new("#{directory}/README.md", 'w')
+      myfile.puts readme_contents
     end
 
     private_class_method def self.unpack_profile(directory, controls, separated, output_format)
@@ -244,8 +296,6 @@ module Utils
       Dir.mkdir directory unless Dir.exist?(directory)
       Dir.mkdir "#{directory}/controls" unless Dir.exist?("#{directory}/controls")
       Dir.mkdir "#{directory}/libraries" unless Dir.exist?("#{directory}/libraries")
-      myfile = File.new("#{directory}/README.md", 'w')
-      myfile.puts "# Example InSpec Profile\n\nthis example shows the implementation of an InSpec profile."
       if separated
         if output_format == 'ruby'
           controls.each do |control|
