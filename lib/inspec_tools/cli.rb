@@ -123,39 +123,39 @@ module InspecTools
 
     desc 'generate_ckl_metadata', 'Generate metadata file that can be passed to inspec2ckl'
     def generate_ckl_metadata
-      metadata = Hash.new
+      metadata = {}
 
-      metadata['stigid'] = ask("STID ID: ")
-      metadata['role'] = ask("Role: " )
-      metadata['type'] = ask("Type: " )
-      metadata['hostname'] = ask("Hostname: ")
-      metadata['ip'] = ask("IP Address: ")
-      metadata['mac'] = ask("MAC Address: ")
-      metadata['fqdn'] = ask("FQDN: ")
-      metadata['tech_area'] = ask("Tech Area: " )
-      metadata['target_key'] = ask("Target Key: ")
-      metadata['web_or_database'] = ask("Web or Database: ")
-      metadata['web_db_site'] = ask("Web DB Site: ")
-      metadata['web_db_instance'] = ask("Web DB Instance: ")
+      metadata['stigid'] = ask('STID ID: ')
+      metadata['role'] = ask('Role: ')
+      metadata['type'] = ask('Type: ')
+      metadata['hostname'] = ask('Hostname: ')
+      metadata['ip'] = ask('IP Address: ')
+      metadata['mac'] = ask('MAC Address: ')
+      metadata['fqdn'] = ask('FQDN: ')
+      metadata['tech_area'] = ask('Tech Area: ')
+      metadata['target_key'] = ask('Target Key: ')
+      metadata['web_or_database'] = ask('Web or Database: ')
+      metadata['web_db_site'] = ask('Web DB Site: ')
+      metadata['web_db_instance'] = ask('Web DB Instance: ')
 
-      metadata.delete_if {|key, value| value.length == 0 }
-      File.open('metadata.json','w') do |f|
+      metadata.delete_if { |_key, value| value.empty? }
+      File.open('metadata.json', 'w') do |f|
         f.write(metadata.to_json)
       end
     end
 
     desc 'generate_inspec_metadata', 'Generate mapping file that can be passed to xccdf2inspec'
     def generate_inspec_metadata
-      metadata = Hash.new
+      metadata = {}
 
-      metadata['maintainer'] = ask("Maintainer: ")
-      metadata['copyright'] = ask("Copyright: ")
-      metadata['copyright_email'] = ask("Copyright Email: ")
-      metadata['license'] = ask("License: ")
-      metadata['version'] = ask("Version: ")
+      metadata['maintainer'] = ask('Maintainer: ')
+      metadata['copyright'] = ask('Copyright: ')
+      metadata['copyright_email'] = ask('Copyright Email: ')
+      metadata['license'] = ask('License: ')
+      metadata['version'] = ask('Version: ')
 
-      metadata.delete_if {|key, value| value.length == 0 }
-      File.open('metadata.json','w') do |f|
+      metadata.delete_if { |_key, value| value.empty? }
+      File.open('metadata.json', 'w') do |f|
         f.write(metadata.to_json)
       end
     end
