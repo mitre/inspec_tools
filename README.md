@@ -4,6 +4,9 @@ InspecTools supplies several CLI tools to convert to and from InSpec format.
 
 The inspec_tools support the following modules:
 
+- generate_map
+- generate_ckl_metadata
+- generate_inspec_metadata
 - compliance
 - summary
 - csv2inspec
@@ -53,6 +56,30 @@ xccdf_results = tool.to_xccdf(attribs_json)
 
 On the Command Line, `inspec_tools help` will print a listing of all the command with a short description.
 For detailed help on any command, run `inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `inspec_tools xccdf2inspec -h`.
+
+## generate_map
+
+This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `-m` option.
+
+```
+USAGE: inspec_tools generate_map
+```
+
+## generate_ckl_metadata
+
+This command will generate a `metadata.json` file that can be passed in to the `inspec2ckl` command with the `-m` option.
+
+```
+USAGE: inspec_tools generate_ckl_metadata
+```
+
+## generate_inspec_metadata
+
+This command will generate a `metadata.json` file that can be passed in to the `xccdf2inspec` command with the `-m` option.
+
+```
+USAGE: inspec_tools generate_inspec_metadata
+```
 
 ## compliance
 
@@ -129,6 +156,7 @@ FLAGS:
 	-o --output <profile-path>         : path to the InSpec profile output (default: profile) [optional]
 	-f --format [ruby | hash]          : the format you would like (default: ruby) [optional]
 	-s --separate-files [true | false] : output the resulting controls as one or mutiple files (default: true) [optional]
+	-m --metadata <metadata-json>      : path to json file with additional metadata for the inspec.yml file [optional]
 	-r --replace-tags <array>          : A case-sensitive, comma separated list to replace tags with a $ if found in a group rules description tag [optional]
 
 example: inspec_tools xccdf2inspec -x xccdf_file.xml -a attributes.yml -o myprofile -f ruby -s false
@@ -168,14 +196,6 @@ FLAGS:
 example: inspec_tools csv2inspec -c stig.csv -m map.yml -o mydir -f ruby -s true   # To map stig.csv to InSpec via map.yml
 ```
 
-### generate_map
-
-This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
-
-```
-USAGE: inspec_tools generate_map
-```
-
 ## inspec2csv
 
 Convert an InSpec json to a csv file
@@ -201,6 +221,7 @@ USAGE: inspec_tools inspec2ckl [OPTIONS] -j <inspec-json> -o <results-ckl>
 FLAGS:
 	-j --inspec-json <inspec-json> : path to InSpec results json file
 	-o --output <results-ckl>      : path to output checklist file
+	-m --metadata <metadata-json>  : path to json file with additional metadata for the checklist file [optional]
 	-V --verbose                   : verbose run [optional]
 
 example: inspec_tools inspec2ckl -j results.json -o output.ckl

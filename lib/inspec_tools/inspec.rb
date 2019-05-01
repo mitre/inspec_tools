@@ -184,7 +184,7 @@ module InspecTools
       asset.host_fqdn = generate_fqdn
       asset.tech_area = !@metadata['tech_area'].nil? ? @metadata['tech_area'] : ''
       asset.target_key = !@metadata['target_key'].nil? ? @metadata['target_key'] : ''
-      asset.web_or_database = !@metadata['web_or_databae'].nil? ? @metadata['web_or_database'] : '0'
+      asset.web_or_database = !@metadata['web_or_database'].nil? ? @metadata['web_or_database'] : '0'
       asset.web_db_site = !@metadata['web_db_site'].nil? ? @metadata['web_db_site'] : ''
       asset.web_db_instance = !@metadata['web_db_instance'].nil? ? @metadata['web_db_instance'] : ''
       asset
