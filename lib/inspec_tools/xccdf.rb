@@ -146,7 +146,6 @@ module InspecTools
         control['tags']['ia_controls'] = group.rule.description.ia_controls if group.rule.description.ia_controls != ''
         control['tags']['check'] = group.rule.check.content
         control['tags']['fix'] = group.rule.fixtext
-        control['tags']['severity'] = group.rule.severity
         @controls << control
       end
       @profile['controls'] = @controls
