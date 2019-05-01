@@ -1,5 +1,20 @@
 # Change Log
 
+## [v1.3.4](https://github.com/mitre/inspec_tools/tree/v1.3.4) (2019-05-01)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.6...v1.3.4)
+
+**Closed issues:**
+
+- Needed app is missing [\#49](https://github.com/mitre/inspec_tools/issues/49)
+- 2018   b79e5c3 [\#48](https://github.com/mitre/inspec_tools/issues/48)
+
+**Merged pull requests:**
+
+- Metadata docs and tools [\#55](https://github.com/mitre/inspec_tools/pull/55) ([samcornwell](https://github.com/samcornwell))
+- Fix bugs introduced by \#51 \(STIGViewer PR\) [\#52](https://github.com/mitre/inspec_tools/pull/52) ([samcornwell](https://github.com/samcornwell))
+- Enhancements to meet working with STIGViewer as well as tracking some custom metadata when converting from xccdf2inspec and inspec2ckl [\#51](https://github.com/mitre/inspec_tools/pull/51) ([kevin-j-smith](https://github.com/kevin-j-smith))
+- Add modules summary, compliance [\#45](https://github.com/mitre/inspec_tools/pull/45) ([rx294](https://github.com/rx294))
+
 ## [v1.1.6](https://github.com/mitre/inspec_tools/tree/v1.1.6) (2018-12-13)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.5...v1.1.6)
 
