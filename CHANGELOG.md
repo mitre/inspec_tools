@@ -1,5 +1,21 @@
 # Change Log
 
+## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.5...v1.3.6)
+
+**Implemented enhancements:**
+
+- remove 'severity' from conversion [\#57](https://github.com/mitre/inspec_tools/pull/57) ([aaronlippold](https://github.com/aaronlippold))
+
+**Fixed bugs:**
+
+- document new metadata.json file and creation of file in README.md [\#53](https://github.com/mitre/inspec_tools/issues/53)
+
+**Closed issues:**
+
+- While working with STIGViewer there were some missing TAGs [\#50](https://github.com/mitre/inspec_tools/issues/50)
+- remove severity tag in xccdf to inspec converted [\#44](https://github.com/mitre/inspec_tools/issues/44)
+
 ## [v1.3.5](https://github.com/mitre/inspec_tools/tree/v1.3.5) (2019-05-01)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.4...v1.3.5)
 
