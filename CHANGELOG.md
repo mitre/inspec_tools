@@ -1,5 +1,8 @@
 # Change Log
 
+## [v1.3.5](https://github.com/mitre/inspec_tools/tree/v1.3.5) (2019-05-01)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.4...v1.3.5)
+
 ## [v1.3.4](https://github.com/mitre/inspec_tools/tree/v1.3.4) (2019-05-01)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.6...v1.3.4)
 
