@@ -1,4 +1,5 @@
 require 'inspec/objects'
+require 'inspec/impact'
 require 'word_wrap'
 require 'pp'
 require 'uri'
@@ -174,6 +175,10 @@ module Utils
       when 'high' then 0.7
       else severity
       end
+    end
+
+    def self.get_impact_string(impact)
+      Inspec::Impact.string_from_impact(impact) unless impact.nil?
     end
 
     def self.unpack_inspec_json(directory, inspec_json, separated, output_format)

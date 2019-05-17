@@ -120,10 +120,26 @@ module InspecTools
       %w{
         Vuln_Num Severity Group_Title Rule_ID Rule_Ver Rule_Title Vuln_Discuss
         Check_Content Fix_Text CCI_REF
-      }.each do |param|
+      }.each do |attrib|
+        if attrib == 'Severity'
+          key = :impact
+        else
+          key = attrib.downcase.to_sym
+        end
+
+        next if control[key].nil?
+
+        if attrib == 'Severity'
+          value = Utils::InspecUtil.get_impact_string(control[key])
+          next if value == 'none'
+          value = 'high' if value == 'critical'
+        else
+          value = control[key]
+        end
+
         stigdata = HappyMapperTools::StigChecklist::StigData.new
-        stigdata.attrib = param
-        stigdata.data = control[param.downcase.to_sym]
+        stigdata.attrib = attrib
+        stigdata.data = value
         stig_data_list.push(stigdata)
       end
 
