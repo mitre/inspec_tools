@@ -1,15 +1,19 @@
 # Change Log
 
+## [v1.4.0](https://github.com/mitre/inspec_tools/tree/v1.4.0) (2019-05-17)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.6...v1.4.0)
+
+**Merged pull requests:**
+
+- Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
+
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.5...v1.3.6)
 
 **Implemented enhancements:**
 
-- remove 'severity' from conversion [\#57](https://github.com/mitre/inspec_tools/pull/57) ([aaronlippold](https://github.com/aaronlippold))
-
-**Fixed bugs:**
-
 - document new metadata.json file and creation of file in README.md [\#53](https://github.com/mitre/inspec_tools/issues/53)
+- remove 'severity' from conversion [\#57](https://github.com/mitre/inspec_tools/pull/57) ([aaronlippold](https://github.com/aaronlippold))
 
 **Closed issues:**
 
