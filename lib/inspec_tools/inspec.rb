@@ -132,6 +132,7 @@ module InspecTools
         if attrib == 'Severity'
           value = Utils::InspecUtil.get_impact_string(control[key])
           next if value == 'none'
+
           value = 'high' if value == 'critical'
         else
           value = control[key]
