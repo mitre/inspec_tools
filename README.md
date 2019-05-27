@@ -116,13 +116,13 @@ compliance:
 
 ```
 compliance.min: 81
-failed.critical.max: 10
+failed.critical.max: 1
 failed.high.max: 1
 ```
 
 #### In-Line Exmamples
 ```
-{compliance: {min: 80}, failed: {critical: {max: 0}, high: {max: 0}}}
+{compliance: {min: 90}, failed: {critical: {max: 0}, high: {max: 0}}}
 ```
 
 ```
