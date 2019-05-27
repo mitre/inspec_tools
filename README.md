@@ -101,8 +101,9 @@ Examples:
   inspec_tools compliance -j examples/sample_json/rhel-simp.json -f examples/sample_yaml/threshold.yaml
 ```
 
-##### Possible In-line and yaml file threshold definition styles:
+### YAML file or In-line threshold definition styles:
 
+#### File Examples
 ```
 failed:
   critical:
@@ -114,17 +115,18 @@ compliance:
 ```
 
 ```
+compliance.min: 81
+failed.critical.max: 10
+failed.high.max: 1
+```
+
+#### In-Line Exmamples
+```
 {compliance: {min: 80}, failed: {critical: {max: 0}, high: {max: 0}}}
 ```
 
 ```
-{compliance.min: 81, failed.critical.max: 10, failed.high.max: 0}
-```
-
-```
-compliance.min: 81
-failed.critical.max: 10
-failed.high.max: 1
+{compliance.min: 81, failed.critical.max: 0, failed.high.max: 0}
 ```
 
 ## summary
@@ -300,7 +302,7 @@ Then, run `bundle exec rake release` which will create a git tag for the specifi
 
 Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
 
-## NOTICE
+### NOTICE
 
 MITRE hereby grants express written permission to use, reproduce, distribute, modify, and otherwise leverage this software to the extent permitted by the licensed terms provided in the LICENSE.md file included with this project.
 
