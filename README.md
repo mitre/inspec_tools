@@ -139,10 +139,11 @@ USAGE: inspec_tools summary [OPTIONS] -j <inspec-json> -o <summary-csv>
 FLAGS:
 	-j --inspec-json <inspec-json>  : path to InSpec results Json
 	-o --output <output-json> 		: path to summary json
+    -c --cli <output-cli>           : print summary to stdout
 
 Examples:
 
-  inspec_tools summary -j examples/sample_json/rhel-simp.json -o summary.json
+  inspec_tools summary -j examples/sample_json/rhel-simp.json -o summary.json -c
 ```
 
 ## xccdf2inspec

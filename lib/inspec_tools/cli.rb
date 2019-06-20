@@ -164,10 +164,19 @@ module InspecTools
     long_desc Help.text(:summary)
     option :inspec_json, required: true, aliases: '-j'
     option :output, required: true, aliases: '-o'
+    option :cli, required: false, aliases: '-c'
     option :verbose, type: :boolean, aliases: '-V'
 
     def summary
       summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
+
+      summary[:status].keys.each do |status|
+        puts status
+        summary[:status][status.to_sym].keys.each do |impact|
+          print "\t#{impact} : #{summary[:status][status.to_sym][impact.to_sym]}\n"
+        end
+      end if options[:cli]
+
       File.write(options[:output], summary.to_json)
     end
 
