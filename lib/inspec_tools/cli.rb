@@ -163,7 +163,7 @@ module InspecTools
     desc 'summary', 'summary parses an inspec results json to create a summary json'
     long_desc Help.text(:summary)
     option :inspec_json, required: true, aliases: '-j'
-    option :output, required: true, aliases: '-o'
+    option :output, required: false, aliases: '-o'
     option :cli, required: false, aliases: '-c'
     option :verbose, type: :boolean, aliases: '-V'
 
@@ -177,7 +177,7 @@ module InspecTools
         end
       end if options[:cli]
 
-      File.write(options[:output], summary.to_json)
+      File.write(options[:output], summary.to_json) if options[:output]
     end
 
     desc 'compliance', 'compliance parses an inspec results json to check if the compliance level meets a specified threshold'
