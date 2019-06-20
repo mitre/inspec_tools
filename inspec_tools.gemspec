@@ -31,7 +31,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.require_paths = ['lib']
 
   spec.add_dependency 'colorize', '~> 0'
-  spec.add_dependency 'inspec', '~> 3.0'
+  spec.add_dependency 'inspec', ">= 3.0", "< 5.0"
   spec.add_dependency 'nokogiri', '~> 1.8'
   spec.add_dependency 'nokogiri-happymapper', '~> 0'
   spec.add_dependency 'OptionParser', '~> 0'
