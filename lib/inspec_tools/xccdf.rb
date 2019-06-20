@@ -4,6 +4,7 @@ require_relative '../utilities/inspec_util'
 
 require 'digest'
 require 'json'
+require 'inspec'
 
 module InspecTools
   # rubocop:disable Metrics/ClassLength

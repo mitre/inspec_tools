@@ -1,4 +1,5 @@
 require 'json'
+require 'fileutils'
 require_relative '../test_helper'
 require_relative '../../../lib/utilities/inspec_util'
 
