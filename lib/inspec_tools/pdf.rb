@@ -1,4 +1,5 @@
 require 'digest'
+require 'inspec'
 
 require_relative '../utilities/inspec_util'
 require_relative '../utilities/extract_pdf_text'
