@@ -4,6 +4,7 @@ require 'word_wrap'
 require 'pp'
 require 'uri'
 require 'net/http'
+require 'fileutils'
 
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize

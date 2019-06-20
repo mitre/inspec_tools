@@ -4,6 +4,7 @@ require 'inspec/objects'
 require 'word_wrap'
 require 'yaml'
 require 'digest'
+require 'inspec'
 
 require_relative '../utilities/inspec_util'
 
