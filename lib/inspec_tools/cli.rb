@@ -170,6 +170,7 @@ module InspecTools
     def summary
       summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
 
+      puts "\ncompliance: #{summary[:compliance]}%\n\n"
       summary[:status].keys.each do |status|
         puts status
         summary[:status][status.to_sym].keys.each do |impact|
