@@ -29,7 +29,6 @@ module InspecPlugins
       class_option :log_level, type: :string, desc: "Set the logging level: #{POSSIBLE_LOG_LEVELS}"
 
       subcommand_desc 'tools [COMMAND]', 'Runs inspec_tools commands through Inspec'
-
       desc 'xccdf2inspec', 'xccdf2inspec translates an xccdf file to an inspec profile'
       long_desc InspecTools::Help.text(:xccdf2inspec)
       option :xccdf, required: true, aliases: '-x'
@@ -53,7 +52,7 @@ module InspecPlugins
           File.write(options[:attributes], YAML.dump(attributes))
         end
       end
-
+ 
       desc 'inspec2xccdf', 'inspec2xccdf translates an inspec profile and attributes files to an xccdf file'
       long_desc InspecTools::Help.text(:inspec2xccdf)
       option :inspec_json, required: true, aliases: '-j'
