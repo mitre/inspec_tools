@@ -22,7 +22,7 @@ end
 # rubocop:disable Style/GuardClause
 module InspecPlugins
   module InspecToolsPlugin
-    class CliCommand < Inspec.plugin(2, :cli_command)
+    class CliCommand < Inspec.plugin(2, :cli_command) # rubocop:disable Metrics/ClassLength
 
       POSSIBLE_LOG_LEVELS = %w{debug info warn error fatal}
   
@@ -245,3 +245,5 @@ end
 # Adjustments for non-required log-directory
 #---------------------------------------------------------------------#
 ARGV.push("--log-directory=#{Dir.pwd}/logs") if (log_commands & ARGV).empty? && (help_commands & ARGV).empty?
+
+# rubocop:enable Style/GuardClause
