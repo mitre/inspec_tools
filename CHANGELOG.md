@@ -1,14 +1,23 @@
 # Change Log
 
+## [v1.4.2](https://github.com/mitre/inspec_tools/tree/v1.4.2) (2019-07-30)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.1...v1.4.2)
+
+**Closed issues:**
+
+- Add additional option for Summary command [\#64](https://github.com/mitre/inspec_tools/issues/64)
+- `insert\_json\_metadata': undefined method `version' for nil:NilClass [\#63](https://github.com/mitre/inspec_tools/issues/63)
+
+**Merged pull requests:**
+
+- Updated rake version [\#69](https://github.com/mitre/inspec_tools/pull/69) ([robthew](https://github.com/robthew))
+- Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
+
 ## [v1.4.1](https://github.com/mitre/inspec_tools/tree/v1.4.1) (2019-06-20)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.0...v1.4.1)
 
 ## [v1.4.0](https://github.com/mitre/inspec_tools/tree/v1.4.0) (2019-05-17)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.6...v1.4.0)
-
-**Merged pull requests:**
-
-- Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.5...v1.3.6)
@@ -104,6 +113,7 @@
 
 **Merged pull requests:**
 
+- Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
 - Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
 - Change default separated\_files setting to default to true [\#11](https://github.com/mitre/inspec_tools/pull/11) ([yarick](https://github.com/yarick))
 - Cleanup [\#8](https://github.com/mitre/inspec_tools/pull/8) ([robthew](https://github.com/robthew))
