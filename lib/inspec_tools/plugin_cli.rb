@@ -36,7 +36,7 @@ module InspecPlugins
       option :output, required: false, aliases: '-o', default: 'profile'
       option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
       option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
-      option :replace_tags, required: false, aliases: '-r'
+      option :replace_tags, required: false, type: :array, aliases: '-r'
       option :metadata, required: false, aliases: '-m'
       def xccdf2inspec
         xccdf = InspecTools::XCCDF.new(File.read(options[:xccdf]), options[:replace_tags])
