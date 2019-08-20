@@ -22,15 +22,14 @@ end
 # rubocop:disable Style/GuardClause
 module InspecPlugins
   module InspecToolsPlugin
-    class CliCommand < Inspec.plugin(2, :cli_command)
+    class CliCommand < Inspec.plugin(2, :cli_command) # rubocop:disable Metrics/ClassLength
+      POSSIBLE_LOG_LEVELS = %w{debug info warn error fatal}.freeze
 
-      POSSIBLE_LOG_LEVELS = %w{debug info warn error fatal}
-  
       class_option :log_directory, type: :string, aliases: :l, desc: 'Provie log location'
       class_option :log_level, type: :string, desc: "Set the logging level: #{POSSIBLE_LOG_LEVELS}"
-  
+
       subcommand_desc 'tools [COMMAND]', 'Runs inspec_tools commands through Inspec'
-  
+
       desc 'xccdf2inspec', 'xccdf2inspec translates an xccdf file to an inspec profile'
       long_desc InspecTools::Help.text(:xccdf2inspec)
       option :xccdf, required: true, aliases: '-x'
@@ -38,23 +37,23 @@ module InspecPlugins
       option :output, required: false, aliases: '-o', default: 'profile'
       option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
       option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
-      option :replace_tags, required: false, type: :array, aliases: '-r'
+      option :replace_tags, required: false, aliases: '-r'
       option :metadata, required: false, aliases: '-m'
       def xccdf2inspec
         xccdf = InspecTools::XCCDF.new(File.read(options[:xccdf]), options[:replace_tags])
         profile = xccdf.to_inspec
-  
+
         if !options[:metadata].nil?
           xccdf.inject_metadata(File.read(options[:metadata]))
         end
-  
+
         Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
         if !options[:attributes].nil?
           attributes = xccdf.to_attributes
           File.write(options[:attributes], YAML.dump(attributes))
         end
       end
-  
+
       desc 'inspec2xccdf', 'inspec2xccdf translates an inspec profile and attributes files to an xccdf file'
       long_desc InspecTools::Help.text(:inspec2xccdf)
       option :inspec_json, required: true, aliases: '-j'
@@ -67,7 +66,7 @@ module InspecPlugins
         xccdf = inspec_tool.to_xccdf(attr_hsh)
         File.write(options[:output], xccdf)
       end
-  
+
       desc 'csv2inspec', 'csv2inspec translates CSV to Inspec controls using a mapping file'
       long_desc InspecTools::Help.text(:csv2inspec)
       option :csv, required: true, aliases: '-c'
@@ -82,7 +81,7 @@ module InspecPlugins
         profile = InspecTools::CSVTool.new(csv, mapping, options[:csv].split('/')[-1].split('.')[0], options[:verbose]).to_inspec
         Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
       end
-  
+
       desc 'inspec2csv', 'inspec2csv translates Inspec controls to CSV'
       long_desc InspecTools::Help.text(:inspec2csv)
       option :inspec_json, required: true, aliases: '-j'
@@ -92,7 +91,7 @@ module InspecPlugins
         csv = InspecTools::Inspec.new(File.read(options[:inspec_json])).to_csv
         Utils::CSVUtil.unpack_csv(csv, options[:output])
       end
-  
+
       desc 'inspec2ckl', 'inspec2ckl translates an inspec json file to a Checklist file'
       long_desc InspecTools::Help.text(:inspec2ckl)
       option :inspec_json, required: true, aliases: '-j'
@@ -107,7 +106,7 @@ module InspecPlugins
         ckl = InspecTools::Inspec.new(File.read(options[:inspec_json]), metadata).to_ckl
         File.write(options[:output], ckl)
       end
-  
+
       desc 'pdf2inspec', 'pdf2inspec translates a PDF Security Control Speficication to Inspec Security Profile'
       long_desc InspecTools::Help.text(:pdf2inspec)
       option :pdf, required: true, aliases: '-p'
@@ -120,15 +119,14 @@ module InspecPlugins
         profile = InspecTools::PDF.new(pdf, options[:output], options[:debug]).to_inspec
         Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
       end
-  
+
       desc 'generate_map', 'Generates mapping template from CSV to Inspec Controls'
       def generate_map
         template = '
         # Setting csv_header to true will skip the csv file header
         skip_csv_header: true
         width   : 80
-  
-  
+
         control.id: 0
         control.title: 15
         control.desc: 16
@@ -144,11 +142,11 @@ module InspecPlugins
         myfile.puts template
         myfile.close
       end
-  
+
       desc 'generate_ckl_metadata', 'Generate metadata file that can be passed to inspec2ckl'
       def generate_ckl_metadata
         metadata = {}
-  
+
         metadata['stigid'] = ask('STID ID: ')
         metadata['role'] = ask('Role: ')
         metadata['type'] = ask('Type: ')
@@ -161,39 +159,38 @@ module InspecPlugins
         metadata['web_or_database'] = ask('Web or Database: ')
         metadata['web_db_site'] = ask('Web DB Site: ')
         metadata['web_db_instance'] = ask('Web DB Instance: ')
-  
+
         metadata.delete_if { |_key, value| value.empty? }
         File.open('metadata.json', 'w') do |f|
           f.write(metadata.to_json)
         end
       end
-  
+
       desc 'generate_inspec_metadata', 'Generate mapping file that can be passed to xccdf2inspec'
       def generate_inspec_metadata
         metadata = {}
-  
+
         metadata['maintainer'] = ask('Maintainer: ')
         metadata['copyright'] = ask('Copyright: ')
         metadata['copyright_email'] = ask('Copyright Email: ')
         metadata['license'] = ask('License: ')
         metadata['version'] = ask('Version: ')
-  
+
         metadata.delete_if { |_key, value| value.empty? }
         File.open('metadata.json', 'w') do |f|
           f.write(metadata.to_json)
         end
       end
-  
+
       desc 'summary', 'summary parses an inspec results json to create a summary json'
       long_desc InspecTools::Help.text(:summary)
       option :inspec_json, required: true, aliases: '-j'
       option :output, required: false, aliases: '-o'
       option :cli, required: false, aliases: '-c'
       option :verbose, type: :boolean, aliases: '-V'
-  
       def summary
         summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
-  
+
         puts "\ncompliance: #{summary[:compliance]}%\n\n"
         summary[:status].keys.each do |status|
           puts status
@@ -201,17 +198,17 @@ module InspecPlugins
             print "\t#{impact} : #{summary[:status][status.to_sym][impact.to_sym]}\n"
           end
         end if options[:cli]
-  
+
         File.write(options[:output], summary.to_json) if options[:output]
       end
-  
+
       desc 'compliance', 'compliance parses an inspec results json to check if the compliance level meets a specified threshold'
       long_desc InspecTools::Help.text(:compliance)
       option :inspec_json, required: true, aliases: '-j'
       option :threshold_file, required: false, aliases: '-f'
       option :threshold_inline, required: false, aliases: '-i'
       option :verbose, type: :boolean, aliases: '-V'
-  
+
       def compliance
         if options[:threshold_file].nil? && options[:threshold_inline].nil?
           puts 'Please provide threshold as a yaml file or inline yaml'
@@ -237,7 +234,7 @@ version_commands = ['-v', '--version', 'version']
 # Adjustments for non-required version commands
 #---------------------------------------------------------------------#
 unless (version_commands & ARGV).empty?
-  puts VERSION
+  puts InspecTools::VERSION
   exit 0
 end
 
@@ -245,3 +242,4 @@ end
 # Adjustments for non-required log-directory
 #---------------------------------------------------------------------#
 ARGV.push("--log-directory=#{Dir.pwd}/logs") if (log_commands & ARGV).empty? && (help_commands & ARGV).empty?
+# rubocop:enable Style/GuardClause
