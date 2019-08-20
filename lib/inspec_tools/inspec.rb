@@ -25,6 +25,7 @@ module InspecTools
     def to_ckl(title = nil, date = nil, cklist = nil)
       @data = Utils::InspecUtil.parse_data_for_ckl(@json)
       @platform = Utils::InspecUtil.get_platform(@json)
+      title = @metadata['title'] if @metadata['title'] && !title
       @title = generate_title title, @json, date
       @cklist = cklist
       @checklist = HappyMapperTools::StigChecklist::Checklist.new
