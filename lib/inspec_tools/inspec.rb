@@ -17,9 +17,9 @@ require_relative 'csv'
 
 module InspecTools
   class Inspec
-    def initialize(inspec_json, metadata = '{}')
+    def initialize(inspec_json, metadata = {})
       @json = JSON.parse(inspec_json)
-      @metadata = JSON.parse(metadata)
+      @metadata = metadata
     end
 
     def to_ckl(title = nil, date = nil, cklist = nil)
