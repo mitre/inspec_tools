@@ -96,11 +96,18 @@ module InspecPlugins
       option :inspec_json, required: true, aliases: '-j'
       option :output, required: true, aliases: '-o'
       option :verbose, type: :boolean, aliases: '-V'
-      option :metadata, required: false, aliases: '-m'
+      option :metadata, type: :array, required: false, aliases: '-m'
+      option :attributes, type: :hash, required: false, aliases: '-a'
       def inspec2ckl
-        metadata = '{}'
-        if !options[:metadata].nil?
-          metadata = File.read(options[:metadata])
+        metadata = {}
+        if options[:metadata]
+          options[:metadata].each do |m|
+            m_json = JSON.parse(File.read(m))
+            metadata = metadata.merge(m_json)
+          end
+        end
+        if options[:attributes]
+          metadata = metadata.merge(options[:attributes])
         end
         ckl = InspecTools::Inspec.new(File.read(options[:inspec_json]), metadata).to_ckl
         File.write(options[:output], ckl)
