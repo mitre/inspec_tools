@@ -77,8 +77,9 @@ module InspecTools
     option :verbose, type: :boolean, aliases: '-V'
     option :metadata, type: :array, required: false, aliases: '-m'
     option :attributes, type: :hash, required: false, aliases: '-a'
+    option :xccdf, type: :string, required: false, aliases: '-x'
     def inspec2ckl
-      metadata = JSON.parse('{}')
+      metadata = {}
       if options[:metadata]
         options[:metadata].each do |m|
           m_json = JSON.parse(File.read(m))
@@ -88,7 +89,10 @@ module InspecTools
       if options[:attributes]
         metadata = metadata.merge(options[:attributes])
       end
-      ckl = InspecTools::Inspec.new(File.read(options[:inspec_json]), metadata).to_ckl
+
+      xccdf = InspecTools::XCCDF.new(File.read(options[:xccdf])) if options[:xccdf]
+
+      ckl = InspecTools::Inspec.new(File.read(options[:inspec_json]), metadata, xccdf).to_ckl
       File.write(options[:output], ckl)
     end
 
