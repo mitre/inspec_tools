@@ -13,8 +13,6 @@ module InspecTools
   CLI = InspecPlugins::InspecToolsPlugin::CliCommand
 end
 
-
-
 #=====================================================================#
 #                        Pre-Flight Code
 #=====================================================================#
@@ -34,5 +32,3 @@ end
 # Adjustments for non-required log-directory
 #---------------------------------------------------------------------#
 ARGV.push("--log-directory=#{Dir.pwd}/logs") if (log_commands & ARGV).empty? && (help_commands & ARGV).empty?
-
-# rubocop:enable Style/GuardClause
