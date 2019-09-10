@@ -1,5 +1,16 @@
 # Change Log
 
+## [v1.5.0](https://github.com/mitre/inspec_tools/tree/v1.5.0) (2019-09-10)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.2...v1.5.0)
+
+**Closed issues:**
+
+- Feature Enhancement: Inspec command plugin for inspec\_tools [\#67](https://github.com/mitre/inspec_tools/issues/67)
+
+**Merged pull requests:**
+
+- Kevin j smith adding inspec command plugin logic [\#72](https://github.com/mitre/inspec_tools/pull/72) ([lukemalinowski](https://github.com/lukemalinowski))
+
 ## [v1.4.2](https://github.com/mitre/inspec_tools/tree/v1.4.2) (2019-07-30)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.1...v1.4.2)
 
@@ -11,6 +22,7 @@
 **Merged pull requests:**
 
 - Updated rake version [\#69](https://github.com/mitre/inspec_tools/pull/69) ([robthew](https://github.com/robthew))
+- Added logic so that inspec\_tools can be a plugin to Inspec as a comma… [\#68](https://github.com/mitre/inspec_tools/pull/68) ([kevin-j-smith](https://github.com/kevin-j-smith))
 - Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.4.1](https://github.com/mitre/inspec_tools/tree/v1.4.1) (2019-06-20)
@@ -18,6 +30,10 @@
 
 ## [v1.4.0](https://github.com/mitre/inspec_tools/tree/v1.4.0) (2019-05-17)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.6...v1.4.0)
+
+**Merged pull requests:**
+
+- Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.5...v1.3.6)
@@ -113,7 +129,6 @@
 
 **Merged pull requests:**
 
-- Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
 - Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
 - Change default separated\_files setting to default to true [\#11](https://github.com/mitre/inspec_tools/pull/11) ([yarick](https://github.com/yarick))
 - Cleanup [\#8](https://github.com/mitre/inspec_tools/pull/8) ([robthew](https://github.com/robthew))
