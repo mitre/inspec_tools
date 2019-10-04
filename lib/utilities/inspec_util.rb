@@ -97,10 +97,14 @@ module Utils
           data[c_id][:message] = []
           if control.key?('results')
             control['results'].each do |result|
+              if !result['backtrace'].nil?
+                result['status'] = 'error'
+              end
               data[c_id][:status].push(result['status'])
               data[c_id][:message].push("SKIPPED -- Test: #{result['code_desc']}\nMessage: #{result['skip_message']}\n") if result['status'] == 'skipped'
               data[c_id][:message].push("FAILED -- Test: #{result['code_desc']}\nMessage: #{result['message']}\n") if result['status'] == 'failed'
               data[c_id][:message].push("PASS -- #{result['code_desc']}\n") if result['status'] == 'passed'
+              data[c_id][:message].push("PROFILE_ERROR -- Test: #{result['code_desc']}\nMessage: #{result['exception']}\n") if result['status'] == 'error'
             end
           end
           if data[c_id][:impact].to_f.zero?
@@ -130,16 +134,16 @@ module Utils
       status_list = control[:status].uniq
       if status_list.include?('failed')
         result = 'Open'
-      elsif status_list.include?('skipped')
-        result = 'Not_Reviewed'
       elsif status_list.include?('passed')
         result = 'NotAFinding'
-      else
-        # result = 'Not_Tested' ## STIGViewer does not allow Not_Tested as a possible status.
+      elsif status_list.include?('skipped')
         result = 'Not_Reviewed'
       end
       if control[:impact].to_f.zero?
         result = 'Not_Applicable'
+      end
+      if status_list.empty? or status_list.include?('error')
+        result = 'Profile_Error'
       end
       result
     end
@@ -149,7 +153,7 @@ module Utils
       result = "All Automated tests passed for the control \n\n #{control[:message].join}" if control_clk_status == 'NotAFinding'
       result = "Automated test skipped due to known accepted condition in the control : \n\n#{control[:message].join}" if control_clk_status == 'Not_Reviewed'
       result = "Justification: \n #{control[:message].join}" if control_clk_status == 'Not_Applicable'
-      result = 'No test available for this control' if control_clk_status == 'Not_Tested'
+      result = 'No test available or some test errors occurred for this control' if control_clk_status == 'Profile_Error'
       result
     end
 

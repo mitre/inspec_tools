@@ -17,3 +17,4 @@ test/version_tmp
 tmp
 # Ignore Mac DS_Store files
 **/.DS_Store
+*.json
