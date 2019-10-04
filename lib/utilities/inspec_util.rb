@@ -104,7 +104,7 @@ module Utils
               data[c_id][:message].push("SKIPPED -- Test: #{result['code_desc']}\nMessage: #{result['skip_message']}\n") if result['status'] == 'skipped'
               data[c_id][:message].push("FAILED -- Test: #{result['code_desc']}\nMessage: #{result['message']}\n") if result['status'] == 'failed'
               data[c_id][:message].push("PASS -- #{result['code_desc']}\n") if result['status'] == 'passed'
-              data[c_id][:message].push("PROFILE_ERROR -- Test: #{result['code_desc']}\nMessage: #{result['exception']}\n") if result['status'] == 'error'
+              data[c_id][:message].push("PROFILE_ERROR -- Test: #{result['code_desc']}\nMessage: #{result['backtrace']}\n") if result['status'] == 'error'
             end
           end
           if data[c_id][:impact].to_f.zero?
