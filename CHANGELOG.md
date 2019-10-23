@@ -1,5 +1,25 @@
 # Change Log
 
+## [v1.6.3](https://github.com/mitre/inspec_tools/tree/v1.6.3) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.2...v1.6.3)
+
+## [v1.6.2](https://github.com/mitre/inspec_tools/tree/v1.6.2) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.1...v1.6.2)
+
+## [v1.6.1](https://github.com/mitre/inspec_tools/tree/v1.6.1) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.0...v1.6.1)
+
+**Merged pull requests:**
+
+- Update Profile logic include control exceptions [\#75](https://github.com/mitre/inspec_tools/pull/75) ([rx294](https://github.com/rx294))
+
+## [v1.6.0](https://github.com/mitre/inspec_tools/tree/v1.6.0) (2019-10-04)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.5.0...v1.6.0)
+
+**Closed issues:**
+
+- Updated logic for results metrics [\#74](https://github.com/mitre/inspec_tools/issues/74)
+
 ## [v1.5.0](https://github.com/mitre/inspec_tools/tree/v1.5.0) (2019-09-10)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.2...v1.5.0)
 
