@@ -8,7 +8,7 @@ jobs:
     name: Generate VERSION.md
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout heimdall_tools
+      - name: Checkout inspec_tools
         uses: actions/checkout@v1  
         with:
           token: ${{secrets.GITHUB_TOKEN}}   
