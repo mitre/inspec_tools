@@ -60,7 +60,6 @@
 
 **Implemented enhancements:**
 
-- document new metadata.json file and creation of file in README.md [\#53](https://github.com/mitre/inspec_tools/issues/53)
 - remove 'severity' from conversion [\#57](https://github.com/mitre/inspec_tools/pull/57) ([aaronlippold](https://github.com/aaronlippold))
 
 **Closed issues:**
@@ -131,6 +130,10 @@
 
 ## [v1.1.0](https://github.com/mitre/inspec_tools/tree/v1.1.0) (2018-11-08)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.0.0...v1.1.0)
+
+**Implemented enhancements:**
+
+- document new metadata.json file and creation of file in README.md [\#53](https://github.com/mitre/inspec_tools/issues/53)
 
 **Fixed bugs:**
 
