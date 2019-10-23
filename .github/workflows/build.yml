@@ -1,0 +1,43 @@
+name: inspec_tools
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    name: Build and test inspec_tools
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout inspec_tools
+        uses: actions/checkout@v1
+      - name: Setup ruby
+        uses: actions/setup-ruby@v1
+      - name: Install bundler
+        run: |
+          gem install bundler
+      - name: Run bundle install
+        run: |
+          bundle install
+      - name: Run rake test
+        run: |
+          rake test
+#      - name: Install rubocop
+#        run: |
+#          gem install rubocop
+#      - name: Run rubocop
+#        run: |
+#          rubocop
+      - name: Build inspec_tools gem
+        run: | 
+          gem build inspec_tools.gemspec
+      - name: Install inspec_tools gem
+        run: |
+          gem install inspec_tools
+#      - name: Run inspec_tools
+#        run: |
+#          inspec_tools
+      - uses: anothrNick/github-tag-action@master
+      - uses: toolmantim/release-drafter@v5.2.0
+
+        env:
+          CI: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
