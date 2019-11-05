@@ -24,7 +24,7 @@ version_commands = ['-v', '--version', 'version']
 # Adjustments for non-required version commands
 #---------------------------------------------------------------------#
 unless (version_commands & ARGV).empty?
-  puts VERSION
+  puts InspecTools::VERSION
   exit 0
 end
 
