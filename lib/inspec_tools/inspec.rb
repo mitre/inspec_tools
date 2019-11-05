@@ -18,7 +18,7 @@ require_relative 'csv'
 module InspecTools
   class Inspec
     def initialize(inspec_json, metadata = '{}')
-      @json = JSON.parse(inspec_json)
+      @json = JSON.parse(inspec_json.gsub(/\\+u0000/, ''))
       @metadata = JSON.parse(metadata)
     end
 
