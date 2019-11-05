@@ -1,4 +1,3 @@
-module InspecTools\n  VERSION = '
-v1.6.4
-'.freeze\n
+module InspecTools  
+  VERSION = 'v1.6.0'.freeze
 end
