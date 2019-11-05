@@ -21,9 +21,9 @@ jobs:
           git show -s --format=%ci $(git rev-list --tags --max-count=1) >> RELEASE.md
           echo "<br><br>**Commit:** " >> RELEASE.md
           git rev-list --tags --max-count=1 >> RELEASE.md
-          echo "module InspecTools<br>  VERSION = '" >> lib/inspec_tools/version.rb
+          echo "module InspecTools\n  VERSION = '" > lib/inspec_tools/version.rb
           git describe --tags $(git rev-list --tags --max-count=1) >> lib/inspec_tools/version.rb
-          echo "'.freeze<br>" >> lib/inspec_tools/version.rb
+          echo "'.freeze\n" >> lib/inspec_tools/version.rb
           echo "end" >> lib/inspec_tools/version.rb
       - name: Commit and push changes to RELEASE.md
         uses: github-actions-x/commit@v2.1
