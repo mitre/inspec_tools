@@ -48,7 +48,7 @@ module InspecTools
       @summary[:buckets][:passed]    = select_by_status(@data, 'NotAFinding')
       @summary[:buckets][:no_impact] = select_by_status(@data, 'Not_Applicable')
       @summary[:buckets][:skipped]   = select_by_status(@data, 'Not_Reviewed')
-      @summary[:buckets][:error]     = select_by_status(@data, 'Not_Tested')
+      @summary[:buckets][:error]     = select_by_status(@data, 'Profile_Error')
 
       @summary[:status] = {}
       @summary[:status][:failed]    = tally_by_impact(@summary[:buckets][:failed])

@@ -1,5 +1,31 @@
 # Change Log
 
+## [v1.6.5](https://github.com/mitre/inspec_tools/tree/v1.6.5) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.4...v1.6.5)
+
+## [v1.6.4](https://github.com/mitre/inspec_tools/tree/v1.6.4) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.3...v1.6.4)
+
+## [v1.6.3](https://github.com/mitre/inspec_tools/tree/v1.6.3) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.2...v1.6.3)
+
+## [v1.6.2](https://github.com/mitre/inspec_tools/tree/v1.6.2) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.1...v1.6.2)
+
+## [v1.6.1](https://github.com/mitre/inspec_tools/tree/v1.6.1) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.0...v1.6.1)
+
+**Merged pull requests:**
+
+- Update Profile logic include control exceptions [\#75](https://github.com/mitre/inspec_tools/pull/75) ([rx294](https://github.com/rx294))
+
+## [v1.6.0](https://github.com/mitre/inspec_tools/tree/v1.6.0) (2019-10-04)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.5.0...v1.6.0)
+
+**Closed issues:**
+
+- Updated logic for results metrics [\#74](https://github.com/mitre/inspec_tools/issues/74)
+
 ## [v1.5.0](https://github.com/mitre/inspec_tools/tree/v1.5.0) (2019-09-10)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.2...v1.5.0)
 
@@ -97,7 +123,6 @@
 - Added appveyor config [\#40](https://github.com/mitre/inspec_tools/pull/40) ([robthew](https://github.com/robthew))
 - Travis test [\#39](https://github.com/mitre/inspec_tools/pull/39) ([robthew](https://github.com/robthew))
 - Add rubocop to the process [\#35](https://github.com/mitre/inspec_tools/pull/35) ([aaronlippold](https://github.com/aaronlippold))
-- \* added refernces to external data sources [\#30](https://github.com/mitre/inspec_tools/pull/30) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.1.2](https://github.com/mitre/inspec_tools/tree/v1.1.2) (2018-11-08)
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.1...v1.1.2)
@@ -126,6 +151,7 @@
 **Merged pull requests:**
 
 - Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
+- \* added refernces to external data sources [\#30](https://github.com/mitre/inspec_tools/pull/30) ([aaronlippold](https://github.com/aaronlippold))
 - Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
 - Change default separated\_files setting to default to true [\#11](https://github.com/mitre/inspec_tools/pull/11) ([yarick](https://github.com/yarick))
 - Cleanup [\#8](https://github.com/mitre/inspec_tools/pull/8) ([robthew](https://github.com/robthew))
