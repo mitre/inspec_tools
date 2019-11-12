@@ -248,7 +248,7 @@ ARGV.push("--log-directory=#{Dir.pwd}/logs") if (log_commands & ARGV).empty? && 
 # Push help to front of command so thor recognizes subcommands are called with help
 if help_commands.any? { |cmd| ARGV.include? cmd }
   help_commands.each do |cmd|
-    if match = ARGV.delete(cmd)
+    if (match = ARGV.delete(cmd))
       ARGV.unshift match
     end
   end
