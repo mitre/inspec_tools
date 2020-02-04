@@ -79,40 +79,6 @@ module InspecTools
       [nist_ref, nist_ver]
     end
 
-    def parse_cis_controls
-      @csv.each do |row|
-        print '.'
-        control = {}
-        control['id'] = 'M-' + row[@mapping['control.id']].split(' ')[0] unless @mapping['control.id'].nil? || row[@mapping['control.id']].nil?
-        control['title']  = row[@mapping['control.title']]  unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
-        control['desc']   = row[@mapping['control.desc']]   unless @mapping['control.desc'].nil? || row[@mapping['control.desc']].nil?
-        control['tags'] = {}
-        control['impact'] = Utils::InspecUtil.get_impact('medium')
-        control['tags']['ref'] = row[@mapping['control.ref']] unless @mapping['control.ref'].nil? || row[@mapping['control.ref']].nil?
-        
-        # applicability comes from the sheet number
-        # control['tags']['applicability'] = row[@mapping['control.applicability']] unless @mapping['control.applicability'].nil? || row[@mapping['control.applicability']].nil?
-        control['tags']['cis_id'] = row[@mapping['control.title']].split(' ')[0] unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
-        control['tags']['check'] = row[@mapping['control.check']] unless @mapping['control.check'].nil? || row[@mapping['control.check']].nil?
-        control['tags']['fix'] = row[@mapping['control.fix']] unless @mapping['control.fix'].nil? || row[@mapping['control.fix']].nil?
-
-        # nist = find_nist(row[:cis]) unless row[:cis] == 'No CIS Control'
-
-        # cis_control must be extracted from CIS control column via regex
-        # control['tags']['cis_control'] = [row[:cis], @nist_mapping[0][:cis_ver]] unless row[:cis].nil? # tag cis_control: [5, 6.1] ##6.1 is the version
-        # control['tags']['cis_level'] = row[:level] unless row[:level].nil?
-        # control['tags']['nist'] = nist unless nist.nil? # tag nist: [AC-3, 4]  ##4 is the version
-        # control['tags']['Default Value'] = row[:default] unless row[:default].nil?
-
-        @mapping['control.tags'].each do |tag|
-          control['tags'][tag.first.to_s] = row[tag.last] unless row[tag.last].nil?
-        end
-        control['impact'] = Utils::InspecUtil.get_impact(row[@mapping['control.tags']['severity']]) unless @mapping['control.tags']['severity'].nil? || row[@mapping['control.tags']['severity']].nil?
-
-        # controls << control
-        @controls << control
-      end
-    end
     def parse_controls
       @csv.each do |row|
         print '.'
