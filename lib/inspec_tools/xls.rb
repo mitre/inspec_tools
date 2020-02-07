@@ -12,11 +12,11 @@ require_relative '../utilities/inspec_util'
 # rubocop:disable Metrics/CyclomaticComplexity
 
 module InspecTools
-  # Methods for converting from XSL to various formats
-  class XSLTool
-    def initialize(xsl, mapping, name, verbose = false)
+  # Methods for converting from XLS to various formats
+  class XLSTool
+    def initialize(xls, mapping, name, verbose = false)
       @name = name
-      @xsl = xsl
+      @xls = xls
       @mapping = mapping
       @verbose = verbose
     end
@@ -38,6 +38,7 @@ module InspecTools
       parse_cis_controls
       @profile['controls'] = @controls
       @profile['sha256'] = Digest::SHA256.hexdigest @profile.to_s
+      puts @profile
       @profile
     end
 
@@ -78,36 +79,49 @@ module InspecTools
     end
 
     def parse_cis_controls
-      [ 1, 2 ] do |level|
-        @xsl.sheets[level].rows.each do |row|
-          print '.'
+      [ 1, 2 ].each do |level|
+        @xls.sheet(level).each do |row|
+          if row[@mapping['control.id']].nil? || row[@mapping['control.id']] == "Recommendation #" 
+            next
+          end
+          tag_pos = @mapping['control.tags']
           control = {}
-          control['id'] = 'M-' + row[@mapping['control.id']].split(' ')[0] unless @mapping['control.id'].nil? || row[@mapping['control.id']].nil?
+          control['id'] = 'M-' + row[@mapping['control.id']].to_s.split(' ')[0] unless @mapping['control.id'].nil? || row[@mapping['control.id']].nil?
           control['title']  = row[@mapping['control.title']]  unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
-          control['desc']   = row[@mapping['control.desc']]   unless @mapping['control.desc'].nil? || row[@mapping['control.desc']].nil?
+          control['desc'] = ""
+          @mapping['control.desc'].each do |i|
+            control['desc'] << " " + row[i] unless row[i].nil?
+          end
           control['tags'] = {}
           control['impact'] = Utils::InspecUtil.get_impact('medium')
           control['tags']['ref'] = row[@mapping['control.ref']] unless @mapping['control.ref'].nil? || row[@mapping['control.ref']].nil?
-          control['tags']['cis_level'] = row[:level] unless row[:level].nil?
+          control['tags']['cis_level'] = level unless level.nil?
           
           # nist = find_nist(row[:cis]) unless row[:cis] == 'No CIS Control'
 
           # cis_control must be extracted from CIS control column via regex
-          # control['tags']['cis_control'] = [row[:cis], @nist_mapping[0][:cis_ver]] unless row[:cis].nil? # tag cis_control: [5, 6.1] ##6.1 is the version
+          cis_tags = row[tag_pos['cis_tag']].scan(/CONTROL:v(\d) (\d+)\.?(\d*)/)
           # control['tags']['nist'] = nist unless nist.nil? # tag nist: [AC-3, 4]  ##4 is the version
-
+          control['tags']['cis_family'] = []
+          cis_tags.each do |cis_tag| 
+            if cis_tag[2].nil? || cis_tag[2] == ""
+              control['tags']['cis_family'] << cis_tag[1].to_s
+            else
+              control['tags']['cis_family'] << cis_tag[1].to_s + "." + cis_tag[2].to_s
+            end
+          end
+          control['tags']['cis_family'] << cis_tags[0][0] unless cis_tags[0].nil?
           # control['tags']['Default Value'] = row[:default] unless row[:default].nil?
           # applicability comes from the sheet number
           # control['tags']['applicability'] = row[@mapping['control.applicability']] unless @mapping['control.applicability'].nil? || row[@mapping['control.applicability']].nil?
 
-          control['tags']['cis_id'] = row[@mapping['control.title']].split(' ')[0] unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
-          control['tags']['check'] = row[@mapping['control.check']] unless @mapping['control.check'].nil? || row[@mapping['control.check']].nil?
-          control['tags']['fix'] = row[@mapping['control.fix']] unless @mapping['control.fix'].nil? || row[@mapping['control.fix']].nil?
+          control['tags']['cis_rid'] = row[tag_pos['title']].to_s.split(' ')[0] unless tag_pos['title'].nil? || row[tag_pos['title']].nil?
+          control['tags']['check'] = row[tag_pos['check']] unless tag_pos['check'].nil? || row[tag_pos['check']].nil?
+          control['tags']['fix'] = row[tag_pos['fix']] unless tag_pos['fix'].nil? || row[tag_pos['fix']].nil?
 
-
-          @mapping['control.tags'].each do |tag|
-            control['tags'][tag.first.to_s] = row[tag.last] unless row[tag.last].nil?
-          end
+          #@mapping['control.tags'].each do |tag|
+          #  control['tags'][tag.first.to_s] = row[tag.last] unless row[tag.last].nil?
+          #end
           # I dont think the CIS things have severities, need to ask Eugene for help
           # control['impact'] = Utils::InspecUtil.get_impact(row[@mapping['control.tags']['severity']]) unless @mapping['control.tags']['severity'].nil? || row[@mapping['control.tags']['severity']].nil?
 

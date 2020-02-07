@@ -18,6 +18,7 @@ module InspecTools
   autoload :Inspec, 'inspec_tools/inspec'
   autoload :Summary, 'inspec_tools/summary'
   autoload :Threshold, 'inspec_tools/threshold'
+  autoload :XLSTool, 'inspec_tools/xls'
 end
 
 # rubocop:disable Style/GuardClause
@@ -84,18 +85,18 @@ module InspecPlugins
         Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
       end
 
-      desc 'xsl2inspec', 'xsl2inspec translates CIS XSL to Inspec controls using a mapping file'
-      long_desc InspecTools::Help.text(:xsl2inspec)
-      option :xsl, required: true, aliases: '-c'
+      desc 'xls2inspec', 'xls2inspec translates CIS XLS to Inspec controls using a mapping file'
+      long_desc InspecTools::Help.text(:xls2inspec)
+      option :xls, required: true, aliases: '-c'
       option :mapping, required: true, aliases: '-m'
       option :verbose, required: false, type: :boolean, aliases: '-V'
       option :output, required: false, aliases: '-o', default: 'profile'
       option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
       option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
-      def xsl2inspec
-        xls = Roo::Spreadsheet.open(options[:xsl])
+      def xls2inspec
+        xls = Roo::Spreadsheet.open(options[:xls])
         mapping = YAML.load_file(options[:mapping])
-        profile = InspecTools::XSLTool.new(xsl, mapping, options[:xsl].split('/')[-1].split('.')[0], options[:verbose]).to_inspec
+        profile = InspecTools::XLSTool.new(xls, mapping, options[:xls].split('/')[-1].split('.')[0], options[:verbose]).to_inspec
         Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
       end
 
