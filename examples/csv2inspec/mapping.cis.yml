@@ -1,0 +1,18 @@
+
+    # Setting csv_header to true will skip the csv file header
+    skip_csv_header: true
+    width   : 80
+
+
+    control.id: 1
+    control.title: 2
+    control.desc: 
+      - 6
+      - 7 
+    control.tags:
+      cis_tag: 11
+      check: 8
+      fix: 7
+      ref: 13
+      # applicability comes from the page of the sheet its in/the title of the sheet
+      # applicability: 
