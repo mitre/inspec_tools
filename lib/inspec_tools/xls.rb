@@ -79,6 +79,15 @@ module InspecTools
     end
 
     def parse_cis_controls
+      cis2NistXls = Roo::Spreadsheet.open(File.join(File.dirname(__FILE__), "../data/NIST_Map_02052020_CIS_Controls_Version_7.1_Implementation_Groups_1.2.xlsx"))
+      cis2Nist = {}
+      cis2NistXls.sheet(3).each do |row|
+        if row[3].is_a? Numeric
+          cis2Nist[row[3].to_s] = row[0]
+        else
+          cis2Nist[row[2].to_s] = row[0] unless (row[2] == "") || (row[2].to_i.nil?)
+        end
+      end
       [ 1, 2 ].each do |level|
         @xls.sheet(level).each do |row|
           if row[@mapping['control.id']].nil? || row[@mapping['control.id']] == "Recommendation #" 
@@ -93,22 +102,29 @@ module InspecTools
             control['desc'] << " " + row[i] unless row[i].nil?
           end
           control['tags'] = {}
-          control['impact'] = Utils::InspecUtil.get_impact('medium')
+          control['tags']['severity'] = level == 1 ? 'medium' : 'high'
+          control['impact'] = Utils::InspecUtil.get_impact(control['tags']['severity'])
           control['tags']['ref'] = row[@mapping['control.ref']] unless @mapping['control.ref'].nil? || row[@mapping['control.ref']].nil?
           control['tags']['cis_level'] = level unless level.nil?
           
-          # nist = find_nist(row[:cis]) unless row[:cis] == 'No CIS Control'
+          #nist = find_nist(row[:cis]) unless row[:cis] == 'No CIS Control'
 
           # cis_control must be extracted from CIS control column via regex
           cis_tags = row[tag_pos['cis_tag']].scan(/CONTROL:v(\d) (\d+)\.?(\d*)/)
           # control['tags']['nist'] = nist unless nist.nil? # tag nist: [AC-3, 4]  ##4 is the version
           control['tags']['cis_family'] = []
+          control['tags']['nist'] = []
           cis_tags.each do |cis_tag| 
             if cis_tag[2].nil? || cis_tag[2] == ""
               control['tags']['cis_family'] << cis_tag[1].to_s
+              control['tags']['nist'] << cis2Nist[cis_tag[1]]
             else
               control['tags']['cis_family'] << cis_tag[1].to_s + "." + cis_tag[2].to_s
+              control['tags']['nist'] << cis2Nist[cis_tag[1].to_s + "." + cis_tag[2].to_s]
             end
+          end
+          if not control['tags']['nist'].nil?
+            control['tags']['nist'] << "Rev_4"
           end
           control['tags']['cis_family'] << cis_tags[0][0] unless cis_tags[0].nil?
           # control['tags']['Default Value'] = row[:default] unless row[:default].nil?

@@ -8,7 +8,6 @@ require_relative '../happy_mapper_tools/stig_attributes'
 require_relative '../happy_mapper_tools/stig_checklist'
 require_relative '../happy_mapper_tools/benchmark'
 require_relative '../utilities/inspec_util'
-require_relative 'csv'
 
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
