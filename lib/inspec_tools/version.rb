@@ -1,3 +1,3 @@
 module InspecTools
-  VERSION = ''.freeze
+  VERSION = '1.6.4'.freeze
 end
