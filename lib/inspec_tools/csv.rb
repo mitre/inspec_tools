@@ -1,10 +1,9 @@
 require 'csv'
 require 'nokogiri'
-require 'inspec/objects'
+require 'inspec'
 require 'word_wrap'
 require 'yaml'
 require 'digest'
-require 'inspec'
 
 require_relative '../utilities/inspec_util'
 
