@@ -6,13 +6,12 @@
 
     control.id: 1
     control.title: 2
-    control.desc: 
-      - 6
-      - 7 
+    control.desc: 5
     control.tags:
-      cis_tag: 11
+      cis_controls: 11
       check: 8
       fix: 7
       ref: 13
+      rationale: 6
       # applicability comes from the page of the sheet its in/the title of the sheet
       # applicability: 

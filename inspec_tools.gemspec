@@ -37,7 +37,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_dependency 'nokogiri-happymapper', '~> 0'
   spec.add_dependency 'OptionParser', '~> 0'
   spec.add_dependency 'pdf-reader', '~> 2.1', '>= 2.1.0'
-  spec.add_dependency 'roo', '~> 2.7'
+  spec.add_dependency 'roo', '~> 2.8'
   spec.add_dependency 'thor', '~> 0.19'
   spec.add_dependency 'word_wrap', '~> 1.0', '~> 1.0.0'
   spec.add_development_dependency 'bundler', '~> 2.0'
