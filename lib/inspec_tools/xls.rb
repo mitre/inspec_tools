@@ -56,8 +56,8 @@ module InspecTools
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-        'name': 'inspec',
-        'version': Gem.loaded_specs['inspec'].version
+        'name': 'inspec_tools',
+        'version': VERSION
       }
     end
 

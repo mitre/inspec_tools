@@ -39,7 +39,6 @@ class XCCDFTest < Minitest::Test
     assert_equal(inspec_json['version'], "0.1.0")
     assert_equal(inspec_json['supports'], [])
     assert_equal(inspec_json['attributes'], [])
-    assert_equal(inspec_json['generator'], {"name": "inspec", "version": Gem.loaded_specs["inspec"].version})
   end
 
   def test_controls_count
