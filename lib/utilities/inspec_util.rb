@@ -226,6 +226,10 @@ module Utils
         control.add_tag(Inspec::Tag.new('fix_id', json_control['tags']['fix_id']))
         control.add_tag(Inspec::Tag.new('cci', json_control['tags']['cci']))
         control.add_tag(Inspec::Tag.new('nist', json_control['tags']['nist']))
+        control.add_tag(Inspec::Tag.new('cis_level', json_control['tags']['cis_level'])) unless json_control['tags']['cis_level'].nil?
+        control.add_tag(Inspec::Tag.new('cis_family', json_control['tags']['cis_family'])) unless json_control['tags']['cis_family'].nil?
+        control.add_tag(Inspec::Tag.new('cis_rid', json_control['tags']['cis_rid'])) unless json_control['tags']['cis_rid'].nil?
+        control.add_tag(Inspec::Tag.new('ref', json_control['tags']['ref'])) unless json_control['tags']['ref'].nil?
         control.add_tag(Inspec::Tag.new('false_negatives', json_control['tags']['false_negatives'])) if json_control['tags']['false_positives'] != ''
         control.add_tag(Inspec::Tag.new('false_positives', json_control['tags']['false_positives'])) if json_control['tags']['false_positives'] != ''
         control.add_tag(Inspec::Tag.new('documentable', json_control['tags']['documentable'])) if json_control['tags']['documentable'] != ''
