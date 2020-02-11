@@ -16,10 +16,10 @@ jobs:
           gem install bundler
       - name: Run bundle install
         run: |
-          bundle install
+          bundle install -j 4
       - name: Run rake test
         run: |
-          rake test
+          bundle exec rake test
 #      - name: Install rubocop
 #        run: |
 #          gem install rubocop
@@ -32,6 +32,9 @@ jobs:
       - name: Install inspec_tools gem
         run: |
           gem install inspec_tools
+      - name: test built gem
+        run: |
+          rake test
 #      - name: Run inspec_tools
 #        run: |
 #          inspec_tools
