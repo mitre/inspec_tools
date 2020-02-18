@@ -220,6 +220,11 @@ module Utils
         control.id     = json_control['id']
         control.title  = json_control['title']
         control.impact = get_impact(json_control['impact'])
+
+        #json_control['tags'].each do |tag|
+        #  control.add_tag(Inspec::Tag.new(tag.key, tag.value)
+        #end
+
         control.add_tag(Inspec::Tag.new('severity', json_control['tags']['severity']))
         control.add_tag(Inspec::Tag.new('gtitle', json_control['tags']['gtitle']))
         control.add_tag(Inspec::Tag.new('satisfies', json_control['tags']['satisfies'])) if json_control['tags']['satisfies']

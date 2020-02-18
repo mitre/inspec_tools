@@ -87,8 +87,9 @@ module InspecPlugins
 
       desc 'xls2inspec', 'xls2inspec translates CIS XLS to Inspec controls using a mapping file'
       long_desc InspecTools::Help.text(:xls2inspec)
-      option :xls, required: true, aliases: '-c'
+      option :xls, required: true, aliases: '-x'
       option :mapping, required: true, aliases: '-m'
+      option :control_name_prefix, required: true, aliases: '-p'
       option :verbose, required: false, type: :boolean, aliases: '-V'
       option :output, required: false, aliases: '-o', default: 'profile'
       option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
@@ -96,7 +97,7 @@ module InspecPlugins
       def xls2inspec
         xls = Roo::Spreadsheet.open(options[:xls])
         mapping = YAML.load_file(options[:mapping])
-        profile = InspecTools::XLSTool.new(xls, mapping, options[:xls].split('/')[-1].split('.')[0], options[:verbose]).to_inspec
+        profile = InspecTools::XLSTool.new(xls, mapping, options[:xls].split('/')[-1].split('.')[0], options[:verbose]).to_inspec(options[:control_name_prefix])
         Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
       end
 
