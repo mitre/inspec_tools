@@ -33,7 +33,6 @@ module InspecTools
       @controls = []
       @cci_xml = nil
       @profile = {}
-      read_cci_xml
       insert_json_metadata
       parse_cis_controls(control_prefix)
       @profile['controls'] = @controls
