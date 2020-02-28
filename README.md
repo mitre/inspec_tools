@@ -17,6 +17,7 @@ The inspec_tools support the following modules:
 - inspec2xccdf
 - inspec2ckl
 - pdf2inspec
+- xlsx2inspec
 
 It also includes an API that can be used in a ruby application. The Ruby API is defined in lib/inspec_tools/inspec.rb
 
@@ -247,6 +248,34 @@ FLAGS:
 	-d --debug                         : debug run [optional]
 
 example: inspec_tools pdf2inspec -p benchmark.pdf -o /path/to/myprofile -f ruby -s true
+```
+
+## xlsx2inspec
+```
+Usage:
+  inspec_tools xlsx2inspec -m, --mapping=MAPPING -p, --control-name-prefix=CONTROL_NAME_PREFIX -x, --xlsx=XLSX
+
+Options:
+  -x, --xlsx=XLSX                                
+  -m, --mapping=MAPPING                          
+  -p, --control-name-prefix=CONTROL_NAME_PREFIX  
+  -V, [--verbose], [--no-verbose]                
+  -o, [--output=OUTPUT]                          
+                                                 # Default: profile
+  -f, [--format=FORMAT]                          
+                                                 # Default: ruby
+                                                 # Possible values: ruby, hash
+  -s, [--separate-files], [--no-separate-files]  
+                                                 # Default: true
+      [--log-level=LOG_LEVEL]                    # Set the logging level: ["debug", "info", "warn", "error", "fatal"]
+      [--log-location=LOG_LOCATION]              # Location to send diagnostic log messages to. (default: $stdout or Inspec::Log.error)
+  l, [--log-directory=LOG_DIRECTORY]             # Provie log location
+
+xlsx2inspec translates CIS Benchmarks in XLSX format to Inspec controls using a mapping file
+
+See examples/xlsx2inspec/mapping.cis.yml for an example mapping file
+
+example: bundle exec inspec_tools xls2inspec -m examples/xlsx2inspec/mapping.cis.yml -p azure-cis-foundations -x examples/cis.xlsx
 ```
 
 ## version
