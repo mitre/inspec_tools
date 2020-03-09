@@ -275,7 +275,7 @@ xlsx2inspec translates CIS Benchmarks in XLSX format to Inspec controls using a 
 
 See examples/xlsx2inspec/mapping.cis.yml for an example mapping file
 
-example: bundle exec inspec_tools xls2inspec -m examples/xlsx2inspec/mapping.cis.yml -p azure-cis-foundations -x examples/cis.xlsx
+example: bundle exec inspec_tools xlsx2inspec -m examples/xlsx2inspec/mapping.cis.yml -p azure-cis-foundations -x examples/cis.xlsx
 ```
 
 ## version
