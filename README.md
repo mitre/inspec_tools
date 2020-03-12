@@ -261,7 +261,7 @@ USAGE: inspec_tools version
 
 This gem was developed using the [CLI Template](https://github.com/tongueroo/cli-template), a generator tool that builds a starter CLI project.
 
-## A complete PR should include 7 core elements:  
+## A complete PR should include 7 core elements:
 
 - A signed PR ( aka `git commit -a -s` )
 - Code for the new functionality
@@ -291,7 +291,7 @@ This gem was developed using the [CLI Template](https://github.com/tongueroo/cli
 17. git commit -a -s `<your_branch>`
 18. Open a PRs aginst the MITRE inspec_tools repo
 
-# Testing  
+# Testing
 
 There are a set of unit tests. Run `rake test` to run the tests.
 
@@ -313,4 +313,4 @@ MITRE hereby grants express written permission to use, reproduce, distribute, mo
 
 This software was produced for the U. S. Government under Contract Number HHSM-500-2012-00008I, and is subject to Federal Acquisition Regulation Clause 52.227-14, Rights in Data-General.
 
-No other use other than that granted to the U. S. Government, or to those acting on behalf of the U. S. Government under that Clause is authorized without the express written permission of The MITRE Corporation.DISA STIGs are published by DISA IASE, see: https://iase.disa.mil/Pages/privacy_policy.aspx
+No other use other than that granted to the U. S. Government, or to those acting on behalf of the U. S. Government under that Clause is authorized without the express written permission of The MITRE Corporation. DISA STIGs are published by DISA, see: https://public.cyber.mil/privacy-security/
