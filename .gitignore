@@ -14,6 +14,8 @@ rdoc
 spec/reports
 test/tmp
 test/version_tmp
+pdf_text
+debug_text
 tmp
 # Ignore Mac DS_Store files
 **/.DS_Store
