@@ -11,9 +11,9 @@ jobs:
        - name: Setup ruby
          uses: actions/setup-ruby@v1
        - name: Checkout inspec_tools
-         uses: actions/checkout@v1  
+         uses: actions/checkout@v2
          with:
-           token: ${{secrets.GITHUB_TOKEN}}   
+           token: ${{secrets.GITHUB_TOKEN}}
        - name: Install github_changelog_generator
          run: |
            gem install github_changelog_generator
