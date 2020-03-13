@@ -8,8 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout inspec_tools 
-      uses: actions/checkout@master
+    - name: Checkout inspec_tools
+      uses: actions/checkout@v2
     - name: Increment version and push tag
       uses: anothrNick/github-tag-action@master
       env:
