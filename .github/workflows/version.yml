@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout inspec_tools
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           token: ${{secrets.GITHUB_TOKEN}}
       - name: Get information for RELEASE.md
