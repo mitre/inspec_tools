@@ -23,7 +23,7 @@ jobs:
            export CHANGELOG_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
            github_changelog_generator -u mitre -p inspec_tools
        - name: Commit and push changes to CHANGELOG.md
-         uses: github-actions-x/commit@v2.1
+         uses: Bialogs/commit@master
          with:
            github-token: ${{ secrets.GITHUB_TOKEN }}
            push-branch: 'master'
