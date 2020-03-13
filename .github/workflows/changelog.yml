@@ -1,8 +1,7 @@
 name: Generate CHANGELOG.md
 on:
   push:
-    branches:
-      - master
+  pull_request:
 jobs:
   test:
     name: Generate CHANGELOG.md
@@ -13,20 +12,17 @@ jobs:
        - name: Checkout inspec_tools
          uses: actions/checkout@v2
          with:
+           lfs: true
            token: ${{secrets.GITHUB_TOKEN}}
-       - name: Install github_changelog_generator
-         run: |
-           gem install github_changelog_generator
        - name: Run github_changelog_generator
          run: |
-           git pull origin master
            export CHANGELOG_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-           github_changelog_generator -u mitre -p inspec_tools
+           echo "WHATEVER" > CHANGELOG.md
        - name: Commit and push changes to CHANGELOG.md
-         uses: github-actions-x/commit@v2.1
+         uses: Bialogs/commit@master
          with:
            github-token: ${{ secrets.GITHUB_TOKEN }}
-           push-branch: 'master'
+           push-branch: 'test-update-github-actions'
            commit-message: 'Publish changelog'
            force-add: 'true'
          env:

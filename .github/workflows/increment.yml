@@ -10,6 +10,8 @@ jobs:
     steps:
     - name: Checkout inspec_tools
       uses: actions/checkout@v2
+      with:
+        lfs: true
     - name: Increment version and push tag
       uses: anothrNick/github-tag-action@master
       env:

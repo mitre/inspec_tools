@@ -9,9 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout inspec_tools
-        uses: actions/checkout@v1  
+        uses: actions/checkout@v2
         with:
-          token: ${{secrets.GITHUB_TOKEN}}   
+          lfs: true
+          token: ${{secrets.GITHUB_TOKEN}}
       - name: Get information for RELEASE.md
         run: |
           git pull origin master
@@ -23,7 +24,7 @@ jobs:
           git rev-list --tags --max-count=1 >> RELEASE.md
           printf "module InspecTools\n  VERSION = '$(git describe --tags $(git rev-list --tags --max-count 1) | grep -o "\d.\d.\d")'.freeze\nend\n" > lib/inspec_tools/version.rb
       - name: Commit and push changes to RELEASE.md
-        uses: github-actions-x/commit@v2.1
+        uses: Bialogs/commit@v2.4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           push-branch: 'master'
