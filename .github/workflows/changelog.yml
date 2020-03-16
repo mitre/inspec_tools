@@ -19,7 +19,6 @@ jobs:
            gem install github_changelog_generator
        - name: Run github_changelog_generator
          run: |
-           git pull origin master
            export CHANGELOG_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
            github_changelog_generator -u mitre -p inspec_tools
        - name: Commit and push changes to CHANGELOG.md
