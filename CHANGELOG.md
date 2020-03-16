@@ -1,25 +1,168 @@
-# Change Log
+# Changelog
 
-## [v1.6.5](https://github.com/mitre/inspec_tools/tree/v1.6.5) (2019-10-23)
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.4...v1.6.5)
+## [v1.6.19](https://github.com/mitre/inspec_tools/tree/v1.6.19) (2020-03-16)
 
-## [v1.6.4](https://github.com/mitre/inspec_tools/tree/v1.6.4) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.18...v1.6.19)
+
+**Merged pull requests:**
+
+- Update github workflows [\#99](https://github.com/mitre/inspec_tools/pull/99) ([Bialogs](https://github.com/Bialogs))
+
+## [v1.6.18](https://github.com/mitre/inspec_tools/tree/v1.6.18) (2020-03-16)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.17...v1.6.18)
+
+## [v1.6.17](https://github.com/mitre/inspec_tools/tree/v1.6.17) (2020-03-13)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.16...v1.6.17)
+
+**Fixed bugs:**
+
+- Fix VERSION file update to update the right file in the gem [\#79](https://github.com/mitre/inspec_tools/issues/79)
+
+## [v1.6.16](https://github.com/mitre/inspec_tools/tree/v1.6.16) (2020-03-13)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.15...v1.6.16)
+
+**Fixed bugs:**
+
+- The `changelog.md` versions seem to be broken [\#80](https://github.com/mitre/inspec_tools/issues/80)
+- Update version.yml regex to match multidigit version numbers and use … [\#98](https://github.com/mitre/inspec_tools/pull/98) ([Bialogs](https://github.com/Bialogs))
+
+## [v1.6.15](https://github.com/mitre/inspec_tools/tree/v1.6.15) (2020-03-13)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.14...v1.6.15)
+
+**Merged pull requests:**
+
+- Fix issue with CHANGELOD.md not generating because of invalid startin… [\#97](https://github.com/mitre/inspec_tools/pull/97) ([Bialogs](https://github.com/Bialogs))
+
+## [v1.6.14](https://github.com/mitre/inspec_tools/tree/v1.6.14) (2020-03-13)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.13...v1.6.14)
+
+**Closed issues:**
+
+- add travis to the commit/PR workflow [\#36](https://github.com/mitre/inspec_tools/issues/36)
+
+**Merged pull requests:**
+
+- Use my personal version of github-actions-x/commit until git-lfs patc… [\#96](https://github.com/mitre/inspec_tools/pull/96) ([Bialogs](https://github.com/Bialogs))
+
+## [v1.6.13](https://github.com/mitre/inspec_tools/tree/v1.6.13) (2020-03-13)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.12...v1.6.13)
+
+**Closed issues:**
+
+- use github\_changelog\_generator in our release process [\#33](https://github.com/mitre/inspec_tools/issues/33)
+- add project instructions for Changelog, contribution and issue\_template [\#32](https://github.com/mitre/inspec_tools/issues/32)
+
+**Merged pull requests:**
+
+- Enable git-lfs for this repository; tracking xls and xlsx files. [\#94](https://github.com/mitre/inspec_tools/pull/94) ([Bialogs](https://github.com/Bialogs))
+
+## [v1.6.12](https://github.com/mitre/inspec_tools/tree/v1.6.12) (2020-03-13)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.11...v1.6.12)
+
+**Closed issues:**
+
+- Typo in main README.md [\#89](https://github.com/mitre/inspec_tools/issues/89)
+
+**Merged pull requests:**
+
+- Fix typo in README.md, Remove development guidance in favor of a wiki… [\#93](https://github.com/mitre/inspec_tools/pull/93) ([Bialogs](https://github.com/Bialogs))
+
+## [v1.6.11](https://github.com/mitre/inspec_tools/tree/v1.6.11) (2020-03-12)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.10...v1.6.11)
+
+**Closed issues:**
+
+- DISA STIG web address needs to be updated [\#66](https://github.com/mitre/inspec_tools/issues/66)
+
+**Merged pull requests:**
+
+- Ignore debug generated files [\#92](https://github.com/mitre/inspec_tools/pull/92) ([Bialogs](https://github.com/Bialogs))
+
+## [v1.6.10](https://github.com/mitre/inspec_tools/tree/v1.6.10) (2020-03-12)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.9...v1.6.10)
+
+**Fixed bugs:**
+
+- Fix https://public.cyber.mil refernces [\#81](https://github.com/mitre/inspec_tools/pull/81) ([aaronlippold](https://github.com/aaronlippold))
+
+## [v1.6.9](https://github.com/mitre/inspec_tools/tree/v1.6.9) (2020-03-06)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.8...v1.6.9)
+
+## [v1.6.8](https://github.com/mitre/inspec_tools/tree/v1.6.8) (2020-03-05)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.7...v1.6.8)
+
+## [v1.6.7](https://github.com/mitre/inspec_tools/tree/v1.6.7) (2020-02-11)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.6...v1.6.7)
+
+## [v1.6.6](https://github.com/mitre/inspec_tools/tree/v1.6.6) (2020-02-05)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/53bdcb3...v1.6.6)
+
+**Fixed bugs:**
+
+- --help option is broken but inspec\_tools help \<command\> works [\#77](https://github.com/mitre/inspec_tools/issues/77)
+- Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
+
+**Merged pull requests:**
+
+- Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
+
+## [53bdcb3](https://github.com/mitre/inspec_tools/tree/53bdcb3) (2019-11-06)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.4...53bdcb3)
+
+**Fixed bugs:**
+
+- --version and -v are broken [\#76](https://github.com/mitre/inspec_tools/issues/76)
+
+**Closed issues:**
+
+- Logic fix [\#83](https://github.com/mitre/inspec_tools/issues/83)
+
+**Merged pull requests:**
+
+- Fixes \#83 [\#85](https://github.com/mitre/inspec_tools/pull/85) ([aaronlippold](https://github.com/aaronlippold))
+- Fixes \#76 by editing version number [\#84](https://github.com/mitre/inspec_tools/pull/84) ([lukemalinowski](https://github.com/lukemalinowski))
+
+## [v1.6.4](https://github.com/mitre/inspec_tools/tree/v1.6.4) (2019-11-05)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.3...v1.6.4)
 
-## [v1.6.3](https://github.com/mitre/inspec_tools/tree/v1.6.3) (2019-10-23)
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.2...v1.6.3)
+## [v1.6.3](https://github.com/mitre/inspec_tools/tree/v1.6.3) (2019-11-05)
 
-## [v1.6.2](https://github.com/mitre/inspec_tools/tree/v1.6.2) (2019-10-23)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.5...v1.6.3)
+
+## [v1.6.5](https://github.com/mitre/inspec_tools/tree/v1.6.5) (2019-11-05)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.2...v1.6.5)
+
+## [v1.6.2](https://github.com/mitre/inspec_tools/tree/v1.6.2) (2019-11-05)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.1...v1.6.2)
 
-## [v1.6.1](https://github.com/mitre/inspec_tools/tree/v1.6.1) (2019-10-23)
+## [v1.6.1](https://github.com/mitre/inspec_tools/tree/v1.6.1) (2019-11-05)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.0...v1.6.1)
 
 **Merged pull requests:**
 
 - Update Profile logic include control exceptions [\#75](https://github.com/mitre/inspec_tools/pull/75) ([rx294](https://github.com/rx294))
+- Null Byte in json report causes inspec2ckl to bomb-out [\#73](https://github.com/mitre/inspec_tools/pull/73) ([kevin-j-smith](https://github.com/kevin-j-smith))
 
 ## [v1.6.0](https://github.com/mitre/inspec_tools/tree/v1.6.0) (2019-10-04)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.5.0...v1.6.0)
 
 **Closed issues:**
@@ -27,6 +170,7 @@
 - Updated logic for results metrics [\#74](https://github.com/mitre/inspec_tools/issues/74)
 
 ## [v1.5.0](https://github.com/mitre/inspec_tools/tree/v1.5.0) (2019-09-10)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.2...v1.5.0)
 
 **Closed issues:**
@@ -36,8 +180,10 @@
 **Merged pull requests:**
 
 - Kevin j smith adding inspec command plugin logic [\#72](https://github.com/mitre/inspec_tools/pull/72) ([lukemalinowski](https://github.com/lukemalinowski))
+- Added logic so that inspec\_tools can be a plugin to Inspec as a comma… [\#68](https://github.com/mitre/inspec_tools/pull/68) ([kevin-j-smith](https://github.com/kevin-j-smith))
 
 ## [v1.4.2](https://github.com/mitre/inspec_tools/tree/v1.4.2) (2019-07-30)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.1...v1.4.2)
 
 **Closed issues:**
@@ -48,13 +194,14 @@
 **Merged pull requests:**
 
 - Updated rake version [\#69](https://github.com/mitre/inspec_tools/pull/69) ([robthew](https://github.com/robthew))
-- Added logic so that inspec\_tools can be a plugin to Inspec as a comma… [\#68](https://github.com/mitre/inspec_tools/pull/68) ([kevin-j-smith](https://github.com/kevin-j-smith))
 - Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.4.1](https://github.com/mitre/inspec_tools/tree/v1.4.1) (2019-06-20)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.0...v1.4.1)
 
 ## [v1.4.0](https://github.com/mitre/inspec_tools/tree/v1.4.0) (2019-05-17)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.6...v1.4.0)
 
 **Merged pull requests:**
@@ -62,6 +209,7 @@
 - Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.5...v1.3.6)
 
 **Implemented enhancements:**
@@ -75,9 +223,11 @@
 - remove severity tag in xccdf to inspec converted [\#44](https://github.com/mitre/inspec_tools/issues/44)
 
 ## [v1.3.5](https://github.com/mitre/inspec_tools/tree/v1.3.5) (2019-05-01)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.4...v1.3.5)
 
 ## [v1.3.4](https://github.com/mitre/inspec_tools/tree/v1.3.4) (2019-05-01)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.6...v1.3.4)
 
 **Closed issues:**
@@ -93,17 +243,14 @@
 - Add modules summary, compliance [\#45](https://github.com/mitre/inspec_tools/pull/45) ([rx294](https://github.com/rx294))
 
 ## [v1.1.6](https://github.com/mitre/inspec_tools/tree/v1.1.6) (2018-12-13)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.5...v1.1.6)
 
 ## [v1.1.5](https://github.com/mitre/inspec_tools/tree/v1.1.5) (2018-12-11)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.2...v1.1.5)
 
 **Implemented enhancements:**
-
-- Add help for the gem usage and or ruby usage [\#7](https://github.com/mitre/inspec_tools/issues/7)
-- add sub-help command output to match README and document each function [\#6](https://github.com/mitre/inspec_tools/issues/6)
-
-**Fixed bugs:**
 
 - Add help for the gem usage and or ruby usage [\#7](https://github.com/mitre/inspec_tools/issues/7)
 - add sub-help command output to match README and document each function [\#6](https://github.com/mitre/inspec_tools/issues/6)
@@ -127,43 +274,16 @@
 - Added appveyor config [\#40](https://github.com/mitre/inspec_tools/pull/40) ([robthew](https://github.com/robthew))
 - Travis test [\#39](https://github.com/mitre/inspec_tools/pull/39) ([robthew](https://github.com/robthew))
 - Add rubocop to the process [\#35](https://github.com/mitre/inspec_tools/pull/35) ([aaronlippold](https://github.com/aaronlippold))
+- \* added refernces to external data sources [\#30](https://github.com/mitre/inspec_tools/pull/30) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.1.2](https://github.com/mitre/inspec_tools/tree/v1.1.2) (2018-11-08)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.1...v1.1.2)
 
 ## [v1.1.1](https://github.com/mitre/inspec_tools/tree/v1.1.1) (2018-11-08)
+
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.0...v1.1.1)
 
-## [v1.1.0](https://github.com/mitre/inspec_tools/tree/v1.1.0) (2018-11-08)
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.0.0...v1.1.0)
-
-**Fixed bugs:**
-
-- Remove unneeded `exe` dir if we are going to standardize on `bin`and update the `.gemspec` file [\#25](https://github.com/mitre/inspec_tools/issues/25)
-
-**Closed issues:**
-
-- when you When build the gem and install it - the command `inspec\_tools` does not seem to install into the path [\#26](https://github.com/mitre/inspec_tools/issues/26)
-- Add MITRE Copyright to the end of the README.md [\#23](https://github.com/mitre/inspec_tools/issues/23)
-- Update email addresses to MITRE addresses [\#18](https://github.com/mitre/inspec_tools/issues/18)
-- update readme.md [\#17](https://github.com/mitre/inspec_tools/issues/17)
-- update inspec\_tools.gemspec [\#16](https://github.com/mitre/inspec_tools/issues/16)
-- update license to apache 2.0 [\#13](https://github.com/mitre/inspec_tools/issues/13)
-- Separate Files defaults to \[False\] [\#10](https://github.com/mitre/inspec_tools/issues/10)
-- Rename repository to 'inspec\_tools' [\#9](https://github.com/mitre/inspec_tools/issues/9)
-
-**Merged pull requests:**
-
-- \* added refernces to external data sources [\#30](https://github.com/mitre/inspec_tools/pull/30) ([aaronlippold](https://github.com/aaronlippold))
-- Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
-- Change default separated\_files setting to default to true [\#11](https://github.com/mitre/inspec_tools/pull/11) ([yarick](https://github.com/yarick))
-- Cleanup [\#8](https://github.com/mitre/inspec_tools/pull/8) ([robthew](https://github.com/robthew))
-- Unification [\#5](https://github.com/mitre/inspec_tools/pull/5) ([dromazmj](https://github.com/dromazmj))
-- \* Adds functionality for inspec2csv [\#4](https://github.com/mitre/inspec_tools/pull/4) ([dromazmj](https://github.com/dromazmj))
-- Md/pdf [\#3](https://github.com/mitre/inspec_tools/pull/3) ([dromazmj](https://github.com/dromazmj))
-- Md/csv2inspec [\#2](https://github.com/mitre/inspec_tools/pull/2) ([dromazmj](https://github.com/dromazmj))
-- Writes code in the inspec util to output an inspec json to a directory [\#1](https://github.com/mitre/inspec_tools/pull/1) ([dromazmj](https://github.com/dromazmj))
 
 
-
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
