@@ -24,11 +24,12 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
     raise 'RubyGems 2.0 or newer is required to protect against public gem pushes.'
   end
 
-  spec.files         = Dir.glob('{lib,test,exe}/**/*') + %w{CHANGELOG.md Guardfile LICENSE.md Rakefile README.md}
+  spec.files         = Dir.glob('{lib,exe}/**/*') + %w{CHANGELOG.md Guardfile LICENSE.md Rakefile README.md}
   spec.bindir        = 'exe'
   spec.executables   << 'inspec_tools'
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
+
+  spec.required_ruby_version = '~> 2.3'
 
   spec.add_dependency 'colorize', '~> 0'
   spec.add_dependency 'inspec', ">= 3.0", "< 5.0"
@@ -42,5 +43,5 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'minitest', '~> 5.0'
   spec.add_development_dependency 'pry', '~> 0'
-  spec.add_dependency 'rake', '>= 11.1'
+  spec.add_development_dependency 'rake', '~> 13.0'
 end
