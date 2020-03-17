@@ -6,7 +6,7 @@ branches:
 language: ruby
 cache: bundler
 
-bundler_args: --without integration --without tools --without development
+bundler_args: --without integration --without tools
 
 before_install:
 - sudo apt-get update
@@ -21,3 +21,4 @@ matrix:
   - rvm: 2.3
   - rvm: 2.4
   - rvm: 2.5
+  - rvm: 2.6
