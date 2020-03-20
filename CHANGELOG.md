@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.7.0](https://github.com/mitre/inspec_tools/tree/v1.7.0) (2020-03-20)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.21...v1.7.0)
+
+**Implemented enhancements:**
+
+- Migrate to depend on the new inspect objects library [\#86](https://github.com/mitre/inspec_tools/issues/86)
+
+**Merged pull requests:**
+
+- Remove warnings \(\#minor\) [\#101](https://github.com/mitre/inspec_tools/pull/101) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.6.21](https://github.com/mitre/inspec_tools/tree/v1.6.21) (2020-03-20)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.20...v1.6.21)
@@ -137,6 +149,7 @@
 
 **Merged pull requests:**
 
+- Fixes \#83 [\#85](https://github.com/mitre/inspec_tools/pull/85) ([aaronlippold](https://github.com/aaronlippold))
 - Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [53bdcb3](https://github.com/mitre/inspec_tools/tree/53bdcb3) (2019-11-06)
@@ -153,7 +166,6 @@
 
 **Merged pull requests:**
 
-- Fixes \#83 [\#85](https://github.com/mitre/inspec_tools/pull/85) ([aaronlippold](https://github.com/aaronlippold))
 - Fixes \#76 by editing version number [\#84](https://github.com/mitre/inspec_tools/pull/84) ([lukemalinowski](https://github.com/lukemalinowski))
 
 ## [v1.6.4](https://github.com/mitre/inspec_tools/tree/v1.6.4) (2019-11-05)
