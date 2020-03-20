@@ -1,7 +1,7 @@
 require 'yaml'
 require 'json'
 
-require 'inspec'
+require 'inspec-objects'
 require_relative 'version'
 
 require_relative '../utilities/inspec_util'

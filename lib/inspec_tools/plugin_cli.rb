@@ -1,7 +1,6 @@
 require 'yaml'
 require 'json'
 
-require 'inspec'
 require 'roo'
 require_relative 'version'
 

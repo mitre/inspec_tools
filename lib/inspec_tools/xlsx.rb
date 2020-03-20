@@ -3,7 +3,6 @@ require 'inspec/objects'
 require 'word_wrap'
 require 'yaml'
 require 'digest'
-require 'inspec'
 
 require_relative '../utilities/inspec_util'
 
@@ -92,7 +91,7 @@ module InspecTools
           cis_tags = row[tag_pos['cis_controls']].formatted_value.scan(/CONTROL:v(\d) (\d+)\.?(\d*)/)
           control['tags']['cis_controls'] = []
           control['tags']['nist'] = []
-          cis_tags.each do |cis_tag| 
+          cis_tags.each do |cis_tag|
             if cis_tag[2].nil? || cis_tag[2] == ""
               control['tags']['cis_controls'] << cis_tag[1].to_s
               control['tags']['nist'] << cis2Nist[cis_tag[1]]

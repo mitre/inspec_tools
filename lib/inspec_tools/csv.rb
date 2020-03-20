@@ -1,6 +1,5 @@
 require 'csv'
 require 'nokogiri'
-require 'inspec'
 require 'word_wrap'
 require 'yaml'
 require 'digest'

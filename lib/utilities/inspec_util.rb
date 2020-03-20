@@ -1,5 +1,4 @@
 require 'inspec/objects'
-require 'inspec/impact'
 require 'word_wrap'
 require 'pp'
 require 'uri'
@@ -48,6 +47,15 @@ module Utils
   class InspecUtil
     DATA_NOT_FOUND_MESSAGE = 'N/A'.freeze
     WIDTH = 80
+    IMPACT_SCORES = {
+      "none" => 0.0,
+      "low" => 0.1,
+      "medium" => 0.4,
+      "high" => 0.7,
+      "critical" => 0.9,
+    }.freeze
+
+    class ImpactError; end
 
     def self.parse_data_for_xccdf(json)
       data = {}
@@ -214,7 +222,13 @@ module Utils
     end
 
     def self.get_impact_string(impact)
-      Inspec::Impact.string_from_impact(impact) unless impact.nil?
+      return if impact.nil?
+      value = impact.to_f
+      raise ImpactError, "'#{value}' is not a valid impact score. Valid impact scores: [0.0 - 1.0]." if value < 0 || value > 1
+
+      IMPACT_SCORES.reverse_each do |name, impact|
+        return name if value >= impact
+      end
     end
 
     def self.unpack_inspec_json(directory, inspec_json, separated, output_format)
@@ -239,7 +253,7 @@ module Utils
     private_class_method def self.generate_controls(inspec_json)
       controls = []
       inspec_json['controls'].each do |json_control|
-        control = Inspec::Control.new
+        control = ::Inspec::Object::Control.new
         if (defined? control.desc).nil?
           control.descriptions[:default] = json_control['desc']
           control.descriptions[:rationale] = json_control['tags']['rationale']
@@ -253,32 +267,32 @@ module Utils
         control.impact = get_impact(json_control['impact'])
 
         #json_control['tags'].each do |tag|
-        #  control.add_tag(Inspec::Tag.new(tag.key, tag.value)
+        #  control.add_tag(Inspec::Object::Tag.new(tag.key, tag.value)
         #end
 
-        control.add_tag(Inspec::Tag.new('severity', json_control['tags']['severity']))
-        control.add_tag(Inspec::Tag.new('gtitle', json_control['tags']['gtitle']))
-        control.add_tag(Inspec::Tag.new('satisfies', json_control['tags']['satisfies'])) if json_control['tags']['satisfies']
-        control.add_tag(Inspec::Tag.new('gid',      json_control['tags']['gid']))
-        control.add_tag(Inspec::Tag.new('rid',      json_control['tags']['rid']))
-        control.add_tag(Inspec::Tag.new('stig_id',  json_control['tags']['stig_id']))
-        control.add_tag(Inspec::Tag.new('fix_id', json_control['tags']['fix_id']))
-        control.add_tag(Inspec::Tag.new('cci', json_control['tags']['cci']))
-        control.add_tag(Inspec::Tag.new('nist', json_control['tags']['nist']))
-        control.add_tag(Inspec::Tag.new('cis_level', json_control['tags']['cis_level'])) unless json_control['tags']['cis_level'].blank?
-        control.add_tag(Inspec::Tag.new('cis_controls', json_control['tags']['cis_controls'])) unless json_control['tags']['cis_controls'].blank?
-        control.add_tag(Inspec::Tag.new('cis_rid', json_control['tags']['cis_rid'])) unless json_control['tags']['cis_rid'].blank?
-        control.add_tag(Inspec::Tag.new('ref', json_control['tags']['ref'])) unless json_control['tags']['ref'].blank?
-        control.add_tag(Inspec::Tag.new('false_negatives', json_control['tags']['false_negatives'])) unless json_control['tags']['false_positives'].blank?
-        control.add_tag(Inspec::Tag.new('false_positives', json_control['tags']['false_positives'])) unless json_control['tags']['false_positives'].blank?
-        control.add_tag(Inspec::Tag.new('documentable', json_control['tags']['documentable'])) unless json_control['tags']['documentable'].blank?
-        control.add_tag(Inspec::Tag.new('mitigations', json_control['tags']['mitigations'])) unless json_control['tags']['mitigations'].blank?
-        control.add_tag(Inspec::Tag.new('severity_override_guidance', json_control['tags']['documentable'])) unless json_control['tags']['severity_override_guidance'].blank?
-        control.add_tag(Inspec::Tag.new('potential_impacts', json_control['tags']['potential_impacts'])) unless json_control['tags']['potential_impacts'].blank?
-        control.add_tag(Inspec::Tag.new('third_party_tools', json_control['tags']['third_party_tools'])) unless json_control['tags']['third_party_tools'].blank?
-        control.add_tag(Inspec::Tag.new('mitigation_controls', json_control['tags']['mitigation_controls'])) unless json_control['tags']['mitigation_controls'].blank?
-        control.add_tag(Inspec::Tag.new('responsibility', json_control['tags']['responsibility'])) unless json_control['tags']['responsibility'].blank?
-        control.add_tag(Inspec::Tag.new('ia_controls', json_control['tags']['ia_controls'])) unless json_control['tags']['ia_controls'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('severity', json_control['tags']['severity']))
+        control.add_tag(::Inspec::Object::Tag.new('gtitle', json_control['tags']['gtitle']))
+        control.add_tag(::Inspec::Object::Tag.new('satisfies', json_control['tags']['satisfies'])) if json_control['tags']['satisfies']
+        control.add_tag(::Inspec::Object::Tag.new('gid',      json_control['tags']['gid']))
+        control.add_tag(::Inspec::Object::Tag.new('rid',      json_control['tags']['rid']))
+        control.add_tag(::Inspec::Object::Tag.new('stig_id',  json_control['tags']['stig_id']))
+        control.add_tag(::Inspec::Object::Tag.new('fix_id', json_control['tags']['fix_id']))
+        control.add_tag(::Inspec::Object::Tag.new('cci', json_control['tags']['cci']))
+        control.add_tag(::Inspec::Object::Tag.new('nist', json_control['tags']['nist']))
+        control.add_tag(::Inspec::Object::Tag.new('cis_level', json_control['tags']['cis_level'])) unless json_control['tags']['cis_level'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('cis_controls', json_control['tags']['cis_controls'])) unless json_control['tags']['cis_controls'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('cis_rid', json_control['tags']['cis_rid'])) unless json_control['tags']['cis_rid'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('ref', json_control['tags']['ref'])) unless json_control['tags']['ref'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('false_negatives', json_control['tags']['false_negatives'])) unless json_control['tags']['false_positives'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('false_positives', json_control['tags']['false_positives'])) unless json_control['tags']['false_positives'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('documentable', json_control['tags']['documentable'])) unless json_control['tags']['documentable'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('mitigations', json_control['tags']['mitigations'])) unless json_control['tags']['mitigations'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('severity_override_guidance', json_control['tags']['documentable'])) unless json_control['tags']['severity_override_guidance'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('potential_impacts', json_control['tags']['potential_impacts'])) unless json_control['tags']['potential_impacts'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('third_party_tools', json_control['tags']['third_party_tools'])) unless json_control['tags']['third_party_tools'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('mitigation_controls', json_control['tags']['mitigation_controls'])) unless json_control['tags']['mitigation_controls'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('responsibility', json_control['tags']['responsibility'])) unless json_control['tags']['responsibility'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('ia_controls', json_control['tags']['ia_controls'])) unless json_control['tags']['ia_controls'].blank?
 
         controls << control
       end
@@ -313,7 +327,7 @@ module Utils
           else
             license_content = inspec_json['license']
           end
-        rescue StandardError => e
+        rescue StandardError => _e
           license_content = inspec_json['license']
         end
       end

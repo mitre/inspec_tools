@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby -E UTF-8
 
 # Trap ^C
 Signal.trap('INT') {
