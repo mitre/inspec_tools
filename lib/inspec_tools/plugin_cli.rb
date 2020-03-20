@@ -2,6 +2,7 @@ require 'yaml'
 require 'json'
 
 require 'inspec'
+require 'roo'
 require_relative 'version'
 
 require_relative '../utilities/inspec_util'
@@ -12,11 +13,12 @@ module InspecTools
   autoload :Command, 'inspec_tools/command'
   autoload :XCCDF, 'inspec_tools/xccdf'
   autoload :PDF, 'inspec_tools/pdf'
-  autoload :CSV, 'inspec_tools/csv'
+  autoload :CSVTool, 'inspec_tools/csv'
   autoload :CKL, 'inspec_tools/ckl'
   autoload :Inspec, 'inspec_tools/inspec'
   autoload :Summary, 'inspec_tools/summary'
   autoload :Threshold, 'inspec_tools/threshold'
+  autoload :XLSXTool, 'inspec_tools/xlsx'
 end
 
 # rubocop:disable Style/GuardClause
@@ -52,6 +54,7 @@ module InspecPlugins
           attributes = xccdf.to_attributes
           File.write(options[:attributes], YAML.dump(attributes))
         end
+        puts InspecTools.methods
       end
 
       desc 'inspec2xccdf', 'inspec2xccdf translates an inspec profile and attributes files to an xccdf file'
@@ -76,9 +79,25 @@ module InspecPlugins
       option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
       option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
       def csv2inspec
-        csv = InspecTools::CSV.read(options[:csv], encoding: 'ISO8859-1')
+        csv = CSV.read(options[:csv], encoding: 'ISO8859-1')
         mapping = YAML.load_file(options[:mapping])
         profile = InspecTools::CSVTool.new(csv, mapping, options[:csv].split('/')[-1].split('.')[0], options[:verbose]).to_inspec
+        Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
+      end
+
+      desc 'xlsx2inspec', 'xlsx2inspec translates CIS XLSX to Inspec controls using a mapping file'
+      long_desc InspecTools::Help.text(:xlsx2inspec)
+      option :xlsx, required: true, aliases: '-x'
+      option :mapping, required: true, aliases: '-m'
+      option :control_name_prefix, required: true, aliases: '-p'
+      option :verbose, required: false, type: :boolean, aliases: '-V'
+      option :output, required: false, aliases: '-o', default: 'profile'
+      option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
+      option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
+      def xlsx2inspec
+        xlsx = Roo::Spreadsheet.open(options[:xlsx])
+        mapping = YAML.load_file(options[:mapping])
+        profile = InspecTools::XLSXTool.new(xlsx, mapping, options[:xlsx].split('/')[-1].split('.')[0], options[:verbose]).to_inspec(options[:control_name_prefix])
         Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
       end
 
