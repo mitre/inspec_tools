@@ -79,7 +79,6 @@ module HappyMapperTools
       tag 'CHECKLIST'
       has_one :asset, Asset, tag: 'ASSET'
       has_one :stig, Stigs, tag: 'STIGS'
-      Encoding.default_external = 'UTF-8'
 
       def where(attrib, data)
         stig.istig.vuln.each do |vuln|
