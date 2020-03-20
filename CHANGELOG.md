@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.6.21](https://github.com/mitre/inspec_tools/tree/v1.6.21) (2020-03-20)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.20...v1.6.21)
+
+**Implemented enhancements:**
+
+- Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
+
+**Closed issues:**
+
+- figure out rubygems.org [\#31](https://github.com/mitre/inspec_tools/issues/31)
+
 ## [v1.6.20](https://github.com/mitre/inspec_tools/tree/v1.6.20) (2020-03-17)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.19...v1.6.20)
