@@ -214,10 +214,21 @@ module Utils
     #
     def self.get_impact(severity)
       case severity
-      when 'low' then 0.3
-      when 'medium' then 0.5
-      when 'high' then 0.7
-      else severity
+      when severity <= 0.01 then 0.0 # 0.0 to <0.01 these are controls with no impact, they only provide information
+      when severity < 0.4 then 0.3 # 0.01 to <0.4 these are controls with low impact
+      when severity < 0.7 then 0.5 # 0.4 to <0.7 these are controls with medium impact
+      when severity < 0.9 then 0.7  # 0.7 to <0.9 these are controls with high impact
+      when severity (0.9..1.0) then 1.0  # 0.9 to 1.0 these are critical controls
+      when /none|na|n\/a|Not[(_)|(\s*)]?Applicable/i then 0.0
+      when /low|cat(agory)?\s*(III|3)/i then 0.3
+      when /medium|cat(agory)?\s*(II|2)/i then 0.5
+      when /high|cat(agory)?\s*(I|1)/i then 0.7
+      when /'critical'/i then 1.0
+      else
+        puts "#{severity} is not a supported value. It should be a Float between
+             0.0 - 1.0 or the approved keywords found in the inspec_tools README,
+             defaulting to 0.5"
+        0.5
       end
     end
 
