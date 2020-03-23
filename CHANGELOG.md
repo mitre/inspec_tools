@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.7.2](https://github.com/mitre/inspec_tools/tree/v1.7.2) (2020-03-23)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.7.1...v1.7.2)
+
+**Implemented enhancements:**
+
+- add warning in CLI if needed app is missing for pdf2inspec  [\#38](https://github.com/mitre/inspec_tools/issues/38)
+
+**Merged pull requests:**
+
+- Allow pushing to any gem host to support GitHub [\#103](https://github.com/mitre/inspec_tools/pull/103) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.7.1](https://github.com/mitre/inspec_tools/tree/v1.7.1) (2020-03-23)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.7.0...v1.7.1)
@@ -7,7 +19,6 @@
 **Merged pull requests:**
 
 - GitHub Action Workflow Updates [\#102](https://github.com/mitre/inspec_tools/pull/102) ([Bialogs](https://github.com/Bialogs))
-- Rubygems release workflow [\#100](https://github.com/mitre/inspec_tools/pull/100) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.7.0](https://github.com/mitre/inspec_tools/tree/v1.7.0) (2020-03-20)
 
@@ -36,6 +47,10 @@
 ## [v1.6.20](https://github.com/mitre/inspec_tools/tree/v1.6.20) (2020-03-17)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.19...v1.6.20)
+
+**Merged pull requests:**
+
+- Rubygems release workflow [\#100](https://github.com/mitre/inspec_tools/pull/100) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.19](https://github.com/mitre/inspec_tools/tree/v1.6.19) (2020-03-16)
 
