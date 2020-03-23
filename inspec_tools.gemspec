@@ -1,9 +1,8 @@
 # coding: utf-8
 
-# rubocop:disable Style/GuardClause
-
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require 'inspec_tools/version'
 
 Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
@@ -21,9 +20,10 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.executables   << 'inspec_tools'
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '~> 2.3'
+  spec.required_ruby_version = '~> 2.4'
 
   spec.add_runtime_dependency 'colorize', '~> 0'
+  spec.add_runtime_dependency 'inspec', ">= 3.0", "< 5.0"
   spec.add_runtime_dependency 'inspec-objects'
   spec.add_runtime_dependency 'nokogiri', '~> 1.8'
   spec.add_runtime_dependency 'nokogiri-happymapper', '~> 0'

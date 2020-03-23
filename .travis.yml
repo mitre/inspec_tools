@@ -1,24 +1,25 @@
 ---
 sudo: false
-branches:
-  only:
-    - master
 language: ruby
 cache: bundler
 
 bundler_args: --without integration --without tools
 
 before_install:
-- sudo apt-get update
-- sudo apt-get install -y poppler-utils
 - gem update --system
 - gem update bundler
 - gem update rake
 - gem --version
+- bundle install
+
+script:
+  - bundle exec rake test
+  - bundle exec inspec_tools --help
+  - bundle exec inspec_tools --version
 
 matrix:
   include:
-  - rvm: 2.3
   - rvm: 2.4
   - rvm: 2.5
   - rvm: 2.6
+  - rvm: 2.7

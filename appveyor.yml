@@ -7,7 +7,6 @@ environment:
     - RUBY_VERSION: 26
     - RUBY_VERSION: 25
     - RUBY_VERSION: 24
-    - RUBY_VERSION: 23
 
 branches:
   only:
