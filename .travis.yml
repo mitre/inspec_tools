@@ -16,6 +16,11 @@ before_install:
 - gem update rake
 - gem --version
 
+script:
+  - bundle exec rake test
+  - bundle exec exe/inspec_tools --help
+  - bundle exec exe/inspec_tools --version
+
 matrix:
   include:
   - rvm: 2.3
