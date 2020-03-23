@@ -32,6 +32,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.required_ruby_version = '~> 2.3'
 
   spec.add_runtime_dependency 'colorize', '~> 0'
+  spec.add_runtime_dependency 'inspec', ">= 3.0", "< 5.0"
   spec.add_runtime_dependency 'inspec-objects'
   spec.add_runtime_dependency 'nokogiri', '~> 1.8'
   spec.add_runtime_dependency 'nokogiri-happymapper', '~> 0'
