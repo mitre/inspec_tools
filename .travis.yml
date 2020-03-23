@@ -14,8 +14,8 @@ before_install:
 
 script:
   - bundle exec rake test
-  - bundle exec exe/inspec_tools --help
-  - bundle exec exe/inspec_tools --version
+  - bundle exec inspec_tools --help
+  - bundle exec inspec_tools --version
 
 matrix:
   include:
