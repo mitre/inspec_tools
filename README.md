@@ -186,7 +186,7 @@ example: inspec_tools inspec2xccdf -j example.json -a attributes.yml -o xccdf.xm
 
 ## csv2inspec
 
-Convert a csv export of STIG controls to an InSpec profile
+csv2inspec translates CSV to Inspec controls using a mapping file
 
 ```
 USAGE: inspec_tools csv2inspec [OPTIONS] -c <stig-csv> -m <map-yml>
@@ -199,7 +199,7 @@ FLAGS:
 	-f --format [ruby | hash]          : the format you would like (default: ruby) [optional]
 	-s --separate-files [true | false] : separate the controls into different files (default: true) [optional]
 
-example: inspec_tools csv2inspec -c stig.csv -m map.yml -o mydir -f ruby -s true   # To map stig.csv to InSpec via map.yml
+example: inspec_tools csv2inspec -c examples/csv2inspec/stig.csv -m examples/csv2inspec/mapping.yml -o mydir -f ruby -s true   # To map stig.csv to InSpec via mapping.yml
 ```
 
 ## inspec2csv
@@ -256,16 +256,16 @@ Usage:
   inspec_tools xlsx2inspec -m, --mapping=MAPPING -p, --control-name-prefix=CONTROL_NAME_PREFIX -x, --xlsx=XLSX
 
 Options:
-  -x, --xlsx=XLSX                                
-  -m, --mapping=MAPPING                          
-  -p, --control-name-prefix=CONTROL_NAME_PREFIX  
-  -V, [--verbose], [--no-verbose]                
-  -o, [--output=OUTPUT]                          
+  -x, --xlsx=XLSX
+  -m, --mapping=MAPPING
+  -p, --control-name-prefix=CONTROL_NAME_PREFIX
+  -V, [--verbose], [--no-verbose]
+  -o, [--output=OUTPUT]
                                                  # Default: profile
-  -f, [--format=FORMAT]                          
+  -f, [--format=FORMAT]
                                                  # Default: ruby
                                                  # Possible values: ruby, hash
-  -s, [--separate-files], [--no-separate-files]  
+  -s, [--separate-files], [--no-separate-files]
                                                  # Default: true
       [--log-level=LOG_LEVEL]                    # Set the logging level: ["debug", "info", "warn", "error", "fatal"]
       [--log-location=LOG_LOCATION]              # Location to send diagnostic log messages to. (default: $stdout or Inspec::Log.error)
