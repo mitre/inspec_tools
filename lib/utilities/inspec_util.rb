@@ -239,7 +239,7 @@ module Utils
     end
 
     private_class_method def self.string_to_impact(severity)
-      if /none|na|n\/a|not[(_)|(\s*)]?applicable/i.match?(severity)
+      if /none|na|n\/a|not[_|(\s*)]?applicable/i.match?(severity)
         0.0 # Informative
       elsif /low|cat(egory)?\s*(iii|3)/i.match?(severity)
         0.3 # Low Impact
@@ -259,8 +259,7 @@ module Utils
       return if impact.nil?
 
       value = impact.to_f
-      between?(0,1)
-      if value < 0 || value > 1
+      unless value.between?(0,1)
         raise ImpactInputError, "'#{value}' is not a valid impact score. Valid impact scores: [0.0 - 1.0]."
       end
 
