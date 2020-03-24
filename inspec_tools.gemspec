@@ -38,4 +38,5 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'codeclimate-test-reporter'
   spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'rubocop'
 end
