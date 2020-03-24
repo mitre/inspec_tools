@@ -14,23 +14,14 @@ jobs:
       - name: Setup ruby
         uses: actions/setup-ruby@v1
       - name: Install bundler
-        run: |
-          gem install bundler
+        run: gem install bundler
       - name: Run bundle install
-        run: |
-          bundle install
+        run: bundle install
       - name: Run rake test
-        run: |
-          bundle exec rake test
-#      - name: Install rubocop
-#        run: |
-#          gem install rubocop
-#      - name: Run rubocop
-#        run: |
-#          rubocop
+        run: bundle exec rake test
+      - name: Run bundle-audit
+        run: bundle-audit check --update
       - name: Build inspec_tools gem
-        run: |
-          gem build inspec_tools.gemspec
+        run: gem build inspec_tools.gemspec
       - name: Install inspec_tools gem
-        run: |
-          gem install inspec_tools
+        run: gem install inspec_tools
