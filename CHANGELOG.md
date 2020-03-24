@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.8.1](https://github.com/mitre/inspec_tools/tree/v1.8.1) (2020-03-24)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.0...v1.8.1)
+
+**Closed issues:**
+
+- Please update the homepage in the gemspec to point to inspec-tools.mitre.org [\#105](https://github.com/mitre/inspec_tools/issues/105)
+
+**Merged pull requests:**
+
+- Update Gem homepage to https://inspec-tools.mitre.org/ [\#108](https://github.com/mitre/inspec_tools/pull/108) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.0](https://github.com/mitre/inspec_tools/tree/v1.8.0) (2020-03-24)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.7.3...v1.8.0)
