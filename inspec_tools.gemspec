@@ -12,7 +12,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.email         = ['rthew@mitre.org']
   spec.summary       = 'Converter utils for Inspec'
   spec.description   = 'Converter utils for Inspec that can be included as a gem or used from the command line'
-  spec.homepage      = 'https://github.com/mitre/inspec_tools'
+  spec.homepage      = 'https://inspec-tools.mitre.org/'
   spec.license       = 'Apache-2.0'
 
   spec.files         = Dir.glob('{lib,exe}/**/*') + %w{CHANGELOG.md Guardfile LICENSE.md Rakefile README.md}
