@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.8.0](https://github.com/mitre/inspec_tools/tree/v1.8.0) (2020-03-24)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.7.3...v1.8.0)
+
+**Closed issues:**
+
+- csv2inspec impact doesn't correct format "CAT I II III" severities [\#88](https://github.com/mitre/inspec_tools/issues/88)
+
+**Merged pull requests:**
+
+- Support conversion from CAT/Category style severities when generating an impact number. [\#106](https://github.com/mitre/inspec_tools/pull/106) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.7.3](https://github.com/mitre/inspec_tools/tree/v1.7.3) (2020-03-23)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.7.2...v1.7.3)
