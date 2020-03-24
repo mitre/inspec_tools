@@ -4,6 +4,8 @@ require 'pp'
 require 'uri'
 require 'net/http'
 require 'fileutils'
+require 'exceptions/impact_input_error'
+require 'exceptions/severity_input_error'
 
 # Add rails style blank? method to all classes
 class NilClass
@@ -54,8 +56,6 @@ module Utils
       "high" => 0.7,
       "critical" => 0.9,
     }.freeze
-
-    class ImpactError; end
 
     def self.parse_data_for_xccdf(json)
       data = {}
@@ -213,29 +213,56 @@ module Utils
     # values to numbers or to override our hard coded values.
     #
     def self.get_impact(severity)
-      case severity
-      when severity <= 0.01 then 0.0 # 0.0 to <0.01 these are controls with no impact, they only provide information
-      when severity < 0.4 then 0.3 # 0.01 to <0.4 these are controls with low impact
-      when severity < 0.7 then 0.5 # 0.4 to <0.7 these are controls with medium impact
-      when severity < 0.9 then 0.7  # 0.7 to <0.9 these are controls with high impact
-      when severity (0.9..1.0) then 1.0  # 0.9 to 1.0 these are critical controls
-      when /none|na|n\/a|Not[(_)|(\s*)]?Applicable/i then 0.0
-      when /low|cat(agory)?\s*(III|3)/i then 0.3
-      when /medium|cat(agory)?\s*(II|2)/i then 0.5
-      when /high|cat(agory)?\s*(I|1)/i then 0.7
-      when /'critical'/i then 1.0
+      return float_to_impact(severity) if severity.is_a?(Float)
+
+      return string_to_impact(severity) if severity.is_a?(String)
+
+      raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
+                                '1.0 or one of the approved keywords.'
+    end
+
+    private_class_method def self.float_to_impact(severity)
+      raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
+                                  '1.0 or one of the approved keywords.' unless severity.between?(0,1)
+
+      if severity <= 0.01
+        0.0 # Informative
+      elsif severity < 0.4
+        0.3 # Low Impact
+      elsif severity < 0.7
+        0.5 # Medium Impact
+      elsif severity < 0.9
+        0.7 # High Impact
       else
-        puts "#{severity} is not a supported value. It should be a Float between
-             0.0 - 1.0 or the approved keywords found in the inspec_tools README,
-             defaulting to 0.5"
-        0.5
+        1.0 # Critical Controls
+      end
+    end
+
+    private_class_method def self.string_to_impact(severity)
+      if /none|na|n\/a|not[(_)|(\s*)]?applicable/i.match?(severity)
+        0.0 # Informative
+      elsif /low|cat(egory)?\s*(iii|3)/i.match?(severity)
+        0.3 # Low Impact
+      elsif /med(ium)?|cat(egory)?\s*(ii|2)/i.match?(severity)
+        0.5 # Medium Impact
+      elsif /high|cat(egory)?\s*(i|1)/i.match?(severity)
+        0.7 # High Impact
+      elsif /crit(ical)?|severe/i.match?(severity)
+        1.0 # Critical Controls
+      else
+        raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
+                                  '1.0 or one of the approved keywords.'
       end
     end
 
     def self.get_impact_string(impact)
       return if impact.nil?
+
       value = impact.to_f
-      raise ImpactError, "'#{value}' is not a valid impact score. Valid impact scores: [0.0 - 1.0]." if value < 0 || value > 1
+      between?(0,1)
+      if value < 0 || value > 1
+        raise ImpactInputError, "'#{value}' is not a valid impact score. Valid impact scores: [0.0 - 1.0]."
+      end
 
       IMPACT_SCORES.reverse_each do |name, impact|
         return name if value >= impact
