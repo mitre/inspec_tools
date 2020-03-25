@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.8.2](https://github.com/mitre/inspec_tools/tree/v1.8.2) (2020-03-25)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.1...v1.8.2)
+
+**Merged pull requests:**
+
+- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.1](https://github.com/mitre/inspec_tools/tree/v1.8.1) (2020-03-24)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.0...v1.8.1)
