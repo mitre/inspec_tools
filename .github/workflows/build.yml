@@ -1,11 +1,17 @@
-name: inspec_tools
+name: Build and test inspec_tools
 on:
   push:
+    branches: [ master ]
   pull_request:
+    branches: [ master ]
 jobs:
   test:
-    name: Build and test inspec_tools
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+        ruby: [ '2.4', '2.5', '2.6', '2.7']
+    runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout inspec_tools
         uses: actions/checkout@v2
@@ -13,6 +19,8 @@ jobs:
           lfs: true
       - name: Setup ruby
         uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
       - name: Install bundler
         run: gem install bundler
       - name: Run bundle install
@@ -24,4 +32,8 @@ jobs:
       - name: Build inspec_tools gem
         run: gem build inspec_tools.gemspec
       - name: Install inspec_tools gem
-        run: gem install inspec_tools
+        run: gem install inspec_tools-*.gem
+      - name: Run installed inspec_tools
+        run: |
+          inspec_tools --version
+          inspec_tools --help
