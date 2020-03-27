@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.8.6](https://github.com/mitre/inspec_tools/tree/v1.8.6) (2020-03-27)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.5...v1.8.6)
+
+**Closed issues:**
+
+- GitHub Actions Build Matrix [\#112](https://github.com/mitre/inspec_tools/issues/112)
+
+**Merged pull requests:**
+
+- Update build/test process to only use GitHub actions [\#115](https://github.com/mitre/inspec_tools/pull/115) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.5](https://github.com/mitre/inspec_tools/tree/v1.8.5) (2020-03-27)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.4...v1.8.5)
