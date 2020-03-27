@@ -207,19 +207,24 @@ module InspecPlugins
       option :output, required: false, aliases: '-o'
       option :cli, required: false, aliases: '-c'
       option :verbose, type: :boolean, aliases: '-V'
+      option :json_full, required: false, aliases: '-f'
 
       def summary
         summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
 
-        puts "\ncompliance: #{summary[:compliance]}%\n\n"
-        summary[:status].keys.each do |status|
-          puts status
-          summary[:status][status.to_sym].keys.each do |impact|
-            print "\t#{impact} : #{summary[:status][status.to_sym][impact.to_sym]}\n"
+        if options[:cli]
+          puts "\nOverall compliance: #{summary[:compliance]}%\n\n"
+          summary[:status].keys.each do |category|
+            puts category
+            summary[:status][category].keys.each do |impact|
+              puts "\t#{impact} : #{summary[:status][category][impact]}"
+            end
           end
-        end if options[:cli]
+        end
 
-        File.write(options[:output], summary.to_json) if options[:output]
+        json_summary = summary.to_json
+        File.write(options[:output], json_summary) if options[:output]
+        puts json_summary if options[:json_full]
       end
 
       desc 'compliance', 'compliance parses an inspec results json to check if the compliance level meets a specified threshold'
