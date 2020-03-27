@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.8.5](https://github.com/mitre/inspec_tools/tree/v1.8.5) (2020-03-27)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.4...v1.8.5)
+
+**Implemented enhancements:**
+
+- add "\# encoding: utf-8" to controls [\#54](https://github.com/mitre/inspec_tools/issues/54)
+
+**Merged pull requests:**
+
+- Add '\# encoding: UTF-8' to the top of all generated controls/\*.rb [\#114](https://github.com/mitre/inspec_tools/pull/114) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.4](https://github.com/mitre/inspec_tools/tree/v1.8.4) (2020-03-27)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.3...v1.8.4)
