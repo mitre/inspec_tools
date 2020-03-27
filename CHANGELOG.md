@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.8.4](https://github.com/mitre/inspec_tools/tree/v1.8.4) (2020-03-27)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.3...v1.8.4)
+
+**Fixed bugs:**
+
+- \[BUG\] inspec\_tools \> 1.7.1 getting unknown encoding name -  UTF-8 \(RuntimeError\) [\#110](https://github.com/mitre/inspec_tools/issues/110)
+
+**Merged pull requests:**
+
+- Reorganize overrides [\#113](https://github.com/mitre/inspec_tools/pull/113) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.3](https://github.com/mitre/inspec_tools/tree/v1.8.3) (2020-03-27)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.2...v1.8.3)
@@ -11,6 +23,10 @@
 ## [v1.8.2](https://github.com/mitre/inspec_tools/tree/v1.8.2) (2020-03-25)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.1...v1.8.2)
+
+**Merged pull requests:**
+
+- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.8.1](https://github.com/mitre/inspec_tools/tree/v1.8.1) (2020-03-24)
 
@@ -34,7 +50,6 @@
 
 **Merged pull requests:**
 
-- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
 - Support conversion from CAT/Category style severities when generating an impact number. [\#106](https://github.com/mitre/inspec_tools/pull/106) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.7.3](https://github.com/mitre/inspec_tools/tree/v1.7.3) (2020-03-23)
