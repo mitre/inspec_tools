@@ -205,9 +205,9 @@ module InspecPlugins
       long_desc InspecTools::Help.text(:summary)
       option :inspec_json, required: true, aliases: '-j'
       option :output, required: false, aliases: '-o'
-      option :cli, required: false, aliases: '-c'
+      option :cli, type: :boolean, required: false, aliases: '-c'
       option :verbose, type: :boolean, aliases: '-V'
-      option :json_full, required: false, aliases: '-f'
+      option :json_full, type: :boolean, required: false, aliases: '-f'
 
       def summary
         summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
