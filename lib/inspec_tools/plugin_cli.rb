@@ -208,6 +208,7 @@ module InspecPlugins
       option :cli, type: :boolean, required: false, aliases: '-c'
       option :verbose, type: :boolean, aliases: '-V'
       option :json_full, type: :boolean, required: false, aliases: '-f'
+      option :json_counts, type: :boolean, required: false, aliases: '-k'
 
       def summary
         summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
@@ -225,6 +226,7 @@ module InspecPlugins
         json_summary = summary.to_json
         File.write(options[:output], json_summary) if options[:output]
         puts json_summary if options[:json_full]
+        puts summary[:status].to_json if options[:json_counts]
       end
 
       desc 'compliance', 'compliance parses an inspec results json to check if the compliance level meets a specified threshold'
