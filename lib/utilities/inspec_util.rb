@@ -6,37 +6,11 @@ require 'net/http'
 require 'fileutils'
 require 'exceptions/impact_input_error'
 require 'exceptions/severity_input_error'
-
-# Add rails style blank? method to all classes
-class NilClass
-  def blank?
-    true
-  end
-end
-
-class String
-  def blank?
-    self.strip.empty?
-  end
-end
-
-class FalseClass
-  def blank?
-    true
-  end
-end
-
-class TrueClass
-  def blank?
-    false
-  end
-end
-
-class Object
-  def blank?
-    respond_to?(:empty?) ? empty? : !self
-  end
-end
+require 'overrides/false_class'
+require 'overrides/true_class'
+require 'overrides/nil_class'
+require 'overrides/object'
+require 'overrides/string'
 
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
