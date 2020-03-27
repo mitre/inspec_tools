@@ -1,12 +1,16 @@
 # Changelog
 
-## [v1.8.2](https://github.com/mitre/inspec_tools/tree/v1.8.2) (2020-03-25)
+## [v1.8.3](https://github.com/mitre/inspec_tools/tree/v1.8.3) (2020-03-27)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.1...v1.8.2)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.2...v1.8.3)
 
 **Merged pull requests:**
 
-- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
+- Spaces cause interpreter not to pick up encoding correctly [\#111](https://github.com/mitre/inspec_tools/pull/111) ([Bialogs](https://github.com/Bialogs))
+
+## [v1.8.2](https://github.com/mitre/inspec_tools/tree/v1.8.2) (2020-03-25)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.1...v1.8.2)
 
 ## [v1.8.1](https://github.com/mitre/inspec_tools/tree/v1.8.1) (2020-03-24)
 
@@ -30,6 +34,7 @@
 
 **Merged pull requests:**
 
+- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
 - Support conversion from CAT/Category style severities when generating an impact number. [\#106](https://github.com/mitre/inspec_tools/pull/106) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.7.3](https://github.com/mitre/inspec_tools/tree/v1.7.3) (2020-03-23)
