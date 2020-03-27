@@ -403,6 +403,7 @@ module Utils
           controls.each do |control|
             file_name = control.id.to_s
             myfile = File.new("#{directory}/controls/#{file_name}.rb", 'w')
+            myfile.puts "# encoding: UTF-8\n\n"
             myfile.puts wrap(control.to_ruby, WIDTH) + "\n"
             myfile.close
           end
@@ -418,6 +419,7 @@ module Utils
         myfile = File.new("#{directory}/controls/controls.rb", 'w')
         if output_format == 'ruby'
           controls.each do |control|
+            myfile.puts "# encoding: UTF-8\n\n"
             myfile.puts wrap(control.to_ruby, WIDTH) + "\n"
           end
         else
