@@ -30,3 +30,5 @@ build_script:
 
 test_script:
   - bundle exec rake test:windows
+  - gem build inspec_tools.gemspec
+  - gem install inspec_tools
