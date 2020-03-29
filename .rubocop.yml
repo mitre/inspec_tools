@@ -9,7 +9,7 @@ AllCops:
   - 'vendor/**/*'
 Documentation:
   Enabled: false
-AlignParameters:
+Layout/ParameterAlignment:
   Enabled: true
 Encoding:
   Enabled: false
@@ -42,15 +42,13 @@ Style/PercentLiteralDelimiters:
     '%w': '{}'
     '%W': ()
     '%x': ()
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 Naming/PredicateName:
   Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false
 Style/ConditionalAssignment:
-  Enabled: false
-Style/BracesAroundHashParameters:
   Enabled: false
 Style/AndOr:
   Enabled: false
