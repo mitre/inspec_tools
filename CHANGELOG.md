@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.8.7](https://github.com/mitre/inspec_tools/tree/v1.8.7) (2020-03-29)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.6...v1.8.7)
+
 ## [v1.8.6](https://github.com/mitre/inspec_tools/tree/v1.8.6) (2020-03-27)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.5...v1.8.6)
