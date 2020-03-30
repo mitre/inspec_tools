@@ -185,9 +185,15 @@ module InspecTools
       end
 
       stig_info = HappyMapperTools::StigChecklist::StigInfo.new
-      stig_info.si_data = si_data('stigid', '')
-      stig_info.si_data = si_data('stigid', @metadata['stigid']) if @metadata['stigid']
-      stig_info.si_data = si_datas if @benchmark
+
+      if @benchmark
+        stig_info.si_data = si_datas
+      elsif @metadata['stigid']
+        stig_info.si_data = si_data('stigid', @metadata['stigid'])
+      else
+        stig_info.si_data = si_data('stigid', '')
+      end
+
       istig.stig_info = stig_info
 
       istig.vuln = vuln_list
