@@ -21,3 +21,4 @@ tmp
 **/.DS_Store
 *.json
 profile/
+output.ckl
