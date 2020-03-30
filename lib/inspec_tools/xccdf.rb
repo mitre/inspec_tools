@@ -21,6 +21,10 @@ module InspecTools
       @benchmark = HappyMapperTools::StigAttributes::Benchmark.parse(@xccdf)
     end
 
+    def to_benchmark
+      @benchmark
+    end
+
     def to_ckl
       # TODO: to_ckl
     end

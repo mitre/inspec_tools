@@ -17,14 +17,17 @@ require_relative 'csv'
 
 module InspecTools
   class Inspec
-    def initialize(inspec_json, metadata = '{}')
-      @json = JSON.parse(inspec_json.gsub(/\\+u0000/, ''))
-      @metadata = JSON.parse(metadata)
+    def initialize(inspec_json, metadata = {}, xccdf = {})
+      @json = JSON.parse(inspec_json)
+      @metadata = metadata
+      @xccdf = xccdf
     end
 
     def to_ckl(title = nil, date = nil, cklist = nil)
+      @benchmark = @xccdf.to_benchmark if @xccdf.is_a?(InspecTools::XCCDF)
       @data = Utils::InspecUtil.parse_data_for_ckl(@json)
       @platform = Utils::InspecUtil.get_platform(@json)
+      title = @metadata['title'] if @metadata['title'] && !title
       @title = generate_title title, @json, date
       @cklist = cklist
       @checklist = HappyMapperTools::StigChecklist::Checklist.new
@@ -146,7 +149,9 @@ module InspecTools
 
       stigdata = HappyMapperTools::StigChecklist::StigData.new
       stigdata.attrib = 'STIGRef'
-      stigdata.data = @title
+      title = @title
+      title = "#{control[:profile_name]} :: Version #{@benchmark.version}, #{@benchmark.plaintext.plaintext}" if @benchmark
+      stigdata.data = title
       stig_data_list.push(stigdata)
 
       vuln.stig_data = stig_data_list
@@ -160,7 +165,9 @@ module InspecTools
     end
 
     def generate_title(title, json, date)
-      title ||= "Untitled - Checklist Created from Automated InSpec Results JSON; Profiles: #{json['profiles'].map { |x| x['name'] }.join(' | ')}"
+      title_prefix = 'Untitled - Checklist Created from Automated InSpec Results JSON'
+      title_prefix = @metadata['title_prefix'] if @metadata['title_prefix']
+      title ||= "#{title_prefix} #{json['profiles'].map { |x| x['name'] }.join(' | ')}"
       title + " Checklist Date: #{date || Date.today.to_s}"
     end
 
@@ -173,15 +180,10 @@ module InspecTools
         vuln_list.push(generate_vuln_data(@data[control_id]))
       end
 
-      si_data = HappyMapperTools::StigChecklist::SiData.new
-      si_data.name = 'stigid'
-      si_data.data = ''
-      if !@metadata['stigid'].nil?
-        si_data.data = @metadata['stigid']
-      end
-
       stig_info = HappyMapperTools::StigChecklist::StigInfo.new
-      stig_info.si_data = si_data
+      stig_info.si_data = si_data('stigid', '')
+      stig_info.si_data = si_data('stigid', @metadata['stigid']) if @metadata['stigid']
+      stig_info.si_data = si_datas if @benchmark
       istig.stig_info = stig_info
 
       istig.vuln = vuln_list
@@ -320,6 +322,28 @@ module InspecTools
         group_array << group
       end
       @benchmark.group = group_array
+    end
+
+    def si_datas
+      si_info_data = []
+      # Find classification
+      si_info_data.push(si_data('description', @benchmark.description))
+      # Determine if filename is useful
+      si_info_data.push(si_data('notice', @benchmark.notice.notice))
+      si_info_data.push(si_data('releaseinfo', @benchmark.plaintext.plaintext))
+      # Determine if source is useful
+      si_info_data.push(si_data('stigid', @benchmark.id))
+      si_info_data.push(si_data('title', @benchmark.title))
+      # Determine where this can come from
+      si_info_data.push(si_data('version', @benchmark.version))
+      si_info_data
+    end
+
+    def si_data(name, data)
+      si_data = HappyMapperTools::StigChecklist::SiData.new
+      si_data.name = name
+      si_data.data = data
+      si_data
     end
   end
 end

@@ -356,10 +356,6 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.6...v1.4.0)
 
-**Merged pull requests:**
-
-- Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
-
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.5...v1.3.6)
