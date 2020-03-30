@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.8.9](https://github.com/mitre/inspec_tools/tree/v1.8.9) (2020-03-30)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.8...v1.8.9)
+
+**Merged pull requests:**
+
+- Fix bug in creating severity override guidance tags [\#118](https://github.com/mitre/inspec_tools/pull/118) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.8](https://github.com/mitre/inspec_tools/tree/v1.8.8) (2020-03-30)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.7...v1.8.8)
@@ -35,10 +43,6 @@
 **Implemented enhancements:**
 
 - add "\# encoding: utf-8" to controls [\#54](https://github.com/mitre/inspec_tools/issues/54)
-
-**Merged pull requests:**
-
-- Add '\# encoding: UTF-8' to the top of all generated controls/\*.rb [\#114](https://github.com/mitre/inspec_tools/pull/114) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.8.4](https://github.com/mitre/inspec_tools/tree/v1.8.4) (2020-03-27)
 
@@ -90,6 +94,7 @@
 
 **Merged pull requests:**
 
+- Add '\# encoding: UTF-8' to the top of all generated controls/\*.rb [\#114](https://github.com/mitre/inspec_tools/pull/114) ([Bialogs](https://github.com/Bialogs))
 - Support conversion from CAT/Category style severities when generating an impact number. [\#106](https://github.com/mitre/inspec_tools/pull/106) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.7.3](https://github.com/mitre/inspec_tools/tree/v1.7.3) (2020-03-23)
@@ -144,10 +149,6 @@
 
 - figure out rubygems.org [\#31](https://github.com/mitre/inspec_tools/issues/31)
 
-**Merged pull requests:**
-
-- Update github workflows [\#99](https://github.com/mitre/inspec_tools/pull/99) ([Bialogs](https://github.com/Bialogs))
-
 ## [v1.6.20](https://github.com/mitre/inspec_tools/tree/v1.6.20) (2020-03-17)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.19...v1.6.20)
@@ -159,6 +160,10 @@
 ## [v1.6.19](https://github.com/mitre/inspec_tools/tree/v1.6.19) (2020-03-16)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.18...v1.6.19)
+
+**Merged pull requests:**
+
+- Update github workflows [\#99](https://github.com/mitre/inspec_tools/pull/99) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.18](https://github.com/mitre/inspec_tools/tree/v1.6.18) (2020-03-16)
 
@@ -393,6 +398,7 @@
 - Fix bugs introduced by \#51 \(STIGViewer PR\) [\#52](https://github.com/mitre/inspec_tools/pull/52) ([samcornwell](https://github.com/samcornwell))
 - Enhancements to meet working with STIGViewer as well as tracking some custom metadata when converting from xccdf2inspec and inspec2ckl [\#51](https://github.com/mitre/inspec_tools/pull/51) ([kevin-j-smith](https://github.com/kevin-j-smith))
 - Add modules summary, compliance [\#45](https://github.com/mitre/inspec_tools/pull/45) ([rx294](https://github.com/rx294))
+- replaced docsplit with pdf-reader [\#43](https://github.com/mitre/inspec_tools/pull/43) ([robthew](https://github.com/robthew))
 
 ## [v1.1.6](https://github.com/mitre/inspec_tools/tree/v1.1.6) (2018-12-13)
 
@@ -421,7 +427,6 @@
 
 **Merged pull requests:**
 
-- replaced docsplit with pdf-reader [\#43](https://github.com/mitre/inspec_tools/pull/43) ([robthew](https://github.com/robthew))
 - Updated remove dir statement [\#41](https://github.com/mitre/inspec_tools/pull/41) ([robthew](https://github.com/robthew))
 - Added appveyor config [\#40](https://github.com/mitre/inspec_tools/pull/40) ([robthew](https://github.com/robthew))
 - Travis test [\#39](https://github.com/mitre/inspec_tools/pull/39) ([robthew](https://github.com/robthew))
