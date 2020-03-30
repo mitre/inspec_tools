@@ -21,6 +21,7 @@ module InspecTools
       @json = JSON.parse(inspec_json.gsub(/\\+u0000/, ''))
       @metadata = metadata
       @xccdf = xccdf
+      @benchmark = nil
     end
 
     def to_ckl(title = nil, date = nil, cklist = nil)
