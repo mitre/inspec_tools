@@ -70,7 +70,7 @@ module InspecTools
       end
       [ 1, 2 ].each do |level|
         @xlsx.sheet(level).each_row_streaming do |row|
-          if row[@mapping['control.id']].nil? || !/^\d+\.?\d*$/.match(row[@mapping['control.id']].formatted_value)
+          if row[@mapping['control.id']].nil? || !/^\d+(\.?\d)*$/.match(row[@mapping['control.id']].formatted_value)
             next
           end
           tag_pos = @mapping['control.tags']
