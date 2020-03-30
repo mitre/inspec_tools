@@ -205,21 +205,28 @@ module InspecPlugins
       long_desc InspecTools::Help.text(:summary)
       option :inspec_json, required: true, aliases: '-j'
       option :output, required: false, aliases: '-o'
-      option :cli, required: false, aliases: '-c'
+      option :cli, type: :boolean, required: false, aliases: '-c'
       option :verbose, type: :boolean, aliases: '-V'
+      option :json_full, type: :boolean, required: false, aliases: '-f'
+      option :json_counts, type: :boolean, required: false, aliases: '-k'
 
       def summary
         summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
 
-        puts "\ncompliance: #{summary[:compliance]}%\n\n"
-        summary[:status].keys.each do |status|
-          puts status
-          summary[:status][status.to_sym].keys.each do |impact|
-            print "\t#{impact} : #{summary[:status][status.to_sym][impact.to_sym]}\n"
+        if options[:cli]
+          puts "\nOverall compliance: #{summary[:compliance]}%\n\n"
+          summary[:status].keys.each do |category|
+            puts category
+            summary[:status][category].keys.each do |impact|
+              puts "\t#{impact} : #{summary[:status][category][impact]}"
+            end
           end
-        end if options[:cli]
+        end
 
-        File.write(options[:output], summary.to_json) if options[:output]
+        json_summary = summary.to_json
+        File.write(options[:output], json_summary) if options[:output]
+        puts json_summary if options[:json_full]
+        puts summary[:status].to_json if options[:json_counts]
       end
 
       desc 'compliance', 'compliance parses an inspec results json to check if the compliance level meets a specified threshold'

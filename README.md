@@ -140,13 +140,16 @@ summary parses an inspec results json to create a summary json
 USAGE: inspec_tools summary [OPTIONS] -j <inspec-json> -o <summary-csv>
 
 FLAGS:
-	-j --inspec-json <inspec-json>  : path to InSpec results Json
-	-o --output <output-json> 		: path to summary json
-    -c --cli <output-cli>           : print summary to stdout
+	-j --inspec-json <inspec-json>   : path to InSpec results JSON
+	-o --output <output-json> 		   : path to summary JSON
+  -c --cli, --no-cli               : print summary to STDOUT
+  -V --verbose, --no-verbose       : print verbose an debug output
+  -f --json-full, --no-json-full   : print the summary STDOUT as JSON
+  -k --json-counts, --no-json_cou  : print the reslut status to STDOUT as JSON
 
 Examples:
 
-  inspec_tools summary -j examples/sample_json/rhel-simp.json -o summary.json -c
+  inspec_tools summary -j examples/sample_json/rhel-simp.json -f -o summary.json -c
 ```
 
 ## xccdf2inspec
