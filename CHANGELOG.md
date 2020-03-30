@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.8.8](https://github.com/mitre/inspec_tools/tree/v1.8.8) (2020-03-30)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.7...v1.8.8)
+
+**Implemented enhancements:**
+
+- add a `--json-full` and `--json-counts` option to the summary command - like the cli so I can pipe to jq [\#78](https://github.com/mitre/inspec_tools/issues/78)
+
+**Merged pull requests:**
+
+- Add --json-full and --json-summary options to summary subcommand [\#116](https://github.com/mitre/inspec_tools/pull/116) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.7](https://github.com/mitre/inspec_tools/tree/v1.8.7) (2020-03-29)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.6...v1.8.7)
@@ -132,6 +144,10 @@
 
 - figure out rubygems.org [\#31](https://github.com/mitre/inspec_tools/issues/31)
 
+**Merged pull requests:**
+
+- Update github workflows [\#99](https://github.com/mitre/inspec_tools/pull/99) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.6.20](https://github.com/mitre/inspec_tools/tree/v1.6.20) (2020-03-17)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.19...v1.6.20)
@@ -143,10 +159,6 @@
 ## [v1.6.19](https://github.com/mitre/inspec_tools/tree/v1.6.19) (2020-03-16)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.18...v1.6.19)
-
-**Merged pull requests:**
-
-- Update github workflows [\#99](https://github.com/mitre/inspec_tools/pull/99) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.18](https://github.com/mitre/inspec_tools/tree/v1.6.18) (2020-03-16)
 
