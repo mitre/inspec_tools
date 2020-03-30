@@ -29,7 +29,7 @@ module InspecTools
       @data = Utils::InspecUtil.parse_data_for_ckl(@json)
       @platform = Utils::InspecUtil.get_platform(@json)
       title = @metadata['title'] if @metadata['title'] && !title
-      @title = generate_title title, @json, date
+      @title = generate_title(title, @json, date)
       @cklist = cklist
       @checklist = HappyMapperTools::StigChecklist::Checklist.new
       if @cklist.nil?
@@ -150,11 +150,14 @@ module InspecTools
 
       stigdata = HappyMapperTools::StigChecklist::StigData.new
       stigdata.attrib = 'STIGRef'
-      title = @title
-      title = "#{control[:profile_name]} :: Version #{@benchmark.version}, #{@benchmark.plaintext.plaintext}" if @benchmark
-      stigdata.data = title
-      stig_data_list.push(stigdata)
 
+      if @benchmark
+        stigdata.data = "#{control[:profile_name]} :: Version #{@benchmark.version}, #{@benchmark.plaintext.plaintext}"
+      else
+        stigdata.data = @title
+      end
+
+      stig_data_list.push(stigdata)
       vuln.stig_data = stig_data_list
       vuln.status = Utils::InspecUtil.control_status(control)
       vuln.comments = "\nAutomated compliance tests brought to you by the MITRE corporation and the InSpec project.\n\nInspec Profile: #{control[:profile_name]}\nProfile shasum: #{control[:profile_shasum]}"
