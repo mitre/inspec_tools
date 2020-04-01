@@ -10,6 +10,7 @@
 
 **Merged pull requests:**
 
+- Update parse XLSXTool\#parse\_cis\_control to handle the case when there… [\#123](https://github.com/mitre/inspec_tools/pull/123) ([Bialogs](https://github.com/Bialogs))
 - Track Inspec versions \>= 4.18.100 [\#122](https://github.com/mitre/inspec_tools/pull/122) ([Bialogs](https://github.com/Bialogs))
 - Restructure workflow for publishing gem [\#121](https://github.com/mitre/inspec_tools/pull/121) ([rbclark](https://github.com/rbclark))
 
@@ -120,6 +121,7 @@
 **Merged pull requests:**
 
 - Support conversion from CAT/Category style severities when generating an impact number. [\#106](https://github.com/mitre/inspec_tools/pull/106) ([Bialogs](https://github.com/Bialogs))
+- Remove warnings \(\#minor\) [\#101](https://github.com/mitre/inspec_tools/pull/101) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.7.3](https://github.com/mitre/inspec_tools/tree/v1.7.3) (2020-03-23)
 
@@ -156,10 +158,6 @@
 **Implemented enhancements:**
 
 - Migrate to depend on the new inspect objects library [\#86](https://github.com/mitre/inspec_tools/issues/86)
-
-**Merged pull requests:**
-
-- Remove warnings \(\#minor\) [\#101](https://github.com/mitre/inspec_tools/pull/101) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.21](https://github.com/mitre/inspec_tools/tree/v1.6.21) (2020-03-20)
 
@@ -456,6 +454,7 @@
 - Travis test [\#39](https://github.com/mitre/inspec_tools/pull/39) ([robthew](https://github.com/robthew))
 - Add rubocop to the process [\#35](https://github.com/mitre/inspec_tools/pull/35) ([aaronlippold](https://github.com/aaronlippold))
 - \* added refernces to external data sources [\#30](https://github.com/mitre/inspec_tools/pull/30) ([aaronlippold](https://github.com/aaronlippold))
+- Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
 
 ## [v1.1.2](https://github.com/mitre/inspec_tools/tree/v1.1.2) (2018-11-08)
 
@@ -486,7 +485,6 @@
 
 **Merged pull requests:**
 
-- Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
 - Change default separated\_files setting to default to true [\#11](https://github.com/mitre/inspec_tools/pull/11) ([yarick](https://github.com/yarick))
 - Cleanup [\#8](https://github.com/mitre/inspec_tools/pull/8) ([robthew](https://github.com/robthew))
 - Unification [\#5](https://github.com/mitre/inspec_tools/pull/5) ([dromazmj](https://github.com/dromazmj))
