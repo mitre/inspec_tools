@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.10...HEAD)
+
+**Fixed bugs:**
+
+- xlsx2inspec failing to parse controls over two digits [\#117](https://github.com/mitre/inspec_tools/issues/117)
+
+**Merged pull requests:**
+
+- Restructure workflow for publishing gem [\#121](https://github.com/mitre/inspec_tools/pull/121) ([rbclark](https://github.com/rbclark))
+
 ## [v1.8.10](https://github.com/mitre/inspec_tools/tree/v1.8.10) (2020-03-30)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.9...v1.8.10)
@@ -443,7 +455,6 @@
 - Travis test [\#39](https://github.com/mitre/inspec_tools/pull/39) ([robthew](https://github.com/robthew))
 - Add rubocop to the process [\#35](https://github.com/mitre/inspec_tools/pull/35) ([aaronlippold](https://github.com/aaronlippold))
 - \* added refernces to external data sources [\#30](https://github.com/mitre/inspec_tools/pull/30) ([aaronlippold](https://github.com/aaronlippold))
-- \* Adds functionality for inspec2csv [\#4](https://github.com/mitre/inspec_tools/pull/4) ([dromazmj](https://github.com/dromazmj))
 
 ## [v1.1.2](https://github.com/mitre/inspec_tools/tree/v1.1.2) (2018-11-08)
 
@@ -452,6 +463,36 @@
 ## [v1.1.1](https://github.com/mitre/inspec_tools/tree/v1.1.1) (2018-11-08)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.1.0...v1.1.1)
+
+## [v1.1.0](https://github.com/mitre/inspec_tools/tree/v1.1.0) (2018-11-08)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/85b69b32277ea43f95b09eee00e9f7b84c62dfff...v1.1.0)
+
+**Fixed bugs:**
+
+- Remove unneeded `exe` dir if we are going to standardize on `bin`and update the `.gemspec` file [\#25](https://github.com/mitre/inspec_tools/issues/25)
+
+**Closed issues:**
+
+- when you When build the gem and install it - the command `inspec\_tools` does not seem to install into the path [\#26](https://github.com/mitre/inspec_tools/issues/26)
+- Add MITRE Copyright to the end of the README.md [\#23](https://github.com/mitre/inspec_tools/issues/23)
+- Update email addresses to MITRE addresses [\#18](https://github.com/mitre/inspec_tools/issues/18)
+- update readme.md [\#17](https://github.com/mitre/inspec_tools/issues/17)
+- update inspec\_tools.gemspec [\#16](https://github.com/mitre/inspec_tools/issues/16)
+- update license to apache 2.0 [\#13](https://github.com/mitre/inspec_tools/issues/13)
+- Separate Files defaults to \[False\] [\#10](https://github.com/mitre/inspec_tools/issues/10)
+- Rename repository to 'inspec\_tools' [\#9](https://github.com/mitre/inspec_tools/issues/9)
+
+**Merged pull requests:**
+
+- Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
+- Change default separated\_files setting to default to true [\#11](https://github.com/mitre/inspec_tools/pull/11) ([yarick](https://github.com/yarick))
+- Cleanup [\#8](https://github.com/mitre/inspec_tools/pull/8) ([robthew](https://github.com/robthew))
+- Unification [\#5](https://github.com/mitre/inspec_tools/pull/5) ([dromazmj](https://github.com/dromazmj))
+- \* Adds functionality for inspec2csv [\#4](https://github.com/mitre/inspec_tools/pull/4) ([dromazmj](https://github.com/dromazmj))
+- Md/pdf [\#3](https://github.com/mitre/inspec_tools/pull/3) ([dromazmj](https://github.com/dromazmj))
+- Md/csv2inspec [\#2](https://github.com/mitre/inspec_tools/pull/2) ([dromazmj](https://github.com/dromazmj))
+- Writes code in the inspec util to output an inspec json to a directory [\#1](https://github.com/mitre/inspec_tools/pull/1) ([dromazmj](https://github.com/dromazmj))
 
 
 
