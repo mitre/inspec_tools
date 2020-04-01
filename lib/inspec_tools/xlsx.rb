@@ -80,38 +80,46 @@ module InspecTools
           control['title']  = row[@mapping['control.title']].formatted_value  unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
           control['desc'] = ""
           control['desc'] = row[@mapping['control.desc']].formatted_value unless row[@mapping['control.desc']].nil?
-          control['tags']['rationale'] = row[tag_pos['rationale']].formatted_value unless row[tag_pos['rationale']].nil?
+          control['tags']['rationale'] = row[tag_pos['rationale']].formatted_value unless row[tag_pos['rationale']].empty?
 
           control['tags']['severity'] = level == 1 ? 'medium' : 'high'
           control['impact'] = Utils::InspecUtil.get_impact(control['tags']['severity'])
           control['tags']['ref'] = row[@mapping['control.ref']].formatted_value unless @mapping['control.ref'].nil? || row[@mapping['control.ref']].nil?
           control['tags']['cis_level'] = level unless level.nil?
 
-          # cis_control must be extracted from CIS control column via regex
-          cis_tags = row[tag_pos['cis_controls']].formatted_value.scan(/CONTROL:v(\d) (\d+)\.?(\d*)/)
-          control['tags']['cis_controls'] = []
-          control['tags']['nist'] = []
-          cis_tags.each do |cis_tag|
-            if cis_tag[2].nil? || cis_tag[2] == ""
-              control['tags']['cis_controls'] << cis_tag[1].to_s
-              control['tags']['nist'] << cis2Nist[cis_tag[1]]
-            else
-              control['tags']['cis_controls'] << cis_tag[1].to_s + "." + cis_tag[2].to_s
-              control['tags']['nist'] << cis2Nist[cis_tag[1].to_s + "." + cis_tag[2].to_s]
-            end
+          unless row[tag_pos['cis_controls']].empty?
+            # cis_control must be extracted from CIS control column via regex
+            control = handle_cis_tags(control, row[tag_pos['cis_controls']].formatted_value.scan(/CONTROL:v(\d) (\d+)\.?(\d*)/))
           end
-          if not control['tags']['nist'].nil?
-            control['tags']['nist'] << "Rev_4"
-          end
-          control['tags']['cis_controls'] << "Rev_" +  cis_tags.first[0] unless cis_tags[0].nil?
 
           control['tags']['cis_rid'] = row[@mapping['control.id']].formatted_value unless @mapping['control.id'].nil? || row[@mapping['control.id']].nil?
-          control['tags']['check'] = row[tag_pos['check']].formatted_value unless tag_pos['check'].nil? || row[tag_pos['check']].nil?
-          control['tags']['fix'] = row[tag_pos['fix']].formatted_value unless tag_pos['fix'].nil? || row[tag_pos['fix']].nil?
+          control['tags']['check'] = row[tag_pos['check']].formatted_value unless tag_pos['check'].nil? || row[tag_pos['check']].empty?
+          control['tags']['fix'] = row[tag_pos['fix']].formatted_value unless tag_pos['fix'].nil? || row[tag_pos['fix']].empty?
 
           @controls << control
         end
       end
+    end
+
+    def handle_cis_tags(control, cis_tags)
+      control['tags']['cis_controls'] = []
+      control['tags']['nist'] = []
+
+      cis_tags.each do |cis_tag|
+        if cis_tag[2].nil? || cis_tag[2] == ""
+          control['tags']['cis_controls'] << cis_tag[1].to_s
+          control['tags']['nist'] << cis2Nist[cis_tag[1]]
+        else
+          control['tags']['cis_controls'] << cis_tag[1].to_s + "." + cis_tag[2].to_s
+          control['tags']['nist'] << cis2Nist[cis_tag[1].to_s + "." + cis_tag[2].to_s]
+        end
+      end
+
+      if not control['tags']['nist'].nil?
+        control['tags']['nist'] << "Rev_4"
+      end
+      control['tags']['cis_controls'] << "Rev_" +  cis_tags.first[0] unless cis_tags[0].nil?
+      control
     end
   end
 end
