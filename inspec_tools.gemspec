@@ -3,11 +3,15 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'inspec_tools/version'
+begin
+  require 'inspec_tools/version'
+rescue LoadError
+  nil
+end
 
 Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.name          = 'inspec_tools'
-  spec.version       = InspecTools::VERSION
+  spec.version       = InspecTools::VERSION rescue "0.0.0.1.ENOGVB"
   spec.authors       = ['Robert Thew', 'Matthew Dromazos', 'Rony Xavier', 'Aaron Lippold']
   spec.email         = ['rthew@mitre.org']
   spec.summary       = 'Converter utils for Inspec'
@@ -31,6 +35,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_runtime_dependency 'pdf-reader', '~> 2.1'
   spec.add_runtime_dependency 'roo', '~> 2.8'
   spec.add_runtime_dependency 'word_wrap', '~> 1.0'
+  spec.add_runtime_dependency 'git-lite-version-bump', '>= 0.17'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'minitest'
   spec.add_development_dependency 'pry'

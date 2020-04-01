@@ -1,6 +1,7 @@
 # InspecTools
 
-![](https://github.com/mitre/inspec_tools/workflows/inspec_tools/badge.svg)
+![Overall Status](https://github.com/mitre/inspec_tools/workflows/inspec_tools/badge.svg)
+![Inspec Tools Release](https://github.com/mitre/inspec_tools/workflows/Release%20Management/badge.svg)
 
 InspecTools supplies several CLI tools to convert to and from InSpec format.
 
@@ -300,6 +301,16 @@ View our wiki pages on [expected](https://github.com/mitre/inspec_tools/wiki/Exp
 # `inspec_tools` Development
 
 View our [wiki page](https://github.com/mitre/inspec_tools/wiki/Development) for more information on contributing.
+
+# Publishing a Release
+
+If you are a maintainer, it is very easy to cut a release of this gem:
+
+1. Click on "Releases" and there should be a draft pending.
+2. Make sure the Tag version and Release title match!
+3. Add any additional notes can be added in the Description box.
+4. Click "Publish release".
+5. Release notes will be posted and a new gem will be pushed to Rubygems & Github Packages with the version you specified on step 2.
 
 ### NOTICE
 

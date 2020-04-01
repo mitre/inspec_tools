@@ -1,0 +1,31 @@
+name: Update Changelog
+
+on:
+  push:
+    # branches to consider in the event; optional, defaults to all
+    branches:
+      - master
+  release:
+    types: [published]
+
+jobs:
+  update_changelog:
+    name: Publish changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup ruby
+        uses: actions/setup-ruby@v1
+      - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow
+      - name: Install github_changelog_generator
+        run: |
+          gem install github_changelog_generator
+      - name: Run github_changelog_generator
+        run: |
+          export CHANGELOG_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          github_changelog_generator -u mitre -p inspec_tools
+      - name: Commit and push changes to CHANGELOG.md
+        uses: stefanzweifel/git-auto-commit-action@v4.1.0
+        with:
+          commit_message: 'Update CHANGELOG.md'
+          branch: 'master'

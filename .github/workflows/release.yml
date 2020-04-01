@@ -1,16 +1,38 @@
 name: Release Management
 
 on:
-  push:
-    # branches to consider in the event; optional, defaults to all
-    branches:
-      - master
+  release:
+    types: [published]
 
 jobs:
-  update_draft_release:
+  release:
+    name: Release to gem hosts
     runs-on: ubuntu-latest
     steps:
-      # Drafts your next Release notes as Pull Requests are merged into "master"
-      - uses: toolmantim/release-drafter@v5.2.0
+      - name: Setup ruby
+        uses: actions/setup-ruby@v1
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: git fetch origin +refs/tags/*:refs/tags/*
+      - name: Setup credentials and versioning
+        run: |
+          gem install git-lite-version-bump keycutter
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}\n" > $HOME/.gem/credentials
+          printf -- ":github: Bearer ${GPR_API_KEY}\n" >> $HOME/.gem/credentials
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_AUTH_TOKEN}}
+          GPR_API_KEY: ${{secrets.GITHUB_TOKEN}}
+      - name: Build gem
+        run: gem build *.gemspec
+      - name: Publish to RubyGems
+        run: |
+          gem push --KEY rubygems --host https://rubygems.org *.gem
+      - name: Publish to GPR
+        run: |
+          gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} *.gem
+        env:
+          OWNER: mitre
