@@ -10,6 +10,7 @@
 
 **Merged pull requests:**
 
+- Track Inspec versions \>= 4.18.100 [\#122](https://github.com/mitre/inspec_tools/pull/122) ([Bialogs](https://github.com/Bialogs))
 - Restructure workflow for publishing gem [\#121](https://github.com/mitre/inspec_tools/pull/121) ([rbclark](https://github.com/rbclark))
 
 ## [v1.8.10](https://github.com/mitre/inspec_tools/tree/v1.8.10) (2020-03-30)
