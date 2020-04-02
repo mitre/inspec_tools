@@ -1,4 +1,4 @@
-require 'inspec/objects'
+require 'inspec-objects'
 require 'word_wrap'
 require 'pp'
 require 'uri'
