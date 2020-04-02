@@ -6,6 +6,7 @@
 
 **Merged pull requests:**
 
+- Missed some references to inspec/objects [\#126](https://github.com/mitre/inspec_tools/pull/126) ([Bialogs](https://github.com/Bialogs))
 - Move to mitre/inspec-objects [\#125](https://github.com/mitre/inspec_tools/pull/125) ([Bialogs](https://github.com/Bialogs))
 
 ## [v2.0.1.pre1](https://github.com/mitre/inspec_tools/tree/v2.0.1.pre1) (2020-04-02)
@@ -110,6 +111,10 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.1...v1.8.2)
 
+**Merged pull requests:**
+
+- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.1](https://github.com/mitre/inspec_tools/tree/v1.8.1) (2020-03-24)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.0...v1.8.1)
@@ -172,7 +177,6 @@
 
 **Merged pull requests:**
 
-- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
 - Remove warnings \(\#minor\) [\#101](https://github.com/mitre/inspec_tools/pull/101) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.21](https://github.com/mitre/inspec_tools/tree/v1.6.21) (2020-03-20)
