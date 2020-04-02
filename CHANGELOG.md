@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+## [v2.0.0](https://github.com/mitre/inspec_tools/tree/v2.0.0) (2020-04-01)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.10...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.10...v2.0.0)
 
 **Fixed bugs:**
 
@@ -121,7 +121,6 @@
 **Merged pull requests:**
 
 - Support conversion from CAT/Category style severities when generating an impact number. [\#106](https://github.com/mitre/inspec_tools/pull/106) ([Bialogs](https://github.com/Bialogs))
-- Remove warnings \(\#minor\) [\#101](https://github.com/mitre/inspec_tools/pull/101) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.7.3](https://github.com/mitre/inspec_tools/tree/v1.7.3) (2020-03-23)
 
@@ -159,13 +158,13 @@
 
 - Migrate to depend on the new inspect objects library [\#86](https://github.com/mitre/inspec_tools/issues/86)
 
+**Merged pull requests:**
+
+- Remove warnings \(\#minor\) [\#101](https://github.com/mitre/inspec_tools/pull/101) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.6.21](https://github.com/mitre/inspec_tools/tree/v1.6.21) (2020-03-20)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.20...v1.6.21)
-
-**Implemented enhancements:**
-
-- Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
 
 **Closed issues:**
 
@@ -288,6 +287,10 @@
 ## [v1.6.6](https://github.com/mitre/inspec_tools/tree/v1.6.6) (2020-02-05)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/53bdcb3...v1.6.6)
+
+**Implemented enhancements:**
+
+- Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
 
 **Fixed bugs:**
 
@@ -454,7 +457,6 @@
 - Travis test [\#39](https://github.com/mitre/inspec_tools/pull/39) ([robthew](https://github.com/robthew))
 - Add rubocop to the process [\#35](https://github.com/mitre/inspec_tools/pull/35) ([aaronlippold](https://github.com/aaronlippold))
 - \* added refernces to external data sources [\#30](https://github.com/mitre/inspec_tools/pull/30) ([aaronlippold](https://github.com/aaronlippold))
-- Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
 
 ## [v1.1.2](https://github.com/mitre/inspec_tools/tree/v1.1.2) (2018-11-08)
 
@@ -485,6 +487,7 @@
 
 **Merged pull requests:**
 
+- Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
 - Change default separated\_files setting to default to true [\#11](https://github.com/mitre/inspec_tools/pull/11) ([yarick](https://github.com/yarick))
 - Cleanup [\#8](https://github.com/mitre/inspec_tools/pull/8) ([robthew](https://github.com/robthew))
 - Unification [\#5](https://github.com/mitre/inspec_tools/pull/5) ([dromazmj](https://github.com/dromazmj))
