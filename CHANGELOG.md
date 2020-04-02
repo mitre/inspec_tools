@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+## [v2.0.1.pre2](https://github.com/mitre/inspec_tools/tree/v2.0.1.pre2) (2020-04-02)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre1...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre1...v2.0.1.pre2)
 
 **Merged pull requests:**
 
