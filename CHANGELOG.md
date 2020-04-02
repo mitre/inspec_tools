@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.0...HEAD)
+
+**Merged pull requests:**
+
+- Pull lfs objects in when building the gem. [\#124](https://github.com/mitre/inspec_tools/pull/124) ([rbclark](https://github.com/rbclark))
+
 ## [v2.0.0](https://github.com/mitre/inspec_tools/tree/v2.0.0) (2020-04-01)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.10...v2.0.0)
@@ -166,6 +174,10 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.20...v1.6.21)
 
+**Implemented enhancements:**
+
+- Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
+
 **Closed issues:**
 
 - figure out rubygems.org [\#31](https://github.com/mitre/inspec_tools/issues/31)
@@ -287,10 +299,6 @@
 ## [v1.6.6](https://github.com/mitre/inspec_tools/tree/v1.6.6) (2020-02-05)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/53bdcb3...v1.6.6)
-
-**Implemented enhancements:**
-
-- Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
 
 **Fixed bugs:**
 
