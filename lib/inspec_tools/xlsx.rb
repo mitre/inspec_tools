@@ -13,7 +13,7 @@ require_relative '../utilities/inspec_util'
 module InspecTools
   # Methods for converting from XLS to various formats
   class XLSXTool
-    CIS_2_NIST_XLSX = Roo::Spreadsheet.open(File.join(File.dirname(__FILE__), "../data/NIST_Map_02052020_CIS_Controls_Version_7.1_Implementation_Groups_1.2.xlsx"))
+    CIS_2_NIST_XLSX = Roo::Spreadsheet.open(File.join(File.dirname(__FILE__), '../data/NIST_Map_02052020_CIS_Controls_Version_7.1_Implementation_Groups_1.2.xlsx'))
     LATEST_NIST_REV = 'Rev_4'.freeze
 
     def initialize(xlsx, mapping, name, verbose = false)
@@ -51,7 +51,7 @@ module InspecTools
         if row[3].is_a? Numeric
           cis2Nist[row[3].to_s] = row[0]
         else
-          cis2Nist[row[2].to_s] = row[0] unless (row[2] == "") || (row[2].to_i.nil?)
+          cis2Nist[row[2].to_s] = row[0] unless (row[2] == '') || row[2].to_i.nil?
         end
       end
       cis2Nist
@@ -80,12 +80,13 @@ module InspecTools
           if row[@mapping['control.id']].nil? || !/^\d+(\.?\d)*$/.match(row[@mapping['control.id']].formatted_value)
             next
           end
+
           tag_pos = @mapping['control.tags']
           control = {}
           control['tags'] = {}
           control['id'] = control_prefix + '-' + row[@mapping['control.id']].formatted_value unless cell_empty?(@mapping['control.id']) || cell_empty?(row[@mapping['control.id']])
-          control['title']  = row[@mapping['control.title']].formatted_value  unless cell_empty?(@mapping['control.title']) || cell_empty?(row[@mapping['control.title']])
-          control['desc'] = ""
+          control['title']  = row[@mapping['control.title']].formatted_value unless cell_empty?(@mapping['control.title']) || cell_empty?(row[@mapping['control.title']])
+          control['desc'] = ''
           control['desc'] = row[@mapping['control.desc']].formatted_value unless cell_empty?(row[@mapping['control.desc']])
           control['tags']['rationale'] = row[tag_pos['rationale']].formatted_value unless cell_empty?(row[tag_pos['rationale']])
 
@@ -97,7 +98,7 @@ module InspecTools
           unless cell_empty?(row[tag_pos['cis_controls']])
             # cis_control must be extracted from CIS control column via regex
             cis_tags_array = row[tag_pos['cis_controls']].formatted_value.scan(/CONTROL:v(\d) (\d+)\.?(\d*)/).flatten
-            cis_tags = [:revision, :section, :sub_section].zip(cis_tags_array).to_h
+            cis_tags = %i(revision section sub_section).zip(cis_tags_array).to_h
             control = apply_cis_and_nist_controls(control, cis_tags)
           end
 
@@ -134,7 +135,7 @@ module InspecTools
       control
     end
 
-    def get_nist_control_for_cis(section, sub_section=nil)
+    def get_nist_control_for_cis(section, sub_section = nil)
       return @cis2Nist[section] if sub_section.nil?
 
       @cis2Nist["#{section}.#{sub_section}"]
