@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre3...HEAD)
+
+**Closed issues:**
+
+- consider how to convert impact 0 to Severity in inspec2ckl [\#60](https://github.com/mitre/inspec_tools/issues/60)
+
+**Merged pull requests:**
+
+- Apply fixes from CodeFactor [\#129](https://github.com/mitre/inspec_tools/pull/129) ([aaronlippold](https://github.com/aaronlippold))
+
 ## [v2.0.1.pre3](https://github.com/mitre/inspec_tools/tree/v2.0.1.pre3) (2020-04-03)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre2...v2.0.1.pre3)
@@ -151,6 +163,10 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.7.2...v1.7.3)
 
+**Merged pull requests:**
+
+- Hotfix [\#104](https://github.com/mitre/inspec_tools/pull/104) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.7.2](https://github.com/mitre/inspec_tools/tree/v1.7.2) (2020-03-23)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.7.1...v1.7.2)
@@ -181,7 +197,6 @@
 
 **Merged pull requests:**
 
-- Hotfix [\#104](https://github.com/mitre/inspec_tools/pull/104) ([Bialogs](https://github.com/Bialogs))
 - Remove warnings \(\#minor\) [\#101](https://github.com/mitre/inspec_tools/pull/101) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.21](https://github.com/mitre/inspec_tools/tree/v1.6.21) (2020-03-20)
