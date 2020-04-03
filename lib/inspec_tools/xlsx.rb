@@ -21,7 +21,7 @@ module InspecTools
       @xlsx = xlsx
       @mapping = mapping
       @verbose = verbose
-      @cis2Nist = get_cis_to_nist_control_mapping(CIS_2_NIST_XLSX)
+      @cis_to_nist = get_cis_to_nist_control_mapping(CIS_2_NIST_XLSX)
     end
 
     def to_ckl
@@ -46,15 +46,15 @@ module InspecTools
     private
 
     def get_cis_to_nist_control_mapping(spreadsheet)
-      cis2Nist = {}
+      cis_to_nist = {}
       spreadsheet.sheet(3).each do |row|
         if row[3].is_a? Numeric
-          cis2Nist[row[3].to_s] = row[0]
+          cis_to_nist[row[3].to_s] = row[0]
         else
-          cis2Nist[row[2].to_s] = row[0] unless (row[2] == "") || (row[2].to_i.nil?)
+          cis_to_nist[row[2].to_s] = row[0] unless (row[2] == "") || (row[2].to_i.nil?)
         end
       end
-      cis2Nist
+      cis_to_nist
     end
 
     def insert_json_metadata
@@ -75,7 +75,7 @@ module InspecTools
     end
 
     def parse_cis_controls(control_prefix)
-      [ 1, 2 ].each do |level|
+      [1, 2].each do |level|
         @xlsx.sheet(level).each_row_streaming do |row|
           if row[@mapping['control.id']].nil? || !/^\d+(\.?\d)*$/.match(row[@mapping['control.id']].formatted_value)
             next
@@ -117,8 +117,7 @@ module InspecTools
     end
 
     def apply_cis_and_nist_controls(control, cis_tags)
-      control['tags']['cis_controls'] = []
-      control['tags']['nist'] = []
+      control['tags']['cis_controls'], control['tags']['nist'] = [], []
 
       if cis_tags[:sub_section].nil? || cis_tags[:sub_section].blank?
         control['tags']['cis_controls'] << cis_tags[:section]
@@ -135,9 +134,13 @@ module InspecTools
     end
 
     def get_nist_control_for_cis(section, sub_section=nil)
-      return @cis2Nist[section] if sub_section.nil?
+      return @cis_to_nist[section] if sub_section.nil?
 
-      @cis2Nist["#{section}.#{sub_section}"]
+      @cis_to_nist["#{section}.#{sub_section}"]
     end
   end
 end
+
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
