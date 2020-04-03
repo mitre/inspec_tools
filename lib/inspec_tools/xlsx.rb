@@ -134,7 +134,7 @@ module InspecTools
       control
     end
 
-    def get_nist_control_for_cis(section, sub_section=nil)
+    def get_nist_control_for_cis(section, sub_section = nil)
       return @cis_to_nist[section] if sub_section.nil?
 
       @cis_to_nist["#{section}.#{sub_section}"]
