@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre2...HEAD)
+
+**Merged pull requests:**
+
+- Cleanup xlsx2inspec Process of Adding NIST and CIS Controls to Inspec Controls [\#127](https://github.com/mitre/inspec_tools/pull/127) ([Bialogs](https://github.com/Bialogs))
+
 ## [v2.0.1.pre2](https://github.com/mitre/inspec_tools/tree/v2.0.1.pre2) (2020-04-02)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre1...v2.0.1.pre2)
