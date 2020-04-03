@@ -1,9 +1,6 @@
 require 'yaml'
 require 'json'
-
 require 'roo'
-require_relative 'version'
-
 require_relative '../utilities/inspec_util'
 require_relative '../utilities/csv_util'
 
@@ -17,7 +14,7 @@ module InspecTools
   autoload :Inspec, 'inspec_tools/inspec'
   autoload :Summary, 'inspec_tools/summary'
   autoload :Threshold, 'inspec_tools/threshold'
-  autoload :XLSXTool, 'inspec_tools/xlsx'
+  autoload :XLSXTool, 'inspec_tools/xlsx_tool'
 end
 
 # rubocop:disable Style/GuardClause

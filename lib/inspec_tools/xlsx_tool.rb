@@ -3,6 +3,7 @@ require 'inspec-objects'
 require 'word_wrap'
 require 'yaml'
 require 'digest'
+require 'roo'
 
 require_relative '../utilities/inspec_util'
 
@@ -51,7 +52,7 @@ module InspecTools
         if row[3].is_a? Numeric
           cis_to_nist[row[3].to_s] = row[0]
         else
-          cis2Nist[row[2].to_s] = row[0] unless (row[2] == '') || row[2].to_i.nil?
+          cis_to_nist[row[2].to_s] = row[0] unless (row[2] == '') || row[2].to_i.nil?
         end
       end
       cis_to_nist
@@ -70,7 +71,7 @@ module InspecTools
       @profile['attributes'] = []
       @profile['generator'] = {
         'name': 'inspec_tools',
-        'version': VERSION
+        'version': ::InspecTools::VERSION
       }
     end
 
@@ -122,10 +123,10 @@ module InspecTools
 
       if cis_tags[:sub_section].nil? || cis_tags[:sub_section].blank?
         control['tags']['cis_controls'] << cis_tags[:section]
-        control['tags']['nist'] << get_nist_control_for_cis([cis_tags[:section]])
+        control['tags']['nist'] << get_nist_control_for_cis(cis_tags[:section])
       else
         control['tags']['cis_controls'] << "#{cis_tags[:section]}.#{cis_tags[:sub_section]}"
-        control['tags']['nist'] << get_nist_control_for_cis([cis_tags[:section], cis_tags[:sub_section]])
+        control['tags']['nist'] << get_nist_control_for_cis(cis_tags[:section], cis_tags[:sub_section])
       end
 
       control['tags']['nist'] << LATEST_NIST_REV unless control['tags']['nist'].nil?
