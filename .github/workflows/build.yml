@@ -55,3 +55,5 @@ jobs:
           inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -o inspec2ckl_test.ckl
           inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a lib/data/attributes.yml -o inspec2xccdf_test.xml
           inspec_tools compliance -j examples/sample_json/rhel-simp.json -f examples/sample_yaml/threshold.yaml
+        env:
+          CHEF_LICENSE: "accept"
