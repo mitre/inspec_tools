@@ -3,10 +3,6 @@ require 'json'
 
 require 'inspec-objects'
 require 'inspec'
-require_relative 'version'
-
-require_relative '../utilities/inspec_util'
-require_relative '../utilities/csv_util'
 require_relative './plugin_cli.rb'
 
 # This tells the ruby cli app to use the same argument parsing as the plugin
