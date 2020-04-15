@@ -27,7 +27,7 @@ jobs:
       - name: Fetch all tags for versioning
         run: git fetch origin +refs/tags/*:refs/tags/*
       - name: Setup Ruby ${{ matrix.ruby }}
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
       - name: Install bundler and git-lite-version-bump
