@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+## [v2.0.2.pre5](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre5) (2020-04-15)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre4...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre4...v2.0.2.pre5)
 
 **Implemented enhancements:**
 
@@ -219,10 +219,6 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.20...v1.6.21)
 
-**Implemented enhancements:**
-
-- Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
-
 **Closed issues:**
 
 - figure out rubygems.org [\#31](https://github.com/mitre/inspec_tools/issues/31)
@@ -267,6 +263,10 @@
 ## [v1.6.15](https://github.com/mitre/inspec_tools/tree/v1.6.15) (2020-03-13)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.14...v1.6.15)
+
+**Implemented enhancements:**
+
+- Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
 
 **Merged pull requests:**
 
