@@ -2,7 +2,22 @@
 
 ## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre3...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre4...HEAD)
+
+**Implemented enhancements:**
+
+- Summary Error Count [\#132](https://github.com/mitre/inspec_tools/issues/132)
+- change check and fix tags to sub-descriptions in xccdf2inspec [\#47](https://github.com/mitre/inspec_tools/issues/47)
+- merge in the `merge\_tool`  [\#42](https://github.com/mitre/inspec_tools/issues/42)
+- InSpec 3.x Data features [\#22](https://github.com/mitre/inspec_tools/issues/22)
+
+**Merged pull requests:**
+
+- Ruby 2.6.6 and 2.7.1 update [\#143](https://github.com/mitre/inspec_tools/pull/143) ([Bialogs](https://github.com/Bialogs))
+
+## [v2.0.1.pre4](https://github.com/mitre/inspec_tools/tree/v2.0.1.pre4) (2020-04-06)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre3...v2.0.1.pre4)
 
 **Closed issues:**
 
@@ -10,6 +25,7 @@
 
 **Merged pull requests:**
 
+- Add unit tests for XLSXTool and add system tests in CI [\#130](https://github.com/mitre/inspec_tools/pull/130) ([Bialogs](https://github.com/Bialogs))
 - Apply fixes from CodeFactor [\#129](https://github.com/mitre/inspec_tools/pull/129) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v2.0.1.pre3](https://github.com/mitre/inspec_tools/tree/v2.0.1.pre3) (2020-04-03)
