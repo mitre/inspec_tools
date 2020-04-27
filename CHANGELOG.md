@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre5...HEAD)
+
+**Closed issues:**
+
+- update inspec2ckl schema to the newest CKL Schema in the stig viewer 2.10 [\#149](https://github.com/mitre/inspec_tools/issues/149)
+- Categorize all errors the same [\#145](https://github.com/mitre/inspec_tools/issues/145)
+
 ## [v2.0.2.pre5](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre5) (2020-04-15)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre4...v2.0.2.pre5)
@@ -219,6 +228,10 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.20...v1.6.21)
 
+**Implemented enhancements:**
+
+- Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
+
 **Closed issues:**
 
 - figure out rubygems.org [\#31](https://github.com/mitre/inspec_tools/issues/31)
@@ -263,10 +276,6 @@
 ## [v1.6.15](https://github.com/mitre/inspec_tools/tree/v1.6.15) (2020-03-13)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.14...v1.6.15)
-
-**Implemented enhancements:**
-
-- Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
 
 **Merged pull requests:**
 
