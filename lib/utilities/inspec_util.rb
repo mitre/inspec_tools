@@ -24,11 +24,11 @@ module Utils
     DATA_NOT_FOUND_MESSAGE = 'N/A'.freeze
     WIDTH = 80
     IMPACT_SCORES = {
-      "none" => 0.0,
-      "low" => 0.1,
-      "medium" => 0.4,
-      "high" => 0.7,
-      "critical" => 0.9,
+      'none' => 0.0,
+      'low' => 0.1,
+      'medium' => 0.4,
+      'high' => 0.7,
+      'critical' => 0.9
     }.freeze
 
     def self.parse_data_for_xccdf(json)
@@ -197,7 +197,7 @@ module Utils
 
     private_class_method def self.float_to_impact(severity)
       raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
-                                  '1.0 or one of the approved keywords.' unless severity.between?(0,1)
+                                  '1.0 or one of the approved keywords.' unless severity.between?(0, 1)
 
       if severity <= 0.01
         0.0 # Informative
@@ -233,7 +233,7 @@ module Utils
       return if impact.nil?
 
       value = impact.to_f
-      unless value.between?(0,1)
+      unless value.between?(0, 1)
         raise ImpactInputError, "'#{value}' is not a valid impact score. Valid impact scores: [0.0 - 1.0]."
       end
 
@@ -277,9 +277,9 @@ module Utils
         control.title  = json_control['title']
         control.impact = get_impact(json_control['impact'])
 
-        #json_control['tags'].each do |tag|
+        # json_control['tags'].each do |tag|
         #  control.add_tag(Inspec::Object::Tag.new(tag.key, tag.value)
-        #end
+        # end
 
         control.add_tag(::Inspec::Object::Tag.new('severity', json_control['tags']['severity']))
         control.add_tag(::Inspec::Object::Tag.new('gtitle', json_control['tags']['gtitle']))
