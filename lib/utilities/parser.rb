@@ -345,8 +345,8 @@ module Util
 
     def parse(clean_text)
       @parser.parse(clean_text)
-    rescue Parslet::ParseFailed => error
-      puts error.parse_failure_cause.ascii_tree
+    rescue Parslet::ParseFailed => e
+      puts e.parse_failure_cause.ascii_tree
     end
 
     def convert_str(value)

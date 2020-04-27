@@ -22,7 +22,7 @@ module Util
     # Removes everything before and after the controls
     def isolate_controls_data(extracted_data)
       extracted_data = extracted_data.gsub(/\| P a g e+/, "| P a g e\n")
-      extracted_data = extracted_data.split("\n").map{ |line| line.strip}.reject { |e| e.to_s.empty? }.join("\n")
+      extracted_data = extracted_data.split("\n").map(&:strip).reject { |e| e.to_s.empty? }.join("\n")
       extracted_data = extracted_data.gsub('???', '')
       controls_data = /^1\.1\s*[^\)]*?(?=\)$)(.*\n)*?(?=\s*Appendix:)/.match(extracted_data).to_s
       controls_data
