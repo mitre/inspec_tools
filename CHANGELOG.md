@@ -9,6 +9,10 @@
 - update inspec2ckl schema to the newest CKL Schema in the stig viewer 2.10 [\#149](https://github.com/mitre/inspec_tools/issues/149)
 - Categorize all errors the same [\#145](https://github.com/mitre/inspec_tools/issues/145)
 
+**Merged pull requests:**
+
+- Apply fixes from CodeFactor [\#153](https://github.com/mitre/inspec_tools/pull/153) ([aaronlippold](https://github.com/aaronlippold))
+
 ## [v2.0.2.pre5](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre5) (2020-04-15)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre4...v2.0.2.pre5)
