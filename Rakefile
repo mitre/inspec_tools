@@ -1,5 +1,6 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
+require File.expand_path('../lib/inspec_tools/version', __FILE__)
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
@@ -19,6 +20,11 @@ namespace :test do
       'test/unit/inspec_tools_test.rb'
     ])
   end
+end
+
+desc 'Build and publish the gem'
+task publish: :build do
+  system("gem push pkg/inspec_tools-#{InspecTools::VERSION}.gem")
 end
 
 task :default => :test

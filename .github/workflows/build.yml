@@ -1,43 +1,59 @@
-name: inspec_tools
+name: Build and test inspec_tools
+
 on:
   push:
+    branches: [ master ]
   pull_request:
+    branches: [ master ]
+
 jobs:
   test:
-    name: Build and test inspec_tools
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout inspec_tools
-        uses: actions/checkout@v1
-      - name: Setup ruby
-        uses: actions/setup-ruby@v1
-      - name: Install bundler
-        run: |
-          gem install bundler
-      - name: Run bundle install
-        run: |
-          bundle install
-      - name: Run rake test
-        run: |
-          rake test
-#      - name: Install rubocop
-#        run: |
-#          gem install rubocop
-#      - name: Run rubocop
-#        run: |
-#          rubocop
-      - name: Build inspec_tools gem
-        run: | 
-          gem build inspec_tools.gemspec
-      - name: Install inspec_tools gem
-        run: |
-          gem install inspec_tools
-#      - name: Run inspec_tools
-#        run: |
-#          inspec_tools
-      - uses: anothrNick/github-tag-action@master
-      - uses: toolmantim/release-drafter@v5.2.0
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-16.04, ubuntu-latest, macos-latest, windows-latest]
+        ruby: [ 2.5, 2.6, 2.7 ]
+        # TODO: Remove this exclusion once Nokogiri is supported on ruby 2.7 for Windows
+        exclude:
+          - platform: windows-latest
+            ruby: 2.7
+    runs-on: ${{ matrix.platform }}
 
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+          fetch-depth: 0
+      - name: Fetch all tags for versioning
+        run: git fetch origin +refs/tags/*:refs/tags/*
+      - name: Setup Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install bundler and git-lite-version-bump
+        run: gem install bundler git-lite-version-bump
+      - name: Run bundle install
+        run: bundle install
+      - name: Run rake test
+        run: bundle exec rake test
+      - name: Run bundle-audit
+        run: bundle-audit check --update
+      - name: Build inspec_tools gem
+        run: gem build inspec_tools.gemspec
+      - name: Install inspec_tools gem
+        run: gem install inspec_tools-*.gem
+      - name: Run installed inspec_tools
+        run: |
+          inspec_tools --version
+          inspec_tools --help
+          inspec_tools xlsx2inspec -m examples/xlsx2inspec/mapping.cis.yml -x examples/cis.xlsx -p xlsx2inspec_test
+          inspec_tools summary -j examples/sample_json/rhel-simp.json -o summary.json -c
+          inspec_tools csv2inspec -c examples/csv2inspec/stig.csv -m examples/csv2inspec/mapping.yml -o csv2inspec_test
+          inspec_tools xccdf2inspec -x examples/xccdf2inspec/xccdf.xml -a lib/data/attributes.yml -o xccdf2inspec_test
+          inspec_tools pdf2inspec -p examples/CIS_Ubuntu_Linux_16.04_LTS_Benchmark_v1.0.0.pdf -o pdf2inspec_test
+          inspec_tools inspec2csv -j examples/sample_json/rhel-simp.json -o inspec2csv_test.csv
+          inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -o inspec2ckl_test.ckl
+          inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a lib/data/attributes.yml -o inspec2xccdf_test.xml
+          inspec_tools compliance -j examples/sample_json/single_control_results.json -f examples/sample_yaml/threshold.yaml
         env:
-          CI: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHEF_LICENSE: "accept"

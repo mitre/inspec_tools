@@ -1,10 +1,8 @@
 require 'csv'
 require 'nokogiri'
-require 'inspec/objects'
 require 'word_wrap'
 require 'yaml'
 require 'digest'
-require 'inspec'
 
 require_relative '../utilities/inspec_util'
 
@@ -57,8 +55,8 @@ module InspecTools
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-        'name': 'inspec',
-        'version': Gem.loaded_specs['inspec'].version
+        'name': 'inspec_tools',
+        'version': VERSION
       }
     end
 

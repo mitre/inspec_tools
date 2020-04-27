@@ -1,10 +1,16 @@
-require 'inspec/objects'
-require 'inspec/impact'
+require 'inspec-objects'
 require 'word_wrap'
 require 'pp'
 require 'uri'
 require 'net/http'
 require 'fileutils'
+require 'exceptions/impact_input_error'
+require 'exceptions/severity_input_error'
+require 'overrides/false_class'
+require 'overrides/true_class'
+require 'overrides/nil_class'
+require 'overrides/object'
+require 'overrides/string'
 
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
@@ -17,6 +23,13 @@ module Utils
   class InspecUtil
     DATA_NOT_FOUND_MESSAGE = 'N/A'.freeze
     WIDTH = 80
+    IMPACT_SCORES = {
+      "none" => 0.0,
+      "low" => 0.1,
+      "medium" => 0.4,
+      "high" => 0.7,
+      "critical" => 0.9,
+    }.freeze
 
     def self.parse_data_for_xccdf(json)
       data = {}
@@ -174,16 +187,59 @@ module Utils
     # values to numbers or to override our hard coded values.
     #
     def self.get_impact(severity)
-      case severity
-      when 'low' then 0.3
-      when 'medium' then 0.5
-      when 'high' then 0.7
-      else severity
+      return float_to_impact(severity) if severity.is_a?(Float)
+
+      return string_to_impact(severity) if severity.is_a?(String)
+
+      raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
+                                '1.0 or one of the approved keywords.'
+    end
+
+    private_class_method def self.float_to_impact(severity)
+      raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
+                                  '1.0 or one of the approved keywords.' unless severity.between?(0,1)
+
+      if severity <= 0.01
+        0.0 # Informative
+      elsif severity < 0.4
+        0.3 # Low Impact
+      elsif severity < 0.7
+        0.5 # Medium Impact
+      elsif severity < 0.9
+        0.7 # High Impact
+      else
+        1.0 # Critical Controls
+      end
+    end
+
+    private_class_method def self.string_to_impact(severity)
+      if /none|na|n\/a|not[_|(\s*)]?applicable/i.match?(severity)
+        0.0 # Informative
+      elsif /low|cat(egory)?\s*(iii|3)/i.match?(severity)
+        0.3 # Low Impact
+      elsif /med(ium)?|cat(egory)?\s*(ii|2)/i.match?(severity)
+        0.5 # Medium Impact
+      elsif /high|cat(egory)?\s*(i|1)/i.match?(severity)
+        0.7 # High Impact
+      elsif /crit(ical)?|severe/i.match?(severity)
+        1.0 # Critical Controls
+      else
+        raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
+                                  '1.0 or one of the approved keywords.'
       end
     end
 
     def self.get_impact_string(impact)
-      Inspec::Impact.string_from_impact(impact) unless impact.nil?
+      return if impact.nil?
+
+      value = impact.to_f
+      unless value.between?(0,1)
+        raise ImpactInputError, "'#{value}' is not a valid impact score. Valid impact scores: [0.0 - 1.0]."
+      end
+
+      IMPACT_SCORES.reverse_each do |name, impact|
+        return name if value >= impact
+      end
     end
 
     def self.unpack_inspec_json(directory, inspec_json, separated, output_format)
@@ -208,36 +264,46 @@ module Utils
     private_class_method def self.generate_controls(inspec_json)
       controls = []
       inspec_json['controls'].each do |json_control|
-        control = Inspec::Control.new
+        control = ::Inspec::Object::Control.new
         if (defined? control.desc).nil?
           control.descriptions[:default] = json_control['desc']
+          control.descriptions[:rationale] = json_control['tags']['rationale']
+          control.descriptions[:check] = json_control['tags']['check']
+          control.descriptions[:fix] = json_control['tags']['fix']
         else
           control.desc = json_control['desc']
         end
         control.id     = json_control['id']
         control.title  = json_control['title']
         control.impact = get_impact(json_control['impact'])
-        control.add_tag(Inspec::Tag.new('severity', json_control['tags']['severity']))
-        control.add_tag(Inspec::Tag.new('gtitle', json_control['tags']['gtitle']))
-        control.add_tag(Inspec::Tag.new('satisfies', json_control['tags']['satisfies'])) if json_control['tags']['satisfies']
-        control.add_tag(Inspec::Tag.new('gid',      json_control['tags']['gid']))
-        control.add_tag(Inspec::Tag.new('rid',      json_control['tags']['rid']))
-        control.add_tag(Inspec::Tag.new('stig_id',  json_control['tags']['stig_id']))
-        control.add_tag(Inspec::Tag.new('fix_id', json_control['tags']['fix_id']))
-        control.add_tag(Inspec::Tag.new('cci', json_control['tags']['cci']))
-        control.add_tag(Inspec::Tag.new('nist', json_control['tags']['nist']))
-        control.add_tag(Inspec::Tag.new('false_negatives', json_control['tags']['false_negatives'])) if json_control['tags']['false_positives'] != ''
-        control.add_tag(Inspec::Tag.new('false_positives', json_control['tags']['false_positives'])) if json_control['tags']['false_positives'] != ''
-        control.add_tag(Inspec::Tag.new('documentable', json_control['tags']['documentable'])) if json_control['tags']['documentable'] != ''
-        control.add_tag(Inspec::Tag.new('mitigations', json_control['tags']['mitigations'])) if json_control['tags']['mitigations'] != ''
-        control.add_tag(Inspec::Tag.new('severity_override_guidance', json_control['tags']['documentable'])) if json_control['tags']['severity_override_guidance'] != ''
-        control.add_tag(Inspec::Tag.new('potential_impacts', json_control['tags']['potential_impacts'])) if json_control['tags']['potential_impacts'] != ''
-        control.add_tag(Inspec::Tag.new('third_party_tools', json_control['tags']['third_party_tools'])) if json_control['tags']['third_party_tools'] != ''
-        control.add_tag(Inspec::Tag.new('mitigation_controls', json_control['tags']['mitigation_controls'])) if json_control['tags']['mitigation_controls'] != ''
-        control.add_tag(Inspec::Tag.new('responsibility', json_control['tags']['responsibility'])) if json_control['tags']['responsibility'] != ''
-        control.add_tag(Inspec::Tag.new('ia_controls', json_control['tags']['ia_controls'])) if json_control['tags']['ia_controls'] != ''
-        control.add_tag(Inspec::Tag.new('check', json_control['tags']['check']))
-        control.add_tag(Inspec::Tag.new('fix', json_control['tags']['fix']))
+
+        #json_control['tags'].each do |tag|
+        #  control.add_tag(Inspec::Object::Tag.new(tag.key, tag.value)
+        #end
+
+        control.add_tag(::Inspec::Object::Tag.new('severity', json_control['tags']['severity']))
+        control.add_tag(::Inspec::Object::Tag.new('gtitle', json_control['tags']['gtitle']))
+        control.add_tag(::Inspec::Object::Tag.new('satisfies', json_control['tags']['satisfies'])) if json_control['tags']['satisfies']
+        control.add_tag(::Inspec::Object::Tag.new('gid',      json_control['tags']['gid']))
+        control.add_tag(::Inspec::Object::Tag.new('rid',      json_control['tags']['rid']))
+        control.add_tag(::Inspec::Object::Tag.new('stig_id',  json_control['tags']['stig_id']))
+        control.add_tag(::Inspec::Object::Tag.new('fix_id', json_control['tags']['fix_id']))
+        control.add_tag(::Inspec::Object::Tag.new('cci', json_control['tags']['cci']))
+        control.add_tag(::Inspec::Object::Tag.new('nist', json_control['tags']['nist']))
+        control.add_tag(::Inspec::Object::Tag.new('cis_level', json_control['tags']['cis_level'])) unless json_control['tags']['cis_level'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('cis_controls', json_control['tags']['cis_controls'])) unless json_control['tags']['cis_controls'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('cis_rid', json_control['tags']['cis_rid'])) unless json_control['tags']['cis_rid'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('ref', json_control['tags']['ref'])) unless json_control['tags']['ref'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('false_negatives', json_control['tags']['false_negatives'])) unless json_control['tags']['false_positives'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('false_positives', json_control['tags']['false_positives'])) unless json_control['tags']['false_positives'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('documentable', json_control['tags']['documentable'])) unless json_control['tags']['documentable'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('mitigations', json_control['tags']['mitigations'])) unless json_control['tags']['mitigations'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('severity_override_guidance', json_control['tags']['severity_override_guidance'])) unless json_control['tags']['severity_override_guidance'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('potential_impacts', json_control['tags']['potential_impacts'])) unless json_control['tags']['potential_impacts'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('third_party_tools', json_control['tags']['third_party_tools'])) unless json_control['tags']['third_party_tools'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('mitigation_controls', json_control['tags']['mitigation_controls'])) unless json_control['tags']['mitigation_controls'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('responsibility', json_control['tags']['responsibility'])) unless json_control['tags']['responsibility'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('ia_controls', json_control['tags']['ia_controls'])) unless json_control['tags']['ia_controls'].blank?
 
         controls << control
       end
@@ -272,7 +338,7 @@ module Utils
           else
             license_content = inspec_json['license']
           end
-        rescue StandardError => e
+        rescue StandardError => _e
           license_content = inspec_json['license']
         end
       end
@@ -311,6 +377,7 @@ module Utils
           controls.each do |control|
             file_name = control.id.to_s
             myfile = File.new("#{directory}/controls/#{file_name}.rb", 'w')
+            myfile.puts "# encoding: UTF-8\n\n"
             myfile.puts wrap(control.to_ruby, WIDTH) + "\n"
             myfile.close
           end
@@ -326,6 +393,7 @@ module Utils
         myfile = File.new("#{directory}/controls/controls.rb", 'w')
         if output_format == 'ruby'
           controls.each do |control|
+            myfile.puts "# encoding: UTF-8\n\n"
             myfile.puts wrap(control.to_ruby, WIDTH) + "\n"
           end
         else

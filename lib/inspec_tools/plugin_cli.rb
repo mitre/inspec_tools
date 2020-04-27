@@ -1,9 +1,6 @@
 require 'yaml'
 require 'json'
-
-require 'inspec'
-require_relative 'version'
-
+require 'roo'
 require_relative '../utilities/inspec_util'
 require_relative '../utilities/csv_util'
 
@@ -12,11 +9,12 @@ module InspecTools
   autoload :Command, 'inspec_tools/command'
   autoload :XCCDF, 'inspec_tools/xccdf'
   autoload :PDF, 'inspec_tools/pdf'
-  autoload :CSV, 'inspec_tools/csv'
+  autoload :CSVTool, 'inspec_tools/csv'
   autoload :CKL, 'inspec_tools/ckl'
   autoload :Inspec, 'inspec_tools/inspec'
   autoload :Summary, 'inspec_tools/summary'
   autoload :Threshold, 'inspec_tools/threshold'
+  autoload :XLSXTool, 'inspec_tools/xlsx_tool'
 end
 
 # rubocop:disable Style/GuardClause
@@ -52,6 +50,7 @@ module InspecPlugins
           attributes = xccdf.to_attributes
           File.write(options[:attributes], YAML.dump(attributes))
         end
+        puts InspecTools.methods
       end
 
       desc 'inspec2xccdf', 'inspec2xccdf translates an inspec profile and attributes files to an xccdf file'
@@ -76,9 +75,25 @@ module InspecPlugins
       option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
       option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
       def csv2inspec
-        csv = InspecTools::CSV.read(options[:csv], encoding: 'ISO8859-1')
+        csv = CSV.read(options[:csv], encoding: 'ISO8859-1')
         mapping = YAML.load_file(options[:mapping])
         profile = InspecTools::CSVTool.new(csv, mapping, options[:csv].split('/')[-1].split('.')[0], options[:verbose]).to_inspec
+        Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
+      end
+
+      desc 'xlsx2inspec', 'xlsx2inspec translates CIS XLSX to Inspec controls using a mapping file'
+      long_desc InspecTools::Help.text(:xlsx2inspec)
+      option :xlsx, required: true, aliases: '-x'
+      option :mapping, required: true, aliases: '-m'
+      option :control_name_prefix, required: true, aliases: '-p'
+      option :verbose, required: false, type: :boolean, aliases: '-V'
+      option :output, required: false, aliases: '-o', default: 'profile'
+      option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
+      option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
+      def xlsx2inspec
+        xlsx = Roo::Spreadsheet.open(options[:xlsx])
+        mapping = YAML.load_file(options[:mapping])
+        profile = InspecTools::XLSXTool.new(xlsx, mapping, options[:xlsx].split('/')[-1].split('.')[0], options[:verbose]).to_inspec(options[:control_name_prefix])
         Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
       end
 
@@ -187,21 +202,28 @@ module InspecPlugins
       long_desc InspecTools::Help.text(:summary)
       option :inspec_json, required: true, aliases: '-j'
       option :output, required: false, aliases: '-o'
-      option :cli, required: false, aliases: '-c'
+      option :cli, type: :boolean, required: false, aliases: '-c'
       option :verbose, type: :boolean, aliases: '-V'
+      option :json_full, type: :boolean, required: false, aliases: '-f'
+      option :json_counts, type: :boolean, required: false, aliases: '-k'
 
       def summary
         summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
 
-        puts "\ncompliance: #{summary[:compliance]}%\n\n"
-        summary[:status].keys.each do |status|
-          puts status
-          summary[:status][status.to_sym].keys.each do |impact|
-            print "\t#{impact} : #{summary[:status][status.to_sym][impact.to_sym]}\n"
+        if options[:cli]
+          puts "\nOverall compliance: #{summary[:compliance]}%\n\n"
+          summary[:status].keys.each do |category|
+            puts category
+            summary[:status][category].keys.each do |impact|
+              puts "\t#{impact} : #{summary[:status][category][impact]}"
+            end
           end
-        end if options[:cli]
+        end
 
-        File.write(options[:output], summary.to_json) if options[:output]
+        json_summary = summary.to_json
+        File.write(options[:output], json_summary) if options[:output]
+        puts json_summary if options[:json_full]
+        puts summary[:status].to_json if options[:json_counts]
       end
 
       desc 'compliance', 'compliance parses an inspec results json to check if the compliance level meets a specified threshold'

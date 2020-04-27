@@ -300,7 +300,7 @@ module InspecTools
         group.rule.reference.dc_identifier = @attribute['reference.dc.identifier']
 
         group.rule.ident = HappyMapperTools::Benchmark::Ident.new
-        group.rule.ident.system = 'http://iase.disa.mil/cci'
+        group.rule.ident.system = 'https://public.cyber.mil/stigs/cci/'
         group.rule.ident.ident = control['cci']
 
         group.rule.fixtext = HappyMapperTools::Benchmark::Fixtext.new

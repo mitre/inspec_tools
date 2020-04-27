@@ -18,7 +18,7 @@ singular, actionable statements that comprise an IA control or IA best practice.
   - Stylesheet for viewing CCI List as HTML
     (open U_CCI_List.xml in a web browser to view)
 
-see: https://iase.disa.mil/stigs/cci/pages/index.aspx
+see: https://public.cyber.mil/stigs/cci/
 
 * NIST_Map_09212017B_CSC-CIS_Critical_Security_Controls_VER_6.1_Excel_9.1.2016.xlsx
 

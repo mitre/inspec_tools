@@ -4,7 +4,6 @@ require_relative '../utilities/inspec_util'
 
 require 'digest'
 require 'json'
-require 'inspec'
 
 module InspecTools
   # rubocop:disable Metrics/ClassLength
@@ -109,8 +108,8 @@ module InspecTools
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-        'name': 'inspec',
-        'version': Gem.loaded_specs['inspec'].version
+        'name': 'inspec_tools',
+        'version': VERSION
       }
       @profile['plaintext'] = @benchmark.plaintext.plaintext
       @profile['status'] = "#{@benchmark.status} on #{@benchmark.release_date.release_date}"

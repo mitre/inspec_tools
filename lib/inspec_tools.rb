@@ -13,4 +13,5 @@ module InspecTools
   autoload :Inspec, 'inspec_tools/inspec'
   autoload :Summary, 'inspec_tools/summary'
   autoload :Threshold, 'inspec_tools/threshold'
+  autoload :XLSXTool, 'inspec_tools/xlsx_tool'
 end

@@ -7,21 +7,30 @@ AllCops:
   - 'test/**/*'
   - 'examples/plugins/train-*/test/**/*'
   - 'vendor/**/*'
-Documentation:
+Style/Documentation:
   Enabled: false
-AlignParameters:
+Layout/MultilineBlockLayout:
   Enabled: true
-Encoding:
-  Enabled: false
-HashSyntax:
+Layout/MultilineAssignmentLayout:
   Enabled: true
-LineLength:
+Layout/ParameterAlignment:
+  Enabled: true
+Style/Encoding:
   Enabled: false
-EmptyLinesAroundBlockBody:
-  Enabled: false
-MethodLength:
-  Max: 40
-NumericLiterals:
+Style/HashSyntax:
+  Enabled: true
+Layout/LineLength:
+  Enabled: true
+  AutoCorrect: true
+  Max: 8192
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+Metrics/BlockLength:
+  Enabled: true
+  Max: 8192
+Metrics/MethodLength:
+  Enabled: true
+Style/NumericLiterals:
   MinDigits: 10
 Metrics/CyclomaticComplexity:
   Max: 10
@@ -30,7 +39,9 @@ Metrics/PerceivedComplexity:
 Metrics/AbcSize:
   Max: 33
 Metrics/ModuleLength:
-  Enabled: false
+  Enabled: true
+Style/StringLiterals:
+  Enabled: true
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     '%':  '{}'
@@ -42,15 +53,13 @@ Style/PercentLiteralDelimiters:
     '%w': '{}'
     '%W': ()
     '%x': ()
-Layout/AlignHash:
-  Enabled: false
+Layout/HashAlignment:
+  Enabled: true
 Naming/PredicateName:
   Enabled: false
 Style/ClassAndModuleChildren:
-  Enabled: false
+  Enabled: true
 Style/ConditionalAssignment:
-  Enabled: false
-Style/BracesAroundHashParameters:
   Enabled: false
 Style/AndOr:
   Enabled: false
@@ -66,13 +75,41 @@ Style/NegatedIf:
   Enabled: false
 Style/UnlessElse:
   Enabled: false
-BlockDelimiters:
-  Enabled: false
+Style/BlockDelimiters:
+  Enabled: true
 Layout/SpaceAroundOperators:
   Enabled: false
 Style/IfUnlessModifier:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
-SignalException:
+Style/SignalException:
   Enabled: false
+Style/HashEachMethods:
+  Enabled: false
+Style/HashTransformKeys:
+  Enabled: false
+Style/HashTransformValues:
+  Enabled: false
+Layout/AccessModifierIndentation:
+  Enabled: true
+  EnforcedStyle: indent
+  IndentationWidth: 2
+Layout/ArgumentAlignment:
+  Enabled: true
+  EnforcedStyle: with_first_argument
+  IndentationWidth: 2
+Layout/ArrayAlignment:
+  Enabled: true
+Layout/AssignmentIndentation:
+  Enabled: true
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: normal
+Layout/IndentationWidth:
+  Enabled: true
+  Width: 2
+Layout/InitialIndentation:
+  Enabled: true
+Layout/LeadingCommentSpace:
+  Enabled: true
