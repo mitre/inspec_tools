@@ -68,7 +68,7 @@ module HappyMapperTools
         # some of the XCCDF files were having CCE- tags show up which 
         # we don't support, not sure if this is a typo on their part or 
         # we need to see about supporting CCE tags but ... for now
-         
+        puts ccis.select { |f| /CCE-/.match(f) } 
         filtered_ccis = ccis.select { |f| /CCI-/.match(f) }
         nists = []
         nist_ver = cci_items[0].cci_item[0].references.references.max_by(&:version).version
@@ -76,7 +76,7 @@ module HappyMapperTools
         # require 'pry'; require 'pry-nav'; binding.pry
           nists << cci_items[0].cci_item.select { |item| item.id == cci }.first.references.references.max_by(&:version).index
         end
-        nists << ('Rev_' + nist_ver)
+        nists
       end
     end
   end
