@@ -84,7 +84,7 @@ module InspecTools
       inspec_json['controls'].each do |json_control|
         control = []
         headers.each do |key, _|
-          control.push(json_control[key] || json_control['tags'][key] || (json_control['results']&.collect { |result| result[key] }&.join(",\n")) || nil)
+          control.push(json_control[key] || json_control['tags'][key] || json_control['results']&.collect { |result| result[key] }&.join(",\n") || nil)
         end
         data.push(control)
       end
