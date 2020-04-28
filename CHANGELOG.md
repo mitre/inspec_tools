@@ -14,6 +14,7 @@
 
 **Merged pull requests:**
 
+- Updated README to standardize wording [\#160](https://github.com/mitre/inspec_tools/pull/160) ([Bialogs](https://github.com/Bialogs))
 - Remove guardfile [\#159](https://github.com/mitre/inspec_tools/pull/159) ([Bialogs](https://github.com/Bialogs))
 - Remove unnecessary debug output from xccdf2inspec [\#158](https://github.com/mitre/inspec_tools/pull/158) ([rbclark](https://github.com/rbclark))
 
@@ -28,6 +29,7 @@
 **Fixed bugs:**
 
 - CCE- data seems to be coming into the CCI references in some XCCDF files [\#151](https://github.com/mitre/inspec_tools/issues/151)
+- small fix to resolve issues with CCE data in the XCCDF [\#156](https://github.com/mitre/inspec_tools/pull/156) ([aaronlippold](https://github.com/aaronlippold))
 
 **Closed issues:**
 
@@ -48,10 +50,6 @@
 - change check and fix tags to sub-descriptions in xccdf2inspec [\#47](https://github.com/mitre/inspec_tools/issues/47)
 - merge in the `merge\_tool`  [\#42](https://github.com/mitre/inspec_tools/issues/42)
 - InSpec 3.x Data features [\#22](https://github.com/mitre/inspec_tools/issues/22)
-
-**Fixed bugs:**
-
-- small fix to resolve issues with CCE data in the XCCDF [\#156](https://github.com/mitre/inspec_tools/pull/156) ([aaronlippold](https://github.com/aaronlippold))
 
 **Merged pull requests:**
 
@@ -108,6 +106,7 @@
 - Update parse XLSXTool\#parse\_cis\_control to handle the case when there… [\#123](https://github.com/mitre/inspec_tools/pull/123) ([Bialogs](https://github.com/Bialogs))
 - Track Inspec versions \>= 4.18.100 [\#122](https://github.com/mitre/inspec_tools/pull/122) ([Bialogs](https://github.com/Bialogs))
 - Restructure workflow for publishing gem [\#121](https://github.com/mitre/inspec_tools/pull/121) ([rbclark](https://github.com/rbclark))
+- Update build/test process to only use GitHub actions [\#115](https://github.com/mitre/inspec_tools/pull/115) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.8.10](https://github.com/mitre/inspec_tools/tree/v1.8.10) (2020-03-30)
 
@@ -148,10 +147,6 @@
 **Closed issues:**
 
 - GitHub Actions Build Matrix [\#112](https://github.com/mitre/inspec_tools/issues/112)
-
-**Merged pull requests:**
-
-- Update build/test process to only use GitHub actions [\#115](https://github.com/mitre/inspec_tools/pull/115) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.8.5](https://github.com/mitre/inspec_tools/tree/v1.8.5) (2020-03-27)
 
