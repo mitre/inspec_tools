@@ -4,6 +4,15 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre5...HEAD)
 
+**Implemented enhancements:**
+
+- Remove tag with NIST revision [\#139](https://github.com/mitre/inspec_tools/issues/139)
+
+**Fixed bugs:**
+
+- CCE- data seems to be coming into the CCI references in some XCCDF files [\#151](https://github.com/mitre/inspec_tools/issues/151)
+- small fix to resolve issues with CCE data in the XCCDF [\#156](https://github.com/mitre/inspec_tools/pull/156) ([aaronlippold](https://github.com/aaronlippold))
+
 **Closed issues:**
 
 - update inspec2ckl schema to the newest CKL Schema in the stig viewer 2.10 [\#149](https://github.com/mitre/inspec_tools/issues/149)
@@ -443,6 +452,7 @@
 
 - Updated rake version [\#69](https://github.com/mitre/inspec_tools/pull/69) ([robthew](https://github.com/robthew))
 - Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
+- Metadata docs and tools [\#55](https://github.com/mitre/inspec_tools/pull/55) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.4.1](https://github.com/mitre/inspec_tools/tree/v1.4.1) (2019-06-20)
 
@@ -485,7 +495,6 @@
 
 **Merged pull requests:**
 
-- Metadata docs and tools [\#55](https://github.com/mitre/inspec_tools/pull/55) ([samcornwell](https://github.com/samcornwell))
 - Fix bugs introduced by \#51 \(STIGViewer PR\) [\#52](https://github.com/mitre/inspec_tools/pull/52) ([samcornwell](https://github.com/samcornwell))
 - Enhancements to meet working with STIGViewer as well as tracking some custom metadata when converting from xccdf2inspec and inspec2ckl [\#51](https://github.com/mitre/inspec_tools/pull/51) ([kevin-j-smith](https://github.com/kevin-j-smith))
 - Add modules summary, compliance [\#45](https://github.com/mitre/inspec_tools/pull/45) ([rx294](https://github.com/rx294))
