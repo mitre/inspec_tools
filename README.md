@@ -61,9 +61,9 @@ xccdf_results = tool.to_xccdf(attribs_json)
 On the Command Line, `inspec_tools help` will print a listing of all the command with a short description.
 For detailed help on any command, run `inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `inspec_tools xccdf2inspec -h`.
 
-## generate_map
+### generate_map
 
-This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `-m` option.
+This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
 
 ```
 USAGE: inspec_tools generate_map
@@ -155,7 +155,7 @@ Examples:
 
 ## xccdf2inspec
 
-xccdf2inspec translates an xccdf file to an InSpec profile in one or many files
+`xccdf2inspec` converts a STIG XCCDF file to an InSpec profile
 
 ```
 USAGE: inspec_tools xccdf2inspec [OPTIONS] -x <xccdf-file>
@@ -206,18 +206,9 @@ FLAGS:
 example: inspec_tools csv2inspec -c examples/csv2inspec/stig.csv -m examples/csv2inspec/mapping.yml -o mydir -f ruby -s true   # To map stig.csv to InSpec via mapping.yml
 ```
 
-### generate_map
-
-The `generate_map` sub-command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
-```
-USAGE: inspec_tools generate_map
-```
-
 ## inspec2csv
 
-Convert an InSpec json to a csv file
-
-`inspec2csv` will convert an InSpec json to a csv file
+`inspec2csv` converts an InSpec profile in json format to a csv security control spreadsheet
 
 ```
 USAGE: inspec_tools inspec2csv [OPTIONS] -j <inspec-json> -o <profile-csv>
