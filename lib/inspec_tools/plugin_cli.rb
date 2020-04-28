@@ -50,7 +50,6 @@ module InspecPlugins
           attributes = xccdf.to_attributes
           File.write(options[:attributes], YAML.dump(attributes))
         end
-        puts InspecTools.methods
       end
 
       desc 'inspec2xccdf', 'inspec2xccdf translates an inspec profile and attributes files to an xccdf file'
