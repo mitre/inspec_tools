@@ -8,8 +8,13 @@
 
 - Determine why we are getting odd terminal output at the end of an xccdf2inspec run [\#155](https://github.com/mitre/inspec_tools/issues/155)
 
+**Closed issues:**
+
+- Remove guardfile [\#141](https://github.com/mitre/inspec_tools/issues/141)
+
 **Merged pull requests:**
 
+- Remove guardfile [\#159](https://github.com/mitre/inspec_tools/pull/159) ([Bialogs](https://github.com/Bialogs))
 - Remove unnecessary debug output from xccdf2inspec [\#158](https://github.com/mitre/inspec_tools/pull/158) ([rbclark](https://github.com/rbclark))
 
 ## [v2.0.2.pre6](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre6) (2020-04-28)
@@ -23,7 +28,6 @@
 **Fixed bugs:**
 
 - CCE- data seems to be coming into the CCI references in some XCCDF files [\#151](https://github.com/mitre/inspec_tools/issues/151)
-- small fix to resolve issues with CCE data in the XCCDF [\#156](https://github.com/mitre/inspec_tools/pull/156) ([aaronlippold](https://github.com/aaronlippold))
 
 **Closed issues:**
 
@@ -44,6 +48,10 @@
 - change check and fix tags to sub-descriptions in xccdf2inspec [\#47](https://github.com/mitre/inspec_tools/issues/47)
 - merge in the `merge\_tool`  [\#42](https://github.com/mitre/inspec_tools/issues/42)
 - InSpec 3.x Data features [\#22](https://github.com/mitre/inspec_tools/issues/22)
+
+**Fixed bugs:**
+
+- small fix to resolve issues with CCE data in the XCCDF [\#156](https://github.com/mitre/inspec_tools/pull/156) ([aaronlippold](https://github.com/aaronlippold))
 
 **Merged pull requests:**
 
