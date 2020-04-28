@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre6...HEAD)
+
+**Implemented enhancements:**
+
+- Determine why we are getting odd terminal output at the end of an xccdf2inspec run [\#155](https://github.com/mitre/inspec_tools/issues/155)
+
+**Merged pull requests:**
+
+- Remove unnecessary debug output from xccdf2inspec [\#158](https://github.com/mitre/inspec_tools/pull/158) ([rbclark](https://github.com/rbclark))
+
 ## [v2.0.2.pre6](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre6) (2020-04-28)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre5...v2.0.2.pre6)
