@@ -146,17 +146,15 @@ module Utils
     def self.control_status(control)
       status_list = control[:status].uniq
       if control[:impact].to_f.zero?
-        result = 'Not_Applicable'
+        'Not_Applicable'
       elsif status_list.include?('failed')
-        result = 'Open'
+        'Open'
       elsif status_list.include?('passed')
-        result = 'NotAFinding'
-      elsif status_list.include?('skipped') || status_list.include?('error')
-        result = 'Not_Reviewed'
+        'NotAFinding'
       else
-        result = 'Not_Reviewed'
+        # profile skipped or profile error
+        'Not_Reviewed'
       end
-      result
     end
 
     def self.control_finding_details(control, control_clk_status)
