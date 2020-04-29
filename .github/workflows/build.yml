@@ -57,3 +57,9 @@ jobs:
           inspec_tools compliance -j examples/sample_json/single_control_results.json -f examples/sample_yaml/threshold.yaml
         env:
           CHEF_LICENSE: "accept"
+      - name: Validate Output CKL with xmllint
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-16.04'
+        uses: ChristophWurst/xmllint-action@v1
+        with:
+          xml-file: inspec2ckl_test.ckl
+          xml-schema-file: test/schemas/U_Checklist_Schema_V2-3.xsd
