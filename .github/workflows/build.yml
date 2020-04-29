@@ -20,8 +20,6 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-      - name: Install xmllint
-        run: sudo apt-get install libxml2-utils
       - uses: actions/checkout@v2
         with:
           lfs: true
@@ -55,8 +53,12 @@ jobs:
           inspec_tools pdf2inspec -p examples/CIS_Ubuntu_Linux_16.04_LTS_Benchmark_v1.0.0.pdf -o pdf2inspec_test
           inspec_tools inspec2csv -j examples/sample_json/rhel-simp.json -o inspec2csv_test.csv
           inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -o inspec2ckl_test.ckl
-          xmllint --schema test/schemas/U_Checklist_Schema_V2-3.xsd inspec2ckl_test.ckl --noout
           inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a lib/data/attributes.yml -o inspec2xccdf_test.xml
           inspec_tools compliance -j examples/sample_json/single_control_results.json -f examples/sample_yaml/threshold.yaml
         env:
           CHEF_LICENSE: "accept"
+      - name: Validate Output CKL with xmllint
+        uses: ChristophWurst/xmllint-action@v1
+        with:
+          xml-file: inspec2ckl_test.ckl
+          xml-schema-file: test/schemas/U_Checklist_Schema_V2-3.xsd
