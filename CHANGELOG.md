@@ -1,5 +1,21 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre7...HEAD)
+
+**Fixed bugs:**
+
+- STIG Viewer fails to validate CKL Schema [\#131](https://github.com/mitre/inspec_tools/issues/131)
+
+**Closed issues:**
+
+- Add integration tests to validate output Checklist against schema [\#62](https://github.com/mitre/inspec_tools/issues/62)
+
+**Merged pull requests:**
+
+- 131 ckl schema [\#163](https://github.com/mitre/inspec_tools/pull/163) ([Bialogs](https://github.com/Bialogs))
+
 ## [v2.0.2.pre7](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre7) (2020-04-28)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre6...v2.0.2.pre7)
@@ -69,14 +85,11 @@
 
 - Add unit tests for XLSXTool and add system tests in CI [\#130](https://github.com/mitre/inspec_tools/pull/130) ([Bialogs](https://github.com/Bialogs))
 - Apply fixes from CodeFactor [\#129](https://github.com/mitre/inspec_tools/pull/129) ([aaronlippold](https://github.com/aaronlippold))
+- Cleanup xlsx2inspec Process of Adding NIST and CIS Controls to Inspec Controls [\#127](https://github.com/mitre/inspec_tools/pull/127) ([Bialogs](https://github.com/Bialogs))
 
 ## [v2.0.1.pre3](https://github.com/mitre/inspec_tools/tree/v2.0.1.pre3) (2020-04-03)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.1.pre2...v2.0.1.pre3)
-
-**Merged pull requests:**
-
-- Cleanup xlsx2inspec Process of Adding NIST and CIS Controls to Inspec Controls [\#127](https://github.com/mitre/inspec_tools/pull/127) ([Bialogs](https://github.com/Bialogs))
 
 ## [v2.0.1.pre2](https://github.com/mitre/inspec_tools/tree/v2.0.1.pre2) (2020-04-02)
 
@@ -94,7 +107,6 @@
 **Merged pull requests:**
 
 - Pull lfs objects in when building the gem. [\#124](https://github.com/mitre/inspec_tools/pull/124) ([rbclark](https://github.com/rbclark))
-- Restructure workflow for publishing gem [\#121](https://github.com/mitre/inspec_tools/pull/121) ([rbclark](https://github.com/rbclark))
 
 ## [v2.0.0](https://github.com/mitre/inspec_tools/tree/v2.0.0) (2020-04-01)
 
@@ -108,6 +120,7 @@
 
 - Update parse XLSXTool\#parse\_cis\_control to handle the case when there… [\#123](https://github.com/mitre/inspec_tools/pull/123) ([Bialogs](https://github.com/Bialogs))
 - Track Inspec versions \>= 4.18.100 [\#122](https://github.com/mitre/inspec_tools/pull/122) ([Bialogs](https://github.com/Bialogs))
+- Restructure workflow for publishing gem [\#121](https://github.com/mitre/inspec_tools/pull/121) ([rbclark](https://github.com/rbclark))
 
 ## [v1.8.10](https://github.com/mitre/inspec_tools/tree/v1.8.10) (2020-03-30)
 
