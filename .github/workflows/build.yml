@@ -58,6 +58,7 @@ jobs:
         env:
           CHEF_LICENSE: "accept"
       - name: Validate Output CKL with xmllint
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-16.04'
         uses: ChristophWurst/xmllint-action@v1
         with:
           xml-file: inspec2ckl_test.ckl
