@@ -6,6 +6,7 @@
 
 **Fixed bugs:**
 
+- CCI Information is blank in CKL output [\#147](https://github.com/mitre/inspec_tools/issues/147)
 - STIG Viewer fails to validate CKL Schema [\#131](https://github.com/mitre/inspec_tools/issues/131)
 
 **Closed issues:**
@@ -14,6 +15,7 @@
 
 **Merged pull requests:**
 
+- Break CCI Vuln Information into separate StigData [\#167](https://github.com/mitre/inspec_tools/pull/167) ([Bialogs](https://github.com/Bialogs))
 - Missing array type for replace\_tags [\#166](https://github.com/mitre/inspec_tools/pull/166) ([Didar-Bhullar](https://github.com/Didar-Bhullar))
 - 131 ckl schema [\#163](https://github.com/mitre/inspec_tools/pull/163) ([Bialogs](https://github.com/Bialogs))
 
@@ -301,7 +303,6 @@
 **Merged pull requests:**
 
 - Update github workflows [\#99](https://github.com/mitre/inspec_tools/pull/99) ([Bialogs](https://github.com/Bialogs))
-- Fix issue with CHANGELOD.md not generating because of invalid startin… [\#97](https://github.com/mitre/inspec_tools/pull/97) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.18](https://github.com/mitre/inspec_tools/tree/v1.6.18) (2020-03-16)
 
@@ -327,6 +328,10 @@
 ## [v1.6.15](https://github.com/mitre/inspec_tools/tree/v1.6.15) (2020-03-13)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.14...v1.6.15)
+
+**Merged pull requests:**
+
+- Fix issue with CHANGELOD.md not generating because of invalid startin… [\#97](https://github.com/mitre/inspec_tools/pull/97) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.14](https://github.com/mitre/inspec_tools/tree/v1.6.14) (2020-03-13)
 
@@ -406,6 +411,10 @@
 - --help option is broken but inspec\_tools help \<command\> works [\#77](https://github.com/mitre/inspec_tools/issues/77)
 - Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
 
+**Merged pull requests:**
+
+- Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
+
 ## [53bdcb3](https://github.com/mitre/inspec_tools/tree/53bdcb3) (2019-11-06)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.4...53bdcb3)
@@ -422,7 +431,6 @@
 
 - Fixes \#83 [\#85](https://github.com/mitre/inspec_tools/pull/85) ([aaronlippold](https://github.com/aaronlippold))
 - Fixes \#76 by editing version number [\#84](https://github.com/mitre/inspec_tools/pull/84) ([lukemalinowski](https://github.com/lukemalinowski))
-- Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.6.4](https://github.com/mitre/inspec_tools/tree/v1.6.4) (2019-11-05)
 
@@ -482,7 +490,6 @@
 **Merged pull requests:**
 
 - Updated rake version [\#69](https://github.com/mitre/inspec_tools/pull/69) ([robthew](https://github.com/robthew))
-- Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.4.1](https://github.com/mitre/inspec_tools/tree/v1.4.1) (2019-06-20)
 
@@ -494,6 +501,7 @@
 
 **Merged pull requests:**
 
+- Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 - Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
@@ -562,6 +570,7 @@
 - Added appveyor config [\#40](https://github.com/mitre/inspec_tools/pull/40) ([robthew](https://github.com/robthew))
 - Travis test [\#39](https://github.com/mitre/inspec_tools/pull/39) ([robthew](https://github.com/robthew))
 - Add rubocop to the process [\#35](https://github.com/mitre/inspec_tools/pull/35) ([aaronlippold](https://github.com/aaronlippold))
+- \* added refernces to external data sources [\#30](https://github.com/mitre/inspec_tools/pull/30) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.1.2](https://github.com/mitre/inspec_tools/tree/v1.1.2) (2018-11-08)
 
@@ -592,7 +601,6 @@
 
 **Merged pull requests:**
 
-- \* added refernces to external data sources [\#30](https://github.com/mitre/inspec_tools/pull/30) ([aaronlippold](https://github.com/aaronlippold))
 - Cleanup Debug Statetements [\#12](https://github.com/mitre/inspec_tools/pull/12) ([yarick](https://github.com/yarick))
 - Change default separated\_files setting to default to true [\#11](https://github.com/mitre/inspec_tools/pull/11) ([yarick](https://github.com/yarick))
 - Cleanup [\#8](https://github.com/mitre/inspec_tools/pull/8) ([robthew](https://github.com/robthew))
