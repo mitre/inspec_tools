@@ -42,6 +42,12 @@ module HappyMapperTools
     # Class Asset maps from the 'STIG_DATA' from Checklist XML file using HappyMapper
     class StigData
       include HappyMapper
+
+      def initialize(attrib = nil, data = nil)
+        self.attrib = attrib
+        self.data = data
+      end
+
       tag 'STIG_DATA'
       has_one :attrib, String, tag: 'VULN_ATTRIBUTE'
       has_one :data, String, tag: 'ATTRIBUTE_DATA'

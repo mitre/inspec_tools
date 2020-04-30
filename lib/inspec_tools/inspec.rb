@@ -113,57 +113,6 @@ module InspecTools
       end
     end
 
-    def generate_vuln_data(control)
-      vuln = HappyMapperTools::StigChecklist::Vuln.new
-      stig_data_list = []
-
-      %w{
-        Vuln_Num Severity Group_Title Rule_ID Rule_Ver Rule_Title Vuln_Discuss
-        Check_Content Fix_Text CCI_REF
-      }.each do |attrib|
-        if attrib == 'Severity'
-          key = :impact
-        else
-          key = attrib.downcase.to_sym
-        end
-
-        next if control[key].nil?
-
-        if attrib == 'Severity'
-          value = Utils::InspecUtil.get_impact_string(control[key])
-          next if value == 'none'
-
-          value = 'high' if value == 'critical'
-        else
-          value = control[key]
-        end
-
-        stigdata = HappyMapperTools::StigChecklist::StigData.new
-        stigdata.attrib = attrib
-        stigdata.data = value
-        stig_data_list.push(stigdata)
-      end
-
-      stigdata = HappyMapperTools::StigChecklist::StigData.new
-      stigdata.attrib = 'STIGRef'
-      stigdata.data = @title
-      stig_data_list.push(stigdata)
-
-      vuln.stig_data = stig_data_list
-      vuln.status = Utils::InspecUtil.control_status(control)
-      vuln.comments = "\nAutomated compliance tests brought to you by the MITRE corporation and the InSpec project.\n\nInspec Profile: #{control[:profile_name]}\nProfile shasum: #{control[:profile_shasum]}"
-      vuln.finding_details = Utils::InspecUtil.control_finding_details(control, vuln.status)
-      vuln.severity_override = ''
-      vuln.severity_justification = ''
-
-      vuln
-    end
-
-    def generate_title(title, json, date)
-      title ||= "Untitled - Checklist Created from Automated InSpec Results JSON; Profiles: #{json['profiles'].map { |x| x['name'] }.join(' | ')}"
-      title + " Checklist Date: #{date || Date.today.to_s}"
-    end
-
     def generate_ckl
       stigs = HappyMapperTools::StigChecklist::Stigs.new
       istig = HappyMapperTools::StigChecklist::IStig.new
@@ -189,6 +138,27 @@ module InspecTools
       @checklist.stig = stigs
 
       @checklist.asset = generate_asset
+    end
+
+    def generate_vuln_data(control)
+      vuln = HappyMapperTools::StigChecklist::Vuln.new
+      stig_data_list = []
+
+      %w{Vuln_Num Group_Title Rule_ID Rule_Ver Rule_Title Vuln_Discuss Check_Content Fix_Text}.each do |attribute|
+        stig_data_list << create_stig_data_element(attribute, control)
+      end
+      stig_data_list << handle_severity(control)
+      stig_data_list += handle_cci_ref(control)
+      stig_data_list << handle_stigref
+
+      vuln.stig_data = stig_data_list.reject!(&:nil?)
+      vuln.status = Utils::InspecUtil.control_status(control)
+      vuln.comments = "\nAutomated compliance tests brought to you by the MITRE corporation and the InSpec project.\n\nInspec Profile: #{control[:profile_name]}\nProfile shasum: #{control[:profile_shasum]}"
+      vuln.finding_details = Utils::InspecUtil.control_finding_details(control, vuln.status)
+      vuln.severity_override = ''
+      vuln.severity_justification = ''
+
+      vuln
     end
 
     def generate_asset
@@ -320,6 +290,44 @@ module InspecTools
         group_array << group
       end
       @benchmark.group = group_array
+    end
+
+    def generate_title(title, json, date)
+      title ||= "Untitled - Checklist Created from Automated InSpec Results JSON; Profiles: #{json['profiles'].map { |x| x['name'] }.join(' | ')}"
+      title + " Checklist Date: #{date || Date.today.to_s}"
+    end
+
+    def create_stig_data_element(attribute, control)
+      return HappyMapperTools::StigChecklist::StigData.new(attribute, control[attribute.downcase.to_sym]) unless control[attribute.downcase.to_sym].nil?
+    end
+
+    def handle_severity(control)
+      return if control[:impact].nil?
+
+      value = Utils::InspecUtil.get_impact_string(control[:impact])
+      return if value == 'none'
+
+      value = 'high' if value == 'critical'
+
+      HappyMapperTools::StigChecklist::StigData.new('Severity', value)
+    end
+
+    def handle_cci_ref(control)
+      return [] if control[:cci_ref].nil?
+
+      cci_data = []
+      if control[:cci_ref].respond_to?(:each)
+        control[:cci_ref].each do |cci_number|
+          cci_data << HappyMapperTools::StigChecklist::StigData.new('CCI_REF', cci_number)
+        end
+        cci_data
+      else
+        cci_data << HappyMapperTools::StigChecklist::StigData.new('CCI_REF', control[:cci_ref])
+      end
+    end
+
+    def handle_stigref
+      HappyMapperTools::StigChecklist::StigData.new('STIGRef', @title)
     end
   end
 end
