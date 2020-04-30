@@ -144,7 +144,7 @@ module InspecTools
       vuln = HappyMapperTools::StigChecklist::Vuln.new
       stig_data_list = []
 
-      %w[Vuln_Num Group_Title Rule_ID Rule_Ver Rule_Title Vuln_Discuss Check_Content Fix_Text].each do |attribute|
+      %w{Vuln_Num Group_Title Rule_ID Rule_Ver Rule_Title Vuln_Discuss Check_Content Fix_Text}.each do |attribute|
         stig_data_list << create_stig_data_element(attribute, control)
       end
       stig_data_list << handle_severity(control)
@@ -313,7 +313,7 @@ module InspecTools
     end
 
     def handle_cci_ref(control)
-      return if control[:cci_ref].nil?
+      return [] if control[:cci_ref].nil?
 
       cci_data = []
       if control[:cci_ref].respond_to?(:each)

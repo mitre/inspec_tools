@@ -43,7 +43,7 @@ module HappyMapperTools
     class StigData
       include HappyMapper
 
-      def initialize(attrib=nil, data=nil)
+      def initialize(attrib = nil, data = nil)
         self.attrib = attrib
         self.data = data
       end
