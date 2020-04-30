@@ -305,10 +305,7 @@ module InspecTools
     def handle_vuln_num(stig_data_list, control)
       return stig_data_list if control[:vuln_num].nil?
 
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'Vuln_Num'
-      stig_data.data = control[:vuln_num]
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('Vuln_Num', control[:vuln_num]))
     end
 
     def handle_severity(stig_data_list, control)
@@ -319,93 +316,67 @@ module InspecTools
 
       value = 'high' if value == 'critical'
 
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'Severity'
-      stig_data.data = value
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('Severity', value))
     end
 
     def handle_group_title(stig_data_list, control)
       return stig_data_list if control[:group_title].nil?
 
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'Group_Title'
-      stig_data.data = control[:group_title]
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('Group_Title', control[:group_title]))
     end
 
     def handle_rule_id(stig_data_list, control)
       return stig_data_list if control[:rule_id].nil?
 
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'Rule_ID'
-      stig_data.data = control[:rule_id]
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('Rule_ID', control[:rule_id]))
     end
 
     def handle_rule_ver(stig_data_list, control)
       return stig_data_list if control[:rule_ver].nil?
 
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'Rule_Ver'
-      stig_data.data = control[:rule_ver]
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('Rule_Ver', control[:rule_ver]))
     end
 
     def handle_rule_title(stig_data_list, control)
       return stig_data_list if control[:rule_title].nil?
 
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'Rule_Title'
-      stig_data.data = control[:rule_title]
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('Rule_Title', control[:rule_title]))
     end
 
 
     def handle_vuln_discuss(stig_data_list, control)
       return stig_data_list if control[:vuln_discuss].nil?
 
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'Vuln_Discuss'
-      stig_data.data = control[:vuln_discuss]
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('Vuln_Discuss', control[:vuln_discuss]))
     end
 
     def handle_check_content(stig_data_list, control)
       return stig_data_list if control[:check_content].nil?
 
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'Check_Content'
-      stig_data.data = control[:check_content]
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('Check_Content', control[:check_content]))
     end
 
     def handle_fix_text(stig_data_list, control)
       return stig_data_list if control[:fix_text].nil?
 
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'Fix_Text'
-      stig_data.data = control[:fix_text]
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('Fix_Text', control[:fix_text]))
     end
 
     def handle_cci_ref(stig_data_list, control)
       return stig_data_list if control[:cci_ref].nil?
 
-      control[:cci_ref].each do |cci_number|
-        stig_data = HappyMapperTools::StigChecklist::StigData.new
-        stig_data.attrib = 'CCI_REF'
-        stig_data.data = cci_number
-        stig_data_list.push(stig_data)
+      if control[:cci_ref].respond_to?(:each)
+        control[:cci_ref].each do |cci_number|
+          stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('CCI_REF', cci_number))
+        end
+        stig_data_list
+      else
+        stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('CCI_REF', control[:cci_ref]))
       end
-      stig_data_list
     end
 
     def handle_stigref(stig_data_list)
-      stig_data = HappyMapperTools::StigChecklist::StigData.new
-      stig_data.attrib = 'STIGRef'
-      stig_data.data = @title
-      stig_data_list.push(stig_data)
+      stig_data_list.push(HappyMapperTools::StigChecklist::StigData.new('STIGRef', @title))
     end
   end
 end
