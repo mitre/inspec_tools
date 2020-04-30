@@ -50,7 +50,7 @@ jobs:
           inspec_tools summary -j examples/sample_json/rhel-simp.json -o summary.json -c
           inspec_tools csv2inspec -c examples/csv2inspec/stig.csv -m examples/csv2inspec/mapping.yml -o csv2inspec_test
           inspec_tools xccdf2inspec -x examples/xccdf2inspec/xccdf.xml -a lib/data/attributes.yml -o xccdf2inspec_test
-          inspec_tools xccdf2inspec -x examples/xccdf2inspec/data/U_JBOSS_EAP_6-3_STIG_V1R2_Manual-xccdf.xml -o xccdf2inspec_replace_test -r DIAGNOSTIC_DEST
+          inspec_tools xccdf2inspec -x examples/xccdf2inspec/data/U_JBOSS_EAP_6-3_STIG_V1R2_Manual-xccdf.xml -o xccdf2inspec_replace_test -r JBOSS_HOME
           inspec_tools pdf2inspec -p examples/CIS_Ubuntu_Linux_16.04_LTS_Benchmark_v1.0.0.pdf -o pdf2inspec_test
           inspec_tools inspec2csv -j examples/sample_json/rhel-simp.json -o inspec2csv_test.csv
           inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -o inspec2ckl_test.ckl
