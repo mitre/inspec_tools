@@ -143,7 +143,7 @@ USAGE: inspec_tools summary [OPTIONS] -j <inspec-json> -o <summary-csv>
 FLAGS:
 	-j --inspec-json <inspec-json>   : path to InSpec results JSON
 	-o --output <output-json> 		   : path to summary JSON
-  -c --cli, --no-cli               : print summary to STDOUT
+  -c --cli, --no-cli               : print formatted summary to STDOUT
   -V --verbose, --no-verbose       : print verbose an debug output
   -f --json-full, --no-json-full   : print the summary STDOUT as JSON
   -k --json-counts, --no-json_cou  : print the reslut status to STDOUT as JSON
