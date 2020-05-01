@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+## [v2.0.2.pre8](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre8) (2020-04-30)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre7...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre7...v2.0.2.pre8)
 
 **Fixed bugs:**
 
@@ -490,6 +490,7 @@
 **Merged pull requests:**
 
 - Updated rake version [\#69](https://github.com/mitre/inspec_tools/pull/69) ([robthew](https://github.com/robthew))
+- Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.4.1](https://github.com/mitre/inspec_tools/tree/v1.4.1) (2019-06-20)
 
@@ -501,7 +502,6 @@
 
 **Merged pull requests:**
 
-- Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 - Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
