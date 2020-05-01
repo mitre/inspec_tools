@@ -143,7 +143,7 @@ module Utils
       end
     end
 
-    def self.control_status(control)
+    def self.control_status(control, for_summary=false)
       status_list = control[:status].uniq
       if control[:impact].to_f.zero?
         'Not_Applicable'
@@ -151,6 +151,8 @@ module Utils
         'Open'
       elsif status_list.include?('passed')
         'NotAFinding'
+      elsif status_list.include?('error') && for_summary
+        'Profile_Error'
       else
         # profile skipped or profile error
         'Not_Reviewed'
