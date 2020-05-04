@@ -103,9 +103,9 @@ module Utils
             data[c_id][:nist]           = control['tags']['nist'].join(' ') unless control['tags']['nist'].nil?
           end
 
-          unless control['descriptions'].nil?
-            data[c_id][:check_content]  = control['descriptions']&.find { |c| c['label'] == 'fix' }&.dig('data')
-            data[c_id][:fix_text]       = control['descriptions']&.find { |c| c['label'] == 'check' }&.dig('data')
+          if control['descriptions'].respond_to?(:find)
+            data[c_id][:check_content]  = control['descriptions'].find { |c| c['label'] == 'fix' }&.dig('data')
+            data[c_id][:fix_text]       = control['descriptions'].find { |c| c['label'] == 'check' }&.dig('data')
           end
 
           data[c_id][:impact]         = control['impact'].to_s unless control['impact'].nil?
