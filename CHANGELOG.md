@@ -1,5 +1,23 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre8...HEAD)
+
+**Implemented enhancements:**
+
+- Ensure the output of our converters formats with a standard of 2-space  [\#140](https://github.com/mitre/inspec_tools/issues/140)
+- Ensure we do not create code that uses " where ' are the correct style [\#138](https://github.com/mitre/inspec_tools/issues/138)
+
+**Fixed bugs:**
+
+- Summary always returns 0 for profile errors [\#164](https://github.com/mitre/inspec_tools/issues/164)
+
+**Merged pull requests:**
+
+- Add parameter to InspecUtils\#control\_status to specify when used for summary. [\#170](https://github.com/mitre/inspec_tools/pull/170) ([Bialogs](https://github.com/Bialogs))
+- Generate Ruby with Single Quoted Strings [\#169](https://github.com/mitre/inspec_tools/pull/169) ([Bialogs](https://github.com/Bialogs))
+
 ## [v2.0.2.pre8](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre8) (2020-04-30)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre7...v2.0.2.pre8)
@@ -284,6 +302,10 @@
 
 - Parse cis XSLX [\#90](https://github.com/mitre/inspec_tools/pull/90) ([lukemalinowski](https://github.com/lukemalinowski))
 
+**Fixed bugs:**
+
+- Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
+
 **Closed issues:**
 
 - figure out rubygems.org [\#31](https://github.com/mitre/inspec_tools/issues/31)
@@ -323,7 +345,6 @@
 **Fixed bugs:**
 
 - The `changelog.md` versions seem to be broken [\#80](https://github.com/mitre/inspec_tools/issues/80)
-- Update version.yml regex to match multidigit version numbers and use … [\#98](https://github.com/mitre/inspec_tools/pull/98) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.15](https://github.com/mitre/inspec_tools/tree/v1.6.15) (2020-03-13)
 
@@ -348,6 +369,10 @@
 ## [v1.6.13](https://github.com/mitre/inspec_tools/tree/v1.6.13) (2020-03-13)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.12...v1.6.13)
+
+**Fixed bugs:**
+
+- Update version.yml regex to match multidigit version numbers and use … [\#98](https://github.com/mitre/inspec_tools/pull/98) ([Bialogs](https://github.com/Bialogs))
 
 **Closed issues:**
 
@@ -409,11 +434,11 @@
 **Fixed bugs:**
 
 - --help option is broken but inspec\_tools help \<command\> works [\#77](https://github.com/mitre/inspec_tools/issues/77)
-- Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
 
 **Merged pull requests:**
 
 - Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
+- Kevin j smith adding inspec command plugin logic [\#72](https://github.com/mitre/inspec_tools/pull/72) ([lukemalinowski](https://github.com/lukemalinowski))
 
 ## [53bdcb3](https://github.com/mitre/inspec_tools/tree/53bdcb3) (2019-11-06)
 
@@ -475,7 +500,6 @@
 
 **Merged pull requests:**
 
-- Kevin j smith adding inspec command plugin logic [\#72](https://github.com/mitre/inspec_tools/pull/72) ([lukemalinowski](https://github.com/lukemalinowski))
 - Added logic so that inspec\_tools can be a plugin to Inspec as a comma… [\#68](https://github.com/mitre/inspec_tools/pull/68) ([kevin-j-smith](https://github.com/kevin-j-smith))
 
 ## [v1.4.2](https://github.com/mitre/inspec_tools/tree/v1.4.2) (2019-07-30)
