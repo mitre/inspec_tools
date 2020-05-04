@@ -26,7 +26,7 @@ module InspecTools
       @summary = {}
       @data.keys.each do |control_id|
         current_control = @data[control_id]
-        current_control[:compliance_status] = Utils::InspecUtil.control_status(current_control)
+        current_control[:compliance_status] = Utils::InspecUtil.control_status(current_control, true)
         current_control[:finding_details] = Utils::InspecUtil.control_finding_details(current_control, current_control[:compliance_status])
       end
       compute_summary
