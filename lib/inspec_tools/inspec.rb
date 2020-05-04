@@ -151,7 +151,7 @@ module InspecTools
       stig_data_list += handle_cci_ref(control)
       stig_data_list << handle_stigref
 
-      vuln.stig_data = stig_data_list.reject!(&:nil?)
+      vuln.stig_data = stig_data_list.reject(&:nil?)
       vuln.status = Utils::InspecUtil.control_status(control)
       vuln.comments = "\nAutomated compliance tests brought to you by the MITRE corporation and the InSpec project.\n\nInspec Profile: #{control[:profile_name]}\nProfile shasum: #{control[:profile_shasum]}"
       vuln.finding_details = Utils::InspecUtil.control_finding_details(control, vuln.status)

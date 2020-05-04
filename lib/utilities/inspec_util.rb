@@ -88,9 +88,11 @@ module Utils
         profile['controls'].each do |control|
           c_id = control['id'].to_sym
           data[c_id] = {}
+
           data[c_id][:vuln_num]       = control['id'] unless control['id'].nil?
           data[c_id][:rule_title]     = control['title'] unless control['title'].nil?
           data[c_id][:vuln_discuss]   = control['desc'] unless control['desc'].nil?
+
           unless control['tags'].nil?
             data[c_id][:severity]       = control['tags']['severity'] unless control['tags']['severity'].nil?
             data[c_id][:gid]            = control['tags']['gid'] unless control['tags']['gid'].nil?
@@ -99,15 +101,20 @@ module Utils
             data[c_id][:rule_ver]       = control['tags']['stig_id'] unless control['tags']['stig_id'].nil?
             data[c_id][:cci_ref]        = control['tags']['cci'] unless control['tags']['cci'].nil?
             data[c_id][:nist]           = control['tags']['nist'].join(' ') unless control['tags']['nist'].nil?
-            data[c_id][:check_content]  = control['tags']['check'] unless control['tags']['check'].nil?
-            data[c_id][:fix_text]       = control['tags']['fix'] unless control['tags']['fix'].nil?
           end
+
+          if control['descriptions'].respond_to?(:find)
+            data[c_id][:check_content]  = control['descriptions'].find { |c| c['label'] == 'fix' }&.dig('data')
+            data[c_id][:fix_text]       = control['descriptions'].find { |c| c['label'] == 'check' }&.dig('data')
+          end
+
           data[c_id][:impact]         = control['impact'].to_s unless control['impact'].nil?
           data[c_id][:profile_name]   = profile['name'].to_s unless profile['name'].nil?
           data[c_id][:profile_shasum] = profile['sha256'].to_s unless profile['sha256'].nil?
 
           data[c_id][:status] = []
           data[c_id][:message] = []
+
           if control.key?('results')
             control['results'].each do |result|
               if !result['backtrace'].nil?
@@ -120,6 +127,7 @@ module Utils
               data[c_id][:message].push("PROFILE_ERROR -- Test: #{result['code_desc']}\nMessage: #{result['backtrace']}\n") if result['status'] == 'error'
             end
           end
+
           if data[c_id][:impact].to_f.zero?
             data[c_id][:message].unshift("NOT_APPLICABLE -- Description: #{control['desc']}\n\n")
           end

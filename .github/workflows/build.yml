@@ -53,7 +53,8 @@ jobs:
           inspec_tools xccdf2inspec -x examples/xccdf2inspec/data/U_JBOSS_EAP_6-3_STIG_V1R2_Manual-xccdf.xml -o xccdf2inspec_replace_test -r JBOSS_HOME
           inspec_tools pdf2inspec -p examples/CIS_Ubuntu_Linux_16.04_LTS_Benchmark_v1.0.0.pdf -o pdf2inspec_test
           inspec_tools inspec2csv -j examples/sample_json/rhel-simp.json -o inspec2csv_test.csv
-          inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -o inspec2ckl_test.ckl
+          inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -o inspec2ckl_test_1.ckl
+          inspec_tools inspec2ckl -j test/data/inspec_1.json -o test/data/inspec2ckl_test_2.ckl
           inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a lib/data/attributes.yml -o inspec2xccdf_test.xml
           inspec_tools compliance -j examples/sample_json/single_control_results.json -f examples/sample_yaml/threshold.yaml
         env:
@@ -62,5 +63,11 @@ jobs:
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-16.04'
         uses: ChristophWurst/xmllint-action@v1
         with:
-          xml-file: inspec2ckl_test.ckl
+          xml-file: inspec2ckl_test_1.ckl
+          xml-schema-file: test/schemas/U_Checklist_Schema_V2-3.xsd
+      - name: Validate Output CKL with xmllint
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-16.04'
+        uses: ChristophWurst/xmllint-action@v1
+        with:
+          xml-file: inspec2ckl_test_2.ckl
           xml-schema-file: test/schemas/U_Checklist_Schema_V2-3.xsd
