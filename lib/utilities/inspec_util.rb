@@ -143,7 +143,7 @@ module Utils
       end
     end
 
-    def self.control_status(control, for_summary=false)
+    def self.control_status(control, for_summary = false)
       status_list = control[:status].uniq
       if control[:impact].to_f.zero?
         'Not_Applicable'
