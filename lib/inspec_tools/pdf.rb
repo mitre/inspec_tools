@@ -65,6 +65,7 @@ module InspecTools
         control['desc'] = contr[:descr]
         control['impact'] = Utils::InspecUtil.get_impact('medium')
         control['tags'] = {}
+        control['tags']['severity'] = Utils::InspecUtil.get_impact_string(control['impact'])
         control['tags']['ref'] = contr[:ref] unless contr[:ref].nil?
         control['tags']['applicability'] = contr[:applicability] unless contr[:applicability].nil?
         control['tags']['cis_id'] = contr[:title].split(' ')[0] unless contr[:title].nil?

@@ -126,6 +126,7 @@ module InspecTools
         control['desc'] = group.rule.description.vuln_discussion.split('Satisfies: ')[0]
         control['impact'] = Utils::InspecUtil.get_impact(group.rule.severity)
         control['tags'] = {}
+        control['tags']['severity'] = Utils::InspecUtil.get_impact_string(control['impact'])
         control['tags']['gtitle'] = group.title
         control['tags']['satisfies'] = group.rule.description.vuln_discussion.split('Satisfies: ')[1].split(',').map(&:strip) if group.rule.description.vuln_discussion.split('Satisfies: ').length > 1
         control['tags']['gid'] = group.id
