@@ -304,10 +304,8 @@ module InspecTools
     def handle_severity(control)
       return if control[:impact].nil?
 
-      value = Utils::InspecUtil.get_impact_string(control[:impact])
+      value = Utils::InspecUtil.get_impact_string(control[:impact], false)
       return if value == 'none'
-
-      value = 'high' if value == 'critical'
 
       HappyMapperTools::StigChecklist::StigData.new('Severity', value)
     end
