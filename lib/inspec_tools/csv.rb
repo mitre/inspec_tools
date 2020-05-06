@@ -90,7 +90,10 @@ module InspecTools
         @mapping['control.tags'].each do |tag|
           control['tags'][tag.first.to_s] = row[tag.last] unless row[tag.last].nil?
         end
-        control['impact'] = Utils::InspecUtil.get_impact(row[@mapping['control.tags']['severity']]) unless @mapping['control.tags']['severity'].nil? || row[@mapping['control.tags']['severity']].nil?
+        unless @mapping['control.tags']['severity'].nil? || row[@mapping['control.tags']['severity']].nil?
+          control['impact'] = Utils::InspecUtil.get_impact(row[@mapping['control.tags']['severity']])
+          control['tags']['severity'] = Utils::InspecUtil.get_impact_string(control['impact'])
+        end
         @controls << control
       end
     end

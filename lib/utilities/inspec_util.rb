@@ -16,7 +16,6 @@ require 'overrides/string'
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/CyclomaticComplexity
-# rubocop:disable Metrics/BlockLength
 # rubocop:disable Metrics/MethodLength
 
 module Utils
@@ -46,7 +45,7 @@ module Utils
       end
       c_data = {}
 
-      controls.each do |control| # rubocop:disable Metrics/BlockLength
+      controls.each do |control|
         c_id = control['id'].to_sym
         c_data[c_id] = {}
         c_data[c_id]['id']             = control['id']    || DATA_NOT_FOUND_MESSAGE
@@ -192,18 +191,20 @@ module Utils
     # @todo Allow for the user to pass in a hash for the desired mapping of text
     # values to numbers or to override our hard coded values.
     #
-    def self.get_impact(severity)
-      return float_to_impact(severity) if severity.is_a?(Float)
+    def self.get_impact(severity, use_cvss_terms: true)
+      return float_to_impact(severity, use_cvss_terms) if severity.is_a?(Float)
 
-      return string_to_impact(severity) if severity.is_a?(String)
+      return string_to_impact(severity, use_cvss_terms) if severity.is_a?(String)
 
       raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
                                 '1.0 or one of the approved keywords.'
     end
 
-    private_class_method def self.float_to_impact(severity)
-      raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
-                                  '1.0 or one of the approved keywords.' unless severity.between?(0, 1)
+    private_class_method def self.float_to_impact(severity, use_cvss_terms)
+      unless severity.between?(0, 1)
+        raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
+                                  '1.0 or one of the approved keywords.'
+      end
 
       if severity <= 0.01
         0.0 # Informative
@@ -211,31 +212,33 @@ module Utils
         0.3 # Low Impact
       elsif severity < 0.7
         0.5 # Medium Impact
-      elsif severity < 0.9
+      elsif severity < 0.9 || use_cvss_terms
         0.7 # High Impact
       else
         1.0 # Critical Controls
       end
     end
 
-    private_class_method def self.string_to_impact(severity)
+    private_class_method def self.string_to_impact(severity, use_cvss_terms)
       if /none|na|n\/a|not[_|(\s*)]?applicable/i.match?(severity)
-        0.0 # Informative
+        impact = 0.0 # Informative
       elsif /low|cat(egory)?\s*(iii|3)/i.match?(severity)
-        0.3 # Low Impact
+        impact = 0.3 # Low Impact
       elsif /med(ium)?|cat(egory)?\s*(ii|2)/i.match?(severity)
-        0.5 # Medium Impact
+        impact = 0.5 # Medium Impact
       elsif /high|cat(egory)?\s*(i|1)/i.match?(severity)
-        0.7 # High Impact
+        impact = 0.7 # High Impact
       elsif /crit(ical)?|severe/i.match?(severity)
-        1.0 # Critical Controls
+        impact = 1.0 # Critical Controls
       else
         raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
                                   '1.0 or one of the approved keywords.'
       end
+
+      impact == 1.0 && use_cvss_terms ? 0.7 : impact
     end
 
-    def self.get_impact_string(impact)
+    def self.get_impact_string(impact, use_cvss_terms: true)
       return if impact.nil?
 
       value = impact.to_f
@@ -243,8 +246,14 @@ module Utils
         raise ImpactInputError, "'#{value}' is not a valid impact score. Valid impact scores: [0.0 - 1.0]."
       end
 
-      IMPACT_SCORES.reverse_each do |name, impact|
-        return name if value >= impact
+      IMPACT_SCORES.reverse_each do |name, impact_score|
+        if name == 'critical' && value >= impact_score && use_cvss_terms
+          return 'high'
+        elsif value >= impact_score
+          return name
+        else
+          next
+        end
       end
     end
 
@@ -418,3 +427,9 @@ module Utils
     end
   end
 end
+
+# rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/MethodLength
