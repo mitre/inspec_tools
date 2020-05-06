@@ -304,7 +304,7 @@ module InspecTools
     def handle_severity(control)
       return if control[:impact].nil?
 
-      value = Utils::InspecUtil.get_impact_string(control[:impact], false)
+      value = Utils::InspecUtil.get_impact_string(control[:impact], use_cvss_terms: false)
       return if value == 'none'
 
       HappyMapperTools::StigChecklist::StigData.new('Severity', value)

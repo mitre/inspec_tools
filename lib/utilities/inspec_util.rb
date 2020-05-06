@@ -191,7 +191,7 @@ module Utils
     # @todo Allow for the user to pass in a hash for the desired mapping of text
     # values to numbers or to override our hard coded values.
     #
-    def self.get_impact(severity, use_cvss_terms = true)
+    def self.get_impact(severity, use_cvss_terms: true)
       return float_to_impact(severity, use_cvss_terms) if severity.is_a?(Float)
 
       return string_to_impact(severity, use_cvss_terms) if severity.is_a?(String)
@@ -238,7 +238,7 @@ module Utils
       impact == 1.0 && use_cvss_terms ? 0.7 : impact
     end
 
-    def self.get_impact_string(impact, use_cvss_terms = true)
+    def self.get_impact_string(impact, use_cvss_terms: true)
       return if impact.nil?
 
       value = impact.to_f
