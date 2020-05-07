@@ -35,7 +35,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_runtime_dependency 'pdf-reader', '~> 2.1'
   spec.add_runtime_dependency 'roo', '~> 2.8'
   spec.add_runtime_dependency 'word_wrap', '~> 1.0'
-  spec.add_runtime_dependency 'git-lite-version-bump', '>= 0.17'
+  spec.add_runtime_dependency 'git-lite-version-bump', '>= 0.17.1'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'minitest'
   spec.add_development_dependency 'pry'
