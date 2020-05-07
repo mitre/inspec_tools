@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre10...HEAD)
+
+**Merged pull requests:**
+
+- git-lite-version-bump 0.17.0 is not compatible with Windows [\#176](https://github.com/mitre/inspec_tools/pull/176) ([rbclark](https://github.com/rbclark))
+
 ## [v2.0.2.pre10](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre10) (2020-05-06)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre9...v2.0.2.pre10)
@@ -52,7 +60,6 @@
 - Break CCI Vuln Information into separate StigData [\#167](https://github.com/mitre/inspec_tools/pull/167) ([Bialogs](https://github.com/Bialogs))
 - Missing array type for replace\_tags [\#166](https://github.com/mitre/inspec_tools/pull/166) ([Didar-Bhullar](https://github.com/Didar-Bhullar))
 - 131 ckl schema [\#163](https://github.com/mitre/inspec_tools/pull/163) ([Bialogs](https://github.com/Bialogs))
-- Updated README to standardize wording [\#160](https://github.com/mitre/inspec_tools/pull/160) ([Bialogs](https://github.com/Bialogs))
 
 ## [v2.0.2.pre7](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre7) (2020-04-28)
 
@@ -70,8 +77,10 @@
 **Merged pull requests:**
 
 - Remove Guardfile from Specfile [\#161](https://github.com/mitre/inspec_tools/pull/161) ([Bialogs](https://github.com/Bialogs))
+- Updated README to standardize wording [\#160](https://github.com/mitre/inspec_tools/pull/160) ([Bialogs](https://github.com/Bialogs))
 - Remove guardfile [\#159](https://github.com/mitre/inspec_tools/pull/159) ([Bialogs](https://github.com/Bialogs))
 - Remove unnecessary debug output from xccdf2inspec [\#158](https://github.com/mitre/inspec_tools/pull/158) ([rbclark](https://github.com/rbclark))
+- Add unit tests for XLSXTool and add system tests in CI [\#130](https://github.com/mitre/inspec_tools/pull/130) ([Bialogs](https://github.com/Bialogs))
 
 ## [v2.0.2.pre6](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre6) (2020-04-28)
 
@@ -120,7 +129,6 @@
 
 **Merged pull requests:**
 
-- Add unit tests for XLSXTool and add system tests in CI [\#130](https://github.com/mitre/inspec_tools/pull/130) ([Bialogs](https://github.com/Bialogs))
 - Apply fixes from CodeFactor [\#129](https://github.com/mitre/inspec_tools/pull/129) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v2.0.1.pre3](https://github.com/mitre/inspec_tools/tree/v2.0.1.pre3) (2020-04-03)
@@ -144,6 +152,10 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.0...v2.0.1.pre1)
 
+**Merged pull requests:**
+
+- Pull lfs objects in when building the gem. [\#124](https://github.com/mitre/inspec_tools/pull/124) ([rbclark](https://github.com/rbclark))
+
 ## [v2.0.0](https://github.com/mitre/inspec_tools/tree/v2.0.0) (2020-04-01)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.10...v2.0.0)
@@ -161,10 +173,6 @@
 ## [v1.8.10](https://github.com/mitre/inspec_tools/tree/v1.8.10) (2020-03-30)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.9...v1.8.10)
-
-**Merged pull requests:**
-
-- added two digit contol parsing fixes \#117 [\#120](https://github.com/mitre/inspec_tools/pull/120) ([yarick](https://github.com/yarick))
 
 ## [v1.8.9](https://github.com/mitre/inspec_tools/tree/v1.8.9) (2020-03-30)
 
@@ -184,6 +192,7 @@
 
 **Merged pull requests:**
 
+- added two digit contol parsing fixes \#117 [\#120](https://github.com/mitre/inspec_tools/pull/120) ([yarick](https://github.com/yarick))
 - Add --json-full and --json-summary options to summary subcommand [\#116](https://github.com/mitre/inspec_tools/pull/116) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.8.7](https://github.com/mitre/inspec_tools/tree/v1.8.7) (2020-03-29)
@@ -198,6 +207,10 @@
 
 - GitHub Actions Build Matrix [\#112](https://github.com/mitre/inspec_tools/issues/112)
 
+**Merged pull requests:**
+
+- Update build/test process to only use GitHub actions [\#115](https://github.com/mitre/inspec_tools/pull/115) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.5](https://github.com/mitre/inspec_tools/tree/v1.8.5) (2020-03-27)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.4...v1.8.5)
@@ -208,7 +221,6 @@
 
 **Merged pull requests:**
 
-- Update build/test process to only use GitHub actions [\#115](https://github.com/mitre/inspec_tools/pull/115) ([Bialogs](https://github.com/Bialogs))
 - Add '\# encoding: UTF-8' to the top of all generated controls/\*.rb [\#114](https://github.com/mitre/inspec_tools/pull/114) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.8.4](https://github.com/mitre/inspec_tools/tree/v1.8.4) (2020-03-27)
@@ -221,7 +233,6 @@
 
 **Merged pull requests:**
 
-- Pull lfs objects in when building the gem. [\#124](https://github.com/mitre/inspec_tools/pull/124) ([rbclark](https://github.com/rbclark))
 - Reorganize overrides [\#113](https://github.com/mitre/inspec_tools/pull/113) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.8.3](https://github.com/mitre/inspec_tools/tree/v1.8.3) (2020-03-27)
