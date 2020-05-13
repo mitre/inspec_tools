@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+## [v2.0.2.pre12](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre12) (2020-05-07)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre11...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre11...v2.0.2.pre12)
 
 **Merged pull requests:**
 
@@ -342,6 +342,10 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.19...v1.6.20)
 
+**Merged pull requests:**
+
+- Rubygems release workflow [\#100](https://github.com/mitre/inspec_tools/pull/100) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.6.19](https://github.com/mitre/inspec_tools/tree/v1.6.19) (2020-03-16)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.18...v1.6.19)
@@ -400,11 +404,6 @@
 - use github\_changelog\_generator in our release process [\#33](https://github.com/mitre/inspec_tools/issues/33)
 - add project instructions for Changelog, contribution and issue\_template [\#32](https://github.com/mitre/inspec_tools/issues/32)
 
-**Merged pull requests:**
-
-- Rubygems release workflow [\#100](https://github.com/mitre/inspec_tools/pull/100) ([Bialogs](https://github.com/Bialogs))
-- Enable git-lfs for this repository; tracking xls and xlsx files. [\#94](https://github.com/mitre/inspec_tools/pull/94) ([Bialogs](https://github.com/Bialogs))
-
 ## [v1.6.12](https://github.com/mitre/inspec_tools/tree/v1.6.12) (2020-03-13)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.11...v1.6.12)
@@ -433,10 +432,6 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.9...v1.6.10)
 
-**Fixed bugs:**
-
-- Fix https://public.cyber.mil refernces [\#81](https://github.com/mitre/inspec_tools/pull/81) ([aaronlippold](https://github.com/aaronlippold))
-
 ## [v1.6.9](https://github.com/mitre/inspec_tools/tree/v1.6.9) (2020-03-06)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.8...v1.6.9)
@@ -460,6 +455,7 @@
 
 **Merged pull requests:**
 
+- Enable git-lfs for this repository; tracking xls and xlsx files. [\#94](https://github.com/mitre/inspec_tools/pull/94) ([Bialogs](https://github.com/Bialogs))
 - Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [53bdcb3](https://github.com/mitre/inspec_tools/tree/53bdcb3) (2019-11-06)
@@ -515,6 +511,10 @@
 ## [v1.5.0](https://github.com/mitre/inspec_tools/tree/v1.5.0) (2019-09-10)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.2...v1.5.0)
+
+**Fixed bugs:**
+
+- Fix https://public.cyber.mil refernces [\#81](https://github.com/mitre/inspec_tools/pull/81) ([aaronlippold](https://github.com/aaronlippold))
 
 **Closed issues:**
 
