@@ -106,7 +106,7 @@ USAGE: docker run -v`pwd`:/share -e CHEF_LICENSE=accept <image name> generate_ma
 This command will generate a `metadata.json` file that can be passed in to the `inspec2ckl` command with the `-m` option.
 
 ```
-USAGE: docker run -v `pwd`:/share -e CHEF_LICENSE=accept <image name> generate_ckl_metadata
+USAGE: docker run -it -v `pwd`:/share -e CHEF_LICENSE=accept <image name> generate_ckl_metadata
 ```
 
 ## generate_inspec_metadata
@@ -114,7 +114,7 @@ USAGE: docker run -v `pwd`:/share -e CHEF_LICENSE=accept <image name> generate_c
 This command will generate a `metadata.json` file that can be passed in to the `xccdf2inspec` command with the `-m` option.
 
 ```
-USAGE: docker run -v `pwd`:/share -e CHEF_LICENSE=accept <image name> generate_inspec_metadata
+USAGE: docker run -it -v `pwd`:/share -e CHEF_LICENSE=accept <image name> generate_inspec_metadata
 ```
 
 ## compliance

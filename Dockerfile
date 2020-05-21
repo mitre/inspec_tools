@@ -1,7 +1,7 @@
 FROM ruby:alpine AS builder
 
 RUN mkdir -p /share
-RUN apk add --update build-base git
+RUN apk add --update build-base git-lfs
 
 COPY . /build
 RUN cd /build && \
