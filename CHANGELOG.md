@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre12...HEAD)
+
+**Fixed bugs:**
+
+- All Impacts Parsed from PDF are Medium [\#173](https://github.com/mitre/inspec_tools/issues/173)
+
+**Merged pull requests:**
+
+- Git version bump version 0.17.2 is broken due to a faulty regex. [\#182](https://github.com/mitre/inspec_tools/pull/182) ([rbclark](https://github.com/rbclark))
+
 ## [v2.0.2.pre12](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre12) (2020-05-07)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre11...v2.0.2.pre12)
@@ -258,10 +270,6 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.1...v1.8.2)
 
-**Merged pull requests:**
-
-- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
-
 ## [v1.8.1](https://github.com/mitre/inspec_tools/tree/v1.8.1) (2020-03-24)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.0...v1.8.1)
@@ -304,6 +312,7 @@
 
 **Merged pull requests:**
 
+- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
 - Allow pushing to any gem host to support GitHub [\#103](https://github.com/mitre/inspec_tools/pull/103) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.7.1](https://github.com/mitre/inspec_tools/tree/v1.7.1) (2020-03-23)
@@ -375,6 +384,10 @@
 - The `changelog.md` versions seem to be broken [\#80](https://github.com/mitre/inspec_tools/issues/80)
 - Update version.yml regex to match multidigit version numbers and use … [\#98](https://github.com/mitre/inspec_tools/pull/98) ([Bialogs](https://github.com/Bialogs))
 
+**Merged pull requests:**
+
+- Enable git-lfs for this repository; tracking xls and xlsx files. [\#94](https://github.com/mitre/inspec_tools/pull/94) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.6.15](https://github.com/mitre/inspec_tools/tree/v1.6.15) (2020-03-13)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.14...v1.6.15)
@@ -432,6 +445,10 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.9...v1.6.10)
 
+**Fixed bugs:**
+
+- Fix https://public.cyber.mil refernces [\#81](https://github.com/mitre/inspec_tools/pull/81) ([aaronlippold](https://github.com/aaronlippold))
+
 ## [v1.6.9](https://github.com/mitre/inspec_tools/tree/v1.6.9) (2020-03-06)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.8...v1.6.9)
@@ -455,7 +472,6 @@
 
 **Merged pull requests:**
 
-- Enable git-lfs for this repository; tracking xls and xlsx files. [\#94](https://github.com/mitre/inspec_tools/pull/94) ([Bialogs](https://github.com/Bialogs))
 - Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [53bdcb3](https://github.com/mitre/inspec_tools/tree/53bdcb3) (2019-11-06)
@@ -511,10 +527,6 @@
 ## [v1.5.0](https://github.com/mitre/inspec_tools/tree/v1.5.0) (2019-09-10)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.4.2...v1.5.0)
-
-**Fixed bugs:**
-
-- Fix https://public.cyber.mil refernces [\#81](https://github.com/mitre/inspec_tools/pull/81) ([aaronlippold](https://github.com/aaronlippold))
 
 **Closed issues:**
 
