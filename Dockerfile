@@ -11,6 +11,7 @@ RUN cd /build && \
 
 FROM ruby:alpine
 
+ENV CHEF_LICENSE=accept
 RUN apk add --no-cache build-base
 
 COPY --from=builder /build/inspec_tools.gem /build/
