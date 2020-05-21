@@ -1,7 +1,7 @@
 FROM ruby:alpine AS builder
 
 RUN mkdir -p /share
-RUN apk add --update build-base git-lfs
+RUN apk add --no-cache build-base git-lfs
 
 COPY . /build
 RUN cd /build && \
@@ -11,7 +11,7 @@ RUN cd /build && \
 
 FROM ruby:alpine
 
-RUN apk add --update build-base
+RUN apk add --no-cache build-base
 
 COPY --from=builder /build /build
 RUN cd build && \
