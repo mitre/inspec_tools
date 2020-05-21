@@ -32,7 +32,7 @@ Add this line to your application's Gemfile:
 gem 'inspec_tools'
 ```
 
-Docker installation have the Dockerfile and run `docker build -t <image name>`
+`docker run -itv ` `` ` `` `pwd` `` ` `` `:/share -e CHEF_LICENSE=accept mitre/inspec_tools [COMMAND]`
 
 # Usage
 
@@ -89,16 +89,15 @@ USAGE: inspec_tools generate_inspec_metadata
 
 ## Docker Usage
 
-Building the Docker container and running it with `docker run -v` `` ` ``pwd`` ` `` `:/share -e CHEF_LICENSE=accept <image name>` will print a listing of all the command with a short description.
-For detailed help on any command, run `docker run -v` `` ` ``pwd`` ` `` `:/share -e CHEF_LICENSE=accept <image name> help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `docker run -v` `` ` ``pwd`` ` `` `:/share -e CHEF_LICENSE=accept <image name> xccdf2inspec -h`.
-`` test` ``
+Building the Docker container and running it with `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share -e CHEF_LICENSE=accept <image name>` will print a listing of all the command with a short description.
+For detailed help on any command, run `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share -e CHEF_LICENSE=accept <image name> help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share -e CHEF_LICENSE=accept <image name> xccdf2inspec -h`.
 
 ### generate_map
 
 This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
 
 ```
-USAGE: docker run -v`pwd`:/share -e CHEF_LICENSE=accept <image name> generate_map
+USAGE: docker run -it -v`pwd`:/share -e CHEF_LICENSE=accept <image name> generate_map
 ```
 
 ## generate_ckl_metadata

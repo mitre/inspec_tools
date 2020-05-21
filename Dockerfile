@@ -13,9 +13,8 @@ FROM ruby:alpine
 
 RUN apk add --no-cache build-base
 
-COPY --from=builder /build /build
-RUN cd build && \
-    gem install inspec_tools.gem 
+COPY --from=builder /build/inspec_tools.gem /build/
+RUN gem install build/inspec_tools.gem
     
 RUN apk del build-base
 
