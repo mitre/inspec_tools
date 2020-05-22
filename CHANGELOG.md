@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre12...HEAD)
 
+**Implemented enhancements:**
+
+- Ruby to docker [\#181](https://github.com/mitre/inspec_tools/pull/181) ([jsa5593](https://github.com/jsa5593))
+
 **Fixed bugs:**
 
 - All Impacts Parsed from PDF are Medium [\#173](https://github.com/mitre/inspec_tools/issues/173)
@@ -262,13 +266,14 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.2...v1.8.3)
 
-**Merged pull requests:**
-
-- Spaces cause interpreter not to pick up encoding correctly [\#111](https://github.com/mitre/inspec_tools/pull/111) ([Bialogs](https://github.com/Bialogs))
-
 ## [v1.8.2](https://github.com/mitre/inspec_tools/tree/v1.8.2) (2020-03-25)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.1...v1.8.2)
+
+**Merged pull requests:**
+
+- Spaces cause interpreter not to pick up encoding correctly [\#111](https://github.com/mitre/inspec_tools/pull/111) ([Bialogs](https://github.com/Bialogs))
+- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.8.1](https://github.com/mitre/inspec_tools/tree/v1.8.1) (2020-03-24)
 
@@ -312,7 +317,6 @@
 
 **Merged pull requests:**
 
-- Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
 - Allow pushing to any gem host to support GitHub [\#103](https://github.com/mitre/inspec_tools/pull/103) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.7.1](https://github.com/mitre/inspec_tools/tree/v1.7.1) (2020-03-23)
@@ -384,10 +388,6 @@
 - The `changelog.md` versions seem to be broken [\#80](https://github.com/mitre/inspec_tools/issues/80)
 - Update version.yml regex to match multidigit version numbers and use … [\#98](https://github.com/mitre/inspec_tools/pull/98) ([Bialogs](https://github.com/Bialogs))
 
-**Merged pull requests:**
-
-- Enable git-lfs for this repository; tracking xls and xlsx files. [\#94](https://github.com/mitre/inspec_tools/pull/94) ([Bialogs](https://github.com/Bialogs))
-
 ## [v1.6.15](https://github.com/mitre/inspec_tools/tree/v1.6.15) (2020-03-13)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.14...v1.6.15)
@@ -416,6 +416,10 @@
 
 - use github\_changelog\_generator in our release process [\#33](https://github.com/mitre/inspec_tools/issues/33)
 - add project instructions for Changelog, contribution and issue\_template [\#32](https://github.com/mitre/inspec_tools/issues/32)
+
+**Merged pull requests:**
+
+- Enable git-lfs for this repository; tracking xls and xlsx files. [\#94](https://github.com/mitre/inspec_tools/pull/94) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.6.12](https://github.com/mitre/inspec_tools/tree/v1.6.12) (2020-03-13)
 
