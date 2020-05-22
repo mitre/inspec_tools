@@ -64,7 +64,7 @@ For detailed help on any command, run `inspec_tools help [COMMAND]`. Help can al
 For Docker usage, replace the `inspec_tools` command with the correct Docker command below for your operating system:
 
  - **On Linux and Mac**: `docker run -it -v$(pwd):/share mitre/inspec_tools`
- - **On Windows**: `docker run -it -v%%cd%%:/share mitre/inspec_tools`
+ - **On Windows CMD**: `docker run -it -v%cd%:/share mitre/inspec_tools`
  
 Note that all of the above Docker commands will mount your current directory on the Docker container. Ensure that you have navigated to the directory you intend to convert files in before executing the command.
 
