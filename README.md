@@ -32,8 +32,6 @@ Add this line to your application's Gemfile:
 gem 'inspec_tools'
 ```
 
-`docker run -itv ` `` ` `` `pwd` `` ` `` `:/share -e CHEF_LICENSE=accept mitre/inspec_tools [COMMAND]`
-
 # Usage
 
 ## Ruby Usage
@@ -63,12 +61,17 @@ xccdf_results = tool.to_xccdf(attribs_json)
 On the Command Line, `inspec_tools help` will print a listing of all the command with a short description.
 For detailed help on any command, run `inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `inspec_tools xccdf2inspec -h`.
 
+Using Docker `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share <image name>` will print a list of all the commands with a short description.
+For detailed help on any command, run `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share <image name> help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share <image name> xccdf2inspec -h`.
+
 ### generate_map
 
 This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
 
 ```
 USAGE: inspec_tools generate_map
+Or
+USAGE: docker run -it -v`pwd`:/share mitre/inspec_tools generate_map
 ```
 
 ## generate_ckl_metadata
@@ -77,6 +80,8 @@ This command will generate a `metadata.json` file that can be passed in to the `
 
 ```
 USAGE: inspec_tools generate_ckl_metadata
+Or
+USAGE: docker run -it -v `pwd`:/share mitre/inspec_tools generate_ckl_metadata
 ```
 
 ## generate_inspec_metadata
@@ -85,35 +90,8 @@ This command will generate a `metadata.json` file that can be passed in to the `
 
 ```
 USAGE: inspec_tools generate_inspec_metadata
-```
-
-## Docker Usage
-
-Building the Docker container and running it with `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share <image name>` will print a listing of all the command with a short description.
-For detailed help on any command, run `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share <image name> help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share <image name> xccdf2inspec -h`.
-
-### generate_map
-
-This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
-
-```
-USAGE: docker run -it -v`pwd`:/share <image name> generate_map
-```
-
-## generate_ckl_metadata
-
-This command will generate a `metadata.json` file that can be passed in to the `inspec2ckl` command with the `-m` option.
-
-```
-USAGE: docker run -it -v `pwd`:/share <image name> generate_ckl_metadata
-```
-
-## generate_inspec_metadata
-
-This command will generate a `metadata.json` file that can be passed in to the `xccdf2inspec` command with the `-m` option.
-
-```
-USAGE: docker run -it -v `pwd`:/share <image name> generate_inspec_metadata
+Or
+USAGE: docker run -it -v `pwd`:/share mitre/inspec_tools generate_inspec_metadata
 ```
 
 ## compliance
