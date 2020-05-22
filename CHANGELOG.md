@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+## [v2.0.2.pre13](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre13) (2020-05-22)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre12...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre12...v2.0.2.pre13)
 
 **Implemented enhancements:**
 
@@ -266,13 +266,16 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.2...v1.8.3)
 
+**Merged pull requests:**
+
+- Spaces cause interpreter not to pick up encoding correctly [\#111](https://github.com/mitre/inspec_tools/pull/111) ([Bialogs](https://github.com/Bialogs))
+
 ## [v1.8.2](https://github.com/mitre/inspec_tools/tree/v1.8.2) (2020-03-25)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.8.1...v1.8.2)
 
 **Merged pull requests:**
 
-- Spaces cause interpreter not to pick up encoding correctly [\#111](https://github.com/mitre/inspec_tools/pull/111) ([Bialogs](https://github.com/Bialogs))
 - Gemspec Dependency Updates  [\#109](https://github.com/mitre/inspec_tools/pull/109) ([Bialogs](https://github.com/Bialogs))
 
 ## [v1.8.1](https://github.com/mitre/inspec_tools/tree/v1.8.1) (2020-03-24)
@@ -350,6 +353,10 @@
 **Closed issues:**
 
 - figure out rubygems.org [\#31](https://github.com/mitre/inspec_tools/issues/31)
+
+**Merged pull requests:**
+
+- Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.6.20](https://github.com/mitre/inspec_tools/tree/v1.6.20) (2020-03-17)
 
@@ -473,10 +480,6 @@
 
 - --help option is broken but inspec\_tools help \<command\> works [\#77](https://github.com/mitre/inspec_tools/issues/77)
 - Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
-
-**Merged pull requests:**
-
-- Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [53bdcb3](https://github.com/mitre/inspec_tools/tree/53bdcb3) (2019-11-06)
 
