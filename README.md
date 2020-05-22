@@ -61,8 +61,8 @@ xccdf_results = tool.to_xccdf(attribs_json)
 On the Command Line, `inspec_tools help` will print a listing of all the command with a short description.
 For detailed help on any command, run `inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `inspec_tools xccdf2inspec -h`.
 
-Using Docker `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share <image name>` will print a list of all the commands with a short description.
-For detailed help on any command, run `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share <image name> help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share <image name> xccdf2inspec -h`.
+Using Docker `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share mitre/inspec_tools` will print a list of all the commands with a short description.
+For detailed help on any command, run `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share mitre/inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share mitre/inspec_tools xccdf2inspec -h`.
 
 ### generate_map
 
