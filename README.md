@@ -61,8 +61,12 @@ xccdf_results = tool.to_xccdf(attribs_json)
 On the Command Line, `inspec_tools help` will print a listing of all the command with a short description.
 For detailed help on any command, run `inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `inspec_tools xccdf2inspec -h`.
 
-Using Docker `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share mitre/inspec_tools` will print a list of all the commands with a short description.
-For detailed help on any command, run `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share mitre/inspec_tools help [COMMAND]`. Help can also be called with the `-h, --help` flags after any command, like `docker run -it -v` `` ` `` `pwd` `` ` `` `:/share mitre/inspec_tools xccdf2inspec -h`.
+For Docker usage, replace the `inspec_tools` command with the correct Docker command below for your operating system:
+
+ - **On Linux and Mac**: `docker run -it -v$(pwd):/share mitre/inspec_tools`
+ - **On Windows**: `docker run -it -v%%cd%%:/share mitre/inspec_tools`
+ 
+Note that all of the above Docker commands will mount your current directory on the Docker container. Ensure that you have navigated to the directory you intend to convert files in before executing the command.
 
 ### generate_map
 
@@ -70,8 +74,6 @@ This command will generate a `mapping.xml` file that can be passed in to the `cs
 
 ```
 USAGE: inspec_tools generate_map
-Or
-USAGE: docker run -it -v`pwd`:/share mitre/inspec_tools generate_map
 ```
 
 ## generate_ckl_metadata
@@ -80,8 +82,6 @@ This command will generate a `metadata.json` file that can be passed in to the `
 
 ```
 USAGE: inspec_tools generate_ckl_metadata
-Or
-USAGE: docker run -it -v `pwd`:/share mitre/inspec_tools generate_ckl_metadata
 ```
 
 ## generate_inspec_metadata
@@ -90,8 +90,6 @@ This command will generate a `metadata.json` file that can be passed in to the `
 
 ```
 USAGE: inspec_tools generate_inspec_metadata
-Or
-USAGE: docker run -it -v `pwd`:/share mitre/inspec_tools generate_inspec_metadata
 ```
 
 ## compliance
