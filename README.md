@@ -142,22 +142,57 @@ failed.high.max: 1
 
 ## summary
 
-`summary` parses an inspec results json to create a summary json
+`summary` parses an inspec results json and displays the information from all of the tests that were run. Running the command with flags but `-j` it will display information like:
 
 ```
-USAGE: inspec_tools summary [OPTIONS] -j <inspec-json> -o <summary-csv>
+Overall compliance: 77%
 
+failed
+	total : 41
+	critical : 0
+	high : 3
+	medium : 33
+	low : 5
+passed
+	total : 174
+	critical : 0
+	high : 21
+	medium : 147
+	low : 6
+no_impact
+	total : 21
+	critical : 0
+	high : 0
+	medium : 0
+	low : 0
+skipped
+	total : 10
+	critical : 0
+	high : 2
+	medium : 5
+	low : 3
+error
+	total : 0
+	critical : 0
+	high : 0
+	medium : 0
+	low : 0
+```
+
+Using additional flags will override the normal output and only display the output that flag specifies. 
+
+USAGE: inspec_tools summary [OPTIONS] -j <inspec-json> 
+
+```
 FLAGS:
-	-j --inspec-json <inspec-json>   : path to InSpec results JSON
-	-o --output <output-json> 		   : path to summary JSON
-  -c --cli, --no-cli               : print formatted summary to STDOUT
+  -j --inspec-json <inspec-json>   : path to InSpec results JSON
   -V --verbose, --no-verbose       : print verbose an debug output
   -f --json-full, --no-json-full   : print the summary STDOUT as JSON
   -k --json-counts, --no-json_cou  : print the reslut status to STDOUT as JSON
 
 Examples:
 
-  inspec_tools summary -j examples/sample_json/rhel-simp.json -f -o summary.json -c
+  inspec_tools summary -j examples/sample_json/rhel-simp.json -f
 ```
 
 ## xccdf2inspec
