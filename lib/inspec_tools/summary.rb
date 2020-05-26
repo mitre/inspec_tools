@@ -10,8 +10,8 @@ HIGH = 0.7
 MEDIUM = 0.5
 LOW = 0.3
 
-BUCKETS = %w{failed passed no_impact skipped error}.freeze
-TALLYS = %w{total critical high medium low}.freeze
+BUCKETS = %i{failed passed no_impact skipped error}.freeze
+TALLYS = %i{total critical high medium low}.freeze
 
 THRESHOLD_TEMPLATE = File.expand_path('../data/threshold.yaml', File.dirname(__FILE__))
 
@@ -104,13 +104,13 @@ module InspecTools
         TALLYS.each do |tally|
           max = @threshold["#{bucket}.#{tally}.max"]
           min = @threshold["#{bucket}.#{tally}.min"]
-          if max != -1 and status[bucket.to_sym][tally.to_sym] > max
+          if max != -1 and status[bucket][tally] > max
             compliance = false
-            failure << "Expected #{bucket}.#{tally}.max:#{max} got:#{status[bucket.to_sym][tally.to_sym]}"
+            failure << "Expected #{bucket}.#{tally}.max:#{max} got:#{status[bucket][tally]}"
           end
-          if min != -1 and status[bucket.to_sym][tally.to_sym] < min
+          if min != -1 and status[bucket][tally] < min
             compliance = false
-            failure << "Expected #{bucket}.#{tally}.min:#{min} got:#{status[bucket.to_sym][tally.to_sym]}"
+            failure << "Expected #{bucket}.#{tally}.min:#{min} got:#{status[bucket][tally]}"
           end
         end
       end
