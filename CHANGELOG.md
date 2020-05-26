@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre13...HEAD)
+
+**Closed issues:**
+
+- Add a Dockerfile so folks can eaily add this into their ci/cd container workflows [\#162](https://github.com/mitre/inspec_tools/issues/162)
+
+**Merged pull requests:**
+
+- Summary output [\#186](https://github.com/mitre/inspec_tools/pull/186) ([jsa5593](https://github.com/jsa5593))
+
 ## [v2.0.2.pre13](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre13) (2020-05-22)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre12...v2.0.2.pre13)
@@ -354,10 +366,6 @@
 
 - figure out rubygems.org [\#31](https://github.com/mitre/inspec_tools/issues/31)
 
-**Merged pull requests:**
-
-- Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
-
 ## [v1.6.20](https://github.com/mitre/inspec_tools/tree/v1.6.20) (2020-03-17)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.19...v1.6.20)
@@ -480,6 +488,10 @@
 
 - --help option is broken but inspec\_tools help \<command\> works [\#77](https://github.com/mitre/inspec_tools/issues/77)
 - Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
+
+**Merged pull requests:**
+
+- Apply fixes from CodeFactor [\#82](https://github.com/mitre/inspec_tools/pull/82) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [53bdcb3](https://github.com/mitre/inspec_tools/tree/53bdcb3) (2019-11-06)
 
