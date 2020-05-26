@@ -200,8 +200,6 @@ module InspecPlugins
       desc 'summary', 'summary parses an inspec results json to create a summary json'
       long_desc InspecTools::Help.text(:summary)
       option :inspec_json, required: true, aliases: '-j'
-      option :output, required: false, aliases: '-o'
-      option :cli, type: :boolean, required: false, aliases: '-c'
       option :verbose, type: :boolean, aliases: '-V'
       option :json_full, type: :boolean, required: false, aliases: '-f'
       option :json_counts, type: :boolean, required: false, aliases: '-k'
@@ -209,7 +207,7 @@ module InspecPlugins
       def summary
         summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
 
-        if options[:cli]
+        unless options.include?('json_full') || options.include?('json_counts')
           puts "\nOverall compliance: #{summary[:compliance]}%\n\n"
           summary[:status].keys.each do |category|
             puts category
@@ -220,7 +218,6 @@ module InspecPlugins
         end
 
         json_summary = summary.to_json
-        File.write(options[:output], json_summary) if options[:output]
         puts json_summary if options[:json_full]
         puts summary[:status].to_json if options[:json_counts]
       end
