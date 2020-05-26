@@ -10,8 +10,8 @@ HIGH = 0.7
 MEDIUM = 0.5
 LOW = 0.3
 
-BUCKETS = %i{failed passed no_impact skipped error}.freeze
-TALLYS = %i{total critical high medium low}.freeze
+BUCKETS = %i(failed passed no_impact skipped error).freeze
+TALLYS = %i(total critical high medium low).freeze
 
 THRESHOLD_TEMPLATE = File.expand_path('../data/threshold.yaml', File.dirname(__FILE__))
 
