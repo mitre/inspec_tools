@@ -22,7 +22,7 @@ class SummaryTest < Minitest::Test
     inspec_json = File.read('examples/sample_json/rhel-simp.json')
     inspec_tools = InspecTools::Summary.new(inspec_json)
     summary = inspec_tools.to_summary
-    assert_equal(77.3, summary[:compliance])
+    assert_equal(77, summary[:compliance])
     assert_equal(33, summary[:status][:failed][:medium])
   end
 
