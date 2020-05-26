@@ -1,12 +1,15 @@
 # Changelog
 
-## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+## [v2.0.3](https://github.com/mitre/inspec_tools/tree/v2.0.3) (2020-05-26)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre13...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre13...v2.0.3)
 
 **Implemented enhancements:**
 
 - Round compliance score down [\#146](https://github.com/mitre/inspec_tools/issues/146)
+- Every usage of Bucket and Tally uses it as a symbol, making it a symbol as part of its declaration [\#187](https://github.com/mitre/inspec_tools/pull/187) ([rbclark](https://github.com/rbclark))
+- Summary output [\#186](https://github.com/mitre/inspec_tools/pull/186) ([jsa5593](https://github.com/jsa5593))
+- Compliance score is rounded down and the README is updated [\#185](https://github.com/mitre/inspec_tools/pull/185) ([jsa5593](https://github.com/jsa5593))
 
 **Fixed bugs:**
 
@@ -16,12 +19,6 @@
 
 - inspec\_tools docker container doesn't let me go into a bash shell [\#184](https://github.com/mitre/inspec_tools/issues/184)
 - Add a Dockerfile so folks can eaily add this into their ci/cd container workflows [\#162](https://github.com/mitre/inspec_tools/issues/162)
-
-**Merged pull requests:**
-
-- Every usage of Bucket and Tally uses it as a symbol, making it a symbol as part of its declaration [\#187](https://github.com/mitre/inspec_tools/pull/187) ([rbclark](https://github.com/rbclark))
-- Summary output [\#186](https://github.com/mitre/inspec_tools/pull/186) ([jsa5593](https://github.com/jsa5593))
-- Compliance score is rounded down and the README is updated [\#185](https://github.com/mitre/inspec_tools/pull/185) ([jsa5593](https://github.com/jsa5593))
 
 ## [v2.0.2.pre13](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre13) (2020-05-22)
 
@@ -34,9 +31,6 @@
 **Fixed bugs:**
 
 - All Impacts Parsed from PDF are Medium [\#173](https://github.com/mitre/inspec_tools/issues/173)
-
-**Merged pull requests:**
-
 - Git version bump version 0.17.2 is broken due to a faulty regex. [\#182](https://github.com/mitre/inspec_tools/pull/182) ([rbclark](https://github.com/rbclark))
 
 ## [v2.0.2.pre12](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre12) (2020-05-07)
@@ -545,7 +539,6 @@
 
 - Update Profile logic include control exceptions [\#75](https://github.com/mitre/inspec_tools/pull/75) ([rx294](https://github.com/rx294))
 - Null Byte in json report causes inspec2ckl to bomb-out [\#73](https://github.com/mitre/inspec_tools/pull/73) ([kevin-j-smith](https://github.com/kevin-j-smith))
-- Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.6.0](https://github.com/mitre/inspec_tools/tree/v1.6.0) (2019-10-04)
 
@@ -580,6 +573,7 @@
 **Merged pull requests:**
 
 - Updated rake version [\#69](https://github.com/mitre/inspec_tools/pull/69) ([robthew](https://github.com/robthew))
+- Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.4.1](https://github.com/mitre/inspec_tools/tree/v1.4.1) (2019-06-20)
 
