@@ -19,6 +19,7 @@
 
 **Merged pull requests:**
 
+- Every usage of Bucket and Tally uses it as a symbol, making it a symbol as part of its declaration [\#187](https://github.com/mitre/inspec_tools/pull/187) ([rbclark](https://github.com/rbclark))
 - Summary output [\#186](https://github.com/mitre/inspec_tools/pull/186) ([jsa5593](https://github.com/jsa5593))
 - Compliance score is rounded down and the README is updated [\#185](https://github.com/mitre/inspec_tools/pull/185) ([jsa5593](https://github.com/jsa5593))
 
@@ -544,6 +545,7 @@
 
 - Update Profile logic include control exceptions [\#75](https://github.com/mitre/inspec_tools/pull/75) ([rx294](https://github.com/rx294))
 - Null Byte in json report causes inspec2ckl to bomb-out [\#73](https://github.com/mitre/inspec_tools/pull/73) ([kevin-j-smith](https://github.com/kevin-j-smith))
+- Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.6.0](https://github.com/mitre/inspec_tools/tree/v1.6.0) (2019-10-04)
 
@@ -578,7 +580,6 @@
 **Merged pull requests:**
 
 - Updated rake version [\#69](https://github.com/mitre/inspec_tools/pull/69) ([robthew](https://github.com/robthew))
-- Add in 'inspec' and 'fileutils' require statements [\#65](https://github.com/mitre/inspec_tools/pull/65) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.4.1](https://github.com/mitre/inspec_tools/tree/v1.4.1) (2019-06-20)
 
@@ -606,10 +607,6 @@
 - While working with STIGViewer there were some missing TAGs [\#50](https://github.com/mitre/inspec_tools/issues/50)
 - remove severity tag in xccdf to inspec converted [\#44](https://github.com/mitre/inspec_tools/issues/44)
 
-**Merged pull requests:**
-
-- Add modules summary, compliance [\#45](https://github.com/mitre/inspec_tools/pull/45) ([rx294](https://github.com/rx294))
-
 ## [v1.3.5](https://github.com/mitre/inspec_tools/tree/v1.3.5) (2019-05-01)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.3.4...v1.3.5)
@@ -628,6 +625,7 @@
 - Metadata docs and tools [\#55](https://github.com/mitre/inspec_tools/pull/55) ([samcornwell](https://github.com/samcornwell))
 - Fix bugs introduced by \#51 \(STIGViewer PR\) [\#52](https://github.com/mitre/inspec_tools/pull/52) ([samcornwell](https://github.com/samcornwell))
 - Enhancements to meet working with STIGViewer as well as tracking some custom metadata when converting from xccdf2inspec and inspec2ckl [\#51](https://github.com/mitre/inspec_tools/pull/51) ([kevin-j-smith](https://github.com/kevin-j-smith))
+- Add modules summary, compliance [\#45](https://github.com/mitre/inspec_tools/pull/45) ([rx294](https://github.com/rx294))
 
 ## [v1.1.6](https://github.com/mitre/inspec_tools/tree/v1.1.6) (2018-12-13)
 
