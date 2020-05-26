@@ -83,7 +83,7 @@ module InspecTools
         (@summary[:status][:passed][:total]+
          @summary[:status][:failed][:total]+
          @summary[:status][:skipped][:total]+
-         @summary[:status][:error][:total])).round(1)
+         @summary[:status][:error][:total])).floor
     end
 
     def threshold_compliance

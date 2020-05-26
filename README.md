@@ -98,6 +98,8 @@ USAGE: inspec_tools generate_inspec_metadata
 
 If the specified threshold is not met, an error code (1) is returned along with non-compliant elements.
 
+The compliance score are rounded down to the nearest whole number. For example a score of 77.3 would be displayed as 77.
+
 ```
 USAGE:  inspec_tools compliance [OPTIONS] -j <inspec-json> -i <threshold-inline>
 	inspec_tools compliance [OPTIONS] -j <inspec-json> -f <threshold-file>
