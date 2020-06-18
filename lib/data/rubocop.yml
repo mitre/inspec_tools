@@ -1,0 +1,4 @@
+AllCops:
+  DisabledByDefault: true
+Style/StringLiterals:
+  Enabled: true
