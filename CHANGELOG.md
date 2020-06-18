@@ -1,5 +1,18 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.3...HEAD)
+
+**Closed issues:**
+
+- xccdf2inspec string quotes bug [\#191](https://github.com/mitre/inspec_tools/issues/191)
+- xccdf2inspec fails on OpenSCAP xccdf results with undefined method [\#190](https://github.com/mitre/inspec_tools/issues/190)
+
+**Merged pull requests:**
+
+- 191 single quote replacement [\#192](https://github.com/mitre/inspec_tools/pull/192) ([Bialogs](https://github.com/Bialogs))
+
 ## [v2.0.3](https://github.com/mitre/inspec_tools/tree/v2.0.3) (2020-05-26)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.2.pre13...v2.0.3)
@@ -19,6 +32,10 @@
 
 - inspec\_tools docker container doesn't let me go into a bash shell [\#184](https://github.com/mitre/inspec_tools/issues/184)
 - Add a Dockerfile so folks can eaily add this into their ci/cd container workflows [\#162](https://github.com/mitre/inspec_tools/issues/162)
+
+**Merged pull requests:**
+
+- Add parameter to InspecUtils\#control\_status to specify when used for summary. [\#170](https://github.com/mitre/inspec_tools/pull/170) ([Bialogs](https://github.com/Bialogs))
 
 ## [v2.0.2.pre13](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre13) (2020-05-22)
 
@@ -79,7 +96,6 @@
 **Merged pull requests:**
 
 - Apply fixes from CodeFactor [\#172](https://github.com/mitre/inspec_tools/pull/172) ([aaronlippold](https://github.com/aaronlippold))
-- Add parameter to InspecUtils\#control\_status to specify when used for summary. [\#170](https://github.com/mitre/inspec_tools/pull/170) ([Bialogs](https://github.com/Bialogs))
 - Generate Ruby with Single Quoted Strings [\#169](https://github.com/mitre/inspec_tools/pull/169) ([Bialogs](https://github.com/Bialogs))
 - Update CKL parse method to dig into sub descriptions [\#168](https://github.com/mitre/inspec_tools/pull/168) ([Bialogs](https://github.com/Bialogs))
 
