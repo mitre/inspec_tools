@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.3...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.4...HEAD)
+
+**Closed issues:**
+
+- Remove Debug Files When Running Tests [\#175](https://github.com/mitre/inspec_tools/issues/175)
+
+## [v2.0.4](https://github.com/mitre/inspec_tools/tree/v2.0.4) (2020-06-18)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.3...v2.0.4)
 
 **Closed issues:**
 
@@ -11,6 +19,7 @@
 
 **Merged pull requests:**
 
+- Respect debug env variable when running tests [\#193](https://github.com/mitre/inspec_tools/pull/193) ([Bialogs](https://github.com/Bialogs))
 - 191 single quote replacement [\#192](https://github.com/mitre/inspec_tools/pull/192) ([Bialogs](https://github.com/Bialogs))
 
 ## [v2.0.3](https://github.com/mitre/inspec_tools/tree/v2.0.3) (2020-05-26)
@@ -32,10 +41,6 @@
 
 - inspec\_tools docker container doesn't let me go into a bash shell [\#184](https://github.com/mitre/inspec_tools/issues/184)
 - Add a Dockerfile so folks can eaily add this into their ci/cd container workflows [\#162](https://github.com/mitre/inspec_tools/issues/162)
-
-**Merged pull requests:**
-
-- Add parameter to InspecUtils\#control\_status to specify when used for summary. [\#170](https://github.com/mitre/inspec_tools/pull/170) ([Bialogs](https://github.com/Bialogs))
 
 ## [v2.0.2.pre13](https://github.com/mitre/inspec_tools/tree/v2.0.2.pre13) (2020-05-22)
 
@@ -96,6 +101,7 @@
 **Merged pull requests:**
 
 - Apply fixes from CodeFactor [\#172](https://github.com/mitre/inspec_tools/pull/172) ([aaronlippold](https://github.com/aaronlippold))
+- Add parameter to InspecUtils\#control\_status to specify when used for summary. [\#170](https://github.com/mitre/inspec_tools/pull/170) ([Bialogs](https://github.com/Bialogs))
 - Generate Ruby with Single Quoted Strings [\#169](https://github.com/mitre/inspec_tools/pull/169) ([Bialogs](https://github.com/Bialogs))
 - Update CKL parse method to dig into sub descriptions [\#168](https://github.com/mitre/inspec_tools/pull/168) ([Bialogs](https://github.com/Bialogs))
 
@@ -473,6 +479,10 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.10...v1.6.11)
 
+**Fixed bugs:**
+
+- Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
+
 **Closed issues:**
 
 - DISA STIG web address needs to be updated [\#66](https://github.com/mitre/inspec_tools/issues/66)
@@ -508,7 +518,6 @@
 **Fixed bugs:**
 
 - --help option is broken but inspec\_tools help \<command\> works [\#77](https://github.com/mitre/inspec_tools/issues/77)
-- Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
 
 **Merged pull requests:**
 
@@ -602,6 +611,7 @@
 **Merged pull requests:**
 
 - Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
+- Metadata docs and tools [\#55](https://github.com/mitre/inspec_tools/pull/55) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
 
@@ -632,7 +642,6 @@
 
 **Merged pull requests:**
 
-- Metadata docs and tools [\#55](https://github.com/mitre/inspec_tools/pull/55) ([samcornwell](https://github.com/samcornwell))
 - Fix bugs introduced by \#51 \(STIGViewer PR\) [\#52](https://github.com/mitre/inspec_tools/pull/52) ([samcornwell](https://github.com/samcornwell))
 - Enhancements to meet working with STIGViewer as well as tracking some custom metadata when converting from xccdf2inspec and inspec2ckl [\#51](https://github.com/mitre/inspec_tools/pull/51) ([kevin-j-smith](https://github.com/kevin-j-smith))
 - Add modules summary, compliance [\#45](https://github.com/mitre/inspec_tools/pull/45) ([rx294](https://github.com/rx294))
