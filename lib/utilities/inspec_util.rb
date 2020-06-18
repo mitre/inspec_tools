@@ -11,6 +11,7 @@ require 'overrides/true_class'
 require 'overrides/nil_class'
 require 'overrides/object'
 require 'overrides/string'
+require 'rubocop'
 
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
@@ -393,7 +394,7 @@ module Utils
             file_name = control.id.to_s
             myfile = File.new("#{directory}/controls/#{file_name}.rb", 'w')
             myfile.puts "# encoding: UTF-8\n\n"
-            myfile.puts wrap(control.to_ruby.gsub('"', "\'"), WIDTH) + "\n"
+            myfile.puts wrap(control.to_ruby, WIDTH) + "\n"
             myfile.close
           end
         else
@@ -424,6 +425,10 @@ module Utils
         end
         myfile.close
       end
+      config_store = ::RuboCop::ConfigStore.new
+      config_store.options_config = File.join(File.dirname(__FILE__), '../data/rubocop.yml')
+      rubocop = ::RuboCop::Runner.new({ auto_correct: true }, config_store)
+      rubocop.run([directory])
     end
   end
 end
