@@ -65,7 +65,7 @@ For Docker usage, replace the `inspec_tools` command with the correct Docker com
 
  - **On Linux and Mac**: `docker run -it -v$(pwd):/share mitre/inspec_tools`
  - **On Windows CMD**: `docker run -it -v%cd%:/share mitre/inspec_tools`
- 
+
 Note that all of the above Docker commands will mount your current directory on the Docker container. Ensure that you have navigated to the directory you intend to convert files in before executing the command.
 
 ### generate_map
@@ -181,9 +181,9 @@ error
 	low : 0
 ```
 
-Using additional flags will override the normal output and only display the output that flag specifies. 
+Using additional flags will override the normal output and only display the output that flag specifies.
 
-USAGE: inspec_tools summary [OPTIONS] -j <inspec-json> 
+USAGE: inspec_tools summary [OPTIONS] -j <inspec-json>
 
 ```
 FLAGS:
@@ -211,7 +211,7 @@ FLAGS:
 	-f --format [ruby | hash]          : the format you would like (default: ruby) [optional]
 	-s --separate-files [true | false] : output the resulting controls as one or mutiple files (default: true) [optional]
 	-m --metadata <metadata-json>      : path to json file with additional metadata for the inspec.yml file [optional]
-	-r --replace-tags <array>          : A case-sensitive, comma separated list to replace tags with a $ if found in a group rules description tag [optional]
+	-r --replace-tags <array>          : A case-sensitive, space separated list to replace tags with a $ if found in a group rules description tag [optional]
 
 example: inspec_tools xccdf2inspec -x xccdf_file.xml -a attributes.yml -o myprofile -f ruby -s false
 ```
