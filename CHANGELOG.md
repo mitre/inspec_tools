@@ -8,6 +8,10 @@
 
 - Remove Debug Files When Running Tests [\#175](https://github.com/mitre/inspec_tools/issues/175)
 
+**Merged pull requests:**
+
+- Add additional error checking and documentation surrounding the xccdf… [\#194](https://github.com/mitre/inspec_tools/pull/194) ([Bialogs](https://github.com/Bialogs))
+
 ## [v2.0.4](https://github.com/mitre/inspec_tools/tree/v2.0.4) (2020-06-18)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.3...v2.0.4)
@@ -479,10 +483,6 @@
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v1.6.10...v1.6.11)
 
-**Fixed bugs:**
-
-- Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
-
 **Closed issues:**
 
 - DISA STIG web address needs to be updated [\#66](https://github.com/mitre/inspec_tools/issues/66)
@@ -518,6 +518,7 @@
 **Fixed bugs:**
 
 - --help option is broken but inspec\_tools help \<command\> works [\#77](https://github.com/mitre/inspec_tools/issues/77)
+- Fixes \#77 by shifting help commands around [\#87](https://github.com/mitre/inspec_tools/pull/87) ([lukemalinowski](https://github.com/lukemalinowski))
 
 **Merged pull requests:**
 
@@ -562,7 +563,6 @@
 
 **Merged pull requests:**
 
-- Update Profile logic include control exceptions [\#75](https://github.com/mitre/inspec_tools/pull/75) ([rx294](https://github.com/rx294))
 - Null Byte in json report causes inspec2ckl to bomb-out [\#73](https://github.com/mitre/inspec_tools/pull/73) ([kevin-j-smith](https://github.com/kevin-j-smith))
 
 ## [v1.6.0](https://github.com/mitre/inspec_tools/tree/v1.6.0) (2019-10-04)
@@ -610,8 +610,8 @@
 
 **Merged pull requests:**
 
+- Update Profile logic include control exceptions [\#75](https://github.com/mitre/inspec_tools/pull/75) ([rx294](https://github.com/rx294))
 - Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
-- Metadata docs and tools [\#55](https://github.com/mitre/inspec_tools/pull/55) ([samcornwell](https://github.com/samcornwell))
 
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
 
@@ -642,6 +642,7 @@
 
 **Merged pull requests:**
 
+- Metadata docs and tools [\#55](https://github.com/mitre/inspec_tools/pull/55) ([samcornwell](https://github.com/samcornwell))
 - Fix bugs introduced by \#51 \(STIGViewer PR\) [\#52](https://github.com/mitre/inspec_tools/pull/52) ([samcornwell](https://github.com/samcornwell))
 - Enhancements to meet working with STIGViewer as well as tracking some custom metadata when converting from xccdf2inspec and inspec2ckl [\#51](https://github.com/mitre/inspec_tools/pull/51) ([kevin-j-smith](https://github.com/kevin-j-smith))
 - Add modules summary, compliance [\#45](https://github.com/mitre/inspec_tools/pull/45) ([rx294](https://github.com/rx294))
