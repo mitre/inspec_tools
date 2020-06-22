@@ -148,9 +148,9 @@ module HappyMapperTools
         def apply(value)
           value = value.gsub('&', 'and')
           DescriptionDetails.parse "<Details>#{value}</Details>"
-        rescue Nokogiri::XML::SyntaxError => error
-          if error.to_s.include?('StartTag')
-            report_invalid_start_tag(value, error)
+        rescue Nokogiri::XML::SyntaxError => e
+          if e.to_s.include?('StartTag')
+            report_invalid_start_tag(value, e)
           else
             report_disallowed_tags(value)
           end
