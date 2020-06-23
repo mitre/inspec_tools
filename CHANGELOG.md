@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+## [v2.0.5](https://github.com/mitre/inspec_tools/tree/v2.0.5) (2020-06-22)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.4...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.4...v2.0.5)
 
 **Closed issues:**
 
@@ -563,6 +563,7 @@
 
 **Merged pull requests:**
 
+- Update Profile logic include control exceptions [\#75](https://github.com/mitre/inspec_tools/pull/75) ([rx294](https://github.com/rx294))
 - Null Byte in json report causes inspec2ckl to bomb-out [\#73](https://github.com/mitre/inspec_tools/pull/73) ([kevin-j-smith](https://github.com/kevin-j-smith))
 
 ## [v1.6.0](https://github.com/mitre/inspec_tools/tree/v1.6.0) (2019-10-04)
@@ -610,7 +611,6 @@
 
 **Merged pull requests:**
 
-- Update Profile logic include control exceptions [\#75](https://github.com/mitre/inspec_tools/pull/75) ([rx294](https://github.com/rx294))
 - Apply fixes from CodeFactor [\#61](https://github.com/mitre/inspec_tools/pull/61) ([aaronlippold](https://github.com/aaronlippold))
 
 ## [v1.3.6](https://github.com/mitre/inspec_tools/tree/v1.3.6) (2019-05-02)
