@@ -38,6 +38,7 @@ module HappyMapperTools
       element :documentable, Boolean, tag: 'Documentable'
       element :mitigations, String, tag: 'Mitigations'
       element :severity_override_guidance, String, tag: 'SeverityOverrideGuidance'
+      element :security_override_guidance, String, tag: 'SecurityOverrideGuidance'
       element :potential_impacts, String, tag: 'PotentialImpacts'
       element :third_party_tools, String, tag: 'ThirdPartyTools'
       element :mitigation_controls, String, tag: 'MitigationControl'
@@ -53,7 +54,8 @@ module HappyMapperTools
 
       detail_tags = %i(vuln_discussion false_positives false_negatives documentable
                        mitigations severity_override_guidance potential_impacts
-                       third_party_tools mitigation_controls responsibility ia_controls)
+                       third_party_tools mitigation_controls responsibility ia_controls
+                       security_override_guidance)
 
       detail_tags.each do |name|
         define_method name do

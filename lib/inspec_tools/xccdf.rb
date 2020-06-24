@@ -140,6 +140,7 @@ module InspecTools
         control['tags']['documentable'] = group.rule.description.documentable if group.rule.description.documentable != ''
         control['tags']['mitigations'] = group.rule.description.false_negatives if group.rule.description.mitigations != ''
         control['tags']['severity_override_guidance'] = group.rule.description.severity_override_guidance if group.rule.description.severity_override_guidance != ''
+        control['tags']['security_override_guidance'] = group.rule.description.security_override_guidance if group.rule.description.security_override_guidance != ''
         control['tags']['potential_impacts'] = group.rule.description.potential_impacts if group.rule.description.potential_impacts != ''
         control['tags']['third_party_tools'] = group.rule.description.third_party_tools if group.rule.description.third_party_tools != ''
         control['tags']['mitigation_controls'] = group.rule.description.mitigation_controls if group.rule.description.mitigation_controls != ''

@@ -315,6 +315,7 @@ module Utils
         control.add_tag(::Inspec::Object::Tag.new('documentable', json_control['tags']['documentable'])) unless json_control['tags']['documentable'].blank?
         control.add_tag(::Inspec::Object::Tag.new('mitigations', json_control['tags']['mitigations'])) unless json_control['tags']['mitigations'].blank?
         control.add_tag(::Inspec::Object::Tag.new('severity_override_guidance', json_control['tags']['severity_override_guidance'])) unless json_control['tags']['severity_override_guidance'].blank?
+        control.add_tag(::Inspec::Object::Tag.new('security_override_guidance', json_control['tags']['security_override_guidance'])) unless json_control['tags']['security_override_guidance'].blank?
         control.add_tag(::Inspec::Object::Tag.new('potential_impacts', json_control['tags']['potential_impacts'])) unless json_control['tags']['potential_impacts'].blank?
         control.add_tag(::Inspec::Object::Tag.new('third_party_tools', json_control['tags']['third_party_tools'])) unless json_control['tags']['third_party_tools'].blank?
         control.add_tag(::Inspec::Object::Tag.new('mitigation_controls', json_control['tags']['mitigation_controls'])) unless json_control['tags']['mitigation_controls'].blank?
