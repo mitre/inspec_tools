@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.5...HEAD)
+
+**Closed issues:**
+
+- Run inspec check in CI [\#195](https://github.com/mitre/inspec_tools/issues/195)
+
+**Merged pull requests:**
+
+- Fixes SecurityOverrideGuidance not being output in a profile [\#196](https://github.com/mitre/inspec_tools/pull/196) ([Bialogs](https://github.com/Bialogs))
+
 ## [v2.0.5](https://github.com/mitre/inspec_tools/tree/v2.0.5) (2020-06-22)
 
 [Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.4...v2.0.5)
