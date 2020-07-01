@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/mitre/inspec_tools/tree/HEAD)
+## [v2.0.6](https://github.com/mitre/inspec_tools/tree/v2.0.6) (2020-06-24)
 
-[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.5...HEAD)
+[Full Changelog](https://github.com/mitre/inspec_tools/compare/v2.0.5...v2.0.6)
 
 **Closed issues:**
 
