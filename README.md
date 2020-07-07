@@ -226,10 +226,10 @@ USAGE: inspec_tools inspec2xccdf [OPTIONS] -j <inspec-json> -a <xccdf-attr-yml> 
 FLAGS:
 	-j --inspec-json <inspec-json>   : path to InSpec Json file created using command 'inspec json <profile> > example.json'
 	-a --attributes <xccdf-attr-yml> : path to yml file that provides the required attributes for the XCCDF Document. these attributes are parts of XCCDF document which do not fit into the InSpec schema
+       -m, [--metadata=one two three]   : path to json file with additional host metadata for the xccdf file [optional]
 	-o --output <xccdf-xml>          : name or path to create the xccdf and title to give the xccdf
-	-V --verbose                     : verbose run [optional]
 
-example: inspec_tools inspec2xccdf -j example.json -a attributes.yml -o xccdf.xml
+example: inspec_tools inspec2xccdf -j examples/sample_json/good_nginxresults.json -a lib/data/attributes.yml -o output.xccdf
 ```
 
 ## csv2inspec

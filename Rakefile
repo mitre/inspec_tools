@@ -20,7 +20,15 @@ namespace :test do
       'test/unit/inspec_tools_test.rb'
     ])
   end
-end
+
+  # Excluding all tests that take more than 3 seconds to complete
+  Rake::TestTask.new(:exclude_slow) do |t|
+    t.libs << 'test'
+    t.libs << "lib"
+    t.verbose = true
+    t.test_files = FileList['test/**/*_test.rb'].reject{|file| file.include? 'pdf_test.rb'}.reverse
+  end
+end 
 
 desc 'Build and publish the gem'
 task publish: :build do

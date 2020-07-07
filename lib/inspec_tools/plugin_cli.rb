@@ -23,7 +23,7 @@ module InspecPlugins
     class CliCommand < Inspec.plugin(2, :cli_command) # rubocop:disable Metrics/ClassLength
       POSSIBLE_LOG_LEVELS = %w{debug info warn error fatal}.freeze
 
-      class_option :log_directory, type: :string, aliases: :l, desc: 'Provie log location'
+      class_option :log_directory, type: :string, aliases: :l, desc: 'Provide log location'
       class_option :log_level, type: :string, desc: "Set the logging level: #{POSSIBLE_LOG_LEVELS}"
 
       subcommand_desc 'tools [COMMAND]', 'Runs inspec_tools commands through Inspec'
@@ -56,10 +56,16 @@ module InspecPlugins
       long_desc InspecTools::Help.text(:inspec2xccdf)
       option :inspec_json, required: true, aliases: '-j'
       option :attributes,  required: true, aliases: '-a'
+      option :metadata, required: false, type: :array, aliases: '-m', default: [],
+             desc: "path to json file with additional host metadata for the xccdf file [optional]"
       option :output, required: true, aliases: '-o'
       def inspec2xccdf
         json = File.read(options[:inspec_json])
-        inspec_tool = InspecTools::Inspec.new(json)
+        metadata = {}
+        options[:metadata].each do |m|
+          metadata = metadata.merge(JSON.parse(File.read(m)))
+        end
+        inspec_tool = InspecTools::Inspec.new(json, metadata)
         attr_hsh = YAML.load_file(options[:attributes])
         xccdf = inspec_tool.to_xccdf(attr_hsh)
         File.write(options[:output], xccdf)

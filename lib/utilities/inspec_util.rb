@@ -50,34 +50,65 @@ module Utils
         c_id = control['id'].to_sym
         c_data[c_id] = {}
         c_data[c_id]['id']             = control['id']    || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['title']          = control['title'] || DATA_NOT_FOUND_MESSAGE
+        c_data[c_id]['title']          = control['title'] if control['title'] # Optional attribute
         c_data[c_id]['desc']           = control['desc'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['severity']       = control['tags']['severity'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['gid']            = control['tags']['gid'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['gtitle']         = control['tags']['gtitle'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['gdescription']   = control['tags']['gdescription'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['rid']            = control['tags']['rid'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['rversion']       = control['tags']['rversion'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['rweight']        = control['tags']['rweight'] || DATA_NOT_FOUND_MESSAGE
+        c_data[c_id]['severity']       = control['tags']['severity'] || 'unknown'
+        c_data[c_id]['gid']            = control['tags']['gid'] || control['id']
+        c_data[c_id]['gtitle']         = control['tags']['gtitle'] if control['tags']['gtitle'] # Optional attribute
+        c_data[c_id]['gdescription']   = control['tags']['gdescription'] if control['tags']['gdescription'] # Optional attribute
+        c_data[c_id]['rid']            = control['tags']['rid'] || 'r_' + c_data[c_id]['gid']
+        c_data[c_id]['rversion']       = control['tags']['rversion'] if control['tags']['rversion'] # Optional attribute
+        c_data[c_id]['rweight']        = control['tags']['rweight'] if control['tags']['rweight'] # Optional attribute where N/A is not schema compliant
         c_data[c_id]['stig_id']        = control['tags']['stig_id'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['cci']            = control['tags']['cci'] || DATA_NOT_FOUND_MESSAGE
+        c_data[c_id]['cci']            = control['tags']['cci'] if control['tags']['cci'] # Optional attribute
         c_data[c_id]['nist']           = control['tags']['nist'] || ['unmapped']
         c_data[c_id]['check']          = control['tags']['check'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['checkref']       = control['tags']['checkref'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['fix']            = control['tags']['fix'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['fixref']         = control['tags']['fixref'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['fix_id']         = control['tags']['fix_id'] || DATA_NOT_FOUND_MESSAGE
+        c_data[c_id]['fix_id']         = control['tags']['fix_id'] if control['tags']['fix_id'] # Optional attribute where N/A is not schema compliant
         c_data[c_id]['rationale']      = control['tags']['rationale'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['cis_family']     = control['tags']['cis_family'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['cis_rid']        = control['tags']['cis_rid'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['cis_level']      = control['tags']['cis_level'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['impact']         = control['impact'].to_s || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['code']           = control['code'].to_s || DATA_NOT_FOUND_MESSAGE
+        c_data[c_id]['results']        = parse_results_for_xccdf(control['results']) if control['results']
       end
 
       data['controls'] = c_data.values
+      data['profiles'] = parse_profiles_for_xccdf(json['profiles'])
       data['status'] = 'success'
+      data['inspec_version'] = json['version']
       data
+    end
+
+    # Convert profile information for result processing
+    # @param profiles [Array[Hash]] - The profiles section of the JSON output
+    private_class_method def self.parse_profiles_for_xccdf(profiles)
+      return [] unless profiles
+
+      profiles.map do |profile|
+        data = {}
+        data['name'] = profile['name']
+        data['version'] = profile['version']
+        data
+      end
+    end
+
+    # Convert the test result data to a parseable Hash for downstream processing
+    # @param results [Array[Hash]] - The results section of the JSON output
+    private_class_method def self.parse_results_for_xccdf(results)
+      results.map do |result|
+        data = {}
+        data['status'] = result['status']
+        data['code_desc'] = result['code_desc']
+        data['run_time'] = result['run_time']
+        data['start_time'] = result['start_time']
+        data['resource'] = result['resource']
+        data['message'] = result['message']
+        data['skip_message'] = result['skip_message']
+        data
+      end
     end
 
     def self.parse_data_for_ckl(json)

@@ -1,0 +1,6 @@
+{
+  "benchmark.id": "example_id",
+  "benchmark.status": "accepted",
+  "benchmark.version": "0.1.0",
+  "test_result.target.target": "some.host"
+}

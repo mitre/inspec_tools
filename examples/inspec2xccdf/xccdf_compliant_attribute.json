@@ -1,0 +1,21 @@
+{
+  "benchmark.title": "example_title",
+  "benchmark.id": "example_id",
+  "benchmark.description": "some description",
+  "benchmark.version": "0.1.0",
+  "benchmark.status": "accepted",
+  "benchmark.status.date": "2003-04-05",
+  "benchmark.notice": "some notice",
+  "benchmark.notice.id": "terms-of-use",
+  "benchmark.plaintext": "plaintext",
+  "benchmark.plaintext.id": "plaintext_id",
+  "reference.href": "https://someurl.com",
+  "reference.dc.source": "some source",
+  "reference.dc.publisher": "some publisher",
+  "reference.dc.title": "some title",
+  "reference.dc.subject": "some subject",
+  "reference.dc.type": "some type",
+  "reference.dc.identifier": "some id",
+  "content_ref.name": "M",
+  "content_ref.href": "SOME_STIG.xml"
+}

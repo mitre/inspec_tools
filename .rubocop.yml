@@ -1,6 +1,6 @@
 ---
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
   Exclude:
   - Gemfile
   - Rakefile
@@ -30,6 +30,7 @@ Metrics/BlockLength:
   Max: 8192
 Metrics/MethodLength:
   Enabled: true
+  Max: 40
 Style/NumericLiterals:
   MinDigits: 10
 Metrics/CyclomaticComplexity:
