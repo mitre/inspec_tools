@@ -56,6 +56,7 @@ jobs:
           inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -o inspec2ckl_test_1.ckl
           inspec_tools inspec2ckl -j test/data/inspec_1.json -o test/data/inspec2ckl_test_2.ckl
           inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a lib/data/attributes.yml -o inspec2xccdf_test.xml
+          inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a examples/inspec2xccdf/xccdf_compliant_attribute.json -m examples/inspec2xccdf/metadata.json -o inspec2xccdf_11.xml
           inspec_tools compliance -j examples/sample_json/single_control_results.json -f examples/sample_yaml/threshold.yaml
         env:
           CHEF_LICENSE: "accept"
@@ -81,3 +82,8 @@ jobs:
         with:
           xml-file: inspec2ckl_test_2.ckl
           xml-schema-file: test/schemas/U_Checklist_Schema_V2-3.xsd
+      - name: Validate XCCDF 1.1 with xmllint
+        uses: ChristophWurst/xmllint-action@v1
+        with:
+          xml-file: inspec2xccdf_11.xml
+          xml-schema-file: test/schemas/xccdf_114/xccdf-1.1.4.xsd
