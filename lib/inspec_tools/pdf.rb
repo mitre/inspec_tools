@@ -2,7 +2,6 @@ require 'digest'
 
 require_relative '../utilities/inspec_util'
 require_relative '../utilities/extract_pdf_text'
-require_relative '../utilities/extract_nist_cis_mapping'
 require_relative '../utilities/parser'
 require_relative '../utilities/text_cleaner'
 
@@ -24,7 +23,7 @@ module InspecTools
       @controls = []
       @csv_handle = nil
       @cci_xml = nil
-      @nist_mapping = nil
+      @nist_mapping = get_cis_to_nist_critical_control_mapping
       @pdf_text = ''
       @clean_text = ''
       @transformed_data = ''
@@ -33,7 +32,6 @@ module InspecTools
       @title ||= extract_title
       clean_pdf_text
       transform_data
-      read_excl
       insert_json_metadata
       @profile['controls'] = parse_controls
       @profile['sha256'] = Digest::SHA256.hexdigest @profile.to_s
@@ -123,14 +121,10 @@ module InspecTools
       File.write('debug_text', @clean_text)
     end
 
-    def read_excl
-      nist_map_path = File.join(File.dirname(__FILE__), '../data/NIST_Map_09212017B_CSC-CIS_Critical_Security_Controls_VER_6.1_Excel_9.1.2016.xlsx')
-      excel = Util::ExtractNistMappings.new(nist_map_path)
-      @nist_mapping = excel.full_excl
-    rescue StandardError => e
-      puts "Exception: #{e.message}"
-      puts 'Existing...'
-      exit
+    def get_cis_to_nist_critical_control_mapping
+      path = File.expand_path(File.join(File.expand_path(__dir__), '..', 'data', 'cis_to_nist_critical_controls'))
+      mapping = File.open(path)
+      Marshal.load(mapping)
     end
   end
 end

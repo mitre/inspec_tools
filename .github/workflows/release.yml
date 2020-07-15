@@ -18,7 +18,7 @@ jobs:
       - run: git fetch origin +refs/tags/*:refs/tags/*
       - name: Setup credentials and versioning
         run: |
-          gem install git-lite-version-bump keycutter
+          gem install git-lite-version-bump keycutter roo
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
           chmod 0600 $HOME/.gem/credentials
@@ -28,7 +28,7 @@ jobs:
           RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_AUTH_TOKEN}}
           GPR_API_KEY: ${{secrets.GITHUB_TOKEN}}
       - name: Build gem
-        run: gem build *.gemspec
+        run: rake build_release
       - name: Publish to RubyGems
         run: |
           gem push --KEY rubygems --host https://rubygems.org *.gem

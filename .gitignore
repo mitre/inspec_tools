@@ -20,3 +20,5 @@ tmp
 # Ignore Mac DS_Store files
 **/.DS_Store
 profile/
+lib/data/cis_to_nist_mapping
+lib/data/cis_to_nist_critical_controls

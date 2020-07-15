@@ -18,8 +18,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.description   = 'Converter utils for Inspec that can be included as a gem or used from the command line'
   spec.homepage      = 'https://inspec-tools.mitre.org/'
   spec.license       = 'Apache-2.0'
-
-  spec.files         = Dir.glob('{lib,exe}/**/*') + %w{LICENSE.md Rakefile README.md}
+  spec.files         = Dir.glob('{lib,exe}/**/*').reject! { |file| file.end_with?('.xlsx') } + %w{LICENSE.md Rakefile README.md}
   spec.bindir        = 'exe'
   spec.executables   << 'inspec_tools'
   spec.require_paths = ['lib']
