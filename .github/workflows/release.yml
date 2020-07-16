@@ -5,8 +5,8 @@ on:
     types: [published]
 
 jobs:
-  release-gem-hosts:
-    name: Release to gem hosts
+  release:
+    name: Release to gem hosts and docker registry
     runs-on: ubuntu-latest
     steps:
       - name: Setup ruby
