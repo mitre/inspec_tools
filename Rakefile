@@ -27,7 +27,7 @@ task :build_release do
   Rake::Task["generate_mapping_objects"].reenable
   Rake::Task["generate_mapping_objects"].invoke
 
-  system('gem build *.gemspec')
+  system('gem build inspec_tools.gemspec -o inspec_tools.gem')
 end
 
 desc 'Generate mapping objects'
