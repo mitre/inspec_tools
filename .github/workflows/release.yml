@@ -29,6 +29,10 @@ jobs:
           GPR_API_KEY: ${{secrets.GITHUB_TOKEN}}
       - name: Build gem
         run: rake build_release
+        env:
+          NIST_MAPPING_CIS_CONTROLS: NIST_Map_02052020_CIS_Controls_Version_7.1_Implementation_Groups_1.2.xlsx
+          NIST_MAPPING_CIS_CRITICAL_CONTROLS: NIST_Map_09212017B_CSC-CIS_Critical_Security_Controls_VER_6.1_Excel_9.1.2016.xlsx
+
       - name: Get gem version
         run: |
           ::set-env name={VERSION}::{`ls *.gem | grep -Po '(\d+.)+\d+'`}
