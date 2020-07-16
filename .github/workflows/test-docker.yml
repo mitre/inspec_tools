@@ -1,8 +1,8 @@
-name: Release Management
+name: Test Docker
 
 on:
-  release:
-    types: [published]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   release-gem-hosts:
@@ -32,17 +32,7 @@ jobs:
       - name: Get gem version
         run: |
           ::set-env name={VERSION}::{`ls *.gem | grep -Po '(\d+.)+\d+'`}
-      - name: Publish to RubyGems
-        run: |
-          gem push --KEY rubygems --host https://rubygems.org *.gem
-      - name: Publish to GPR
-        run: |
-          gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} *.gem
-        env:
-          OWNER: mitre
       - name: Log in to docker
         run: echo ${{secrets.DOCKERHUB_PASSWORD}} | docker login --username ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
       - name: Build container
         run: docker build . --tag mitre/inspec_tools:$VERSION
-      - name: Publish container to docker registry
-        run: docker push mitre/inspec_tools
