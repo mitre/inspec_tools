@@ -36,6 +36,9 @@ jobs:
         run: bundle install
       - name: Generate mapping objects
         run: bundle exec rake generate_mapping_objects
+        env:
+          NIST_MAPPING_CIS_CONTROLS: NIST_Map_02052020_CIS_Controls_Version_7.1_Implementation_Groups_1.2.xlsx
+          NIST_MAPPING_CIS_CRITICAL_CONTROLS: NIST_Map_09212017B_CSC-CIS_Critical_Security_Controls_VER_6.1_Excel_9.1.2016.xlsx
       - name: Run rake test
         run: bundle exec rake test
       - name: Run bundle-audit
