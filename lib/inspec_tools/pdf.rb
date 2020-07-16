@@ -4,6 +4,7 @@ require_relative '../utilities/inspec_util'
 require_relative '../utilities/extract_pdf_text'
 require_relative '../utilities/parser'
 require_relative '../utilities/text_cleaner'
+require_relative '../utilities/cis_to_nist'
 
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/PerceivedComplexity
@@ -23,7 +24,7 @@ module InspecTools
       @controls = []
       @csv_handle = nil
       @cci_xml = nil
-      @nist_mapping = get_cis_to_nist_critical_control_mapping
+      @nist_mapping = Utils::CisToNist.get_mapping('cis_to_nist_critical_controls')
       @pdf_text = ''
       @clean_text = ''
       @transformed_data = ''
@@ -119,12 +120,6 @@ module InspecTools
 
     def write_clean_text
       File.write('debug_text', @clean_text)
-    end
-
-    def get_cis_to_nist_critical_control_mapping
-      path = File.expand_path(File.join(File.expand_path(__dir__), '..', 'data', 'cis_to_nist_critical_controls'))
-      mapping = File.open(path)
-      Marshal.load(mapping)
     end
   end
 end

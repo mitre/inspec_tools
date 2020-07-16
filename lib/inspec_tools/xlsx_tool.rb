@@ -5,6 +5,7 @@ require 'yaml'
 require 'digest'
 
 require_relative '../utilities/inspec_util'
+require_relative '../utilities/cis_to_nist'
 
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/PerceivedComplexity
@@ -20,7 +21,7 @@ module InspecTools
       @xlsx = xlsx
       @mapping = mapping
       @verbose = verbose
-      @cis_to_nist = get_cis_to_nist_control_mapping
+      @cis_to_nist = Utils::CisToNist.get_mapping('cis_to_nist_mapping')
     end
 
     def to_ckl
@@ -43,12 +44,6 @@ module InspecTools
     end
 
     private
-
-    def get_cis_to_nist_control_mapping
-      path = File.expand_path(File.join(File.expand_path(__dir__), '..', 'data', 'cis_to_nist_mapping'))
-      mapping = File.open(path)
-      Marshal.load(mapping)
-    end
 
     def insert_json_metadata
       @profile['name'] = @name
