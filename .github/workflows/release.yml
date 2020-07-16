@@ -32,7 +32,6 @@ jobs:
         env:
           NIST_MAPPING_CIS_CONTROLS: NIST_Map_02052020_CIS_Controls_Version_7.1_Implementation_Groups_1.2.xlsx
           NIST_MAPPING_CIS_CRITICAL_CONTROLS: NIST_Map_09212017B_CSC-CIS_Critical_Security_Controls_VER_6.1_Excel_9.1.2016.xlsx
-
       - name: Get gem version
         run: echo "::set-env name=VERSION::$(ls *.gem | grep -Po '(\d+.)+\d+')"
       - name: Publish to RubyGems
@@ -44,8 +43,8 @@ jobs:
         env:
           OWNER: mitre
       - name: Log in to docker
-        run: echo ${{secrets.DOCKERHUB_PASSWORD}} | docker login --username ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
+        run: echo "::set-env name=VERSION::$(ls *.gem | grep -Po '(\d+.)+\d+')"
       - name: Build container
         run: docker build . --tag mitre/inspec_tools:$VERSION
       - name: Publish container to docker registry
-        run: docker push mitre/inspec_tools
+        run: docker push mitre/inspec_tools:$VERSION
