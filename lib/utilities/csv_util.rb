@@ -1,7 +1,7 @@
 require 'csv'
 
 module Utils
-  class CisToNist
+  class CSVUtil
     def self.unpack_csv(csv_string, file)
       csv = CSV.parse(csv_string)
       CSV.open(file, 'wb') do |csv_file|
