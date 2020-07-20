@@ -34,13 +34,16 @@ desc 'Generate mapping objects'
 task :generate_mapping_objects do
   require 'roo'
 
-  raise 'NIST_MAPPING_CIS_CONTROLS must be provided to this task as an environment variable' unless ENV['NIST_MAPPING_CIS_CONTROLS']
-
-  raise 'NIST_MAPPING_CIS_CRITICAL_CONTROLS must be provided to this task as an environment variable' unless ENV['NIST_MAPPING_CIS_CRITICAL_CONTROLS']
+  nist_mapping_cis_controls = ENV['NIST_MAPPING_CIS_CONTROLS'] || 'NIST_Map_02052020_CIS_Controls_Version_7.1_Implementation_Groups_1.2.xlsx'.freeze
+  nist_mapping_cis_critical_controls = ENV['NIST_MAPPING_CIS_CRITICAL_CONTROLS'] || 'NIST_Map_09212017B_CSC-CIS_Critical_Security_Controls_VER_6.1_Excel_9.1.2016.xlsx'.freeze
 
   data_root_path = File.join(File.expand_path(__dir__), 'lib', 'data')
-  cis_controls_path = File.join(data_root_path, ENV['NIST_MAPPING_CIS_CONTROLS'])
-  cis_critical_controls_path = File.join(data_root_path, ENV['NIST_MAPPING_CIS_CRITICAL_CONTROLS'])
+  cis_controls_path = File.join(data_root_path, nist_mapping_cis_controls)
+  cis_critical_controls_path = File.join(data_root_path, nist_mapping_cis_critical_controls)
+
+  raise "#{cis_controls_path} does not exist" unless File.exist?(cis_controls_path)
+
+  raise "#{cis_critical_controls_path} does not exist" unless File.exist?(cis_critical_controls_path)
 
   marshal_cis_controls(cis_controls_path, data_root_path)
   marshal_cis_critical_controls(cis_critical_controls_path, data_root_path)
