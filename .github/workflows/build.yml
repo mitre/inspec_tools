@@ -1,3 +1,4 @@
+---
 name: Build and test inspec_tools
 
 on:
@@ -11,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ubuntu-16.04, ubuntu-latest, macos-latest, windows-latest]
+        platform: [ ubuntu-16.04, ubuntu-latest, macos-latest, windows-latest ]
         ruby: [ 2.5, 2.6, 2.7 ]
         # TODO: Remove this exclusion once Nokogiri is supported on ruby 2.7 for Windows
         exclude:
@@ -61,7 +62,7 @@ jobs:
         env:
           CHEF_LICENSE: "accept"
       - name: Validate Output Profiles with inspec check
-        run : |
+        run: |
           gem install inspec-bin
           inspec check xlsx2inspec_test
           inspec check csv2inspec_test
@@ -83,7 +84,7 @@ jobs:
           xml-file: test/data/inspec2ckl_test_2.ckl
           xml-schema-file: test/schemas/U_Checklist_Schema_V2-3.xsd
       - name: Validate XCCDF 1.1 with xmllint
-        if: matrix.platform == 'ubuntu-latest' || matrix.platform == 'ubuntu-16.04' 
+        if: matrix.platform == 'ubuntu-latest' || matrix.platform == 'ubuntu-16.04'
         uses: ChristophWurst/xmllint-action@v1
         with:
           xml-file: inspec2xccdf_11.xml

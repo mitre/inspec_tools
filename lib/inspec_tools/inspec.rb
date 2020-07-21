@@ -9,7 +9,8 @@ require_relative '../happy_mapper_tools/stig_checklist'
 require_relative '../happy_mapper_tools/benchmark'
 require_relative '../utilities/inspec_util'
 require_relative 'csv'
-require_relative 'to_xccdf'
+require_relative '../utilities/xccdf/from_inspec'
+require_relative '../utilities/xccdf/to_xccdf'
 
 module InspecTools
   class Inspec # rubocop:disable Metrics/ClassLength
@@ -37,18 +38,10 @@ module InspecTools
     # @param attributes [Hash] Optional input attributes
     # @return [String] XML formatted String
     def to_xccdf(attributes, verbose = false)
-      @data = Utils::InspecUtil.parse_data_for_xccdf(@json)
-      @attribute = attributes
-      @attribute = {} if @attribute.eql? false
+      data = Utils::FromInspec.new.parse_data_for_xccdf(@json)
       @verbose = verbose
-      @benchmark = HappyMapperTools::Benchmark::Benchmark.new
-      converter = ToXCCDF.new(@attribute, @data)
-      populate_header
-      # populate_profiles @todo populate profiles; not implemented now because its use is deprecated
-      populate_groups(converter)
-      # Only populate results if a target is defined so that conformant XML is produced.
-      @benchmark.testresult = converter.build_test_results(@benchmark, @metadata) if @metadata['fqdn']
-      @benchmark.to_xml
+
+      Utils::ToXCCDF.new(attributes || {}, data).to_xml(@metadata)
     end
 
     ####
@@ -225,81 +218,6 @@ module InspecTools
         ip = nics_ips.join(',')
       end
       ip
-    end
-
-    # Sets top level XCCDF Benchmark attributes
-    def populate_header
-      @benchmark.title = @attribute['benchmark.title']
-      @benchmark.id = @attribute['benchmark.id']
-      @benchmark.description = @attribute['benchmark.description']
-      @benchmark.version = @attribute['benchmark.version']
-      @benchmark.xmlns = 'http://checklists.nist.gov/xccdf/1.1'
-
-      @benchmark.status = HappyMapperTools::Benchmark::Status.new
-      @benchmark.status.status = @attribute['benchmark.status']
-      @benchmark.status.date = @attribute['benchmark.status.date']
-
-      if @attribute['benchmark.notice.id']
-        @benchmark.notice = HappyMapperTools::Benchmark::Notice.new
-        @benchmark.notice.id = @attribute['benchmark.notice.id']
-      end
-
-      if @attribute['benchmark.plaintext'] || @attribute['benchmark.plaintext.id']
-        @benchmark.plaintext = HappyMapperTools::Benchmark::Plaintext.new
-        @benchmark.plaintext.plaintext = @attribute['benchmark.plaintext']
-        @benchmark.plaintext.id = @attribute['benchmark.plaintext.id']
-      end
-
-      @benchmark.reference = HappyMapperTools::Benchmark::ReferenceBenchmark.new
-      @benchmark.reference.href = @attribute['reference.href']
-      @benchmark.reference.dc_publisher = @attribute['reference.dc.publisher']
-      @benchmark.reference.dc_source = @attribute['reference.dc.source']
-    end
-
-    # Translate join of Inspec results and input attributes to XCCDF Groups
-    def populate_groups(converter) # rubocop:disable Metrics/AbcSize
-      group_array = []
-      @data['controls'].each do |control|
-        group = HappyMapperTools::Benchmark::Group.new
-        group.id = control['id']
-        group.title = control['gtitle']
-        group.description = "<GroupDescription>#{control['gdescription']}</GroupDescription>" if control['gdescription']
-
-        group.rule = HappyMapperTools::Benchmark::Rule.new
-        group.rule.id = control['rid']
-        group.rule.severity = control['severity']
-        group.rule.weight = control['rweight']
-        group.rule.version = control['rversion']
-        group.rule.title = control['title'].tr("\n", ' ') if control['title']
-        group.rule.description = "<VulnDiscussion>#{control['desc'].tr("\n", ' ')}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations></Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
-
-        if ['reference.dc.publisher', 'reference.dc.title', 'reference.dc.subject', 'reference.dc.type', 'reference.dc.identifier'].any? { |a| @attribute.key?(a) }
-          group.rule.reference = converter.build_rule_reference
-        end
-
-        group.rule.ident = converter.build_rule_idents(control['cci']) if control['cci']
-
-        group.rule.fixtext = HappyMapperTools::Benchmark::Fixtext.new
-        group.rule.fixtext.fixref = control['fix_id']
-        group.rule.fixtext.fixtext = control['fix']
-
-        group.rule.fix = converter.build_rule_fix(control['fix_id']) if control['fix_id']
-
-        group.rule.check = HappyMapperTools::Benchmark::Check.new
-        group.rule.check.system = control['checkref']
-
-        # content_ref is optional for schema compliance
-        if @attribute['content_ref.name'] || @attribute['content_ref.href']
-          group.rule.check.content_ref = HappyMapperTools::Benchmark::ContentRef.new
-          group.rule.check.content_ref.name = @attribute['content_ref.name']
-          group.rule.check.content_ref.href = @attribute['content_ref.href']
-        end
-
-        group.rule.check.content = control['check']
-
-        group_array << group
-      end
-      @benchmark.group = group_array
     end
 
     def generate_title(title, json, date)

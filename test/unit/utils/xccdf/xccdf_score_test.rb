@@ -1,12 +1,12 @@
-require_relative '../test_helper'
-require_relative '../../../lib/inspec_tools/xccdf_score'
-require_relative '../../../lib/happy_mapper_tools/benchmark'
+require_relative '../../test_helper'
+require_relative '../../../../lib/utilities/xccdf/xccdf_score'
+require_relative '../../../../lib/happy_mapper_tools/benchmark'
 
 # rubocop:disable Metrics/BlockLength
 
-describe InspecTools::XCCDFScore do
+describe Utils::XCCDFScore do
   before do
-    @dci = InspecTools::XCCDFScore.new(groups, rule_results)
+    @dci = Utils::XCCDFScore.new(groups, rule_results)
   end
 
   let(:groups) { [] }

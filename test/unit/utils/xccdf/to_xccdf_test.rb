@@ -1,9 +1,9 @@
-require_relative '../test_helper'
-require_relative '../../../lib/inspec_tools/to_xccdf'
-require_relative '../../../lib/happy_mapper_tools/benchmark'
+require_relative '../../test_helper'
+require_relative '../../../../lib/utilities/xccdf/to_xccdf'
+require_relative '../../../../lib/happy_mapper_tools/benchmark'
 
-describe InspecTools::ToXCCDF do # rubocop:disable Metrics/BlockLength
-  let(:dci) { InspecTools::ToXCCDF.new(attributes, inspec_data) }
+describe Utils::ToXCCDF do # rubocop:disable Metrics/BlockLength
+  let(:dci) { Utils::ToXCCDF.new(attributes, inspec_data) }
   let(:attributes) { {} }
   let(:inspec_data) do
     { 'controls' => controls }
@@ -44,6 +44,98 @@ describe InspecTools::ToXCCDF do # rubocop:disable Metrics/BlockLength
   describe '#run_start_time' do
     it 'returns the earliest start time of all results' do
       assert_equal '2019-10-17T08:00:02-04:00', dci.send(:run_start_time).to_s
+    end
+  end
+
+  describe '#build_benchmark_header' do
+    let(:subject) { dci.send(:build_benchmark_header) }
+    let(:attributes) { {} }
+
+    describe 'when attribute benchmark.notice.id is not provided' do
+      it 'does not include notice on the benchmark' do
+        subject
+        benchmark = dci.instance_variable_get(:@benchmark)
+        assert_nil benchmark.notice
+      end
+    end
+
+    describe 'when attribute benchmark.plaintext and benchmark.plaintext.id are not provided' do
+      it 'does not include notice on the benchmark' do
+        subject
+        benchmark = dci.instance_variable_get(:@benchmark)
+        assert_nil benchmark.plaintext
+      end
+    end
+  end
+
+  describe '#build_groups' do # rubocop:disable Metrics/BlockLength
+    let(:subject) { dci.send(:build_groups) }
+    let(:attributes) { {} }
+    let(:controls) do
+      [
+          {
+              'id' => '1',
+              'desc' => 'A description'
+          },
+      ]
+    end
+
+    describe 'when attribute content_ref.name and content_ref.href are not provided' do
+      it 'does not include Group::Rule::check::check-content-ref on the benchmark' do
+        subject
+        benchmark = dci.instance_variable_get(:@benchmark)
+        assert_nil benchmark.group.first.rule.check.content_ref
+      end
+    end
+
+    describe 'when tag cci is not provided' do
+      it 'does not include Group::Rule::ident on the benchmark' do
+        subject
+        benchmark = dci.instance_variable_get(:@benchmark)
+        assert_nil benchmark.group.first.rule.ident
+      end
+    end
+
+    describe 'when tag fixref is not provided' do
+      it 'does not include Group::Rule::fix on the benchmark' do
+        subject
+        benchmark = dci.instance_variable_get(:@benchmark)
+        assert_nil benchmark.group.first.rule.fix
+      end
+    end
+
+    describe 'when tag gdescription is not provided' do
+      it 'does not include Group::description on the benchmark' do
+        subject
+        benchmark = dci.instance_variable_get(:@benchmark)
+        assert_nil benchmark.group.first.description
+      end
+    end
+
+    describe 'when tag gdescription is provided' do
+      let(:controls) do
+        [
+            {
+                'id' => '1',
+                'gdescription' => 'A test description',
+                'desc' => 'A description'
+            }
+        ]
+      end
+
+      it 'wraps the data in <GroupDescription> XML tags' do
+        subject
+        benchmark = dci.instance_variable_get(:@benchmark)
+        assert_equal "<GroupDescription>#{controls.first['gdescription']}</GroupDescription>", benchmark.group.first.description
+      end
+    end
+
+    describe 'when no reference attributes are provided' do
+      it 'does not include Group::Rule::fix on the benchmark' do
+        subject
+        benchmark = dci.instance_variable_get(:@benchmark)
+        assert_nil benchmark.group.first.rule.reference
+      end
     end
   end
 

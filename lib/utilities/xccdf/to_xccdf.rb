@@ -1,6 +1,6 @@
 require_relative 'xccdf_score'
 
-module InspecTools
+module Utils
   # Data conversions for Inspec output into XCCDF format.
   class ToXCCDF # rubocop:disable Metrics/ClassLength
     # @param attribute [Hash] XCCDF supplemental attributes
@@ -8,23 +8,115 @@ module InspecTools
     def initialize(attribute, data)
       @attribute = attribute
       @data = data
+      @benchmark = HappyMapperTools::Benchmark::Benchmark.new
+    end
+
+    # Build entire XML document and produce final output
+    # @param metadata [Hash] Data representing a system under scan
+    def to_xml(metadata)
+      build_benchmark_header
+      build_groups
+      # Only populate results if a target is defined so that conformant XML is produced.
+      @benchmark.testresult = build_test_results(metadata) if metadata['fqdn']
+      @benchmark.to_xml
+    end
+
+    private
+
+    # Sets top level XCCDF Benchmark attributes
+    def build_benchmark_header
+      @benchmark.title = @attribute['benchmark.title']
+      @benchmark.id = @attribute['benchmark.id']
+      @benchmark.description = @attribute['benchmark.description']
+      @benchmark.version = @attribute['benchmark.version']
+      @benchmark.xmlns = 'http://checklists.nist.gov/xccdf/1.1'
+
+      @benchmark.status = HappyMapperTools::Benchmark::Status.new
+      @benchmark.status.status = @attribute['benchmark.status']
+      @benchmark.status.date = @attribute['benchmark.status.date']
+
+      if @attribute['benchmark.notice.id']
+        @benchmark.notice = HappyMapperTools::Benchmark::Notice.new
+        @benchmark.notice.id = @attribute['benchmark.notice.id']
+      end
+
+      if @attribute['benchmark.plaintext'] || @attribute['benchmark.plaintext.id']
+        @benchmark.plaintext = HappyMapperTools::Benchmark::Plaintext.new
+        @benchmark.plaintext.plaintext = @attribute['benchmark.plaintext']
+        @benchmark.plaintext.id = @attribute['benchmark.plaintext.id']
+      end
+
+      @benchmark.reference = HappyMapperTools::Benchmark::ReferenceBenchmark.new
+      @benchmark.reference.href = @attribute['reference.href']
+      @benchmark.reference.dc_publisher = @attribute['reference.dc.publisher']
+      @benchmark.reference.dc_source = @attribute['reference.dc.source']
+    end
+
+    # Translate join of Inspec results and input attributes to XCCDF Groups
+    def build_groups # rubocop:disable Metrics/AbcSize
+      group_array = []
+      @data['controls'].each do |control|
+        group = HappyMapperTools::Benchmark::Group.new
+        group.id = control['id']
+        group.title = control['gtitle']
+        group.description = "<GroupDescription>#{control['gdescription']}</GroupDescription>" if control['gdescription']
+
+        group.rule = HappyMapperTools::Benchmark::Rule.new
+        group.rule.id = control['rid']
+        group.rule.severity = control['severity']
+        group.rule.weight = control['rweight']
+        group.rule.version = control['rversion']
+        group.rule.title = control['title'].tr("\n", ' ') if control['title']
+        group.rule.description = "<VulnDiscussion>#{control['desc'].tr("\n", ' ')}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations></Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
+
+        if ['reference.dc.publisher', 'reference.dc.title', 'reference.dc.subject', 'reference.dc.type', 'reference.dc.identifier'].any? { |a| @attribute.key?(a) }
+          group.rule.reference = build_rule_reference
+        end
+
+        group.rule.ident = build_rule_idents(control['cci']) if control['cci']
+
+        group.rule.fixtext = HappyMapperTools::Benchmark::Fixtext.new
+        group.rule.fixtext.fixref = control['fix_id']
+        group.rule.fixtext.fixtext = control['fix']
+
+        group.rule.fix = build_rule_fix(control['fix_id']) if control['fix_id']
+
+        group.rule.check = HappyMapperTools::Benchmark::Check.new
+        group.rule.check.system = control['checkref']
+
+        # content_ref is optional for schema compliance
+        if @attribute['content_ref.name'] || @attribute['content_ref.href']
+          group.rule.check.content_ref = HappyMapperTools::Benchmark::ContentRef.new
+          group.rule.check.content_ref.name = @attribute['content_ref.name']
+          group.rule.check.content_ref.href = @attribute['content_ref.href']
+        end
+
+        group.rule.check.content = control['check']
+
+        group_array << group
+      end
+      @benchmark.group = group_array
     end
 
     # Construct a Benchmark Testresult from Inspec data. This must be called after all XML processing has occurred for profiles
     # and groups.
-    # @param benchmark [Hash]
     # @param metadata [Hash]
     # @return [TestResult]
-    def build_test_results(benchmark, metadata)
+    def build_test_results(metadata)
       test_result = HappyMapperTools::Benchmark::TestResult.new
-      test_result.version = benchmark.version
+      test_result.version = @benchmark.version
       populate_remark(test_result)
       populate_target_facts(test_result, metadata)
       populate_identity(test_result, metadata)
       populate_results(test_result)
-      populate_score(test_result, benchmark.group)
+      populate_score(test_result, @benchmark.group)
 
       test_result
+    end
+
+    # Contruct a Rule / RuleResult fix element with the provided id.
+    def build_rule_fix(fix_id)
+      HappyMapperTools::Benchmark::Fix.new.tap { |f| f.id = fix_id }
     end
 
     # Construct rule identifiers for rule
@@ -41,11 +133,6 @@ module InspecTools
       end
     end
 
-    # Contruct a Rule / RuleResult fix element with the provided id.
-    def build_rule_fix(fix_id)
-      HappyMapperTools::Benchmark::Fix.new.tap { |f| f.id = fix_id }
-    end
-
     # Contruct a Rule reference element
     def build_rule_reference
       reference = HappyMapperTools::Benchmark::ReferenceGroup.new
@@ -56,8 +143,6 @@ module InspecTools
       reference.dc_identifier = @attribute['reference.dc.identifier']
       reference
     end
-
-    private
 
     # Create a remark with contextual information about the Inspec version and profiles used
     # @param result [HappyMapperTools::Benchmark::TestResult]
@@ -117,7 +202,7 @@ module InspecTools
 
         # Consolidate results into single rule result do to lack of multiple=true attribute on Rule.
         # 1. Select the unified result status
-        selected_status = control_results.reduce(control_results.first.result) { |f_status, rule_result| xccdf_and_result(f_status, rule_result) }
+        selected_status = control_results.reduce(control_results.first.result) { |f_status, rule_result| xccdf_and_result(f_status, rule_result.result) }
 
         # 2. Only choose results with that status
         # 3. Combine those results
@@ -296,7 +381,7 @@ module InspecTools
 
     # Set scores for all 4 required/recommended scoring systems.
     def populate_score(test_result, groups)
-      score = InspecTools::XCCDFScore.new(groups, test_result.rule_result)
+      score = Utils::XCCDFScore.new(groups, test_result.rule_result)
       test_result.score = [score.default_score, score.flat_score, score.flat_unweighted_score, score.absolute_score]
     end
   end

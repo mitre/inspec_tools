@@ -21,8 +21,8 @@ namespace :test do
     ])
   end
 
-  # Excluding all tests that take more than 3 seconds to complete
   Rake::TestTask.new(:exclude_slow) do |t|
+    t.description = 'Excluding all tests that take more than 3 seconds to complete'
     t.libs << 'test'
     t.libs << "lib"
     t.verbose = true

@@ -1,6 +1,6 @@
-module InspecTools
+module Utils
   # Perform scoring calculations for the different types that is used in a TestResult score.
-  class XCCDFScore # rubocop:disable Metrics/ClassLength
+  class XCCDFScore
     # @param groups [Array[HappyMapperTools::Benchmark::Group]]
     # @param rule_results [Array[RuleResultType]]
     def initialize(groups, rule_results)
@@ -11,50 +11,39 @@ module InspecTools
     # Calculate and return the urn:xccdf:scoring:default score for the entire benchmark.
     # @return ScoreType
     def default_score
-      score = HappyMapperTools::Benchmark::ScoreType.new
-      score.system = 'urn:xccdf:scoring:default'
-      score.maximum = 100
-      score.score = score_benchmark_default
-      score
+      build_score_type('urn:xccdf:scoring:default', 100, score_benchmark_default)
     end
 
     # urn:xccdf:scoring:flat
     # @return ScoreType
     def flat_score
-      results = score_benchmark_flat
-
-      score = HappyMapperTools::Benchmark::ScoreType.new
-      score.system = 'urn:xccdf:scoring:flat'
-      score.maximum = results[:max]
-      score.score = results[:score]
-      score
+      results = score_benchmark_with_weights(true)
+      build_score_type('urn:xccdf:scoring:flat', results[:max], results[:score])
     end
 
     # urn:xccdf:scoring:flat-unweighted
     # @return ScoreType
     def flat_unweighted_score
-      results = score_benchmark_flat_unweighted
-
-      score = HappyMapperTools::Benchmark::ScoreType.new
-      score.system = 'urn:xccdf:scoring:flat-unweighted'
-      score.maximum = results[:max]
-      score.score = results[:score]
-      score
+      results = score_benchmark_with_weights(false)
+      build_score_type('urn:xccdf:scoring:flat-unweighted', results[:max], results[:score])
     end
 
     # urn:xccdf:scoring:absolute
     # @return ScoreType
     def absolute_score
-      results = score_benchmark_flat
-
-      score = HappyMapperTools::Benchmark::ScoreType.new
-      score.system = 'urn:xccdf:scoring:absolute'
-      score.maximum = 1
-      score.score = (results[:max] == results[:score] && results[:max].positive? ? 1 : 0)
-      score
+      results = score_benchmark_with_weights(true)
+      build_score_type('urn:xccdf:scoring:absolute', 1, (results[:max] == results[:score] && results[:max].positive? ? 1 : 0))
     end
 
     private
+
+    def build_score_type(system, maximum, score)
+      score_type = HappyMapperTools::Benchmark::ScoreType.new
+      score_type.system = system
+      score_type.maximum = maximum
+      score_type.score = score
+      score_type
+    end
 
     # Return the overall score for the default model
     def score_benchmark_default
@@ -76,15 +65,7 @@ module InspecTools
 
       return 0.0 unless count.positive?
 
-      round_number(cumulative_score / count)
-    end
-
-    def score_benchmark_flat
-      score_benchmark_with_weights(true)
-    end
-
-    def score_benchmark_flat_unweighted
-      score_benchmark_with_weights(false)
+      (cumulative_score / count).round(2)
     end
 
     # @param weighted [Boolean] Indicate to apply with weights.
@@ -97,7 +78,7 @@ module InspecTools
       @groups.each do |group|
         # Default weighted scoring only provides value when more than one rule exists per group. This implementation
         # is not currently supporting more than one rule per group so weight need not apply.
-        rule_score = score_flat_rule(test_results(group.rule.id))
+        rule_score = rule_counts_and_score(test_results(group.rule.id))
 
         next unless rule_score[:rule_count].positive?
 
@@ -112,24 +93,18 @@ module InspecTools
         score += (weight * rule_score[:rule_score]) / rule_score[:rule_count]
       end
 
-      { score: round_number(score), max: max_score }
+      { score: score.round(2), max: max_score }
     end
 
     def score_default_rule(results)
       sum = rule_counts_and_score(results)
       return empty_score if sum[:rule_count].zero?
 
-      score = {}
-      score[:rule_count] = sum[:rule_count]
-      score[:rule_score] = (100 * sum[:rule_score]) / sum[:rule_count]
-      score
+      sum[:rule_score] = (100 * sum[:rule_score]) / sum[:rule_count]
+      sum
     end
 
-    def score_flat_rule(results)
-      rule_counts_and_score(results)
-    end
-
-    # Perform basic summation of or rule results and passing tests
+    # Perform basic summation of rule results and passing tests
     def rule_counts_and_score(results)
       rule_count = 0
       rule_score = 0
@@ -161,11 +136,6 @@ module InspecTools
       return [] unless @rule_results
 
       @rule_results.select { |r| r.idref == id }
-    end
-
-    # Round to 2 digits, removing if there are none.
-    def round_number(value)
-      format('%<number>g', number: format('%<number>.2f', number: value)).to_f
     end
   end
 end

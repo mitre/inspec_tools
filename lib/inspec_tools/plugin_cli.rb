@@ -54,17 +54,17 @@ module InspecPlugins
 
       desc 'inspec2xccdf', 'inspec2xccdf translates an inspec profile and attributes files to an xccdf file'
       long_desc InspecTools::Help.text(:inspec2xccdf)
-      option :inspec_json, required: true, aliases: '-j'
-      option :attributes,  required: true, aliases: '-a'
-      option :metadata, required: false, type: :array, aliases: '-m', default: [],
-             desc: "path to json file with additional host metadata for the xccdf file [optional]"
-      option :output, required: true, aliases: '-o'
+      option :inspec_json, required: true, aliases: '-j',
+                           desc: 'path to InSpec JSON file created'
+      option :attributes,  required: true, aliases: '-a',
+                           desc: 'path to yml file that provides the required attributes for the XCCDF document. These attributes are parts of XCCDF document which do not fit into the InSpec schema.'
+      option :output, required: true, aliases: '-o',
+                      desc: 'name or path to create the XCCDF and title to give the XCCDF'
+      option :metadata, required: false, type: :string, aliases: '-m',
+                        desc: 'path to JSON file with additional host metadata for the XCCDF file'
       def inspec2xccdf
         json = File.read(options[:inspec_json])
-        metadata = {}
-        options[:metadata].each do |m|
-          metadata = metadata.merge(JSON.parse(File.read(m)))
-        end
+        metadata = options[:metadata] ? JSON.parse(File.read(options[:metadata])) : {}
         inspec_tool = InspecTools::Inspec.new(json, metadata)
         attr_hsh = YAML.load_file(options[:attributes])
         xccdf = inspec_tool.to_xccdf(attr_hsh)
