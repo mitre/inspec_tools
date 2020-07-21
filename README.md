@@ -70,7 +70,7 @@ Note that all of the above Docker commands will mount your current directory on 
 
 ### generate_map
 
-This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
+This command will generate a `mapping.yml` file that can be passed in to the `csv2inspec` command with the `--m` option.
 
 ```
 USAGE: inspec_tools generate_map
