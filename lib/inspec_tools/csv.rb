@@ -1,10 +1,9 @@
 require 'csv'
-require 'nokogiri'
-require 'word_wrap'
 require 'yaml'
 require 'digest'
 
 require_relative '../utilities/inspec_util'
+require_relative '../utilities/cci_xml'
 
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/PerceivedComplexity
@@ -21,29 +20,20 @@ module InspecTools
       @csv.shift if @mapping['skip_csv_header']
     end
 
-    def to_ckl
-      # TODO
-    end
-
-    def to_xccdf
-      # TODO
-    end
-
     def to_inspec
       @controls = []
-      @cci_xml = nil
       @profile = {}
-      read_cci_xml
-      insert_json_metadata
+      @cci_xml = Utils::CciXml.get_cci_list('U_CCI_List.xml')
+      insert_metadata
       parse_controls
       @profile['controls'] = @controls
-      @profile['sha256'] = Digest::SHA256.hexdigest @profile.to_s
+      @profile['sha256'] = Digest::SHA256.hexdigest(@profile.to_s)
       @profile
     end
 
     private
 
-    def insert_json_metadata
+    def insert_metadata
       @profile['name'] = @name
       @profile['title'] = 'InSpec Profile'
       @profile['maintainer'] = 'The Authors'
@@ -60,35 +50,37 @@ module InspecTools
       }
     end
 
-    def read_cci_xml
-      cci_list_path = File.join(File.dirname(__FILE__), '../data/U_CCI_List.xml')
-      @cci_xml = Nokogiri::XML(File.open(cci_list_path))
-      @cci_xml.remove_namespaces!
-    rescue StandardError => e
-      puts "Exception: #{e.message}"
-    end
-
     def get_nist_reference(cci_number)
       item_node = @cci_xml.xpath("//cci_list/cci_items/cci_item[@id='#{cci_number}']")[0] unless @cci_xml.nil?
-      unless item_node.nil?
-        nist_ref = item_node.xpath('./references/reference[not(@version <= preceding-sibling::reference/@version) and not(@version <=following-sibling::reference/@version)]/@index').text
-        nist_ver = item_node.xpath('./references/reference[not(@version <= preceding-sibling::reference/@version) and not(@version <=following-sibling::reference/@version)]/@version').text
-      end
-      [nist_ref, nist_ver]
+      return nil if item_node.nil?
+
+      [] << item_node.xpath('./references/reference[not(@version <= preceding-sibling::reference/@version) and not(@version <=following-sibling::reference/@version)]/@index').text
+    end
+
+    def get_cci_number(cell)
+      # Return nil if a mapping to the CCI was not provided or if there is not content in the CSV cell.
+      return nil if cell.nil? || @mapping['control.tags']['cci'].nil?
+
+      # If the content has been exported from STIG Viewer, the cell will have extra information
+      cell.split("\n").first
     end
 
     def parse_controls
       @csv.each do |row|
-        print '.'
         control = {}
         control['id']     = row[@mapping['control.id']]     unless @mapping['control.id'].nil? || row[@mapping['control.id']].nil?
         control['title']  = row[@mapping['control.title']]  unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
         control['desc']   = row[@mapping['control.desc']]   unless @mapping['control.desc'].nil? || row[@mapping['control.desc']].nil?
         control['tags'] = {}
-        nist, nist_rev = get_nist_reference(row[@mapping['control.tags']['cci']]) unless @mapping['control.tags']['cci'].nil? || row[@mapping['control.tags']['cci']].nil?
-        control['tags']['nist'] = [nist, 'Rev_' + nist_rev] unless nist.nil? || nist_rev.nil?
+        cci_number = get_cci_number(row[@mapping['control.tags']['cci']])
+        nist = get_nist_reference(cci_number) unless cci_number.nil?
+        control['tags']['nist'] = nist unless nist.nil? || nist.include?(nil)
         @mapping['control.tags'].each do |tag|
-          control['tags'][tag.first.to_s] = row[tag.last] unless row[tag.last].nil?
+          if tag.first == 'cci'
+            control['tags'][tag.first] = cci_number
+            next
+          end
+          control['tags'][tag.first] = row[tag.last] unless row[tag.last].nil?
         end
         unless @mapping['control.tags']['severity'].nil? || row[@mapping['control.tags']['severity']].nil?
           control['impact'] = Utils::InspecUtil.get_impact(row[@mapping['control.tags']['severity']])
