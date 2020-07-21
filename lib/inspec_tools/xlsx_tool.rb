@@ -3,9 +3,9 @@ require 'inspec-objects'
 require 'word_wrap'
 require 'yaml'
 require 'digest'
-require 'roo'
 
 require_relative '../utilities/inspec_util'
+require_relative '../utilities/cis_to_nist'
 
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/PerceivedComplexity
@@ -14,7 +14,6 @@ require_relative '../utilities/inspec_util'
 module InspecTools
   # Methods for converting from XLS to various formats
   class XLSXTool
-    CIS_2_NIST_XLSX = Roo::Spreadsheet.open(File.join(File.dirname(__FILE__), '../data/NIST_Map_02052020_CIS_Controls_Version_7.1_Implementation_Groups_1.2.xlsx'))
     LATEST_NIST_REV = 'Rev_4'.freeze
 
     def initialize(xlsx, mapping, name, verbose = false)
@@ -22,7 +21,7 @@ module InspecTools
       @xlsx = xlsx
       @mapping = mapping
       @verbose = verbose
-      @cis_to_nist = get_cis_to_nist_control_mapping(CIS_2_NIST_XLSX)
+      @cis_to_nist = Utils::CisToNist.get_mapping('cis_to_nist_mapping')
     end
 
     def to_ckl
@@ -45,18 +44,6 @@ module InspecTools
     end
 
     private
-
-    def get_cis_to_nist_control_mapping(spreadsheet)
-      cis_to_nist = {}
-      spreadsheet.sheet(3).each do |row|
-        if row[3].is_a? Numeric
-          cis_to_nist[row[3].to_s] = row[0]
-        else
-          cis_to_nist[row[2].to_s] = row[0] unless (row[2] == '') || row[2].to_i.nil?
-        end
-      end
-      cis_to_nist
-    end
 
     def insert_json_metadata
       @profile['name'] = @name
