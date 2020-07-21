@@ -40,7 +40,7 @@ jobs:
         env:
           OWNER: mitre
       - name: Log in to docker
-        run: echo "::set-env name=VERSION::$(ls *.gem | grep -Po '(\d+.)+\d+')"
+        run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
       - name: Build container
         run: docker build . --tag mitre/inspec_tools:$VERSION
       - name: Publish container to docker registry
