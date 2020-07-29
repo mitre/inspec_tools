@@ -6,6 +6,7 @@ require 'digest'
 
 require_relative '../utilities/inspec_util'
 require_relative '../utilities/cis_to_nist'
+require_relative '../utilities/mapping_validator'
 
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/PerceivedComplexity
@@ -19,7 +20,7 @@ module InspecTools
     def initialize(xlsx, mapping, name, verbose = false)
       @name = name
       @xlsx = xlsx
-      @mapping = mapping
+      @mapping = Utils::MappingValidator.validate(mapping)
       @verbose = verbose
       @cis_to_nist = Utils::CisToNist.get_mapping('cis_to_nist_mapping')
     end

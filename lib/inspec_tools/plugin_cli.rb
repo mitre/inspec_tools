@@ -15,6 +15,7 @@ module InspecTools
   autoload :Summary, 'inspec_tools/summary'
   autoload :Threshold, 'inspec_tools/threshold'
   autoload :XLSXTool, 'inspec_tools/xlsx_tool'
+  autoload :GenerateMap, 'inspec_tools/generate_map'
 end
 
 # rubocop:disable Style/GuardClause
@@ -136,26 +137,8 @@ module InspecPlugins
 
       desc 'generate_map', 'Generates mapping template from CSV to Inspec Controls'
       def generate_map
-        template = '
-        # Setting csv_header to true will skip the csv file header
-        skip_csv_header: true
-        width   : 80
-
-
-        control.id: 0
-        control.title: 15
-        control.desc: 16
-        control.tags:
-                severity: 1
-                rid: 8
-                stig_id: 3
-                cci: 2
-                check: 12
-                fix: 10
-        '
-        myfile = File.new('mapping.yml', 'w')
-        myfile.puts template
-        myfile.close
+        generator = InspecTools::GenerateMap.new
+        generator.generate_example('mapping.yml')
       end
 
       desc 'generate_ckl_metadata', 'Generate metadata file that can be passed to inspec2ckl'
