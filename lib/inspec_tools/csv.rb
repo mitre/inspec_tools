@@ -4,6 +4,7 @@ require 'digest'
 
 require_relative '../utilities/inspec_util'
 require_relative '../utilities/cci_xml'
+require_relative '../utilities/mapping_validator'
 
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/PerceivedComplexity
@@ -15,7 +16,7 @@ module InspecTools
     def initialize(csv, mapping, name, verbose = false)
       @name = name
       @csv = csv
-      @mapping = mapping
+      @mapping = Utils::MappingValidator.validate(mapping)
       @verbose = verbose
       @csv.shift if @mapping['skip_csv_header']
     end
