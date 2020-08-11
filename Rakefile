@@ -19,7 +19,15 @@ namespace :test do
       'test/unit/inspec_tools_test.rb'
     ])
   end
-end
+
+  Rake::TestTask.new(:exclude_slow) do |t|
+    t.description = 'Excluding all tests that take more than 3 seconds to complete'
+    t.libs << 'test'
+    t.libs << "lib"
+    t.verbose = true
+    t.test_files = FileList['test/**/*_test.rb'].reject{|file| file.include? 'pdf_test.rb'}.reverse
+  end
+end 
 
 desc 'Build for release'
 task :build_release do

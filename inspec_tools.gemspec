@@ -9,9 +9,14 @@ rescue LoadError
   nil
 end
 
-Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
+Gem::Specification.new do |spec|
   spec.name          = 'inspec_tools'
-  spec.version       = InspecTools::VERSION rescue "0.0.0.1.ENOGVB"
+  spec.version       =
+    begin
+      InspecTools::VERSION
+    rescue StandardError
+      '0.0.0.1.ENOGVB'
+    end
   spec.authors       = ['Robert Thew', 'Matthew Dromazos', 'Rony Xavier', 'Aaron Lippold']
   spec.email         = ['rthew@mitre.org']
   spec.summary       = 'Converter utils for Inspec'
@@ -26,21 +31,22 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.required_ruby_version = '~> 2.5'
 
   spec.add_runtime_dependency 'colorize', '~> 0'
-  spec.add_runtime_dependency 'inspec', ">= 4.18.100", "< 5.0"
+  spec.add_runtime_dependency 'git-lite-version-bump', '>= 0.17.3'
+  spec.add_runtime_dependency 'inspec', '>= 4.18.100', '< 5.0'
   spec.add_runtime_dependency 'inspec_objects', '~> 0.1'
   spec.add_runtime_dependency 'nokogiri', '~> 1.8'
   spec.add_runtime_dependency 'nokogiri-happymapper', '~> 0'
   spec.add_runtime_dependency 'OptionParser', '~> 0'
   spec.add_runtime_dependency 'pdf-reader', '~> 2.1'
   spec.add_runtime_dependency 'roo', '~> 2.8'
-  spec.add_runtime_dependency 'word_wrap', '~> 1.0'
-  spec.add_runtime_dependency 'git-lite-version-bump', '>= 0.17.3'
   spec.add_runtime_dependency 'rubocop'
+  spec.add_runtime_dependency 'word_wrap', '~> 1.0'
   spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'bundler-audit'
+  spec.add_development_dependency 'codeclimate-test-reporter'
   spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'minitest-reporters', '~> 1.4'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'codeclimate-test-reporter'
   spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'bundler-audit'
 end

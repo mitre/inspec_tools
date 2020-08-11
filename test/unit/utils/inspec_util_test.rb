@@ -3,7 +3,7 @@ require 'fileutils'
 require_relative '../test_helper'
 require_relative '../../../lib/utilities/inspec_util'
 
-class InspecUtilTest < Minitest::Test
+class InspecUtilTest < Minitest::Test # rubocop:disable Metrics/ClassLength
   def test_inspec_util_exists
     refute_nil Utils::InspecUtil
   end
@@ -151,17 +151,10 @@ class InspecUtilTest < Minitest::Test
     end
   end
 
-  def test_parse_data_for_xccdf
-    json = JSON.parse(File.read('./examples/sample_json/single_control_profile.json'))
-    xccdf_json = Utils::InspecUtil.parse_data_for_xccdf(json)
-    assert_equal("Users must re-authenticate for privilege escalation.", xccdf_json['controls'][0]['title'])
-    assert_equal("F-78301r2_fix", xccdf_json['controls'][0]['fix_id'])
-  end
-
   def test_parse_data_for_ckl
     json = JSON.parse(File.read('./examples/sample_json/single_control_results.json'))
     ckl_json = Utils::InspecUtil.parse_data_for_ckl(json)
-    assert_equal("Use human readable security markings", ckl_json[:"V-26680"][:rule_title])
-    assert_equal("AC-16 (5) Rev_4", ckl_json[:"V-26680"][:nist])
+    assert_equal('Use human readable security markings', ckl_json[:"V-26680"][:rule_title])
+    assert_equal('AC-16 (5) Rev_4', ckl_json[:"V-26680"][:nist])
   end
 end

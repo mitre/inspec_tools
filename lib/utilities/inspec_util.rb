@@ -13,15 +13,8 @@ require 'overrides/object'
 require 'overrides/string'
 require 'rubocop'
 
-# rubocop:disable Metrics/ClassLength
-# rubocop:disable Metrics/AbcSize
-# rubocop:disable Metrics/PerceivedComplexity
-# rubocop:disable Metrics/CyclomaticComplexity
-# rubocop:disable Metrics/MethodLength
-
 module Utils
-  class InspecUtil
-    DATA_NOT_FOUND_MESSAGE = 'N/A'.freeze
+  class InspecUtil # rubocop:disable Metrics/ClassLength
     WIDTH = 80
     IMPACT_SCORES = {
       'none' => 0.0,
@@ -31,56 +24,7 @@ module Utils
       'critical' => 0.9
     }.freeze
 
-    def self.parse_data_for_xccdf(json)
-      data = {}
-
-      controls = []
-      if json['profiles'].nil?
-        controls = json['controls']
-      elsif json['profiles'].length == 1
-        controls = json['profiles'].last['controls']
-      else
-        json['profiles'].each do |profile|
-          controls.concat(profile['controls'])
-        end
-      end
-      c_data = {}
-
-      controls.each do |control|
-        c_id = control['id'].to_sym
-        c_data[c_id] = {}
-        c_data[c_id]['id']             = control['id']    || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['title']          = control['title'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['desc']           = control['desc'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['severity']       = control['tags']['severity'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['gid']            = control['tags']['gid'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['gtitle']         = control['tags']['gtitle'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['gdescription']   = control['tags']['gdescription'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['rid']            = control['tags']['rid'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['rversion']       = control['tags']['rversion'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['rweight']        = control['tags']['rweight'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['stig_id']        = control['tags']['stig_id'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['cci']            = control['tags']['cci'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['nist']           = control['tags']['nist'] || ['unmapped']
-        c_data[c_id]['check']          = control['tags']['check'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['checkref']       = control['tags']['checkref'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['fix']            = control['tags']['fix'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['fixref']         = control['tags']['fixref'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['fix_id']         = control['tags']['fix_id'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['rationale']      = control['tags']['rationale'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['cis_family']     = control['tags']['cis_family'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['cis_rid']        = control['tags']['cis_rid'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['cis_level']      = control['tags']['cis_level'] || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['impact']         = control['impact'].to_s || DATA_NOT_FOUND_MESSAGE
-        c_data[c_id]['code']           = control['code'].to_s || DATA_NOT_FOUND_MESSAGE
-      end
-
-      data['controls'] = c_data.values
-      data['status'] = 'success'
-      data
-    end
-
-    def self.parse_data_for_ckl(json)
+    def self.parse_data_for_ckl(json) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       data = {}
 
       # Parse for inspec profile results json
@@ -221,7 +165,7 @@ module Utils
     end
 
     private_class_method def self.string_to_impact(severity, use_cvss_terms)
-      if /none|na|n\/a|not[_|(\s*)]?applicable/i.match?(severity)
+      if %r{none|na|n/a|not[_|(\s*)]?applicable}i.match?(severity)
         impact = 0.0 # Informative
       elsif /low|cat(egory)?\s*(iii|3)/i.match?(severity)
         impact = 0.3 # Low Impact
@@ -248,13 +192,10 @@ module Utils
       end
 
       IMPACT_SCORES.reverse_each do |name, impact_score|
-        if name == 'critical' && value >= impact_score && use_cvss_terms
-          return 'high'
-        elsif value >= impact_score
-          return name
-        else
-          next
-        end
+        return 'high' if name == 'critical' && value >= impact_score && use_cvss_terms
+        return name if value >= impact_score
+
+        next
       end
     end
 
@@ -277,7 +218,7 @@ module Utils
       WordWrap.ww(str.to_s, width)
     end
 
-    private_class_method def self.generate_controls(inspec_json)
+    private_class_method def self.generate_controls(inspec_json) # rubocop:disable Metrics/AbcSize,  Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       controls = []
       inspec_json['controls'].each do |json_control|
         control = ::Inspec::Object::Control.new
@@ -384,7 +325,7 @@ module Utils
       myfile.puts readme_contents
     end
 
-    private_class_method def self.unpack_profile(directory, controls, separated, output_format)
+    private_class_method def self.unpack_profile(directory, controls, separated, output_format) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       FileUtils.rm_rf(directory) if Dir.exist?(directory)
       Dir.mkdir directory unless Dir.exist?(directory)
       Dir.mkdir "#{directory}/controls" unless Dir.exist?("#{directory}/controls")
@@ -433,9 +374,3 @@ module Utils
     end
   end
 end
-
-# rubocop:enable Metrics/ClassLength
-# rubocop:enable Metrics/AbcSize
-# rubocop:enable Metrics/PerceivedComplexity
-# rubocop:enable Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/MethodLength

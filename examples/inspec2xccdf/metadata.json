@@ -1,0 +1,11 @@
+{
+	"hostname" : "myawesome",
+	"ip" : "10.10.10.10",
+	"fqdn" : "myawesome.host.com",
+	"mac" : "aa:aa:99:99:99:99",
+	"identity" : {
+		"identity" : "userabc",
+		"privileged" : true
+	},
+	"organization" : "MITRE Corporation"
+}

@@ -99,6 +99,88 @@ module HappyMapperTools
       element :content, String, tag: 'check-content'
     end
 
+    class MessageType
+      include HappyMapper
+      attribute :severity, String, tag: 'severity'
+      content :message, String
+    end
+
+    class RuleResultType
+      include HappyMapper
+      attribute :idref, String, tag: 'idref'
+      attribute :severity, String, tag: 'severity'
+      attribute :time, String, tag: 'time'
+      attribute :weight, String, tag: 'weight'
+      element :result, String, tag: 'result'
+      # element override - Not implemented. Does not apply to Inspec execution
+      has_many :ident, Ident, tag: 'ident'
+      # Note: element metadata not implemented at this time
+      has_many :message, MessageType, tag: 'message'
+      has_many :instance, String, tag: 'instance'
+      element :fix, Fix, tag: 'fix'
+      element :check, Check, tag: 'check'
+    end
+
+    class ScoreType
+      include HappyMapper
+
+      def initialize(system, maximum, score)
+        @system = system
+        @maximum = maximum
+        @score = score
+      end
+
+      attribute :system, String, tag: 'system'
+      attribute :maximum, String, tag: 'maximum' # optional attribute
+      content :score, String
+    end
+
+    class CPE2idrefType
+      include HappyMapper
+      attribute :idref, String, tag: 'idref'
+    end
+
+    class IdentityType
+      include HappyMapper
+      attribute :authenticated, Boolean, tag: 'authenticated'
+      attribute :privileged, Boolean, tag: 'privileged'
+      content :identity, String
+    end
+
+    class Fact
+      include HappyMapper
+      attribute :name, String, tag: 'name'
+      attribute :type, String, tag: 'type'
+      content :fact, String
+    end
+
+    class TargetFact
+      include HappyMapper
+      has_many :fact, Fact, tag: 'fact'
+    end
+
+    class TestResult
+      include HappyMapper
+      # Note: element benchmark not implemented at this time since this is same file
+      # Note: element title not implemented due to no mapping from Chef Inspec
+      element :remark, String, tag: 'remark'
+      has_many :organization, String, tag: 'organization'
+      element :identity, IdentityType, tag: 'identity'
+      element :target, String, tag: 'target'
+      has_many :target_address, String, tag: 'target-address'
+      element :target_facts, TargetFact, tag: 'target-facts'
+      element :platform, CPE2idrefType, tag: 'platform'
+      # Note: element profile not implemented since Benchmark profile is also not implemented
+      has_many :rule_result, RuleResultType, tag: 'rule-result'
+      has_many :score, ScoreType, tag: 'score' # One minimum
+      # Note: element signature not implemented due to no mapping from Chef Inspec
+      attribute :id, String, tag: 'id'
+      attribute :starttime, String, tag: 'start-time'
+      attribute :endtime, String, tag: 'end-time'
+      # Note: attribute test-system not implemented at this time due to unknown CPE value for Chef Inspec
+      attribute :version, String, tag: 'version'
+    end
+
     # Class Profile maps from the 'Profile' from Benchmark XML file using HappyMapper
     class Profile
       include HappyMapper
@@ -156,6 +238,7 @@ module HappyMapperTools
       element :version, String, tag: 'version'
       has_many :profile, Profile, tag: 'Profile'
       has_many :group, Group, tag: 'Group'
+      element :testresult, TestResult, tag: 'TestResult'
     end
   end
 end

@@ -24,7 +24,7 @@ class InspecTest < Minitest::Test
 
   def test_inspec_to_xccdf_results_json
     inspec_json = File.read('examples/sample_json/single_control_results.json')
-    attributes = 'examples/attribute.json'
+    attributes = JSON.parse(File.read('examples/attribute.json'))
     inspec_tools = InspecTools::Inspec.new(inspec_json)
     xccdf = inspec_tools.to_xccdf(attributes)
     assert(xccdf)
@@ -32,7 +32,7 @@ class InspecTest < Minitest::Test
 
   def test_inspec_to_xccdf_profile_json
     inspec_json = File.read('examples/sample_json/single_control_profile.json')
-    attributes = 'examples/attribute.json'
+    attributes = JSON.parse(File.read('examples/attribute.json'))
     inspec_tools = InspecTools::Inspec.new(inspec_json)
     xccdf = inspec_tools.to_xccdf(attributes)
     assert(xccdf)

@@ -220,16 +220,18 @@ example: inspec_tools xccdf2inspec -x xccdf_file.xml -a attributes.yml -o myprof
 
 `inspec2xccdf` converts an InSpec profile in json format to a STIG XCCDF Document
 
+See [examples documentation](./examples/inspec2xccdf/README.md) for additional guidance on usage including attribute details.
+
 ```
 USAGE: inspec_tools inspec2xccdf [OPTIONS] -j <inspec-json> -a <xccdf-attr-yml> -o <xccdf-xml>
 
 FLAGS:
 	-j --inspec-json <inspec-json>   : path to InSpec Json file created using command 'inspec json <profile> > example.json'
-	-a --attributes <xccdf-attr-yml> : path to yml file that provides the required attributes for the XCCDF Document. these attributes are parts of XCCDF document which do not fit into the InSpec schema
-	-o --output <xccdf-xml>          : name or path to create the xccdf and title to give the xccdf
-	-V --verbose                     : verbose run [optional]
+	-a --attributes <xccdf-attr-yml> : path to yml file that provides the required attributes for the XCCDF document. These attributes are parts of XCCDF document which do not fit into the InSpec schema.
+	-o --output <xccdf-xml>          : name or path to create the XCCDF and title to give the XCCDF
+        -m, [--metadata=METADATA]        : path to json file with additional host metadata for the XCCDF file
 
-example: inspec_tools inspec2xccdf -j example.json -a attributes.yml -o xccdf.xml
+example: inspec_tools inspec2xccdf -j examples/sample_json/good_nginxresults.json -a lib/data/attributes.yml -o output.xccdf
 ```
 
 ## csv2inspec

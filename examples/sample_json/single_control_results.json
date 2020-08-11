@@ -27,7 +27,7 @@
                 "severity": "medium",
                 "rid": "SV-33879r1_rule",
                 "stig_id": "SRG-APP-000013",
-                "cci": "CCI-001428",
+                "cci": ["CCI-001428"],
                 "check": "Elasticsearch meets this requirement through design and\nimplementation.\n\nElasticsearch supports this requirement and cannot be configured to be out of\ncompliance. This is a permanent not a finding. ",
                 "fix": "This requirement is a permanent not a finding. No fix is\nrequired."
             },
