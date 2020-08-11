@@ -11,39 +11,31 @@ module Utils
     # Calculate and return the urn:xccdf:scoring:default score for the entire benchmark.
     # @return ScoreType
     def default_score
-      build_score_type('urn:xccdf:scoring:default', 100, score_benchmark_default)
+      HappyMapperTools::Benchmark::ScoreType.new('urn:xccdf:scoring:default', 100, score_benchmark_default)
     end
 
     # urn:xccdf:scoring:flat
     # @return ScoreType
     def flat_score
       results = score_benchmark_with_weights(true)
-      build_score_type('urn:xccdf:scoring:flat', results[:max], results[:score])
+      HappyMapperTools::Benchmark::ScoreType.new('urn:xccdf:scoring:flat', results[:max], results[:score])
     end
 
     # urn:xccdf:scoring:flat-unweighted
     # @return ScoreType
     def flat_unweighted_score
       results = score_benchmark_with_weights(false)
-      build_score_type('urn:xccdf:scoring:flat-unweighted', results[:max], results[:score])
+      HappyMapperTools::Benchmark::ScoreType.new('urn:xccdf:scoring:flat-unweighted', results[:max], results[:score])
     end
 
     # urn:xccdf:scoring:absolute
     # @return ScoreType
     def absolute_score
       results = score_benchmark_with_weights(true)
-      build_score_type('urn:xccdf:scoring:absolute', 1, (results[:max] == results[:score] && results[:max].positive? ? 1 : 0))
+      HappyMapperTools::Benchmark::ScoreType.new('urn:xccdf:scoring:absolute', 1, (results[:max] == results[:score] && results[:max].positive? ? 1 : 0))
     end
 
     private
-
-    def build_score_type(system, maximum, score)
-      score_type = HappyMapperTools::Benchmark::ScoreType.new
-      score_type.system = system
-      score_type.maximum = maximum
-      score_type.score = score
-      score_type
-    end
 
     # Return the overall score for the default model
     def score_benchmark_default
@@ -98,7 +90,7 @@ module Utils
 
     def score_default_rule(results)
       sum = rule_counts_and_score(results)
-      return empty_score if sum[:rule_count].zero?
+      return sum if sum[:rule_count].zero?
 
       sum[:rule_score] = (100 * sum[:rule_score]) / sum[:rule_count]
       sum
@@ -106,28 +98,11 @@ module Utils
 
     # Perform basic summation of rule results and passing tests
     def rule_counts_and_score(results)
-      rule_count = 0
-      rule_score = 0
       excluded_results = %w{notapplicable notchecked informational notselected}
-
-      results.each do |result|
-        unless excluded_results.include? result.result
-          rule_count += 1
-          rule_score += 1 if result.result == 'pass'
-        end
-      end
-
-      return empty_score if rule_count.zero?
+      rule_count = results.count { |r| !excluded_results.include?(r.result) }
+      rule_score = results.count { |r| r.result == 'pass' }
 
       { rule_count: rule_count, rule_score: rule_score }
-    end
-
-    # Used as a score when a rule is not included in scoring
-    def empty_score
-      {
-        rule_count: 0,
-        rule_score: 0
-      }
     end
 
     # Get all test results with the matching rule id

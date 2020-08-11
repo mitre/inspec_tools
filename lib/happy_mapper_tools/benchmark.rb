@@ -123,6 +123,13 @@ module HappyMapperTools
 
     class ScoreType
       include HappyMapper
+
+      def initialize(system, maximum, score)
+        @system = system
+        @maximum = maximum
+        @score = score
+      end
+
       attribute :system, String, tag: 'system'
       attribute :maximum, String, tag: 'maximum' # optional attribute
       content :score, String
