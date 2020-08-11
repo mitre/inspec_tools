@@ -35,6 +35,8 @@ jobs:
         run: gem install bundler git-lite-version-bump
       - name: Run bundle install
         run: bundle install
+      - name: Generate mapping objects
+        run: bundle exec rake generate_mapping_objects
       - name: Run rake test
         run: bundle exec rake test
       - name: Run bundle-audit

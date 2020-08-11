@@ -6,7 +6,7 @@ on:
 
 jobs:
   release:
-    name: Release to gem hosts
+    name: Release to gem hosts and docker registry
     runs-on: ubuntu-latest
     steps:
       - name: Setup ruby
@@ -18,7 +18,7 @@ jobs:
       - run: git fetch origin +refs/tags/*:refs/tags/*
       - name: Setup credentials and versioning
         run: |
-          gem install git-lite-version-bump keycutter
+          gem install git-lite-version-bump keycutter roo
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
           chmod 0600 $HOME/.gem/credentials
@@ -28,7 +28,9 @@ jobs:
           RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_AUTH_TOKEN}}
           GPR_API_KEY: ${{secrets.GITHUB_TOKEN}}
       - name: Build gem
-        run: gem build *.gemspec
+        run: rake build_release
+      - name: Get gem version
+        run: echo "::set-env name=VERSION::$(ls *.gem | grep -Po '(\d+.)+\d+')"
       - name: Publish to RubyGems
         run: |
           gem push --KEY rubygems --host https://rubygems.org *.gem
@@ -37,3 +39,9 @@ jobs:
           gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} *.gem
         env:
           OWNER: mitre
+      - name: Log in to docker
+        run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
+      - name: Build container
+        run: docker build . --tag mitre/inspec_tools:$VERSION
+      - name: Publish container to docker registry
+        run: docker push mitre/inspec_tools:$VERSION

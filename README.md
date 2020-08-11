@@ -70,7 +70,7 @@ Note that all of the above Docker commands will mount your current directory on 
 
 ### generate_map
 
-This command will generate a `mapping.xml` file that can be passed in to the `csv2inspec` command with the `--m` option.
+This command will generate a `mapping.yml` file that can be passed in to the `csv2inspec` command with the `--m` option.
 
 ```
 USAGE: inspec_tools generate_map
@@ -297,7 +297,7 @@ FLAGS:
 	-s --separate-files [true | false] : output the resulting controls as multiple files (default: true) [optional]
 	-d --debug                         : debug run [optional]
 
-example: inspec_tools pdf2inspec -p benchmark.pdf -o /path/to/myprofile -f ruby -s true
+example: inspec_tools pdf2inspec -p examples/CIS_Ubuntu_Linux_16.04_LTS_Benchmark_v1.0.0.pdf -o /path/to/myprofile -f ruby -s true
 ```
 
 ## xlsx2inspec
