@@ -29,8 +29,8 @@ module InspecTools
       @json = JSON.parse(File.read(options[:inspec_json]))
       @json_full = false || options[:json_counts]
       @json_counts = false || options[:json_counts]
-      @threshold_file = options[:threshold_file].nil? ? nil : YAML.load_file(options[:threshold_file])
-      @threshold_inline = options[:threshold_inline].nil? ? nil : YAML.safe_load(options[:threshold_inline])
+      @threshold_file = options[:threshold_file].nil? ? nil : Utils::InspecUtil.to_dotted_hash(YAML.load_file(options[:threshold_file]))
+      @threshold_inline = options[:threshold_inline].nil? ? nil : Utils::InspecUtil.to_dotted_hash(YAML.safe_load(options[:threshold_inline]))
       @summary = {}
     end
 
@@ -45,8 +45,8 @@ module InspecTools
     end
 
     def output_summary
-      output_threshold_compliance_level
       unless @json_full || @json_counts
+        output_threshold_compliance_level
         puts "\nOverall compliance: #{@summary[:compliance]}%\n\n"
         @summary[:status].keys.each do |category|
           puts category
@@ -64,7 +64,7 @@ module InspecTools
     def threshold
       to_summary
       @threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
-      parse_threshold(Utils::InspecUtil.to_dotted_hash(select_given_threshold))
+      parse_threshold(select_given_threshold)
       threshold_compliance
     end
 
@@ -72,9 +72,9 @@ module InspecTools
 
     def output_threshold_compliance_level
       if @threshold_inline
-        puts "\nThreshold compliance: #{@threshold_inline['compliance']['min']}%"
+        puts "\nThreshold compliance: #{@threshold_inline['compliance.min']}%"
       elsif @threshold_file
-        puts "\nThreshold compliance: #{@threshold_file['compliance']['min']}%"
+        puts "\nThreshold compliance: #{@threshold_file['compliance.min']}%"
       end
     end
 
