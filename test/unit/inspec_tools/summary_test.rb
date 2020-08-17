@@ -9,34 +9,40 @@ class SummaryTest < Minitest::Test
   end
 
   def test_summary_init_with_valid_params
-    inspec_json = File.read('examples/sample_json/rhel-simp.json')
-    assert(InspecTools::Summary.new(inspec_json))
+    options = { options: {} }
+    options[:options][:inspec_json] = 'examples/sample_json/rhel-simp.json'
+    assert(InspecTools::Summary.new(options))
   end
 
   def test_summary_init_with_invalid_params
-    json = nil
-    assert_raises(StandardError) { InspecTools::Summary.new(json) }
+    # File not found
+    options = { options: {} }
+    options[:options][:inspec_json] = 'does_not_exist'
+    assert_raises(StandardError) { InspecTools::Summary.new(options) }
   end
 
   def test_inspec_to_summary
-    inspec_json = File.read('examples/sample_json/rhel-simp.json')
-    inspec_tools = InspecTools::Summary.new(inspec_json)
-    summary = inspec_tools.to_summary
-    assert_equal(77, summary[:compliance])
-    assert_equal(33, summary[:status][:failed][:medium])
+    options = { options: {} }
+    options[:options][:inspec_json] = 'examples/sample_json/rhel-simp.json'
+    inspec_tools = InspecTools::Summary.new(options)
+    inspec_tools.to_summary
+    assert_equal(77, inspec_tools.summary[:compliance])
+    assert_equal(33, inspec_tools.summary[:status][:failed][:medium])
   end
 
   def test_inspec_results_compliance_pass
-    inspec_json = File.read('examples/sample_json/rhel-simp.json')
-    threshold = YAML.safe_load('{compliance.min: 77, failed.critical.max: 0, failed.high.max: 3}')
-    inspec_tools = InspecTools::Summary.new(inspec_json)
-    assert_output(/Compliance threshold met/) { inspec_tools.threshold(threshold) }
+    options = { options: {} }
+    options[:options][:inspec_json] = 'examples/sample_json/rhel-simp.json'
+    options[:options][:threshold_inline] = '{compliance.min: 77, failed.critical.max: 0, failed.high.max: 3}'
+    inspec_tools = InspecTools::Summary.new(options)
+    assert_output(%r{Compliance threshold of \d\d% met}) { inspec_tools.threshold }
   end
 
   def test_inspec_results_compliance_fail
-    inspec_json = File.read('examples/sample_json/rhel-simp.json')
-    threshold = YAML.safe_load('{compliance.min: 80, failed.critical.max: 0, failed.high.max: 0}')
-    inspec_tools = InspecTools::Summary.new(inspec_json)
-    assert_output(%r{Expected compliance.min:80 got:77(\r\n|\r|\n)Expected failed.high.max:0 got:3}) { inspec_tools.threshold(threshold) }
+    options = { options: {} }
+    options[:options][:inspec_json] = 'examples/sample_json/rhel-simp.json'
+    options[:options][:threshold_inline] = '{compliance.min: 80, failed.critical.max: 0, failed.high.max: 0}'
+    inspec_tools = InspecTools::Summary.new(options)
+    assert_output(%r{Expected compliance.min:80 got:77(\r\n|\r|\n)Expected failed.high.max:0 got:3}) { inspec_tools.threshold }
   end
 end

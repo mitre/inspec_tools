@@ -2,8 +2,6 @@ require 'json'
 require 'yaml'
 require_relative '../utilities/inspec_util'
 
-# rubocop:disable Metrics/AbcSize
-
 # Impact Definitions
 CRITICAL = 0.9
 HIGH = 0.7
@@ -16,32 +14,79 @@ TALLYS = %i(total critical high medium low).freeze
 THRESHOLD_TEMPLATE = File.expand_path('../data/threshold.yaml', File.dirname(__FILE__))
 
 module InspecTools
+  # rubocop:disable Metrics/ClassLength
   class Summary
-    def initialize(inspec_json)
-      @json = JSON.parse(inspec_json)
+    attr_reader :json
+    attr_reader :json_full
+    attr_reader :json_counts
+    attr_reader :threshold_file
+    attr_reader :threshold_inline
+    # Calculated after to_summary
+    attr_reader :summary
+
+    def initialize(**options)
+      options = options[:options]
+      @json = JSON.parse(File.read(options[:inspec_json]))
+      @json_full = false || options[:json_counts]
+      @json_counts = false || options[:json_counts]
+      @threshold_file = options[:threshold_file].nil? ? nil : YAML.load_file(options[:threshold_file])
+      @threshold_inline = options[:threshold_inline].nil? ? nil : YAML.safe_load(options[:threshold_inline])
+      @summary = {}
     end
 
     def to_summary
       @data = Utils::InspecUtil.parse_data_for_ckl(@json)
-      @summary = {}
       @data.keys.each do |control_id|
         current_control = @data[control_id]
         current_control[:compliance_status] = Utils::InspecUtil.control_status(current_control, true)
         current_control[:finding_details] = Utils::InspecUtil.control_finding_details(current_control, current_control[:compliance_status])
       end
       compute_summary
-      @summary
     end
 
-    def threshold(threshold = nil)
-      @summary = to_summary
+    def output_summary
+      output_threshold_compliance_level
+      unless @json_full || @json_counts
+        puts "\nOverall compliance: #{@summary[:compliance]}%\n\n"
+        @summary[:status].keys.each do |category|
+          puts category
+          @summary[:status][category].keys.each do |impact|
+            puts "\t#{impact} : #{@summary[:status][category][impact]}"
+          end
+        end
+      end
+
+      json_summary = @summary.to_json
+      puts json_summary if @json_full
+      puts @summary[:status].to_json if @json_counts
+    end
+
+    def threshold
+      to_summary
       @threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
-      parse_threshold(Utils::InspecUtil.to_dotted_hash(threshold))
+      parse_threshold(Utils::InspecUtil.to_dotted_hash(select_given_threshold))
       threshold_compliance
     end
 
     private
 
+    def output_threshold_compliance_level
+      if @threshold_inline
+        puts "\nThreshold compliance: #{@threshold_inline['compliance']['min']}%"
+      elsif @threshold_file
+        puts "\nThreshold compliance: #{@threshold_file['compliance']['min']}%"
+      end
+    end
+
+    def select_given_threshold
+      raise 'Please provide threshold as a yaml file or inline yaml' if !@threshold_file && !@threshold_inline
+
+      return @threshold_inline if @threshold_inline
+
+      @threshold_file
+    end
+
+    # rubocop:disable Metrics/AbcSize
     def compute_summary
       @summary[:buckets] = {}
       @summary[:buckets][:failed]    = select_by_status(@data, 'Open')
@@ -59,6 +104,7 @@ module InspecTools
 
       @summary[:compliance] = compute_compliance
     end
+    # rubocop:enable Metrics/AbcSize
 
     def select_by_impact(controls, impact)
       controls.select { |_key, value| value[:impact].to_f.eql?(impact) }
@@ -86,6 +132,9 @@ module InspecTools
          @summary[:status][:error][:total])).floor
     end
 
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def threshold_compliance
       compliance = true
       failure = []
@@ -115,12 +164,16 @@ module InspecTools
         end
       end
       puts failure.join("\n") unless compliance
-      puts 'Compliance threshold met' if compliance
+      puts "Compliance threshold of #{@threshold['compliance.min']}\% met. Current compliance at #{@summary[:compliance]}\%" if compliance
       compliance
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def parse_threshold(new_threshold)
       @threshold.merge!(new_threshold)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
