@@ -34,7 +34,7 @@ class SummaryTest < Minitest::Test
     options[:options][:inspec_json] = 'examples/sample_json/rhel-simp.json'
     options[:options][:threshold_inline] = '{compliance.min: 77, failed.critical.max: 0, failed.high.max: 3}'
     inspec_tools = InspecTools::Summary.new(**options)
-    assert_output(%r{Compliance threshold of \d\d% met}) { inspec_tools.threshold }
+    assert_output(%r{Compliance threshold of \d\d% met}) { inspec_tools.results_meet_threshold? }
   end
 
   def test_inspec_results_compliance_fail
@@ -42,16 +42,16 @@ class SummaryTest < Minitest::Test
     options[:options][:inspec_json] = 'examples/sample_json/rhel-simp.json'
     options[:options][:threshold_inline] = '{compliance.min: 80, failed.critical.max: 0, failed.high.max: 0}'
     inspec_tools = InspecTools::Summary.new(**options)
-    assert_output(%r{Expected compliance.min:80 got:77(\r\n|\r|\n)Expected failed.high.max:0 got:3}) { inspec_tools.threshold }
+    assert_output(%r{Expected compliance.min:80 got:77(\r\n|\r|\n)Expected failed.high.max:0 got:3}) { inspec_tools.results_meet_threshold? }
 
     options[:options][:threshold_inline] = '{compliance.max: 50}'
     inspec_tools = InspecTools::Summary.new(**options)
-    assert_output(%r{Expected compliance.max:50 got:77}) { inspec_tools.threshold }
+    assert_output(%r{Expected compliance.max:50 got:77}) { inspec_tools.results_meet_threshold? }
 
     options[:options][:threshold_file] = 'examples/sample_yaml/threshold.yaml'
     options[:options][:threshold_inline] = nil
     inspec_tools = InspecTools::Summary.new(**options)
-    assert_output(%r{Expected compliance.min:81 got:77}) { inspec_tools.threshold }
+    assert_output(%r{Expected compliance.min:81 got:77}) { inspec_tools.results_meet_threshold? }
   end
 
   def test_inline_overrides
@@ -60,7 +60,7 @@ class SummaryTest < Minitest::Test
     options[:options][:threshold_inline] = '{compliance.min: 77}'
     options[:options][:threshold_file] = 'examples/sample_yaml/threshold.yaml'
     inspec_tools = InspecTools::Summary.new(**options)
-    assert(inspec_tools.threshold)
-    assert_equal(77, inspec_tools.summary[:compliance])
+    inspec_tools.results_meet_threshold?
+    assert_equal(77, inspec_tools.threshold['compliance.min'])
   end
 end

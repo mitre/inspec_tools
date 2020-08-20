@@ -13,7 +13,6 @@ module InspecTools
   autoload :CKL, 'inspec_tools/ckl'
   autoload :Inspec, 'inspec_tools/inspec'
   autoload :Summary, 'inspec_tools/summary'
-  autoload :Threshold, 'inspec_tools/threshold'
   autoload :XLSXTool, 'inspec_tools/xlsx_tool'
   autoload :GenerateMap, 'inspec_tools/generate_map'
 end
@@ -207,7 +206,7 @@ module InspecPlugins
 
       def compliance
         compliance = InspecTools::Summary.new(options: options)
-        compliance.threshold ? exit(0) : exit(1)
+        compliance.results_meet_threshold? ? exit(0) : exit(1)
       end
     end
   end

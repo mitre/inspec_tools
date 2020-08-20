@@ -22,6 +22,7 @@ module InspecTools
     attr_reader :threshold_file
     attr_reader :threshold_inline
     attr_reader :summary
+    attr_reader :threshold
 
     def initialize(**options)
       options = options[:options]
@@ -29,6 +30,7 @@ module InspecTools
       @json_full = false || options[:json_full]
       @json_counts = false || options[:json_counts]
       @threshold = parse_threshold(options[:threshold_inline], options[:threshold_file])
+      @threshold_provided = options[:threshold_inline] || options[:threshold_file]
       @summary = compute_summary
     end
 
@@ -51,7 +53,9 @@ module InspecTools
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/CyclomaticComplexity
-    def threshold
+    def results_meet_threshold?
+      raise 'Please provide threshold as a yaml file or inline yaml' unless @threshold_provided
+
       compliance = true
       failure = []
       max = @threshold['compliance.max']
@@ -81,6 +85,7 @@ module InspecTools
       end
       puts failure.join("\n") unless compliance
       puts "Compliance threshold of #{@threshold['compliance.min']}\% met. Current compliance at #{@summary[:compliance]}\%" if compliance
+      compliance
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/PerceivedComplexity
@@ -89,11 +94,9 @@ module InspecTools
     private
 
     def parse_threshold(threshold_inline, threshold_file)
-      raise 'Please provide threshold as a yaml file or inline yaml' unless threshold_file || threshold_inline
-
       threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
-      threshold.merge!(threshold_inline) if threshold_inline
-      threshold.merge!(threshold_file) if threshold_file
+      threshold.merge!(Utils::InspecUtil.to_dotted_hash(YAML.load_file(threshold_file))) if threshold_file
+      threshold.merge!(Utils::InspecUtil.to_dotted_hash(YAML.safe_load(threshold_inline))) if threshold_inline
 
       return threshold
     end
