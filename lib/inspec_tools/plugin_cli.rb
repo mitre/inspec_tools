@@ -1,4 +1,3 @@
-# require 'yaml'
 require 'json'
 require 'roo'
 require_relative '../utilities/inspec_util'
