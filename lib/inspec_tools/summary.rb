@@ -21,27 +21,16 @@ module InspecTools
     attr_reader :json_counts
     attr_reader :threshold_file
     attr_reader :threshold_inline
-    # Calculated after to_summary
     attr_reader :summary
 
     def initialize(**options)
       options = options[:options]
       @json = JSON.parse(File.read(options[:inspec_json]))
-      @json_full = false || options[:json_counts]
+      @json_full = false || options[:json_full]
       @json_counts = false || options[:json_counts]
       @threshold_file = options[:threshold_file].nil? ? nil : Utils::InspecUtil.to_dotted_hash(YAML.load_file(options[:threshold_file]))
       @threshold_inline = options[:threshold_inline].nil? ? nil : Utils::InspecUtil.to_dotted_hash(YAML.safe_load(options[:threshold_inline]))
-      @summary = {}
-    end
-
-    def to_summary
-      @data = Utils::InspecUtil.parse_data_for_ckl(@json)
-      @data.keys.each do |control_id|
-        current_control = @data[control_id]
-        current_control[:compliance_status] = Utils::InspecUtil.control_status(current_control, true)
-        current_control[:finding_details] = Utils::InspecUtil.control_finding_details(current_control, current_control[:compliance_status])
-      end
-      compute_summary
+      @summary = compute_summary
     end
 
     def output_summary
@@ -62,7 +51,6 @@ module InspecTools
     end
 
     def threshold
-      to_summary
       @threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
       parse_threshold(select_given_threshold)
       threshold_compliance
@@ -88,21 +76,31 @@ module InspecTools
 
     # rubocop:disable Metrics/AbcSize
     def compute_summary
-      @summary[:buckets] = {}
-      @summary[:buckets][:failed]    = select_by_status(@data, 'Open')
-      @summary[:buckets][:passed]    = select_by_status(@data, 'NotAFinding')
-      @summary[:buckets][:no_impact] = select_by_status(@data, 'Not_Applicable')
-      @summary[:buckets][:skipped]   = select_by_status(@data, 'Not_Reviewed')
-      @summary[:buckets][:error]     = select_by_status(@data, 'Profile_Error')
+      data = Utils::InspecUtil.parse_data_for_ckl(@json)
 
-      @summary[:status] = {}
-      @summary[:status][:failed]    = tally_by_impact(@summary[:buckets][:failed])
-      @summary[:status][:passed]    = tally_by_impact(@summary[:buckets][:passed])
-      @summary[:status][:no_impact] = tally_by_impact(@summary[:buckets][:no_impact])
-      @summary[:status][:skipped]   = tally_by_impact(@summary[:buckets][:skipped])
-      @summary[:status][:error]     = tally_by_impact(@summary[:buckets][:error])
+      data.keys.each do |control_id|
+        current_control = data[control_id]
+        current_control[:compliance_status] = Utils::InspecUtil.control_status(current_control, true)
+        current_control[:finding_details] = Utils::InspecUtil.control_finding_details(current_control, current_control[:compliance_status])
+      end
 
-      @summary[:compliance] = compute_compliance
+      summary = {}
+      summary[:buckets] = {}
+      summary[:buckets][:failed]    = select_by_status(data, 'Open')
+      summary[:buckets][:passed]    = select_by_status(data, 'NotAFinding')
+      summary[:buckets][:no_impact] = select_by_status(data, 'Not_Applicable')
+      summary[:buckets][:skipped]   = select_by_status(data, 'Not_Reviewed')
+      summary[:buckets][:error]     = select_by_status(data, 'Profile_Error')
+
+      summary[:status] = {}
+      summary[:status][:failed]    = tally_by_impact(summary[:buckets][:failed])
+      summary[:status][:passed]    = tally_by_impact(summary[:buckets][:passed])
+      summary[:status][:no_impact] = tally_by_impact(summary[:buckets][:no_impact])
+      summary[:status][:skipped]   = tally_by_impact(summary[:buckets][:skipped])
+      summary[:status][:error]     = tally_by_impact(summary[:buckets][:error])
+
+      summary[:compliance] = compute_compliance(summary)
+      summary
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -124,12 +122,12 @@ module InspecTools
       tally
     end
 
-    def compute_compliance
-      (@summary[:status][:passed][:total]*100.0/
-        (@summary[:status][:passed][:total]+
-         @summary[:status][:failed][:total]+
-         @summary[:status][:skipped][:total]+
-         @summary[:status][:error][:total])).floor
+    def compute_compliance(summary)
+      (summary[:status][:passed][:total]*100.0/
+        (summary[:status][:passed][:total]+
+         summary[:status][:failed][:total]+
+         summary[:status][:skipped][:total]+
+         summary[:status][:error][:total])).floor
     end
 
     # rubocop:disable Metrics/AbcSize

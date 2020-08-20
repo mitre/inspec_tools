@@ -1,4 +1,4 @@
-require 'yaml'
+# require 'yaml'
 require 'json'
 require 'roo'
 require_relative '../utilities/inspec_util'
@@ -195,9 +195,7 @@ module InspecPlugins
       option :threshold_inline, required: false, aliases: '-i'
 
       def summary
-        # summary = InspecTools::Summary.new(File.read(options[:inspec_json]))
         summary = InspecTools::Summary.new(options: options)
-        summary.to_summary
         summary.output_summary
       end
 

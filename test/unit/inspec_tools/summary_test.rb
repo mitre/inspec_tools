@@ -21,11 +21,10 @@ class SummaryTest < Minitest::Test
     assert_raises(StandardError) { InspecTools::Summary.new(**options) }
   end
 
-  def test_inspec_to_summary
+  def test_summary
     options = { options: {} }
     options[:options][:inspec_json] = 'examples/sample_json/rhel-simp.json'
     inspec_tools = InspecTools::Summary.new(**options)
-    inspec_tools.to_summary
     assert_equal(77, inspec_tools.summary[:compliance])
     assert_equal(33, inspec_tools.summary[:status][:failed][:medium])
   end
@@ -62,8 +61,6 @@ class SummaryTest < Minitest::Test
     options[:options][:threshold_file] = 'examples/sample_yaml/threshold.yaml'
     inspec_tools = InspecTools::Summary.new(**options)
     assert(inspec_tools.threshold)
-
-    inspec_tools.to_summary
     assert_equal(77, inspec_tools.summary[:compliance])
   end
 end
