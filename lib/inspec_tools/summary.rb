@@ -45,8 +45,7 @@ module InspecTools
         end
       end
 
-      json_summary = @summary.to_json
-      puts json_summary if @json_full
+      puts @summary.to_json if @json_full
       puts @summary[:status].to_json if @json_counts
     end
 
