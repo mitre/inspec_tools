@@ -52,7 +52,7 @@ module InspecTools
 
     def threshold
       @threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
-      parse_threshold(select_given_threshold)
+      @threshold.merge!(select_given_threshold)
       threshold_compliance
     end
 
@@ -168,10 +168,6 @@ module InspecTools
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
-
-    def parse_threshold(new_threshold)
-      @threshold.merge!(new_threshold)
-    end
   end
   # rubocop:enable Metrics/ClassLength
 end
