@@ -28,14 +28,13 @@ module InspecTools
       @json = JSON.parse(File.read(options[:inspec_json]))
       @json_full = false || options[:json_full]
       @json_counts = false || options[:json_counts]
-      @threshold_file = options[:threshold_file].nil? ? nil : Utils::InspecUtil.to_dotted_hash(YAML.load_file(options[:threshold_file]))
-      @threshold_inline = options[:threshold_inline].nil? ? nil : Utils::InspecUtil.to_dotted_hash(YAML.safe_load(options[:threshold_inline]))
+      @threshold = parse_threshold(options[:threshold_inline], options[:threshold_file])
       @summary = compute_summary
     end
 
     def output_summary
       unless @json_full || @json_counts
-        output_threshold_compliance_level
+        puts "\nThreshold compliance: #{@threshold['compliance.min']}%"
         puts "\nOverall compliance: #{@summary[:compliance]}%\n\n"
         @summary[:status].keys.each do |category|
           puts category
@@ -49,28 +48,54 @@ module InspecTools
       puts @summary[:status].to_json if @json_counts
     end
 
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def threshold
-      @threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
-      @threshold.merge!(select_given_threshold)
-      threshold_compliance
+      compliance = true
+      failure = []
+      max = @threshold['compliance.max']
+      min = @threshold['compliance.min']
+      if max != -1 and @summary[:compliance] > max
+        compliance = false
+        failure << "Expected compliance.max:#{max} got:#{@summary[:compliance]}"
+      end
+      if min != -1 and @summary[:compliance] < min
+        compliance = false
+        failure << "Expected compliance.min:#{min} got:#{@summary[:compliance]}"
+      end
+      status = @summary[:status]
+      BUCKETS.each do |bucket|
+        TALLYS.each do |tally|
+          max = @threshold["#{bucket}.#{tally}.max"]
+          min = @threshold["#{bucket}.#{tally}.min"]
+          if max != -1 and status[bucket][tally] > max
+            compliance = false
+            failure << "Expected #{bucket}.#{tally}.max:#{max} got:#{status[bucket][tally]}"
+          end
+          if min != -1 and status[bucket][tally] < min
+            compliance = false
+            failure << "Expected #{bucket}.#{tally}.min:#{min} got:#{status[bucket][tally]}"
+          end
+        end
+      end
+      puts failure.join("\n") unless compliance
+      puts "Compliance threshold of #{@threshold['compliance.min']}\% met. Current compliance at #{@summary[:compliance]}\%" if compliance
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     private
 
-    def output_threshold_compliance_level
-      if @threshold_inline
-        puts "\nThreshold compliance: #{@threshold_inline['compliance.min']}%"
-      elsif @threshold_file
-        puts "\nThreshold compliance: #{@threshold_file['compliance.min']}%"
-      end
-    end
+    def parse_threshold(threshold_inline, threshold_file)
+      raise 'Please provide threshold as a yaml file or inline yaml' unless threshold_file || threshold_inline
 
-    def select_given_threshold
-      raise 'Please provide threshold as a yaml file or inline yaml' if !@threshold_file && !@threshold_inline
+      threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
+      threshold.merge!(threshold_inline) if threshold_inline
+      threshold.merge!(threshold_file) if threshold_file
 
-      return @threshold_inline if @threshold_inline
-
-      @threshold_file
+      return threshold
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -128,45 +153,6 @@ module InspecTools
          summary[:status][:skipped][:total]+
          summary[:status][:error][:total])).floor
     end
-
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/PerceivedComplexity
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def threshold_compliance
-      compliance = true
-      failure = []
-      max = @threshold['compliance.max']
-      min = @threshold['compliance.min']
-      if max != -1 and @summary[:compliance] > max
-        compliance = false
-        failure << "Expected compliance.max:#{max} got:#{@summary[:compliance]}"
-      end
-      if min != -1 and @summary[:compliance] < min
-        compliance = false
-        failure << "Expected compliance.min:#{min} got:#{@summary[:compliance]}"
-      end
-      status = @summary[:status]
-      BUCKETS.each do |bucket|
-        TALLYS.each do |tally|
-          max = @threshold["#{bucket}.#{tally}.max"]
-          min = @threshold["#{bucket}.#{tally}.min"]
-          if max != -1 and status[bucket][tally] > max
-            compliance = false
-            failure << "Expected #{bucket}.#{tally}.max:#{max} got:#{status[bucket][tally]}"
-          end
-          if min != -1 and status[bucket][tally] < min
-            compliance = false
-            failure << "Expected #{bucket}.#{tally}.min:#{min} got:#{status[bucket][tally]}"
-          end
-        end
-      end
-      puts failure.join("\n") unless compliance
-      puts "Compliance threshold of #{@threshold['compliance.min']}\% met. Current compliance at #{@summary[:compliance]}\%" if compliance
-      compliance
-    end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/CyclomaticComplexity
   end
   # rubocop:enable Metrics/ClassLength
 end
