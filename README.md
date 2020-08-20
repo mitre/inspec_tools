@@ -192,10 +192,10 @@ Thresholds provided inline (i.e. `-i`) override thresholds provided by files (i.
 
 ```
 FLAGS:
-  -j --inspec-json <inspec-json>   : path to InSpec results JSON
-  -V --verbose, --no-verbose       : print verbose an debug output
-  -f --json-full, --no-json-full   : print the summary STDOUT as JSON
-  -k --json-counts, --no-json_cou  : print the reslut status to STDOUT as JSON
+  -j --inspec-json <inspec-json>      : path to InSpec results JSON
+  -V --verbose, --no-verbose          : print verbose an debug output
+  -f --json-full, --no-json-full      : print the summary STDOUT as JSON
+  -k --json-counts, --no-json-counts  : print the reslut status to STDOUT as JSON
 
 Examples:
 
