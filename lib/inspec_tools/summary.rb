@@ -62,11 +62,11 @@ module InspecTools
       min = @threshold['compliance.min']
       if max != -1 and @summary[:compliance] > max
         compliance = false
-        failure << "Expected compliance.max:#{max} got:#{@summary[:compliance]}"
+        failure << expected_to_string('', 'compliance', 'max', min, @summary[:compliance])
       end
       if min != -1 and @summary[:compliance] < min
         compliance = false
-        failure << "Expected compliance.min:#{min} got:#{@summary[:compliance]}"
+        failure << expected_to_string('', 'compliance', 'min', min, @summary[:compliance])
       end
       status = @summary[:status]
       BUCKETS.each do |bucket|
@@ -75,16 +75,16 @@ module InspecTools
           min = @threshold["#{bucket}.#{tally}.min"]
           if max != -1 and status[bucket][tally] > max
             compliance = false
-            failure << "Expected #{bucket}.#{tally}.max:#{max} got:#{status[bucket][tally]}"
+            failure << expected_to_string(bucket, tally, 'max', status[bucket][tally])
           end
           if min != -1 and status[bucket][tally] < min
             compliance = false
-            failure << "Expected #{bucket}.#{tally}.min:#{min} got:#{status[bucket][tally]}"
+            failure << expected_to_string(bucket, tally, 'min', status[bucket][tally])
           end
         end
       end
       puts failure.join("\n") unless compliance
-      puts "Compliance threshold of #{@threshold['compliance.min']}\% met. Current compliance at #{@summary[:compliance]}\%" if compliance
+      puts "Overall compliance threshold of #{@threshold['compliance.min']}\% met. Current compliance at #{@summary[:compliance]}\%" if compliance
       compliance
     end
     # rubocop:enable Metrics/AbcSize
@@ -92,6 +92,12 @@ module InspecTools
     # rubocop:enable Metrics/CyclomaticComplexity
 
     private
+
+    def expected_to_string(bucket, tally, maxmin, value, got)
+      return "Expected #{bucket}.#{tally}.#{maxmin}:#{value}\% got:#{got}\%" unless bucket.empty? || bucket.nil?
+
+      "Expected #{tally}.#{maxmin}:#{value}\% got:#{got}\%"
+    end
 
     def parse_threshold(threshold_inline, threshold_file)
       threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
@@ -120,12 +126,9 @@ module InspecTools
       summary[:buckets][:error]     = select_by_status(data, 'Profile_Error')
 
       summary[:status] = {}
-      summary[:status][:failed]    = tally_by_impact(summary[:buckets][:failed])
-      summary[:status][:passed]    = tally_by_impact(summary[:buckets][:passed])
-      summary[:status][:no_impact] = tally_by_impact(summary[:buckets][:no_impact])
-      summary[:status][:skipped]   = tally_by_impact(summary[:buckets][:skipped])
-      summary[:status][:error]     = tally_by_impact(summary[:buckets][:error])
-
+      %i[failed passed no_impact skipped error].each do |key|
+        summary[:status][key] = tally_by_impact(summary[:buckets][key])
+      end
       summary[:compliance] = compute_compliance(summary)
       summary
     end
