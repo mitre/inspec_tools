@@ -192,10 +192,11 @@ Thresholds provided inline (i.e. `-i`) override thresholds provided by files (i.
 
 ```
 FLAGS:
-  -j --inspec-json <inspec-json>      : path to InSpec results JSON
-  -V --verbose, --no-verbose          : print verbose an debug output
-  -f --json-full, --no-json-full      : print the summary STDOUT as JSON
-  -k --json-counts, --no-json-counts  : print the reslut status to STDOUT as JSON
+  -j --inspec-json <inspec-json>           : path to InSpec results JSON
+  -f --json-full, --no-json-full           : print the summary STDOUT as JSON
+  -k --json-counts, --no-json-counts       : print the result status to STDOUT as JSON
+  -t, --threshold-file=THRESHOLD_FILE]     : path to threshold YAML file
+  -i, --threshold-inline=THRESHOLD_INLINE] : string of text representing threshold YAML inline
 
 Examples:
 
