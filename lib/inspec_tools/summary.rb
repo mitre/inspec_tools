@@ -62,7 +62,8 @@ module InspecTools
       min = @threshold['compliance.min']
       if max != -1 and @summary[:compliance] > max
         compliance = false
-        failure << expected_to_string('', 'compliance', 'max', min, @summary[:compliance])
+        require 'pry'; binding.pry
+        failure << expected_to_string('', 'compliance', 'max', max, @summary[:compliance])
       end
       if min != -1 and @summary[:compliance] < min
         compliance = false
@@ -75,11 +76,11 @@ module InspecTools
           min = @threshold["#{bucket}.#{tally}.min"]
           if max != -1 and status[bucket][tally] > max
             compliance = false
-            failure << expected_to_string(bucket, tally, 'max', status[bucket][tally])
+            failure << expected_to_string(bucket, tally, 'max', max, status[bucket][tally])
           end
           if min != -1 and status[bucket][tally] < min
             compliance = false
-            failure << expected_to_string(bucket, tally, 'min', status[bucket][tally])
+            failure << expected_to_string(bucket, tally, 'min', min, status[bucket][tally])
           end
         end
       end
@@ -94,7 +95,7 @@ module InspecTools
     private
 
     def expected_to_string(bucket, tally, maxmin, value, got)
-      return "Expected #{bucket}.#{tally}.#{maxmin}:#{value}\% got:#{got}\%" unless bucket.empty? || bucket.nil?
+      return "Expected #{bucket}.#{tally}.#{maxmin}:#{value} got:#{got}" unless bucket.empty? || bucket.nil?
 
       "Expected #{tally}.#{maxmin}:#{value}\% got:#{got}\%"
     end
@@ -103,11 +104,9 @@ module InspecTools
       threshold = Utils::InspecUtil.to_dotted_hash(YAML.load_file(THRESHOLD_TEMPLATE))
       threshold.merge!(Utils::InspecUtil.to_dotted_hash(YAML.load_file(threshold_file))) if threshold_file
       threshold.merge!(Utils::InspecUtil.to_dotted_hash(YAML.safe_load(threshold_inline))) if threshold_inline
-
-      return threshold
+      threshold
     end
 
-    # rubocop:disable Metrics/AbcSize
     def compute_summary
       data = Utils::InspecUtil.parse_data_for_ckl(@json)
 
@@ -126,13 +125,12 @@ module InspecTools
       summary[:buckets][:error]     = select_by_status(data, 'Profile_Error')
 
       summary[:status] = {}
-      %i[failed passed no_impact skipped error].each do |key|
+      %i(failed passed no_impact skipped error).each do |key|
         summary[:status][key] = tally_by_impact(summary[:buckets][key])
       end
       summary[:compliance] = compute_compliance(summary)
       summary
     end
-    # rubocop:enable Metrics/AbcSize
 
     def select_by_impact(controls, impact)
       controls.select { |_key, value| value[:impact].to_f.eql?(impact) }
