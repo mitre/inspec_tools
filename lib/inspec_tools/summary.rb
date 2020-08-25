@@ -62,7 +62,6 @@ module InspecTools
       min = @threshold['compliance.min']
       if max != -1 and @summary[:compliance] > max
         compliance = false
-        require 'pry'; binding.pry
         failure << expected_to_string('', 'compliance', 'max', max, @summary[:compliance])
       end
       if min != -1 and @summary[:compliance] < min
