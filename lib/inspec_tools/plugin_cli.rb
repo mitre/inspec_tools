@@ -1,4 +1,3 @@
-require 'yaml'
 require 'json'
 require 'roo'
 require_relative '../utilities/inspec_util'
@@ -13,7 +12,6 @@ module InspecTools
   autoload :CKL, 'inspec_tools/ckl'
   autoload :Inspec, 'inspec_tools/inspec'
   autoload :Summary, 'inspec_tools/summary'
-  autoload :Threshold, 'inspec_tools/threshold'
   autoload :XLSXTool, 'inspec_tools/xlsx_tool'
   autoload :GenerateMap, 'inspec_tools/generate_map'
 end
@@ -189,26 +187,14 @@ module InspecPlugins
       desc 'summary', 'summary parses an inspec results json to create a summary json'
       long_desc InspecTools::Help.text(:summary)
       option :inspec_json, required: true, aliases: '-j'
-      option :verbose, type: :boolean, aliases: '-V'
       option :json_full, type: :boolean, required: false, aliases: '-f'
       option :json_counts, type: :boolean, required: false, aliases: '-k'
+      option :threshold_file, required: false, aliases: '-t'
+      option :threshold_inline, required: false, aliases: '-i'
 
       def summary
-        summary = InspecTools::Summary.new(File.read(options[:inspec_json])).to_summary
-
-        unless options.include?('json_full') || options.include?('json_counts')
-          puts "\nOverall compliance: #{summary[:compliance]}%\n\n"
-          summary[:status].keys.each do |category|
-            puts category
-            summary[:status][category].keys.each do |impact|
-              puts "\t#{impact} : #{summary[:status][category][impact]}"
-            end
-          end
-        end
-
-        json_summary = summary.to_json
-        puts json_summary if options[:json_full]
-        puts summary[:status].to_json if options[:json_counts]
+        summary = InspecTools::Summary.new(options: options)
+        summary.output_summary
       end
 
       desc 'compliance', 'compliance parses an inspec results json to check if the compliance level meets a specified threshold'
@@ -216,17 +202,10 @@ module InspecPlugins
       option :inspec_json, required: true, aliases: '-j'
       option :threshold_file, required: false, aliases: '-f'
       option :threshold_inline, required: false, aliases: '-i'
-      option :verbose, type: :boolean, aliases: '-V'
 
       def compliance
-        if options[:threshold_file].nil? && options[:threshold_inline].nil?
-          puts 'Please provide threshold as a yaml file or inline yaml'
-          exit(1)
-        end
-        threshold = YAML.load_file(options[:threshold_file]) unless options[:threshold_file].nil?
-        threshold = YAML.safe_load(options[:threshold_inline]) unless options[:threshold_inline].nil?
-        compliance = InspecTools::Summary.new(File.read(options[:inspec_json])).threshold(threshold)
-        compliance ? exit(0) : exit(1)
+        compliance = InspecTools::Summary.new(options: options)
+        compliance.results_meet_threshold? ? exit(0) : exit(1)
       end
     end
   end

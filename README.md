@@ -100,13 +100,15 @@ If the specified threshold is not met, an error code (1) is returned along with 
 
 The compliance score are rounded down to the nearest whole number. For example a score of 77.3 would be displayed as 77.
 
+Thresholds provided inline (i.e. `-i`) override thresholds provided by files (i.e. `-f`).
+
 ```
 USAGE:  inspec_tools compliance [OPTIONS] -j <inspec-json> -i <threshold-inline>
 	inspec_tools compliance [OPTIONS] -j <inspec-json> -f <threshold-file>
 FLAGS:
 	-j --inspec-json <inspec-json>          : path to InSpec results Json
 	-i --template-inline <threshold-inline> : inline compliance threshold definition
-	-f --template-file <threshold-file>     : yaml file with compliance threshold definition
+	-f --threshold-file <threshold-file>    : yaml file with compliance threshold definition
 Examples:
 
   inspec_tools compliance -j examples/sample_json/rhel-simp.json -i '{compliance.min: 80, failed.critical.max: 0, failed.high.max: 0}'
@@ -135,11 +137,11 @@ failed.high.max: 1
 
 #### In-Line Examples
 ```
-{compliance: {min: 90}, failed: {critical: {max: 0}, high: {max: 0}}}
+"{compliance: {min: 90}, failed: {critical: {max: 0}, high: {max: 0}}}"
 ```
 
 ```
-{compliance.min: 81, failed.critical.max: 0, failed.high.max: 0}
+"{compliance.min: 81, failed.critical.max: 0, failed.high.max: 0}"
 ```
 
 ## summary
@@ -185,12 +187,16 @@ Using additional flags will override the normal output and only display the outp
 
 USAGE: inspec_tools summary [OPTIONS] -j <inspec-json>
 
+Thresholds provided inline (i.e. `-i`) override thresholds provided by files (i.e. `-t`).
+
+
 ```
 FLAGS:
-  -j --inspec-json <inspec-json>   : path to InSpec results JSON
-  -V --verbose, --no-verbose       : print verbose an debug output
-  -f --json-full, --no-json-full   : print the summary STDOUT as JSON
-  -k --json-counts, --no-json_cou  : print the reslut status to STDOUT as JSON
+  -j --inspec-json <inspec-json>           : path to InSpec results JSON
+  -f --json-full, --no-json-full           : print the summary STDOUT as JSON
+  -k --json-counts, --no-json-counts       : print the result status to STDOUT as JSON
+  -t, --threshold-file=THRESHOLD_FILE]     : path to threshold YAML file
+  -i, --threshold-inline=THRESHOLD_INLINE] : string of text representing threshold YAML inline
 
 Examples:
 
