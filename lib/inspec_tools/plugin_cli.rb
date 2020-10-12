@@ -78,10 +78,11 @@ module InspecPlugins
       option :output, required: false, aliases: '-o', default: 'profile'
       option :format, required: false, aliases: '-f', enum: %w{ruby hash}, default: 'ruby'
       option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
+      option :control_name_prefix, required: false, type: :string, aliases: '-p'
       def csv2inspec
         csv = CSV.read(options[:csv], encoding: 'ISO8859-1')
         mapping = YAML.load_file(options[:mapping])
-        profile = InspecTools::CSVTool.new(csv, mapping, options[:csv].split('/')[-1].split('.')[0], options[:verbose]).to_inspec
+        profile = InspecTools::CSVTool.new(csv, mapping, options[:csv].split('/')[-1].split('.')[0], options[:verbose]).to_inspec(control_name_prefix: options[:control_name_prefix])
         Utils::InspecUtil.unpack_inspec_json(options[:output], profile, options[:separate_files], options[:format])
       end
 
