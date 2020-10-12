@@ -21,12 +21,12 @@ module InspecTools
       @csv.shift if @mapping['skip_csv_header']
     end
 
-    def to_inspec
+    def to_inspec(control_name_prefix: nil)
       @controls = []
       @profile = {}
       @cci_xml = Utils::CciXml.get_cci_list('U_CCI_List.xml')
       insert_metadata
-      parse_controls
+      parse_controls(control_name_prefix)
       @profile['controls'] = @controls
       @profile['sha256'] = Digest::SHA256.hexdigest(@profile.to_s)
       @profile
@@ -66,12 +66,12 @@ module InspecTools
       cell.split("\n").first
     end
 
-    def parse_controls
+    def parse_controls(prefix)
       @csv.each do |row|
         control = {}
-        control['id']     = row[@mapping['control.id']]     unless @mapping['control.id'].nil? || row[@mapping['control.id']].nil?
-        control['title']  = row[@mapping['control.title']]  unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
-        control['desc']   = row[@mapping['control.desc']]   unless @mapping['control.desc'].nil? || row[@mapping['control.desc']].nil?
+        control['id']     = generate_control_id(prefix, row[@mapping['control.id']]) unless @mapping['control.id'].nil? || row[@mapping['control.id']].nil?
+        control['title']  = row[@mapping['control.title']] unless @mapping['control.title'].nil? || row[@mapping['control.title']].nil?
+        control['desc']   = row[@mapping['control.desc']] unless @mapping['control.desc'].nil? || row[@mapping['control.desc']].nil?
         control['tags'] = {}
         cci_number = get_cci_number(row[@mapping['control.tags']['cci']])
         nist = get_nist_reference(cci_number) unless cci_number.nil?
@@ -90,5 +90,15 @@ module InspecTools
         @controls << control
       end
     end
+
+    def generate_control_id(prefix, id)
+      return id if prefix.nil?
+
+      "#{prefix}-#{id}"
+    end
   end
 end
+
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
