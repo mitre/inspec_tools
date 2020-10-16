@@ -50,48 +50,45 @@ module InspecTools
       puts @summary[:status].to_json if @json_counts
     end
 
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/PerceivedComplexity
-    # rubocop:disable Metrics/CyclomaticComplexity
     def results_meet_threshold?
       raise 'Please provide threshold as a yaml file or inline yaml' unless @threshold_provided
 
       compliance = true
       failure = []
-      max = @threshold['compliance.max']
-      min = @threshold['compliance.min']
-      if max != -1 and @summary[:compliance] > max
-        compliance = false
-        failure << expected_to_string('', 'compliance', 'max', max, @summary[:compliance])
-      end
-      if min != -1 and @summary[:compliance] < min
-        compliance = false
-        failure << expected_to_string('', 'compliance', 'min', min, @summary[:compliance])
-      end
-      status = @summary[:status]
+      failure << check_max_compliance(@threshold['compliance.max'], @summary[:compliance], '', 'compliance')
+      failure << check_min_compliance(@threshold['compliance.min'], @summary[:compliance], '', 'compliance')
+
       BUCKETS.each do |bucket|
         TALLYS.each do |tally|
-          max = @threshold["#{bucket}.#{tally}.max"]
-          min = @threshold["#{bucket}.#{tally}.min"]
-          if max != -1 and status[bucket][tally] > max
-            compliance = false
-            failure << expected_to_string(bucket, tally, 'max', max, status[bucket][tally])
-          end
-          if min != -1 and status[bucket][tally] < min
-            compliance = false
-            failure << expected_to_string(bucket, tally, 'min', min, status[bucket][tally])
-          end
+          failure << check_min_compliance(@threshold["#{bucket}.#{tally}.min"], @summary[:status][bucket][tally], bucket, tally)
+          failure << check_max_compliance(@threshold["#{bucket}.#{tally}.max"], @summary[:status][bucket][tally], bucket, tally)
         end
       end
-      puts failure.join("\n") unless compliance
-      puts "Overall compliance threshold of #{@threshold['compliance.min']}\% met. Current compliance at #{@summary[:compliance]}\%" if compliance
+
+      failure.reject!(&:nil?)
+      compliance = false if failure.length.positive?
+      output(compliance, failure)
       compliance
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/CyclomaticComplexity
 
     private
+
+    def check_min_compliance(min, data, bucket, tally)
+      expected_to_string(bucket, tally, 'min', min, data) if min != -1 and data < min
+    end
+
+    def check_max_compliance(max, data, bucket, tally)
+      expected_to_string(bucket, tally, 'max', max, data) if max != -1 and data > max
+    end
+
+    def output(passed_threshold, what_failed)
+      if passed_threshold
+        puts "Overall compliance threshold of #{@threshold['compliance.min']}\% met. Current compliance at #{@summary[:compliance]}\%"
+      else
+        puts 'Compliance threshold was not met: '
+        puts what_failed.join("\n")
+      end
+    end
 
     def expected_to_string(bucket, tally, maxmin, value, got)
       return "Expected #{bucket}.#{tally}.#{maxmin}:#{value} got:#{got}" unless bucket.empty? || bucket.nil?
