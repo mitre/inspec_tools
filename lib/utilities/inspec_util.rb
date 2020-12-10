@@ -48,8 +48,8 @@ module Utils
           end
 
           if control['descriptions'].respond_to?(:find)
-            data[c_id][:check_content]  = control['descriptions'].find { |c| c['label'] == 'fix' }&.dig('data')
-            data[c_id][:fix_text]       = control['descriptions'].find { |c| c['label'] == 'check' }&.dig('data')
+            data[c_id][:check_content]  = control['descriptions'].find { |c| c['label'] == 'check' }&.dig('data')
+            data[c_id][:fix_text]       = control['descriptions'].find { |c| c['label'] == 'fix' }&.dig('data')
           end
 
           data[c_id][:impact]         = control['impact'].to_s unless control['impact'].nil?
