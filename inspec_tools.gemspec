@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.executables   << 'inspec_tools'
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '~> 2.5'
+  spec.required_ruby_version = '>= 2.5'
 
   spec.add_runtime_dependency 'colorize', '~> 0'
   spec.add_runtime_dependency 'git-lite-version-bump', '>= 0.17.3'
@@ -43,7 +43,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'word_wrap', '~> 1.0'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'bundler-audit'
-  spec.add_development_dependency 'codeclimate-test-reporter'
   spec.add_development_dependency 'minitest'
   spec.add_development_dependency 'minitest-reporters', '~> 1.4'
   spec.add_development_dependency 'pry'
