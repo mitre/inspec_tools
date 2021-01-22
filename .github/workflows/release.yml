@@ -46,4 +46,7 @@ jobs:
       - name: Build container
         run: docker build . --tag mitre/inspec_tools:$VERSION --tag mitre/inspec_tools:latest
       - name: Publish container to docker registry
-        run: docker push mitre/inspec_tools --all-tags
+        run: |
+          docker push mitre/inspec_tools:$VERSION
+          docker push mitre/inspec_tools:latest
+        
