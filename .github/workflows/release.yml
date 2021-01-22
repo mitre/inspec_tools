@@ -31,6 +31,8 @@ jobs:
         run: rake build_release
       - name: Get gem version
         run: echo "::set-env name=VERSION::$(ls *.gem | grep -Po '(\d+.)+\d+')"
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
       - name: Publish to RubyGems
         run: |
           gem push --KEY rubygems --host https://rubygems.org *.gem
