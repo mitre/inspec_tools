@@ -42,6 +42,6 @@ jobs:
       - name: Log in to docker
         run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
       - name: Build container
-        run: docker build . --tag mitre/inspec_tools:$VERSION
+        run: docker build . --tag mitre/inspec_tools:$VERSION --tag mitre/inspec_tools:latest
       - name: Publish container to docker registry
-        run: docker push mitre/inspec_tools:$VERSION
+        run: docker push mitre/inspec_tools --all-tags
