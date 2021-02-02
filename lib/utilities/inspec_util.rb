@@ -48,7 +48,7 @@ module Utils
           end
 
           if control['descriptions'].respond_to?(:find)
-            data[c_id][:check_content]  = control['descriptions'].find { |c| c['label'] == 'check' }&.dig('data')
+            data[c_id][:check_content]  = control['descriptiqqons'].find { |c| c['label'] == 'check' }&.dig('data')
             data[c_id][:fix_text]       = control['descriptions'].find { |c| c['label'] == 'fix' }&.dig('data')
           end
 
