@@ -31,6 +31,8 @@ jobs:
         run: rake build_release
       - name: Get gem version
         run: echo "::set-env name=VERSION::$(ls *.gem | grep -Po '(\d+.)+\d+')"
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
       - name: Publish to RubyGems
         run: |
           gem push --KEY rubygems --host https://rubygems.org *.gem
@@ -42,6 +44,9 @@ jobs:
       - name: Log in to docker
         run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
       - name: Build container
-        run: docker build . --tag mitre/inspec_tools:$VERSION
+        run: docker build . --tag mitre/inspec_tools:$VERSION --tag mitre/inspec_tools:latest
       - name: Publish container to docker registry
-        run: docker push mitre/inspec_tools:$VERSION
+        run: |
+          docker push mitre/inspec_tools:$VERSION
+          docker push mitre/inspec_tools:latest
+        
