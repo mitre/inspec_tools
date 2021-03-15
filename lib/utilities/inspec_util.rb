@@ -246,6 +246,7 @@ module Utils
         control.add_tag(::Inspec::Object::Tag.new('stig_id',  json_control['tags']['stig_id']))
         control.add_tag(::Inspec::Object::Tag.new('fix_id', json_control['tags']['fix_id']))
         control.add_tag(::Inspec::Object::Tag.new('cci', json_control['tags']['cci']))
+        control.add_tag(::Inspec::Object::Tag.new('legacy', json_control['tags']['legacy']))
         control.add_tag(::Inspec::Object::Tag.new('nist', json_control['tags']['nist']))
         control.add_tag(::Inspec::Object::Tag.new('cis_level', json_control['tags']['cis_level'])) unless json_control['tags']['cis_level'].blank?
         control.add_tag(::Inspec::Object::Tag.new('cis_controls', json_control['tags']['cis_controls'])) unless json_control['tags']['cis_controls'].blank?

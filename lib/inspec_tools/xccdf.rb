@@ -17,7 +17,7 @@ module InspecTools
       @xccdf = replace_tags_in_xccdf(replace_tags, @xccdf) unless replace_tags.nil?
       cci_list_path = File.join(File.dirname(__FILE__), '../data/U_CCI_List.xml')
       @cci_items = HappyMapperTools::CCIAttributes::CCI_List.parse(File.read(cci_list_path))
-      # @cci_items = HappyMapperTools::CCIAttributes::CCI_List.parse(File.read('./data/U_CCI_List.xml'))
+      register_after_parse_callbacks
       @benchmark = HappyMapperTools::StigAttributes::Benchmark.parse(@xccdf)
     end
 
@@ -89,6 +89,14 @@ module InspecTools
 
     private
 
+    def register_after_parse_callbacks
+      # Determine if the parsed Ident is refrencing a legacy ID number.
+      HappyMapperTools::StigAttributes::Ident.after_parse do |object|
+        object.cci = object.system.eql?('http://cyber.mil/cci')
+        object.legacy = !object.cci
+      end
+    end
+
     def replace_tags_in_xccdf(replace_tags, xccdf_xml)
       replace_tags.each do |tag|
         xccdf_xml = xccdf_xml.gsub(/(&lt;|<)#{tag}(&gt;|>)/, "$#{tag}")
@@ -133,8 +141,9 @@ module InspecTools
         control['tags']['rid'] = group.rule.id
         control['tags']['stig_id'] = group.rule.version
         control['tags']['fix_id'] = group.rule.fix.id
-        control['tags']['cci'] = group.rule.idents
-        control['tags']['nist'] = @cci_items.fetch_nists(group.rule.idents)
+        control['tags']['cci'] = group.rule.idents.select { |i| i.cci }.map { |i| i.ident }
+        control['tags']['legacy'] = group.rule.idents.select { |i| i.legacy}.map { |i| i.ident }
+        control['tags']['nist'] = @cci_items.fetch_nists(control['tags']['cci'])
         control['tags']['false_negatives'] = group.rule.description.false_negatives if group.rule.description.false_negatives != ''
         control['tags']['false_positives'] = group.rule.description.false_positives if group.rule.description.false_positives != ''
         control['tags']['documentable'] = group.rule.description.documentable if group.rule.description.documentable != ''

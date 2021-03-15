@@ -77,6 +77,15 @@ module HappyMapperTools
       element :dc_identifier, String, tag: 'identifier', namespace: 'dc'
     end
 
+    class Ident
+      include HappyMapper
+      attr_accessor :legacy
+      attr_accessor :cci
+      tag 'ident'
+      attribute :system, String, tag: 'system'
+      content :ident, String
+    end
+
     class Rule
       include HappyMapper
       tag 'Rule'
@@ -87,7 +96,7 @@ module HappyMapperTools
       element :title, String, tag: 'title'
       has_one :description, Description, tag: 'description'
       element :reference, ReferenceInfo, tag: 'reference'
-      has_many :idents, String, tag: 'ident'
+      has_many :idents, Ident, tag: 'ident'
       element :fixtext, String, tag: 'fixtext'
       has_one :fix, Fix, tag: 'fix'
       has_one :check, Check, tag: 'check'
