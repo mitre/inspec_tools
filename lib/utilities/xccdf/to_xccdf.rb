@@ -74,8 +74,7 @@ module Utils
         end
 
         group.rule.ident = build_rule_idents(control['cci'], 'http://cyber.mil/cci') if control['cci']
-        # Usage of the "Legacy IDs" field in the DISA STIGViewer is still unknown
-        # group.rule.ident += build_rule_idents(control['legacy'], 'http://cyber.mil/legacy') if control['legacy']
+        group.rule.ident += build_rule_idents(control['legacy'], 'http://cyber.mil/legacy') if control['legacy']
 
         group.rule.fixtext = HappyMapperTools::Benchmark::Fixtext.new
         group.rule.fixtext.fixref = control['fix_id']
@@ -230,8 +229,7 @@ module Utils
       rule_result.instance = result['code_desc']
 
       rule_result.ident = build_rule_idents(control['cci'], 'http://cyber.mil/cci') if control['cci']
-      # Usage of the "Legacy IDs" field in the DISA STIGViewer is still unknown
-      # rule_result.ident += build_rule_idents(control['legacy'], 'http://cyber.mil/legacy') if control['legacy']
+      rule_result.ident += build_rule_idents(control['legacy'], 'http://cyber.mil/legacy') if control['legacy']
 
       # Fix information is only necessary when there are failed tests
       rule_result.fix = build_rule_fix(control['fix_id']) if control['fix_id'] && result_status == 'fail'

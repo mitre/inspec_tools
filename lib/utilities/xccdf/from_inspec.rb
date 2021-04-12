@@ -34,6 +34,7 @@ module Utils
         c_data[c_id]['rweight']        = control['tags']['rweight'] if control['tags']['rweight'] # Optional attribute where N/A is not schema compliant
         c_data[c_id]['stig_id']        = control['tags']['stig_id'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['cci']            = control['tags']['cci'] if control['tags']['cci'] # Optional attribute
+        c_data[c_id]['legacy']         = control['tags']['legacy'] if control['tags']['legacy'] # Optional attribute
         c_data[c_id]['nist']           = control['tags']['nist'] || ['unmapped']
         c_data[c_id]['check']          = control['tags']['check'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['checkref']       = control['tags']['checkref'] || DATA_NOT_FOUND_MESSAGE
