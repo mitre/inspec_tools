@@ -13,10 +13,11 @@ describe Utils::FromInspec do
     end
     let(:controls) do
       [
-        {
-          'id' => '1',
-          'tags' => {}
-        },
+          {
+              'id' => '1',
+              'tags' => {},
+	      'descriptions' => {}
+          },
       ]
     end
 
@@ -26,6 +27,8 @@ describe Utils::FromInspec do
       it 'parses as expected' do
         assert_equal('Users must re-authenticate for privilege escalation.', subject['controls'][0]['title'])
         assert_equal('F-78301r2_fix', subject['controls'][0]['fix_id'])
+	assert_match /Verify the operating system requires users to reauthenticate/, subject['controls'][0]['check']
+	assert_match /Configure the operating system to require users to reauthenticate/, subject['controls'][0]['fix']
       end
     end
 
@@ -56,10 +59,11 @@ describe Utils::FromInspec do
     describe 'when there is no gid' do
       let(:controls) do
         [
-          {
-            'id' => '1',
-            'tags' => {}
-          },
+            {
+                'id' => '1',
+                'tags' => {},
+		            'descriptions' => {}
+            },
         ]
       end
 
@@ -77,10 +81,11 @@ describe Utils::FromInspec do
     describe 'when there is no rid' do
       let(:controls) do
         [
-          {
-            'id' => '1',
-            'tags' => { 'gid' => 'g_id_1' }
-          },
+            {
+                'id' => '1',
+                'tags' => { 'gid' => 'g_id_1' },
+		            'descriptions' => {}
+            },
         ]
       end
 
