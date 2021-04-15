@@ -73,8 +73,8 @@ module Utils
           group.rule.reference = build_rule_reference
         end
 
-        group.rule.ident = build_rule_idents(control['cci'], 'http://cyber.mil/cci') if control['cci']
-        group.rule.ident += build_rule_idents(control['legacy'], 'http://cyber.mil/legacy') if control['legacy']
+        group.rule.ident = build_rule_idents(control['cci']) if control['cci']
+        group.rule.ident += build_rule_idents(control['legacy']) if control['legacy']
 
         group.rule.fixtext = HappyMapperTools::Benchmark::Fixtext.new
         group.rule.fixtext.fixref = control['fix_id']
@@ -122,16 +122,12 @@ module Utils
 
     # Construct rule identifiers for rule
     # @param idents [Array]
-    def build_rule_idents(idents, system)
+    def build_rule_idents(idents)
       raise "#{idents} is not an Array type." unless idents.is_a?(Array)
 
       # Each rule identifier is a different element
       idents.map do |identifier|
-        ident = HappyMapperTools::Benchmark::Ident.new
-        # ident.system = 'http://cyber.mil/cci'
-        ident.system = system
-        ident.ident = identifier
-        ident
+        ident = HappyMapperTools::Benchmark::Ident.new identifier
       end
     end
 
@@ -228,8 +224,8 @@ module Utils
       rule_result.message = result_message(result, result_status) if result_message(result, result_status)
       rule_result.instance = result['code_desc']
 
-      rule_result.ident = build_rule_idents(control['cci'], 'http://cyber.mil/cci') if control['cci']
-      rule_result.ident += build_rule_idents(control['legacy'], 'http://cyber.mil/legacy') if control['legacy']
+      rule_result.ident = build_rule_idents(control['cci']) if control['cci']
+      rule_result.ident += build_rule_idents(control['legacy']) if control['legacy']
 
       # Fix information is only necessary when there are failed tests
       rule_result.fix = build_rule_fix(control['fix_id']) if control['fix_id'] && result_status == 'fail'
