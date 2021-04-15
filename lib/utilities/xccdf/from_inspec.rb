@@ -36,14 +36,14 @@ module Utils
         c_data[c_id]['cci']            = control['tags']['cci'] if control['tags']['cci'] # Optional attribute
         c_data[c_id]['legacy']         = control['tags']['legacy'] if control['tags']['legacy'] # Optional attribute
         c_data[c_id]['nist']           = control['tags']['nist'] || ['unmapped']
-	if control.key?('descriptions') # new (post-2020) inspec output places check, fix, and rationale fields in a descriptions block
-          c_data[c_id]['check']          = control['descriptions']['check'] || DATA_NOT_FOUND_MESSAGE
-          c_data[c_id]['fix']            = control['descriptions']['fix'] || DATA_NOT_FOUND_MESSAGE
-          c_data[c_id]['rationale']      = control['descriptions']['rationale'] || DATA_NOT_FOUND_MESSAGE
-	else # old inspec output places check, fix, and rationale in the tags block
+	if control['descriptions'].nil? # new (post-2020) inspec output places check, fix, and rationale fields in a descriptions block
           c_data[c_id]['check']          = control['tags']['check'] || DATA_NOT_FOUND_MESSAGE
           c_data[c_id]['fix']            = control['tags']['fix'] || DATA_NOT_FOUND_MESSAGE
           c_data[c_id]['rationale']      = control['tags']['rationale'] || DATA_NOT_FOUND_MESSAGE
+	else # old inspec output places check, fix, and rationale in the tags block
+          c_data[c_id]['check']          = control['descriptions']['check'] || DATA_NOT_FOUND_MESSAGE
+          c_data[c_id]['fix']            = control['descriptions']['fix'] || DATA_NOT_FOUND_MESSAGE
+          c_data[c_id]['rationale']      = control['descriptions']['rationale'] || DATA_NOT_FOUND_MESSAGE
 	end
         c_data[c_id]['checkref']       = control['tags']['checkref'] || DATA_NOT_FOUND_MESSAGE
         c_data[c_id]['fix_id']         = control['tags']['fix_id'] if control['tags']['fix_id'] # Optional attribute where N/A is not schema compliant
