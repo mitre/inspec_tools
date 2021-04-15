@@ -39,7 +39,9 @@ module Utils
 	# new (post-2020) inspec output places check, fix, and rationale fields in a descriptions block
         if control.key?('descriptions')
           desc = control['descriptions']
+	  puts desc.class
           check                          = desc['check'] || DATA_NOT_FOUND_MESSAGE
+	  puts check.class
           c_data[c_id]['check']          = check || DATA_NOT_FOUND_MESSAGE
           c_data[c_id]['fix']            = desc['fix'] || DATA_NOT_FOUND_MESSAGE
           c_data[c_id]['rationale']      = desc['rationale'] || DATA_NOT_FOUND_MESSAGE
