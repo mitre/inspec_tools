@@ -65,6 +65,14 @@ module HappyMapperTools
       tag 'ident'
       attribute :system, String, tag: 'system'
       content :ident, String
+      def initialize(ident_str)
+        @ident = ident_str
+	if ident_str =~ /^(CCI-[0-9]{6})$/
+          @system = 'http://cyber.mil/cci'
+	else
+          @system = 'http://cyber.mil/legacy'
+	end
+      end
     end
 
     # Class Fixtext maps from the 'fixtext' from Benchmark XML file using HappyMapper
