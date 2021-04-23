@@ -67,11 +67,17 @@ module HappyMapperTools
       content :ident, String
       def initialize(ident_str)
         @ident = ident_str
-	if ident_str =~ /^(CCI-[0-9]{6})$/
+        if ident_str =~ /^(CCI-[0-9]{6})$/
+          # Match CCI IDs; e.g. CCI-123456
           @system = 'http://cyber.mil/cci'
-	else
+        elsif ident_str =~ /^(S?V-[0-9]{5})$/
+          # Match SV- IDs; e.g. SV-12345
+          # Match V- IDs; e.g. V-12345
           @system = 'http://cyber.mil/legacy'
-	end
+        else
+          # for all other ident_str, use the old identifier
+          @system = 'https://public.cyber.mil/stigs/cci/'
+        end
       end
     end
 
