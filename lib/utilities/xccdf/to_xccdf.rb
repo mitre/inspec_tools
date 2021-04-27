@@ -67,7 +67,7 @@ module Utils
         group.rule.weight = control['rweight']
         group.rule.version = control['rversion']
         group.rule.title = control['title'].tr("\n", ' ') if control['title']
-        group.rule.description = "<VulnDiscussion>#{control['desc'].tr("\n", ' ')}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations></Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
+        group.rule.description = "<VulnDiscussion>#{control['desc']}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations></Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
 
         if ['reference.dc.publisher', 'reference.dc.title', 'reference.dc.subject', 'reference.dc.type', 'reference.dc.identifier'].any? { |a| @attribute.key?(a) }
           group.rule.reference = build_rule_reference
