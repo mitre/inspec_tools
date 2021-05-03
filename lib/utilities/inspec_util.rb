@@ -99,12 +99,12 @@ module Utils
       status_list = control[:status].uniq
       if control[:impact].to_f.zero?
         'Not_Applicable'
+      elsif (status_list.include?('error') || status_list.empty?) && for_summary
+        'Profile_Error'
       elsif status_list.include?('failed')
         'Open'
       elsif status_list.include?('passed')
         'NotAFinding'
-      elsif status_list.include?('error') && for_summary
-        'Profile_Error'
       else
         # profile skipped or profile error
         'Not_Reviewed'

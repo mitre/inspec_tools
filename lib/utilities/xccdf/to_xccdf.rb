@@ -74,6 +74,7 @@ module Utils
         end
 
         group.rule.ident = build_rule_idents(control['cci']) if control['cci']
+        group.rule.ident += build_rule_idents(control['legacy']) if control['legacy']
 
         group.rule.fixtext = HappyMapperTools::Benchmark::Fixtext.new
         group.rule.fixtext.fixref = control['fix_id']
@@ -126,10 +127,7 @@ module Utils
 
       # Each rule identifier is a different element
       idents.map do |identifier|
-        ident = HappyMapperTools::Benchmark::Ident.new
-        ident.system = 'https://public.cyber.mil/stigs/cci/'
-        ident.ident = identifier
-        ident
+        ident = HappyMapperTools::Benchmark::Ident.new identifier
       end
     end
 
@@ -227,6 +225,7 @@ module Utils
       rule_result.instance = result['code_desc']
 
       rule_result.ident = build_rule_idents(control['cci']) if control['cci']
+      rule_result.ident += build_rule_idents(control['legacy']) if control['legacy']
 
       # Fix information is only necessary when there are failed tests
       rule_result.fix = build_rule_fix(control['fix_id']) if control['fix_id'] && result_status == 'fail'
