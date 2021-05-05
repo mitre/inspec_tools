@@ -52,3 +52,83 @@ class InspecTest < Minitest::Test
     assert(csv)
   end
 end
+
+describe InspecTools::Inspec do
+  let(:dci) { InspecTools::Inspec.new(inspec_json) }
+  let(:inspec_json) do
+    {
+      'profiles' => [{ 'controls' => controls }]
+    }.to_json
+  end
+  let(:controls) do
+    [{ 'id': 'V-221652' }]
+  end
+
+  describe '#generate_ckl' do
+    let(:subject) { dci.send(:generate_ckl, attributes) }
+    let(:attributes) { {} }
+    let(:checklist) { HappyMapperTools::StigChecklist::Checklist.new }
+
+    before do
+      dci.instance_variable_set(:@data, {})
+      dci.instance_variable_set(:@checklist, checklist)
+      dci.instance_variable_set(:@platform, nil)
+    end
+
+    describe 'when a benchmark version is available' do
+      let(:attributes) { { 'benchmark.version' => 2 } }
+
+      it 'sets the SI_DATA version' do
+        subject
+        data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'version' }
+        assert_equal data.data, 2
+      end
+    end
+
+    describe 'when a benchmark plaintext is available' do
+      let(:attributes) { { 'benchmark.plaintext' => 'Release 2020' } }
+
+      it 'sets the SI_DATA releaseinfo' do
+        subject
+        data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'releaseinfo' }
+        assert_equal data.data, 'Release 2020'
+      end
+    end
+
+    describe 'when a benchmark title is available' do
+      let(:attributes) { { 'benchmark.title' => 'STIG Testing' } }
+
+      it 'sets the SI_DATA releaseinfo' do
+        subject
+        data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'title' }
+        assert_equal data.data, 'STIG Testing'
+      end
+    end
+  end
+
+  describe '#generate_title' do
+    let(:subject) { dci.send(:generate_title, attributes, inspec_json) }
+    let(:attributes) { {} }
+    let(:checklist) { HappyMapperTools::StigChecklist::Checklist.new }
+
+    before do
+      dci.instance_variable_set(:@data, {})
+      dci.instance_variable_set(:@checklist, checklist)
+      dci.instance_variable_set(:@platform, nil)
+    end
+
+    describe 'when a benchmark.title attribute is provided' do
+      let(:attributes) do
+        {
+          'benchmark.plaintext' => 'Release 2020',
+          'benchmark.title' => 'STIG Testing',
+          'benchmark.version' => 2
+        }
+      end
+
+      it 'creates the title from attribute data' do
+        assert_equal subject, 'STIG Testing :: Version 2, Release 2020'
+      end
+    end
+  end
+end

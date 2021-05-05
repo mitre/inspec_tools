@@ -281,10 +281,11 @@ example: inspec_tools inspec2csv -j inspec_profile.json -o mycsv.csv
 USAGE: inspec_tools inspec2ckl [OPTIONS] -j <inspec-json> -o <results-ckl>
 
 FLAGS:
-	-j --inspec-json <inspec-json> : path to InSpec results json file
-	-o --output <results-ckl>      : path to output checklist file
-	-m --metadata <metadata-json>  : path to json file with additional metadata for the checklist file [optional]
-	-V --verbose                   : verbose run [optional]
+       -a, [--attributes=ATTRIBUTES]       : path to yml file that provides additional attributes for the Checklist document. These attributes are parts of XCCDF document which do not fit into the InSpec schema.
+       -j, --inspec-json=INSPEC_JSON       : path to InSpec results JSON file
+       -o, --output=OUTPUT                 : path to output checklist file
+       -m, [--metadata=METADATA]           : path to JSON file with additional host metadata for the checklist file
+	-V --verbose                        : verbose run [optional]
 
 example: inspec_tools inspec2ckl -j results.json -o output.ckl
 ```
