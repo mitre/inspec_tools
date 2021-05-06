@@ -6,7 +6,7 @@ class XCCDFTest < Minitest::Test
   end
 
   def test_xccdf_init_with_valid_params
-    xccdf = File.read('examples/xccdf2inspec/data/U_Red_Hat_Enterprise_Linux_7_STIG_V1R4_Manual-xccdf.xml')
+    xccdf = File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml')
     assert(InspecTools::XCCDF.new(xccdf, true))
   end
 
@@ -16,18 +16,18 @@ class XCCDFTest < Minitest::Test
   end
 
   def test_xccdf_attributes
-    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_Red_Hat_Enterprise_Linux_7_STIG_V1R4_Manual-xccdf.xml'), true)
+    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml'), true)
     assert_equal(xccdf.publisher, "DISA")
-    assert_equal(xccdf.published, "2017-12-14")
+    assert_equal(xccdf.published, "2021-03-01")
   end
 
   def test_to_inspec
-    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_Red_Hat_Enterprise_Linux_7_STIG_V1R4_Manual-xccdf.xml'), true)
+    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml'), true)
     assert(xccdf.to_inspec)
   end
 
   def test_to_inspec_metadata
-    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_Red_Hat_Enterprise_Linux_7_STIG_V1R4_Manual-xccdf.xml'), true)
+    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml'), true)
     inspec_json = xccdf.to_inspec
     assert_equal('RHEL_7_STIG', inspec_json['name'])
     assert_equal('Red Hat Enterprise Linux 7 Security Technical Implementation Guide', inspec_json['title'])
@@ -42,15 +42,15 @@ class XCCDFTest < Minitest::Test
   end
 
   def test_controls_count
-    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_Red_Hat_Enterprise_Linux_7_STIG_V1R4_Manual-xccdf.xml'), true)
+    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml'), true)
     inspec_json = xccdf.to_inspec
-    assert_equal(240, inspec_json['controls'].count)
+    assert_equal(249, inspec_json['controls'].count)
   end
 
   def test_control_id_flag
-    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_Red_Hat_Enterprise_Linux_7_STIG_V1R4_Manual-xccdf.xml'), true)
+    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml'), true)
     vulnID_inspec_json = xccdf.to_inspec
-    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_Red_Hat_Enterprise_Linux_7_STIG_V1R4_Manual-xccdf.xml'), false)
+    xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml'), false)
     ruleID_inspec_json = xccdf.to_inspec
     assert(vulnID_inspec_json['controls'].first['id'].start_with? 'V-')
     assert(ruleID_inspec_json['controls'].first['id'].start_with? 'SV-')
