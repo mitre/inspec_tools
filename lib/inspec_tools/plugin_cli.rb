@@ -35,8 +35,9 @@ module InspecPlugins
       option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
       option :replace_tags, type: :array, required: false, aliases: '-r'
       option :metadata, required: false, aliases: '-m'
+      option :control_id, required: false, enum: %w{ruleID vulnID}, aliases: '-c', default: 'vulnID'
       def xccdf2inspec
-        xccdf = InspecTools::XCCDF.new(File.read(options[:xccdf]), options[:replace_tags])
+        xccdf = InspecTools::XCCDF.new(File.read(options[:xccdf]), options[:control_id] == 'vulnID',options[:replace_tags])
         profile = xccdf.to_inspec
 
         if !options[:metadata].nil?

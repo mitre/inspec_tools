@@ -7,13 +7,14 @@ require 'json'
 
 module InspecTools
   class XCCDF
-    def initialize(xccdf, replace_tags = nil)
+    def initialize(xccdf, use_vuln_id, replace_tags = nil)
       @xccdf = xccdf
       @xccdf = replace_tags_in_xccdf(replace_tags, @xccdf) unless replace_tags.nil?
       cci_list_path = File.join(File.dirname(__FILE__), '../data/U_CCI_List.xml')
       @cci_items = HappyMapperTools::CCIAttributes::CCI_List.parse(File.read(cci_list_path))
       register_after_parse_callbacks
       @benchmark = HappyMapperTools::StigAttributes::Benchmark.parse(@xccdf)
+      @use_vuln_id = use_vuln_id
     end
 
     def to_ckl
@@ -124,7 +125,7 @@ module InspecTools
     def insert_controls
       @benchmark.group.each do |group|
         control = {}
-        control['id'] = group.id
+        control['id'] = @use_vuln_id ? group.id : group.rule.id.split('r').first
         control['title'] = group.rule.title
         control['desc'] = group.rule.description.vuln_discussion.split('Satisfies: ')[0]
         control['impact'] = Utils::InspecUtil.get_impact(group.rule.severity)
