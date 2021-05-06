@@ -218,6 +218,7 @@ FLAGS:
 	-s --separate-files [true | false] : output the resulting controls as one or mutiple files (default: true) [optional]
 	-m --metadata <metadata-json>      : path to json file with additional metadata for the inspec.yml file [optional]
 	-r --replace-tags <array>          : A case-sensitive, space separated list to replace tags with a $ if found in a group rules description tag [optional]
+	-c --control-id [vulnID | ruleID]  : use either legacy Vuln ID (ex. 'V-XXXXX') or Rule ID (ex. 'SV-XXXXX') as the overall Control ID (default: vulnID) [optional]
 
 example: inspec_tools xccdf2inspec -x xccdf_file.xml -a attributes.yml -o myprofile -f ruby -s false
 ```
