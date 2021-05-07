@@ -37,8 +37,8 @@ class XCCDFTest < Minitest::Test
     assert_equal('Apache-2.0', inspec_json['license'])
     assert_equal('"This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."', inspec_json['summary'])
     assert_equal('0.1.0', inspec_json['version'])
-    assert_equal([], inspec_json['supports'])
-    assert_equal([], inspec_json['attributes'])
+    assert_empty(inspec_json['supports'])
+    assert_empty(inspec_json['attributes'])
   end
 
   def test_controls_count
