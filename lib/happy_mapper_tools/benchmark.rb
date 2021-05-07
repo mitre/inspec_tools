@@ -67,10 +67,11 @@ module HappyMapperTools
       content :ident, String
       def initialize(ident_str)
         @ident = ident_str
-        if ident_str =~ /^(CCI-[0-9]{6})$/
+        case ident_str
+        when /^(CCI-[0-9]{6})$/
           # Match CCI IDs; e.g. CCI-123456
           @system = 'http://cyber.mil/cci'
-        elsif ident_str =~ /^(S?V-[0-9]{5})$/
+        when /^(S?V-[0-9]{5})$/
           # Match SV- IDs; e.g. SV-12345
           # Match V- IDs; e.g. V-12345
           @system = 'http://cyber.mil/legacy'
@@ -128,7 +129,7 @@ module HappyMapperTools
       element :result, String, tag: 'result'
       # element override - Not implemented. Does not apply to Inspec execution
       has_many :ident, Ident, tag: 'ident'
-      # Note: element metadata not implemented at this time
+      # NOTE: element metadata not implemented at this time
       has_many :message, MessageType, tag: 'message'
       has_many :instance, String, tag: 'instance'
       element :fix, Fix, tag: 'fix'
@@ -175,7 +176,7 @@ module HappyMapperTools
 
     class TestResult
       include HappyMapper
-      # Note: element benchmark not implemented at this time since this is same file
+      # NOTE: element benchmark not implemented at this time since this is same file
       # Note: element title not implemented due to no mapping from Chef Inspec
       element :remark, String, tag: 'remark'
       has_many :organization, String, tag: 'organization'
@@ -184,14 +185,14 @@ module HappyMapperTools
       has_many :target_address, String, tag: 'target-address'
       element :target_facts, TargetFact, tag: 'target-facts'
       element :platform, CPE2idrefType, tag: 'platform'
-      # Note: element profile not implemented since Benchmark profile is also not implemented
+      # NOTE: element profile not implemented since Benchmark profile is also not implemented
       has_many :rule_result, RuleResultType, tag: 'rule-result'
       has_many :score, ScoreType, tag: 'score' # One minimum
       # Note: element signature not implemented due to no mapping from Chef Inspec
       attribute :id, String, tag: 'id'
       attribute :starttime, String, tag: 'start-time'
       attribute :endtime, String, tag: 'end-time'
-      # Note: attribute test-system not implemented at this time due to unknown CPE value for Chef Inspec
+      # NOTE: attribute test-system not implemented at this time due to unknown CPE value for Chef Inspec
       attribute :version, String, tag: 'version'
     end
 

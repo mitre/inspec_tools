@@ -33,6 +33,8 @@ jobs:
         run: bundle install
       - name: Generate mapping objects
         run: bundle exec rake generate_mapping_objects
+      - name: Run rubocop
+        run: bundle exec rubocop
       - name: Run rake test
         run: bundle exec rake test
       - name: Run bundle-audit

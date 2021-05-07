@@ -66,7 +66,7 @@ module InspecTools
     #
     # @param inspec_json : an inspec profile formatted as a json object
     ###
-    def inspec_json_to_array(inspec_json) # rubocop:disable Metrics/CyclomaticComplexity
+    def inspec_json_to_array(inspec_json)
       data = []
       headers = {}
       inspec_json['controls'].each do |control|
@@ -158,19 +158,19 @@ module InspecTools
       vuln
     end
 
-    def generate_asset # rubocop:disable Metrics/AbcSize
+    def generate_asset
       asset = HappyMapperTools::StigChecklist::Asset.new
-      asset.role = !@metadata['role'].nil? ? @metadata['role'] : 'Workstation'
-      asset.type = !@metadata['type'].nil? ? @metadata['type'] : 'Computing'
+      asset.role = @metadata['role'].nil? ? 'Workstation' : @metadata['role']
+      asset.type = @metadata['type'].nil? ? 'Computing' : @metadata['type']
       asset.host_name = generate_hostname
       asset.host_ip = generate_ip
       asset.host_mac = generate_mac
       asset.host_fqdn = generate_fqdn
-      asset.tech_area = !@metadata['tech_area'].nil? ? @metadata['tech_area'] : ''
-      asset.target_key = !@metadata['target_key'].nil? ? @metadata['target_key'] : ''
-      asset.web_or_database = !@metadata['web_or_database'].nil? ? @metadata['web_or_database'] : '0'
-      asset.web_db_site = !@metadata['web_db_site'].nil? ? @metadata['web_db_site'] : ''
-      asset.web_db_instance = !@metadata['web_db_instance'].nil? ? @metadata['web_db_instance'] : ''
+      asset.tech_area = @metadata['tech_area'].nil? ? '' : @metadata['tech_area']
+      asset.target_key = @metadata['target_key'].nil? ? '' : @metadata['target_key']
+      asset.web_or_database = @metadata['web_or_database'].nil? ? '0' : @metadata['web_or_database']
+      asset.web_db_site = @metadata['web_db_site'].nil? ? '' : @metadata['web_db_site']
+      asset.web_db_instance = @metadata['web_db_instance'].nil? ? '' : @metadata['web_db_instance']
       asset
     end
 

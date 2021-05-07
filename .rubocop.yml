@@ -1,11 +1,13 @@
 ---
+inherit_from: .rubocop_todo.yml
+
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.5
   Exclude:
   - Gemfile
   - Rakefile
   - 'test/**/*'
-  - 'examples/plugins/train-*/test/**/*'
   - 'vendor/**/*'
 Style/Documentation:
   Enabled: false
@@ -33,12 +35,6 @@ Metrics/MethodLength:
   Max: 40
 Style/NumericLiterals:
   MinDigits: 10
-Metrics/CyclomaticComplexity:
-  Max: 10
-Metrics/PerceivedComplexity:
-  Max: 10
-Metrics/AbcSize:
-  Max: 33
 Metrics/ModuleLength:
   Enabled: true
 Style/StringLiterals:

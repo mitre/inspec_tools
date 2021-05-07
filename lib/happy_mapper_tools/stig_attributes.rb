@@ -79,8 +79,8 @@ module HappyMapperTools
 
     class Ident
       include HappyMapper
-      attr_accessor :legacy
-      attr_accessor :cci
+      attr_accessor :legacy, :cci
+
       tag 'ident'
       attribute :system, String, tag: 'system'
       content :ident, String
@@ -204,7 +204,7 @@ module HappyMapperTools
                        '(case sensitive) option to replace the offending tags ' \
                        'during processing of the XCCDF ' \
                        'file to use the ' +
-                       "`$#{offending_tags[0]}` " .colorize(:light_green) +
+                       "`$#{offending_tags[0]}` ".colorize(:light_green) +
                        'syntax in your InSpec profile.'
           option_two = '(2) Update your XCCDF file to *not use* non-standard XCCDF ' \
                        'elements within ' +
@@ -213,7 +213,7 @@ module HappyMapperTools
                        '`>` '.colorize(:red) +
                        'as "placeholders", and use something that doesn\'t confuse ' \
                        'the XML parser, such as : ' +
-                       "`$#{offending_tags[0]}`" .colorize(:light_green)
+                       "`$#{offending_tags[0]}`".colorize(:light_green)
           puts option_one
           puts "\n"
           puts option_two

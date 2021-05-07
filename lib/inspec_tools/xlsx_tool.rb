@@ -8,7 +8,6 @@ require_relative '../utilities/inspec_util'
 require_relative '../utilities/cis_to_nist'
 require_relative '../utilities/mapping_validator'
 
-# rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/CyclomaticComplexity
 
@@ -58,8 +57,8 @@ module InspecTools
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-        'name': 'inspec_tools',
-        'version': ::InspecTools::VERSION
+        name: 'inspec_tools',
+        version: ::InspecTools::VERSION
       }
     end
 
@@ -73,7 +72,7 @@ module InspecTools
           tag_pos = @mapping['control.tags']
           control = {}
           control['tags'] = {}
-          control['id'] = control_prefix + '-' + row[@mapping['control.id']].formatted_value unless cell_empty?(@mapping['control.id']) || cell_empty?(row[@mapping['control.id']])
+          control['id'] = "#{control_prefix}-#{row[@mapping['control.id']].formatted_value}" unless cell_empty?(@mapping['control.id']) || cell_empty?(row[@mapping['control.id']])
           control['title']  = row[@mapping['control.title']].formatted_value unless cell_empty?(@mapping['control.title']) || cell_empty?(row[@mapping['control.title']])
           control['desc'] = ''
           control['desc'] = row[@mapping['control.desc']].formatted_value unless cell_empty?(row[@mapping['control.desc']])
@@ -107,7 +106,8 @@ module InspecTools
     end
 
     def apply_cis_and_nist_controls(control, cis_tags)
-      control['tags']['cis_controls'], control['tags']['nist'] = [], []
+      control['tags']['cis_controls'] = []
+      control['tags']['nist'] = []
 
       if cis_tags[:sub_section].nil? || cis_tags[:sub_section].blank?
         control['tags']['cis_controls'] << cis_tags[:section]
@@ -131,6 +131,5 @@ module InspecTools
   end
 end
 
-# rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/CyclomaticComplexity

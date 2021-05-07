@@ -4,7 +4,7 @@ module Utils
     DATA_NOT_FOUND_MESSAGE = 'N/A'.freeze
 
     # Convert raw Inspec result json into format acceptable for XCCDF transformation.
-    def parse_data_for_xccdf(json) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def parse_data_for_xccdf(json) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       data = {}
 
       controls = []
@@ -29,7 +29,7 @@ module Utils
         c_data[c_id]['gid']            = control['tags']['gid'] || control['id']
         c_data[c_id]['gtitle']         = control['tags']['gtitle'] if control['tags']['gtitle'] # Optional attribute
         c_data[c_id]['gdescription']   = control['tags']['gdescription'] if control['tags']['gdescription'] # Optional attribute
-        c_data[c_id]['rid']            = control['tags']['rid'] || 'r_' + c_data[c_id]['gid']
+        c_data[c_id]['rid']            = control['tags']['rid'] || "r_#{c_data[c_id]['gid']}"
         c_data[c_id]['rversion']       = control['tags']['rversion'] if control['tags']['rversion'] # Optional attribute
         c_data[c_id]['rweight']        = control['tags']['rweight'] if control['tags']['rweight'] # Optional attribute where N/A is not schema compliant
         c_data[c_id]['stig_id']        = control['tags']['stig_id'] || DATA_NOT_FOUND_MESSAGE

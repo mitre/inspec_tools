@@ -1,11 +1,11 @@
 #!/usr/bin/env -S ruby -EUTF-8
 
 # Trap ^C
-Signal.trap('INT') {
+Signal.trap('INT') do
   puts "\nCtrl-C detected. Exiting..."
   sleep 1
   exit
-}
+end
 
 $LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
 require 'inspec_tools'
