@@ -13,7 +13,7 @@ require_relative '../utilities/xccdf/from_inspec'
 require_relative '../utilities/xccdf/to_xccdf'
 
 module InspecTools
-  class Inspec # rubocop:disable Metrics/ClassLength
+  class Inspec
     def initialize(inspec_json, metadata = {})
       @json = JSON.parse(inspec_json.gsub(/\\+u0000/, ''))
       @metadata = metadata

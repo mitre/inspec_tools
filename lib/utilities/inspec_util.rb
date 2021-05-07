@@ -14,7 +14,7 @@ require 'overrides/string'
 require 'rubocop'
 
 module Utils
-  class InspecUtil # rubocop:disable Metrics/ClassLength
+  class InspecUtil
     WIDTH = 80
     IMPACT_SCORES = {
       'none' => 0.0,
@@ -24,7 +24,7 @@ module Utils
       'critical' => 0.9
     }.freeze
 
-    def self.parse_data_for_ckl(json) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def self.parse_data_for_ckl(json)
       data = {}
 
       # Parse for inspec profile results json
@@ -219,7 +219,7 @@ module Utils
       WordWrap.ww(str.to_s, width)
     end
 
-    private_class_method def self.generate_controls(inspec_json) # rubocop:disable Metrics/AbcSize,  Metrics/MethodLength, Metrics/PerceivedComplexity
+    private_class_method def self.generate_controls(inspec_json)
       controls = []
       inspec_json['controls'].each do |json_control|
         control = ::Inspec::Object::Control.new
@@ -327,7 +327,7 @@ module Utils
       myfile.puts readme_contents
     end
 
-    private_class_method def self.unpack_profile(directory, controls, separated, output_format) # rubocop:disable Metrics/MethodLength
+    private_class_method def self.unpack_profile(directory, controls, separated, output_format)
       FileUtils.rm_rf(directory) if Dir.exist?(directory)
       Dir.mkdir directory unless Dir.exist?(directory)
       Dir.mkdir "#{directory}/controls" unless Dir.exist?("#{directory}/controls")

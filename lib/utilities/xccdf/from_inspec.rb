@@ -4,7 +4,7 @@ module Utils
     DATA_NOT_FOUND_MESSAGE = 'N/A'.freeze
 
     # Convert raw Inspec result json into format acceptable for XCCDF transformation.
-    def parse_data_for_xccdf(json) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def parse_data_for_xccdf(json)
       data = {}
 
       controls = []

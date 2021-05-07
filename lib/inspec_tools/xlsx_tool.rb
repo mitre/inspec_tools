@@ -8,9 +8,6 @@ require_relative '../utilities/inspec_util'
 require_relative '../utilities/cis_to_nist'
 require_relative '../utilities/mapping_validator'
 
-# rubocop:disable Metrics/PerceivedComplexity
-# rubocop:disable Metrics/CyclomaticComplexity
-
 module InspecTools
   # Methods for converting from XLS to various formats
   class XLSXTool
@@ -130,6 +127,3 @@ module InspecTools
     end
   end
 end
-
-# rubocop:enable Metrics/PerceivedComplexity
-# rubocop:enable Metrics/CyclomaticComplexity

@@ -33,9 +33,6 @@ Layout/EmptyLinesAroundBlockBody:
 Metrics/BlockLength:
   Enabled: true
   Max: 8192
-Metrics/MethodLength:
-  Enabled: true
-  Max: 40
 Style/NumericLiterals:
   MinDigits: 10
 Metrics/ModuleLength:

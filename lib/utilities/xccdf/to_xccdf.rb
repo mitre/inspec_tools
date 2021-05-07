@@ -2,7 +2,7 @@ require_relative 'xccdf_score'
 
 module Utils
   # Data conversions for Inspec output into XCCDF format.
-  class ToXCCDF # rubocop:disable Metrics/ClassLength
+  class ToXCCDF
     # @param attribute [Hash] XCCDF supplemental attributes
     # @param data [Hash] Converted Inspec output data
     def initialize(attribute, data)
