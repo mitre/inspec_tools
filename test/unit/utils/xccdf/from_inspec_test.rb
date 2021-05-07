@@ -1,22 +1,22 @@
 require_relative '../../test_helper'
 require_relative '../../../../lib/utilities/xccdf/from_inspec'
 
-describe Utils::FromInspec do # rubocop:disable Metrics/BlockLength
+describe Utils::FromInspec do
   let(:dci) { Utils::FromInspec.new }
 
-  describe '#parse_data_for_xccdf' do # rubocop:disable Metrics/BlockLength
+  describe '#parse_data_for_xccdf' do
     let(:subject) { dci.parse_data_for_xccdf(json) }
     let(:json) do
       {
-          'profiles' => [{ 'controls' => controls }]
+        'profiles' => [{ 'controls' => controls }]
       }
     end
     let(:controls) do
       [
-          {
-              'id' => '1',
-              'tags' => {}
-          },
+        {
+          'id' => '1',
+          'tags' => {}
+        },
       ]
     end
 
@@ -31,35 +31,35 @@ describe Utils::FromInspec do # rubocop:disable Metrics/BlockLength
 
     describe 'when there is no cci' do
       it 'does not set a value' do
-        assert_equal false, subject['controls'].first.key?('cci')
+        refute subject['controls'].first.key?('cci')
       end
     end
 
     describe 'when there is no fix' do
       it 'does not set a value' do
-        assert_equal true, subject['controls'].first.key?('fix')
+        assert subject['controls'].first.key?('fix')
       end
     end
 
     describe 'when there is no fix_id' do
       it 'does not set a value' do
-        assert_equal false, subject['controls'].first.key?('fix_id')
+        refute subject['controls'].first.key?('fix_id')
       end
     end
 
     describe 'when there is no gdescription' do
       it 'does not set a value' do
-        assert_equal false, subject['controls'].first.key?('gdescription')
+        refute subject['controls'].first.key?('gdescription')
       end
     end
 
     describe 'when there is no gid' do
       let(:controls) do
         [
-            {
-                'id' => '1',
-                'tags' => {}
-            },
+          {
+            'id' => '1',
+            'tags' => {}
+          },
         ]
       end
 
@@ -70,17 +70,17 @@ describe Utils::FromInspec do # rubocop:disable Metrics/BlockLength
 
     describe 'when there is no gtitle' do
       it 'does not set a value' do
-        assert_equal false, subject['controls'].first.key?('gtitle')
+        refute subject['controls'].first.key?('gtitle')
       end
     end
 
     describe 'when there is no rid' do
       let(:controls) do
         [
-            {
-                'id' => '1',
-                'tags' => { 'gid' => 'g_id_1' }
-            },
+          {
+            'id' => '1',
+            'tags' => { 'gid' => 'g_id_1' }
+          },
         ]
       end
 
@@ -91,13 +91,13 @@ describe Utils::FromInspec do # rubocop:disable Metrics/BlockLength
 
     describe 'when there is no rversion' do
       it 'does not set a value' do
-        assert_equal false, subject['controls'].first.key?('rversion')
+        refute subject['controls'].first.key?('rversion')
       end
     end
 
     describe 'when there is no rweight' do
       it 'does not set a value' do
-        assert_equal false, subject['controls'].first.key?('rweight')
+        refute subject['controls'].first.key?('rweight')
       end
     end
 
@@ -109,8 +109,8 @@ describe Utils::FromInspec do # rubocop:disable Metrics/BlockLength
 
     describe 'when there is no title' do
       it 'does not set a value' do
-        assert_equal false, subject['controls'].first.key?('title')
+        refute subject['controls'].first.key?('title')
       end
     end
   end
-end 
+end

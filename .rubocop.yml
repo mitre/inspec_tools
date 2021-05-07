@@ -1,14 +1,17 @@
 ---
 inherit_from: .rubocop_todo.yml
 
+require: rubocop-minitest
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.5
   Exclude:
   - Gemfile
   - Rakefile
-  - 'test/**/*'
   - 'vendor/**/*'
+Minitest/MultipleAssertions:
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Layout/MultilineBlockLayout:

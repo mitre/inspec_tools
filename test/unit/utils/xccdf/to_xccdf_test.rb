@@ -2,7 +2,7 @@ require_relative '../../test_helper'
 require_relative '../../../../lib/utilities/xccdf/to_xccdf'
 require_relative '../../../../lib/happy_mapper_tools/benchmark'
 
-describe Utils::ToXCCDF do # rubocop:disable Metrics/BlockLength
+describe Utils::ToXCCDF do
   let(:dci) { Utils::ToXCCDF.new(attributes, inspec_data) }
   let(:attributes) { {} }
   let(:inspec_data) do
@@ -14,20 +14,20 @@ describe Utils::ToXCCDF do # rubocop:disable Metrics/BlockLength
       {
         'results' => [
           {
-            'run_time'=>0.000101,
-                'start_time'=>'2019-10-17T08:00:02-04:00'
+            'run_time' => 0.000101,
+            'start_time' => '2019-10-17T08:00:02-04:00'
           },
         ]
       },
       {
         'results' => [
           {
-            'run_time' =>  2.426861,
+            'run_time' => 2.426861,
             'start_time' => '2019-10-17T08:00:04-04:00'
           },
           {
-            'run_time' =>  2.0e-06,
-            'start_time' =>  '2019-10-17T08:00:02-04:00'
+            'run_time' => 2.0e-06,
+            'start_time' => '2019-10-17T08:00:02-04:00'
           },
 
         ]
@@ -68,15 +68,15 @@ describe Utils::ToXCCDF do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  describe '#build_groups' do # rubocop:disable Metrics/BlockLength
+  describe '#build_groups' do
     let(:subject) { dci.send(:build_groups) }
     let(:attributes) { {} }
     let(:controls) do
       [
-          {
-              'id' => '1',
-              'desc' => 'A description'
-          },
+        {
+          'id' => '1',
+          'desc' => 'A description'
+        },
       ]
     end
 
@@ -115,11 +115,11 @@ describe Utils::ToXCCDF do # rubocop:disable Metrics/BlockLength
     describe 'when tag gdescription is provided' do
       let(:controls) do
         [
-            {
-                'id' => '1',
-                'gdescription' => 'A test description',
-                'desc' => 'A description'
-            }
+          {
+            'id' => '1',
+            'gdescription' => 'A test description',
+            'desc' => 'A description'
+          },
         ]
       end
 
@@ -139,7 +139,7 @@ describe Utils::ToXCCDF do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  describe '#populate_target_facts' do # rubocop:disable Metrics/BlockLength
+  describe '#populate_target_facts' do
     let(:subject) { dci.send(:populate_target_facts, benchmark_test_result, metadata) }
     let(:benchmark_test_result) { HappyMapperTools::Benchmark::TestResult.new }
     let(:metadata) { {} }
@@ -188,34 +188,34 @@ describe Utils::ToXCCDF do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  describe '#populate_results' do # rubocop:disable Metrics/BlockLength
+  describe '#populate_results' do
     let(:subject) { dci.send(:populate_results, benchmark_test_result) }
     let(:benchmark_test_result) { HappyMapperTools::Benchmark::TestResult.new }
-    describe 'when there is more than one test result for a control' do # rubocop:disable Metrics/BlockLength
-      let(:controls) do # rubocop:disable Metrics/BlockLength
+    describe 'when there is more than one test result for a control' do
+      let(:controls) do
         [
           {
             'results' => [
               {
-                'run_time' =>  2.426861,
-                    'start_time' => '2019-10-17T08:00:04-04:00',
-                    'status' => 'failed',
-                    'code_desc' => 'File 1 should exist',
-                    'cci' => %w{ident_1 ident_2},
-                    'message' => 'Can\'t find file: 1'
+                'run_time' => 2.426861,
+                'start_time' => '2019-10-17T08:00:04-04:00',
+                'status' => 'failed',
+                'code_desc' => 'File 1 should exist',
+                'cci' => %w{ident_1 ident_2},
+                'message' => 'Can\'t find file: 1'
               },
               {
-                'run_time' =>  2.0e-06,
-                  'start_time' =>  '2019-10-17T08:00:02-04:00',
-                  'status' => 'failed',
-                  'code_desc' => 'File 2 should exist',
-                  'cci' => %w{ident_1 ident_2},
-                  'message' => 'Can\'t find file: 2'
+                'run_time' => 2.0e-06,
+                'start_time' => '2019-10-17T08:00:02-04:00',
+                'status' => 'failed',
+                'code_desc' => 'File 2 should exist',
+                'cci' => %w{ident_1 ident_2},
+                'message' => 'Can\'t find file: 2'
               },
               {
-                'run_time' =>  2.0e-06,
-                  'start_time' =>  '2019-10-17T08:00:02-04:00',
-                  'status' => 'passed'
+                'run_time' => 2.0e-06,
+                'start_time' => '2019-10-17T08:00:02-04:00',
+                'status' => 'passed'
               },
             ]
           },
@@ -247,8 +247,8 @@ describe Utils::ToXCCDF do # rubocop:disable Metrics/BlockLength
       let(:result) do
         {
           'status' => 'failed',
-            'code_desc' => 'System Package firewalld should be installed',
-            'message' =>  'expected that `System Package firewalld` is installed'
+          'code_desc' => 'System Package firewalld should be installed',
+          'message' => 'expected that `System Package firewalld` is installed'
         }
       end
 
@@ -266,13 +266,13 @@ describe Utils::ToXCCDF do # rubocop:disable Metrics/BlockLength
     let(:metadata) { {} }
 
     describe 'when test_result.identity.identity is provided' do
-      let(:metadata) { { 'identity' => {'identity' => 'some_user', 'privileged' => true }} }
+      let(:metadata) { { 'identity' => { 'identity' => 'some_user', 'privileged' => true } } }
 
       it 'sets the identity information' do
         subject
-        assert_equal true, benchmark_test_result.identity.authenticated
+        assert benchmark_test_result.identity.authenticated
         assert_equal 'some_user', benchmark_test_result.identity.identity
-        assert_equal true, benchmark_test_result.identity.privileged
+        assert benchmark_test_result.identity.privileged
       end
     end
 
