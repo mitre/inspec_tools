@@ -122,7 +122,7 @@ module InspecTools
     end
 
     # Translate join of Inspec results and input attributes to XCCDF Groups
-    def build_groups(attributes, data) # rubocop:disable Metrics/AbcSize
+    def build_groups(attributes, data)
       group_array = []
       data['controls'].each do |control|
         group = HappyMapperTools::Benchmark::Group.new
@@ -136,7 +136,7 @@ module InspecTools
         group.rule.weight = control['rweight']
         group.rule.version = control['rversion']
         group.rule.title = control['title'].tr("\n", ' ') if control['title']
-	group.rule.description = "<VulnDiscussion>#{control['desc']}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations>#{control['rationale']}</Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
+        group.rule.description = "<VulnDiscussion>#{control['desc']}</VulnDiscussion><FalsePositives></FalsePositives><FalseNegatives></FalseNegatives><Documentable>false</Documentable><Mitigations>#{control['rationale']}</Mitigations><SeverityOverrideGuidance></SeverityOverrideGuidance><PotentialImpacts></PotentialImpacts><ThirdPartyTools></ThirdPartyTools><MitigationControl></MitigationControl><Responsibility></Responsibility><IAControls></IAControls>"
 
         if ['reference.dc.publisher', 'reference.dc.title', 'reference.dc.subject', 'reference.dc.type', 'reference.dc.identifier'].any? { |a| attributes.key?(a) }
           group.rule.reference = build_rule_reference(attributes)
@@ -196,7 +196,7 @@ module InspecTools
 
       # Each rule identifier is a different element
       idents.map do |identifier|
-        ident = HappyMapperTools::Benchmark::Ident.new identifier
+        HappyMapperTools::Benchmark::Ident.new identifier
       end
     end
 
@@ -264,7 +264,7 @@ module InspecTools
 
     # Build out the TestResult given all the control and result data.
     def populate_results(test_result, data)
-      # Note: id is not an XCCDF 1.2 compliant identifier and will need to be updated when that support is added.
+      # NOTE: id is not an XCCDF 1.2 compliant identifier and will need to be updated when that support is added.
       test_result.id = 'result_1'
       test_result.starttime = run_start_time(data)
       test_result.endtime = run_end_time(data)
@@ -295,21 +295,23 @@ module InspecTools
 
     # Return the earliest time of execution.
     def run_start_time(data)
-      start_times = data['controls'].map do |control|
-                      next if control['results'].nil?
+      start_times =
+        data['controls'].map do |control|
+          next if control['results'].nil?
 
-                      control['results'].map { |result| DateTime.parse(result['start_time']) }
-                    end
+          control['results'].map { |result| DateTime.parse(result['start_time']) }
+        end
       start_times.flatten.min
     end
 
     # Return the latest time of execution accounting for Inspec duration.
     def run_end_time(data)
-      end_times = data['controls'].map do |control|
-                    next if control['results'].nil?
+      end_times =
+        data['controls'].map do |control|
+          next if control['results'].nil?
 
-                    control['results'].map { |result| end_time(result['start_time'], result['run_time']) }
-                  end
+          control['results'].map { |result| end_time(result['start_time'], result['run_time']) }
+        end
       end_times.flatten.max
     end
 
@@ -368,7 +370,7 @@ module InspecTools
     # @param one [String] A rule-result status
     # @param two [String] A rule-result status
     # @return The result of the AND operation.
-    def xccdf_and_result(one, two) # rubocop:disable Metrics/CyclomaticComplexity
+    def xccdf_and_result(one, two)
       # From XCCDF specification truth table
       # P = pass
       # F = fail
@@ -394,7 +396,7 @@ module InspecTools
     end
 
     # Combines rule results with the same result into a single rule result.
-    def combine_results(rule_results) # rubocop:disable Metrics/AbcSize
+    def combine_results(rule_results)
       return rule_results.first if rule_results.size == 1
 
       # Can combine, result, idents (duplicate, take first instance), instance - combine into an array removing duplicates
@@ -436,7 +438,7 @@ module InspecTools
 
       message = HappyMapperTools::Benchmark::MessageType.new
       # Including the code of the check and the resulting message if there is one.
-      message.message = "#{result['code_desc'] ? result['code_desc'] + "\n\n" : ''}#{result['message'] || result['skip_message']}"
+      message.message = "#{result['code_desc'] ? "#{result['code_desc']}\n\n" : ''}#{result['message'] || result['skip_message']}"
       message.severity = result_message_severity(xccdf_status)
       message
     end
@@ -454,7 +456,7 @@ module InspecTools
     end
 
     # Convert raw Inspec result json into format acceptable for XCCDF transformation.
-    def parse_data_for_xccdf(json) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def parse_data_for_xccdf(json) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       data = {}
 
       controls = []
@@ -479,7 +481,7 @@ module InspecTools
         c_data[c_id]['gid']            = control['tags']['gid'] || control['id']
         c_data[c_id]['gtitle']         = control['tags']['gtitle'] if control['tags']['gtitle'] # Optional attribute
         c_data[c_id]['gdescription']   = control['tags']['gdescription'] if control['tags']['gdescription'] # Optional attribute
-        c_data[c_id]['rid']            = control['tags']['rid'] || 'r_' + c_data[c_id]['gid']
+        c_data[c_id]['rid']            = control['tags']['rid'] || "r_#{c_data[c_id]['gid']}"
         c_data[c_id]['rversion']       = control['tags']['rversion'] if control['tags']['rversion'] # Optional attribute
         c_data[c_id]['rweight']        = control['tags']['rweight'] if control['tags']['rweight'] # Optional attribute where N/A is not schema compliant
         c_data[c_id]['stig_id']        = control['tags']['stig_id'] || DATA_NOT_FOUND_MESSAGE
