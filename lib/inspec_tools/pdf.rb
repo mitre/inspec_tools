@@ -6,10 +6,6 @@ require_relative '../utilities/parser'
 require_relative '../utilities/text_cleaner'
 require_relative '../utilities/cis_to_nist'
 
-# rubocop:disable Metrics/AbcSize
-# rubocop:disable Metrics/PerceivedComplexity
-# rubocop:disable Metrics/CyclomaticComplexity
-
 module InspecTools
   class PDF
     def initialize(pdf, profile_name, debug = false)
@@ -59,7 +55,7 @@ module InspecTools
       @transformed_data.each do |contr|
         nist = find_nist(contr[:cis]) unless contr[:cis] == 'No CIS Control'
         control = {}
-        control['id'] = 'M-' + contr[:title].split(' ')[0]
+        control['id'] = "M-#{contr[:title].split[0]}"
         control['title'] = contr[:title]
         control['desc'] = contr[:descr]
         control['impact'] = Utils::InspecUtil.get_impact('medium')
@@ -67,7 +63,7 @@ module InspecTools
         control['tags']['severity'] = Utils::InspecUtil.get_impact_string(control['impact'])
         control['tags']['ref'] = contr[:ref] unless contr[:ref].nil?
         control['tags']['applicability'] = contr[:applicability] unless contr[:applicability].nil?
-        control['tags']['cis_id'] = contr[:title].split(' ')[0] unless contr[:title].nil?
+        control['tags']['cis_id'] = contr[:title].split[0] unless contr[:title].nil?
         control['tags']['cis_control'] = [contr[:cis], @nist_mapping[0][:cis_ver]] unless contr[:cis].nil? # tag cis_control: [5, 6.1] ##6.1 is the version
         control['tags']['cis_level'] = contr[:level] unless contr[:level].nil?
         control['tags']['nist'] = nist unless nist.nil? # tag nist: [AC-3, 4]  ##4 is the version
@@ -91,8 +87,8 @@ module InspecTools
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-        'name': 'inspec_tools',
-        'version': VERSION
+        name: 'inspec_tools',
+        version: VERSION
       }
     end
 

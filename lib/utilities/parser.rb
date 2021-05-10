@@ -4,7 +4,6 @@ require 'parslet'
 require 'parslet/convenience'
 require 'pp'
 
-# rubocop:disable Metrics/ClassLength
 module Util
   class ControlParser < Parslet::Parser
     root :controls
@@ -345,8 +344,8 @@ module Util
 
     def parse(clean_text)
       @parser.parse(clean_text)
-    rescue Parslet::ParseFailed => error
-      puts error.parse_failure_cause.ascii_tree
+    rescue Parslet::ParseFailed => e
+      puts e.parse_failure_cause.ascii_tree
     end
 
     def convert_str(value)
@@ -359,13 +358,13 @@ module Util
           references = ctrl[:ref].split("\n")
           references.each do |ref|
             match = ref.scan(/(?<=#)\d+\.\d+/).map(&:inspect).join(',').delete('"').tr(',', ' ')
-            ctrl[:cis] = match.split(' ') unless match.empty?
+            ctrl[:cis] = match.split unless match.empty?
           end
           ctrl[:cis] = 'No CIS Control' unless ctrl[:cis]
         elsif !ctrl[:cis] && !ctrl[:ref]
           ctrl[:cis] = 'No CIS Control'
         elsif ctrl[:cis] && ctrl[:ref]
-          ctrl[:cis] = ctrl[:cis].scan(/^\d+[\.\d+]*/)
+          ctrl[:cis] = ctrl[:cis].scan(/^\d+[.\d+]*/)
         end
       end
     end

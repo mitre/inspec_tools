@@ -6,11 +6,6 @@ require 'digest'
 require 'json'
 
 module InspecTools
-  # rubocop:disable Metrics/ClassLength
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/BlockLength
   class XCCDF
     def initialize(xccdf, replace_tags = nil)
       @xccdf = xccdf
@@ -42,7 +37,7 @@ module InspecTools
     # extracts non-InSpec attributes
     ###
     # TODO there may be more attributes we want to extract, see data/attributes.yml for example
-    def to_attributes # rubocop:disable Metrics/AbcSize
+    def to_attributes
       @attribute = {}
 
       @attribute['benchmark.title'] = @benchmark.title
@@ -116,8 +111,8 @@ module InspecTools
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-        'name': 'inspec_tools',
-        'version': VERSION
+        name: 'inspec_tools',
+        version: VERSION
       }
       @profile['plaintext'] = @benchmark.plaintext.plaintext
       @profile['status'] = "#{@benchmark.status} on #{@benchmark.release_date.release_date}"
@@ -141,8 +136,8 @@ module InspecTools
         control['tags']['rid'] = group.rule.id
         control['tags']['stig_id'] = group.rule.version
         control['tags']['fix_id'] = group.rule.fix.id
-        control['tags']['cci'] = group.rule.idents.select { |i| i.cci }.map { |i| i.ident }
-        control['tags']['legacy'] = group.rule.idents.select { |i| i.legacy}.map { |i| i.ident }
+        control['tags']['cci'] = group.rule.idents.select(&:cci).map(&:ident)
+        control['tags']['legacy'] = group.rule.idents.select(&:legacy).map(&:ident)
         control['tags']['nist'] = @cci_items.fetch_nists(control['tags']['cci'])
         control['tags']['false_negatives'] = group.rule.description.false_negatives if group.rule.description.false_negatives != ''
         control['tags']['false_positives'] = group.rule.description.false_positives if group.rule.description.false_positives != ''

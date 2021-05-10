@@ -3,8 +3,6 @@
 require 'happymapper'
 require 'nokogiri'
 
-# rubocop:disable Naming/ClassAndModuleCamelCase
-
 module HappyMapperTools
   module CCIAttributes
     class Reference
@@ -62,5 +60,3 @@ module HappyMapperTools
     end
   end
 end
-
-# rubocop:enable Naming/ClassAndModuleCamelCase

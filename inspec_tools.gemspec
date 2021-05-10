@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'OptionParser', '~> 0'
   spec.add_runtime_dependency 'pdf-reader', '~> 2.1'
   spec.add_runtime_dependency 'roo', '~> 2.8'
-  spec.add_runtime_dependency 'rubocop'
+  spec.add_runtime_dependency 'rubocop', '~> 1.11'
   spec.add_runtime_dependency 'word_wrap', '~> 1.0'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'bundler-audit'
@@ -47,5 +47,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-reporters', '~> 1.4'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rubocop-minitest', '~> 0.12.1'
   spec.add_development_dependency 'simplecov'
 end

@@ -2,7 +2,7 @@ require_relative 'xccdf_score'
 
 module Utils
   # Data conversions for Inspec output into XCCDF format.
-  class ToXCCDF # rubocop:disable Metrics/ClassLength
+  class ToXCCDF
     # @param attribute [Hash] XCCDF supplemental attributes
     # @param data [Hash] Converted Inspec output data
     def initialize(attribute, data)
@@ -53,7 +53,7 @@ module Utils
     end
 
     # Translate join of Inspec results and input attributes to XCCDF Groups
-    def build_groups # rubocop:disable Metrics/AbcSize
+    def build_groups
       group_array = []
       @data['controls'].each do |control|
         group = HappyMapperTools::Benchmark::Group.new
@@ -127,7 +127,7 @@ module Utils
 
       # Each rule identifier is a different element
       idents.map do |identifier|
-        ident = HappyMapperTools::Benchmark::Ident.new identifier
+        HappyMapperTools::Benchmark::Ident.new identifier
       end
     end
 
@@ -182,7 +182,7 @@ module Utils
 
     # Build out the TestResult given all the control and result data.
     def populate_results(test_result)
-      # Note: id is not an XCCDF 1.2 compliant identifier and will need to be updated when that support is added.
+      # NOTE: id is not an XCCDF 1.2 compliant identifier and will need to be updated when that support is added.
       test_result.id = 'result_1'
       test_result.starttime = run_start_time
       test_result.endtime = run_end_time
@@ -237,7 +237,7 @@ module Utils
     end
 
     # Combines rule results with the same result into a single rule result.
-    def combine_results(rule_results) # rubocop:disable Metrics/AbcSize
+    def combine_results(rule_results)
       return rule_results.first if rule_results.size == 1
 
       # Can combine, result, idents (duplicate, take first instance), instance - combine into an array removing duplicates
@@ -328,7 +328,7 @@ module Utils
     # @param one [String] A rule-result status
     # @param two [String] A rule-result status
     # @return The result of the AND operation.
-    def xccdf_and_result(one, two) # rubocop:disable Metrics/CyclomaticComplexity
+    def xccdf_and_result(one, two)
       # From XCCDF specification truth table
       # P = pass
       # F = fail
@@ -361,7 +361,7 @@ module Utils
 
       message = HappyMapperTools::Benchmark::MessageType.new
       # Including the code of the check and the resulting message if there is one.
-      message.message = "#{result['code_desc'] ? result['code_desc'] + "\n\n" : ''}#{result['message'] || result['skip_message']}"
+      message.message = "#{result['code_desc'] ? "#{result['code_desc']}\n\n" : ''}#{result['message'] || result['skip_message']}"
       message.severity = result_message_severity(xccdf_status)
       message
     end

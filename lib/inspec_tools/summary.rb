@@ -14,15 +14,8 @@ TALLYS = %i(total critical high medium low).freeze
 THRESHOLD_TEMPLATE = File.expand_path('../data/threshold.yaml', File.dirname(__FILE__))
 
 module InspecTools
-  # rubocop:disable Metrics/ClassLength
   class Summary
-    attr_reader :json
-    attr_reader :json_full
-    attr_reader :json_counts
-    attr_reader :threshold_file
-    attr_reader :threshold_inline
-    attr_reader :summary
-    attr_reader :threshold
+    attr_reader :json, :json_full, :json_counts, :threshold_file, :threshold_inline, :summary, :threshold
 
     def initialize(**options)
       options = options[:options]
@@ -154,5 +147,4 @@ module InspecTools
          summary[:status][:error][:total])).floor
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

@@ -16,10 +16,9 @@ module InspecTools
   autoload :GenerateMap, 'inspec_tools/generate_map'
 end
 
-# rubocop:disable Style/GuardClause
 module InspecPlugins
   module InspecToolsPlugin
-    class CliCommand < Inspec.plugin(2, :cli_command) # rubocop:disable Metrics/ClassLength
+    class CliCommand < Inspec.plugin(2, :cli_command)
       POSSIBLE_LOG_LEVELS = %w{debug info warn error fatal}.freeze
 
       class_option :log_directory, type: :string, aliases: :l, desc: 'Provide log location'
@@ -240,5 +239,3 @@ if help_commands.any? { |cmd| ARGV.include? cmd }
     end
   end
 end
-
-# rubocop:enable Style/GuardClause
