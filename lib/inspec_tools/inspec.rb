@@ -175,13 +175,11 @@ module InspecTools
     def build_test_results(metadata, data)
       test_result = HappyMapperTools::Benchmark::TestResult.new
       test_result.version = @benchmark.version
-      populate_remark(test_result, data)
-      populate_target_facts(test_result, metadata)
-      populate_identity(test_result, metadata)
-      populate_results(test_result, data)
+      test_result = populate_remark(test_result, data)
+      test_result = populate_target_facts(test_result, metadata)
+      test_result = populate_identity(test_result, metadata)
+      test_result = populate_results(test_result, data)
       populate_score(test_result, @benchmark.group)
-
-      test_result
     end
 
     # Contruct a Rule / RuleResult fix element with the provided id.
@@ -216,6 +214,7 @@ module InspecTools
     def populate_remark(result, data)
       result.remark = "Results created using Inspec version #{data['inspec_version']}."
       result.remark += "\n#{data['profiles'].map { |p| "Profile: #{p['name']} Version: #{p['version']}" }.join("\n")}" if data['profiles']
+      result
     end
 
     # Create all target specific information.
@@ -243,11 +242,12 @@ module InspecTools
         all_facts << fact
       end
 
-      return unless all_facts.size.nonzero?
+      return result unless all_facts.size.nonzero?
 
       facts = HappyMapperTools::Benchmark::TargetFact.new
       facts.fact = all_facts
       result.target_facts = facts
+      result
     end
 
     # Add information about the the account and organization executing the tests.
@@ -260,6 +260,7 @@ module InspecTools
       end
 
       test_result.organization = metadata['organization'] if metadata['organization']
+      test_result
     end
 
     # Build out the TestResult given all the control and result data.
