@@ -17,8 +17,8 @@ class XCCDFTest < Minitest::Test
 
   def test_xccdf_attributes
     xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml'), true)
-    assert_equal(xccdf.publisher, "DISA")
-    assert_equal(xccdf.published, "2021-03-01")
+    assert_equal('DISA', xccdf.publisher)
+    assert_equal('2021-03-01', xccdf.published)
   end
 
   def test_to_inspec
@@ -49,13 +49,13 @@ class XCCDFTest < Minitest::Test
 
   def test_vuln_id_as_control_id
     xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml'), true)
-    vulnID_inspec_json = xccdf.to_inspec
-    assert(vulnID_inspec_json['controls'].first['id'].start_with? 'V-')
+    vuln_id_inspec_json = xccdf.to_inspec
+    assert(vuln_id_inspec_json['controls'].first['id'].start_with?('V-'))
   end
 
   def test_rule_id_as_control_id
     xccdf = InspecTools::XCCDF.new(File.read('examples/xccdf2inspec/data/U_RHEL_7_STIG_V3R3_Manual-xccdf.xml'), false)
-    ruleID_inspec_json = xccdf.to_inspec
-    assert(ruleID_inspec_json['controls'].first['id'].start_with? 'SV-')
+    rule_id_inspec_json = xccdf.to_inspec
+    assert(rule_id_inspec_json['controls'].first['id'].start_with?('SV-'))
   end
 end
