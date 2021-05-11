@@ -522,6 +522,7 @@ module InspecTools
     def populate_score(test_result, groups)
       score = Utils::XCCDFScore.new(groups, test_result.rule_result)
       test_result.score = [score.default_score, score.flat_score, score.flat_unweighted_score, score.absolute_score]
+      test_result
     end
 
     # Convert profile information for result processing
