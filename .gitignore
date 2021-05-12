@@ -1,9 +1,11 @@
 *.gem
 *.rbc
+*.swp
 .bundle
 .config
 .idea
 .yardoc
+.rake_tasks~
 _yardoc
 Gemfile.lock
 coverage
