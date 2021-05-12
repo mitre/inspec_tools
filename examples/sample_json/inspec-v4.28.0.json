@@ -1,0 +1,158 @@
+{
+  "name": "example_id",
+  "title": "bTitle",
+  "maintainer": "The Authors",
+  "copyright": "The Authors",
+  "copyright_email": "you@example.com",
+  "license": "Apache-2.0",
+  "summary": "bDescription",
+  "version": "0.1.0",
+  "supports": [],
+  "controls": [
+      {
+          "title": "Ensure configuration is set in situations",
+          "desc": "Identify the threat actor and threat vector.\n  \n  Describe the mitigation.\n  \n  Note the external dependencies of the configuration.",
+          "descriptions": {
+              "default": "Identify the threat actor and threat vector.\n  \n  Describe the mitigation.\n  \n  Note the external dependencies of the configuration.",
+              "rationale": "",
+              "check": "Describe preconditions for conducting the check.\n  \nList each step of the check.\n\nIdentify mitigating factors.\n\nDefine success or failure conditions.",
+              "fix": "Describe preconditions for changing the configuration.\n\nList each step of applying the configuration.\n\nIdentify risks to confidentialty, integrity, or availability associated with applying the configuration."
+          },
+          "impact": 0.5,
+          "refs": [],
+          "tags": {
+              "severity": "low",
+              "gtitle": "SRG-APP-000220-ZZZ-567890",
+              "gid": "gid_unused",
+              "rid": "r1_rule",
+              "stig_id": "stig_id_unused",
+              "fix_id": "fix_id_unused",
+              "cci": [
+                  "CCI-001499",
+                  "CCI-000197"
+              ],
+              "legacy": [
+                  "V-72845",
+                  "SV-87497"
+              ],
+              "nist": [
+                  "CM-5 (6)",
+                  "IA-5 (1) (c)"
+              ]
+          },
+          "code": "control 'X-123456' do\n  title 'Ensure configuration is set in situations'\n  desc  \"Identify the threat actor and threat vector.\n  \n  Describe the mitigation.\n  \n  Note the external dependencies of the configuration.\n  \"\n  desc  'rationale', ''\n  desc  'check', \"Describe preconditions for conducting the check.\n  \nList each step of the check.\n\nIdentify mitigating factors.\n\nDefine success or failure conditions.\n\"\n  desc  'fix', \"\n    Describe preconditions for changing the configuration.\n\n    List each step of applying the configuration.\n\n    Identify risks to confidentialty, integrity, or availability associated with applying the configuration.\n  \"\n  impact 0.5\n  tag severity: 'low'\n  tag gtitle: 'SRG-APP-000220-ZZZ-567890'\n  tag gid: 'gid_unused'\n  tag rid: 'r1_rule'\n  tag stig_id: 'stig_id_unused'\n  tag fix_id: 'fix_id_unused'\n  tag cci: ['CCI-001499', 'CCI-000197']\n  tag legacy: ['V-72845', 'SV-87497']\n  tag nist: ['CM-5 (6)', 'IA-5 (1) (c)']\nend\n",
+          "source_location": {
+              "ref": "./controls/g1Identifier.rb",
+              "line": 3
+          },
+          "id": "X-123456"
+      },
+      {
+          "title": "Ensure a log metric filter and alarm exist for AWS Config\nconfiguration changes",
+          "desc": "Real-time monitoring of API calls can be achieved by directing\nCloudTrail Logs to CloudWatch Logs and establishing corresponding metric\nfilters and alarms. It is recommended that a metric filter and alarm be\nestablished for detecting changes to CloudTrail's configurations.",
+          "descriptions": {
+              "default": "Real-time monitoring of API calls can be achieved by directing\nCloudTrail Logs to CloudWatch Logs and establishing corresponding metric\nfilters and alarms. It is recommended that a metric filter and alarm be\nestablished for detecting changes to CloudTrail's configurations.",
+              "rationale": "",
+              "check": "N/A",
+              "fix": "ft2FixText"
+          },
+          "impact": 0.5,
+          "refs": [],
+          "tags": {
+              "severity": "medium",
+              "gtitle": "g2Title",
+              "gid": "g2Identifier",
+              "rid": "r2_rule",
+              "stig_id": "r2Version",
+              "fix_id": "f2Identifier",
+              "cci": [
+                  "CCI-001495",
+                  "CCI-000196"
+              ],
+              "legacy": [
+                  "identVLegacy3",
+                  "identVLegacy4"
+              ],
+              "nist": [
+                  "AU-9",
+                  "IA-5 (1) (c)"
+              ]
+          },
+          "code": "control 'g2Identifier' do\n  title \"Ensure a log metric filter and alarm exist for AWS Config\nconfiguration changes\"\n  desc  \"Real-time monitoring of API calls can be achieved by directing\nCloudTrail Logs to CloudWatch Logs and establishing corresponding metric\nfilters and alarms. It is recommended that a metric filter and alarm be\nestablished for detecting changes to CloudTrail's configurations.\"\n  desc  'rationale', ''\n  desc  'check', 'N/A'\n  desc  'fix', 'ft2FixText'\n  impact 0.5\n  tag severity: 'medium'\n  tag gtitle: 'g2Title'\n  tag gid: 'g2Identifier'\n  tag rid: 'r2_rule'\n  tag stig_id: 'r2Version'\n  tag fix_id: 'f2Identifier'\n  tag cci: ['CCI-001495', 'CCI-000196']\n  tag legacy: ['identVLegacy3', 'identVLegacy4']\n  tag nist: ['AU-9', 'IA-5 (1) (c)']\nend\n",
+          "source_location": {
+              "ref": "./controls/g2Identifier.rb",
+              "line": 3
+          },
+          "id": "g2Identifier"
+      },
+      {
+          "title": "Ensure a log metric filter and alarm exist for AWS Config\nconfiguration changes",
+          "desc": "Real-time monitoring of API calls can be achieved by directing\nCloudTrail Logs to CloudWatch Logs and establishing corresponding metric\nfilters and alarms. It is recommended that a metric filter and alarm be\nestablished for detecting changes to CloudTrail's configurations.",
+          "descriptions": {
+              "default": "Real-time monitoring of API calls can be achieved by directing\nCloudTrail Logs to CloudWatch Logs and establishing corresponding metric\nfilters and alarms. It is recommended that a metric filter and alarm be\nestablished for detecting changes to CloudTrail's configurations.",
+              "rationale": "",
+              "check": "N/A",
+              "fix": "ft3FixText"
+          },
+          "impact": 0.5,
+          "refs": [],
+          "tags": {
+              "severity": "medium",
+              "gtitle": "g3Title",
+              "gid": "g3Identifier",
+              "rid": "r3_rule",
+              "stig_id": "r3Version",
+              "fix_id": "f3Identifier",
+              "cci": [
+                  "CCI-001495",
+                  "CCI-000196"
+              ],
+              "legacy": [
+                  "identVLegacy5",
+                  "identVLegacy6"
+              ],
+              "nist": [
+                  "AU-9",
+                  "IA-5 (1) (c)"
+              ]
+          },
+          "code": "control 'g3Identifier' do\n  title \"Ensure a log metric filter and alarm exist for AWS Config\nconfiguration changes\"\n  desc  \"Real-time monitoring of API calls can be achieved by directing\nCloudTrail Logs to CloudWatch Logs and establishing corresponding metric\nfilters and alarms. It is recommended that a metric filter and alarm be\nestablished for detecting changes to CloudTrail's configurations.\"\n  desc  'rationale', ''\n  desc  'check', 'N/A'\n  desc  'fix', 'ft3FixText'\n  impact 0.5\n  tag severity: 'medium'\n  tag gtitle: 'g3Title'\n  tag gid: 'g3Identifier'\n  tag rid: 'r3_rule'\n  tag stig_id: 'r3Version'\n  tag fix_id: 'f3Identifier'\n  tag cci: ['CCI-001495', 'CCI-000196']\n  tag legacy: ['identVLegacy5', 'identVLegacy6']\n  tag nist: ['AU-9', 'IA-5 (1) (c)']\nend\n",
+          "source_location": {
+              "ref": "./controls/g3Identifier.rb",
+              "line": 3
+          },
+          "id": "g3Identifier"
+      }
+  ],
+  "groups": [
+      {
+          "title": null,
+          "controls": [
+              "X-123456"
+          ],
+          "id": "controls/g1Identifier.rb"
+      },
+      {
+          "title": null,
+          "controls": [
+              "g2Identifier"
+          ],
+          "id": "controls/g2Identifier.rb"
+      },
+      {
+          "title": null,
+          "controls": [
+              "g3Identifier"
+          ],
+          "id": "controls/g3Identifier.rb"
+      }
+  ],
+  "inputs": [],
+  "sha256": "4e73883fc2f0d7c85e953346717c149539978c2780bc52c99276e3d6d6fe0567",
+  "status_message": "",
+  "status": "loaded",
+  "generator": {
+      "name": "inspec",
+      "version": "4.28.0"
+  }
+}
