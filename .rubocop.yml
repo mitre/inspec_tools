@@ -195,5 +195,3 @@ Layout/InitialIndentation:
   Enabled: true
 Layout/LeadingCommentSpace:
   Enabled: true
-Metrics/AbcSize:
-  Enabled: false
