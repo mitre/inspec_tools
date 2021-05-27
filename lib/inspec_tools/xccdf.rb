@@ -138,7 +138,8 @@ module InspecTools
         control['tags']['stig_id'] = group.rule.version
         control['tags']['fix_id'] = group.rule.fix.id
         control['tags']['cci'] = group.rule.idents.select(&:cci).map(&:ident)
-        control['tags']['legacy'] = group.rule.idents.select(&:legacy).map(&:ident)
+        legacy_tags = group.rule.idents.select(&:legacy)
+        control['tags']['legacy'] = legacy_tags.map(&:ident) unless legacy_tags.empty?
         control['tags']['nist'] = @cci_items.fetch_nists(control['tags']['cci'])
         control['tags']['false_negatives'] = group.rule.description.false_negatives if group.rule.description.false_negatives != ''
         control['tags']['false_positives'] = group.rule.description.false_positives if group.rule.description.false_positives != ''
