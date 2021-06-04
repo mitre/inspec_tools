@@ -1,5 +1,12 @@
 {
 	"stigid" : "RHEL_7_STIG",
+  "role": "my role",
+  "type": "my type",
+  "tech_area": "my area",
+  "target_area": "my area",
+  "web_or_database": "my database",
+  "web_db_site": "my web_db site",
+  "web_db_instance": "my web_db instance",
 	"hostname" : "myawesome",
 	"ip" : "10.10.10.10",
 	"fqdn" : "myawesome.host.com",
