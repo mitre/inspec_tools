@@ -27,6 +27,11 @@ module HappyMapperTools
     # Class Asset maps from the 'SI_DATA' from Checklist XML file using HappyMapper
     class SiData
       include HappyMapper
+
+      def initialize(name, data)
+        self.name = name
+        self.data = data
+      end
       tag 'SI_DATA'
       element :name, String, tag: 'SID_NAME'
       element :data, String, tag: 'SID_DATA'
@@ -35,6 +40,11 @@ module HappyMapperTools
     # Class Asset maps from the 'STIG_INFO' from Checklist XML file using HappyMapper
     class StigInfo
       include HappyMapper
+
+      def initialize(si_data)
+        self.si_data = si_data
+      end
+
       tag 'STIG_INFO'
       has_many :si_data, SiData, tag: 'SI_DATA'
     end
@@ -68,6 +78,11 @@ module HappyMapperTools
     # Class Asset maps from the 'iSTIG' from Checklist XML file using HappyMapper
     class IStig
       include HappyMapper
+
+      def initialize(stig_info, vulns)
+        self.stig_info = stig_info
+        self.vuln = vulns
+      end
       tag 'iSTIG'
       has_one :stig_info, StigInfo, tag: 'STIG_INFO'
       has_many :vuln, Vuln, tag: 'VULN'
@@ -76,6 +91,10 @@ module HappyMapperTools
     # Class Asset maps from the 'STIGS' from Checklist XML file using HappyMapper
     class Stigs
       include HappyMapper
+
+      def initialize(istig)
+        self.istig = istig
+      end
       tag 'STIGS'
       has_one :istig, IStig, tag: 'iSTIG'
     end

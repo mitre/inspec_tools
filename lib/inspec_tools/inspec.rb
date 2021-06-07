@@ -61,6 +61,25 @@ module InspecTools
 
     private
 
+    def topmost_profile_name
+      find_topmost_profile_name(0)
+    end
+
+    def find_topmost_profile_name(index, parent_name = nil)
+      # Return nil when the index is out of bounds.
+      # nil returned here will set the profile name to '' in the calling functions.
+      return nil if index > @json['profiles'].length - 1
+
+      # No parent profile means this is the parent
+      if !@json['profiles'][index].key?('parent_profile') && (@json['profiles'][index]['name'] == parent_name || index.zero?)
+        # For the initial case, parent_name will be nil, and if we are already at the parent index is also zero
+        return @json['profiles'][index]['name']
+      end
+
+      parent_name = @json['profiles'][index]['parent_profile']
+      find_topmost_profile_name(index + 1, parent_name)
+    end
+
     ###
     #  This method converts an inspec json to an array of arrays
     #
@@ -111,28 +130,19 @@ module InspecTools
     end
 
     def generate_ckl
-      stigs = HappyMapperTools::StigChecklist::Stigs.new
-      istig = HappyMapperTools::StigChecklist::IStig.new
-
       vuln_list = []
       @data.keys.each do |control_id|
         vuln_list.push(generate_vuln_data(@data[control_id]))
       end
 
-      si_data = HappyMapperTools::StigChecklist::SiData.new
-      si_data.name = 'stigid'
-      si_data.data = ''
-      if !@metadata['stigid'].nil?
-        si_data.data = @metadata['stigid']
-      end
+      si_data_data = @metadata['stigid'] || topmost_profile_name || ''
+      si_data_stigid = HappyMapperTools::StigChecklist::SiData.new('stigid', si_data_data)
+      si_data_title = HappyMapperTools::StigChecklist::SiData.new('title', si_data_data)
 
-      stig_info = HappyMapperTools::StigChecklist::StigInfo.new
-      stig_info.si_data = si_data
-      istig.stig_info = stig_info
+      stig_info = HappyMapperTools::StigChecklist::StigInfo.new([si_data_stigid, si_data_title])
 
-      istig.vuln = vuln_list
-      stigs.istig = istig
-      @checklist.stig = stigs
+      istig = HappyMapperTools::StigChecklist::IStig.new(stig_info, vuln_list)
+      @checklist.stig = HappyMapperTools::StigChecklist::Stigs.new(istig)
 
       @checklist.asset = generate_asset
     end
