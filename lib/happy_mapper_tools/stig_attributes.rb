@@ -158,12 +158,13 @@ module HappyMapperTools
 
         def apply(value)
           value = value.gsub('&', 'and')
-          DescriptionDetails.parse "<Details>#{value}</Details>"
+          value = value.gsub('"<"', 'less than (converted less than)')
+          DescriptionDetails.parse("<Details>#{value}</Details>")
         rescue Nokogiri::XML::SyntaxError => e
-          if e.to_s.include?('StartTag')
-            report_invalid_start_tag(value, e)
+          if report_disallowed_tags(value) # if there was a bad tag
+            exit(1)
           else
-            report_disallowed_tags(value)
+            report_error(value, e)
           end
         end
 
@@ -173,7 +174,7 @@ module HappyMapperTools
 
         private
 
-        def report_invalid_start_tag(value, error)
+        def report_error(value, error)
           puts error.to_s.colorize(:red)
           column = error.column - '<Details>'.length - 2
           puts "Error around #{value[column-10..column+10].colorize(:light_yellow)}"
@@ -184,39 +185,38 @@ module HappyMapperTools
           allowed_tags = %w{VulnDiscussion FalsePositives FalseNegatives Documentable
                             Mitigations SeverityOverrideGuidance PotentialImpacts
                             PotentialImpacts ThirdPartyTools MitigationControl
-                            Responsibility IAControl SecurityOverrideGuidance}
+                            Responsibility IAControl IAControls SecurityOverrideGuidance}
 
           tags_found = value.scan(%r{(?<=<)([^\/]*?)((?= \/>)|(?=>))}).to_a
 
           tags_found = tags_found.uniq.flatten.reject!(&:empty?)
           offending_tags = tags_found - allowed_tags
 
-          if offending_tags.count > 1
-            puts "\n\nThe non-standard tags: #{offending_tags.to_s.colorize(:red)}" \
+          unless offending_tags.count.zero?
+            puts "\n\nThe non-standard tag(s): #{offending_tags.to_s.colorize(:red)}" \
                  ' were found in: ' + "\n\n#{value}"
-          else
-            puts "\n\nThe non-standard tag: #{offending_tags.to_s.colorize(:red)}" \
-                 ' was found in: ' + "\n\n#{value}"
+            puts "\n\nPlease:\n "
+            option_one = '(1) ' + '(best)'.colorize(:green) + ' Use the ' +
+                         '`-r --replace-tags array` '.colorize(:light_yellow) +
+                         '(case sensitive) option to replace the offending tags ' \
+                         'during processing of the XCCDF ' \
+                         'file to use the ' +
+                         "`$#{offending_tags[0]}` ".colorize(:light_green) +
+                         'syntax in your InSpec profile.'
+            option_two = '(2) Update your XCCDF file to *not use* non-standard XCCDF ' \
+                        'elements within ' +
+                         '`&lt;`,`&gt;`, `<` '.colorize(:red) +
+                         'or '.colorize(:default) +
+                         '`>` '.colorize(:red) +
+                         'as "placeholders", and use something that doesn\'t confuse ' \
+                         'the XML parser, such as : ' +
+                         "`$#{offending_tags[0]}`".colorize(:light_green)
+            puts option_one
+            puts "\n"
+            puts option_two
+            return true
           end
-          puts "\n\nPlease:\n "
-          option_one = '(1) ' + '(best)'.colorize(:green) + ' Use the ' +
-                       '`-r --replace-tags array` '.colorize(:light_yellow) +
-                       '(case sensitive) option to replace the offending tags ' \
-                       'during processing of the XCCDF ' \
-                       'file to use the ' +
-                       "`$#{offending_tags[0]}` ".colorize(:light_green) +
-                       'syntax in your InSpec profile.'
-          option_two = '(2) Update your XCCDF file to *not use* non-standard XCCDF ' \
-                       'elements within ' +
-                       '`&lt;`,`&gt;`, `<` '.colorize(:red) +
-                       'or '.colorize(:default) +
-                       '`>` '.colorize(:red) +
-                       'as "placeholders", and use something that doesn\'t confuse ' \
-                       'the XML parser, such as : ' +
-                       "`$#{offending_tags[0]}`".colorize(:light_green)
-          puts option_one
-          puts "\n"
-          puts option_two
+          false
         end
       end
       HappyMapper::SupportedTypes.register DescriptionDetailsType
