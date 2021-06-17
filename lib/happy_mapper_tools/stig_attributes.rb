@@ -197,20 +197,20 @@ module HappyMapperTools
                  ' were found in: ' + "\n\n#{value}"
             puts "\n\nPlease:\n "
             option_one = '(1) ' + '(best)'.colorize(:green) + ' Use the ' +
-                        '`-r --replace-tags array` '.colorize(:light_yellow) +
-                        '(case sensitive) option to replace the offending tags ' \
-                        'during processing of the XCCDF ' \
-                        'file to use the ' +
-                        "`$#{offending_tags[0]}` ".colorize(:light_green) +
-                        'syntax in your InSpec profile.'
+                         '`-r --replace-tags array` '.colorize(:light_yellow) +
+                         '(case sensitive) option to replace the offending tags ' \
+                         'during processing of the XCCDF ' \
+                         'file to use the ' +
+                         "`$#{offending_tags[0]}` ".colorize(:light_green) +
+                         'syntax in your InSpec profile.'
             option_two = '(2) Update your XCCDF file to *not use* non-standard XCCDF ' \
                         'elements within ' +
-                        '`&lt;`,`&gt;`, `<` '.colorize(:red) +
-                        'or '.colorize(:default) +
-                        '`>` '.colorize(:red) +
-                        'as "placeholders", and use something that doesn\'t confuse ' \
-                        'the XML parser, such as : ' +
-                        "`$#{offending_tags[0]}`".colorize(:light_green)
+                         '`&lt;`,`&gt;`, `<` '.colorize(:red) +
+                         'or '.colorize(:default) +
+                         '`>` '.colorize(:red) +
+                         'as "placeholders", and use something that doesn\'t confuse ' \
+                         'the XML parser, such as : ' +
+                         "`$#{offending_tags[0]}`".colorize(:light_green)
             puts option_one
             puts "\n"
             puts option_two
