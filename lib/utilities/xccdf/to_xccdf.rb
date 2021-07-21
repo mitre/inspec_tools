@@ -123,8 +123,11 @@ module Utils
     # Construct rule identifiers for rule
     # @param idents [Array]
     def build_rule_idents(idents)
+      if idents.is_a?(String)
+        idents = [idents]
+      end
       raise "#{idents} is not an Array type." unless idents.is_a?(Array)
-
+      
       # Each rule identifier is a different element
       idents.map do |identifier|
         HappyMapperTools::Benchmark::Ident.new identifier
