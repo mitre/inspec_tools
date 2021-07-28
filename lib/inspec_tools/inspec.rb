@@ -15,11 +15,7 @@ require_relative '../utilities/xccdf/to_xccdf'
 module InspecTools
   class Inspec
     def initialize(inspec_json, metadata = {})
-      begin
-        @json = JSON.parse(inspec_json.gsub(/\\+u0000/, ''))
-      rescue
-        raise "Unexpected file encoding, please encode the inspec json using UTF-8"
-      end
+      @json = JSON.parse(inspec_json)
       @metadata = metadata
     end
 

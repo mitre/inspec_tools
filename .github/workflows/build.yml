@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ ubuntu-16.04, ubuntu-latest, macos-latest, windows-latest ]
-        ruby: [ 2.5, 2.6, 2.7 ]
+        ruby: [ 2.7 ]
     runs-on: ${{ matrix.platform }}
 
     steps:
