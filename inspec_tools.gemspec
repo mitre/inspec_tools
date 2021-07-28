@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
       '0.0.0.1.ENOGVB'
     end
   spec.authors       = ['Robert Thew', 'Matthew Dromazos', 'Rony Xavier', 'Aaron Lippold']
-  spec.email         = ['rthew@mitre.org']
+  spec.email         = ['saf@mitre.org']
   spec.summary       = 'Converter utils for Inspec'
   spec.description   = 'Converter utils for Inspec that can be included as a gem or used from the command line'
   spec.homepage      = 'https://inspec-tools.mitre.org/'
@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.executables   << 'inspec_tools'
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.5'
+  spec.required_ruby_version = '>= 2.7'
 
   spec.add_runtime_dependency 'colorize', '~> 0'
   spec.add_runtime_dependency 'git-lite-version-bump', '>= 0.17.3'

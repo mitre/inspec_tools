@@ -15,7 +15,7 @@ require_relative '../utilities/xccdf/to_xccdf'
 module InspecTools
   class Inspec
     def initialize(inspec_json, metadata = {})
-      @json = JSON.parse(inspec_json.gsub(/\\+u0000/, ''))
+      @json = JSON.parse(inspec_json)
       @metadata = metadata
     end
 

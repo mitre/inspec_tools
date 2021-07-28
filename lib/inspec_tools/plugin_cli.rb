@@ -62,9 +62,10 @@ module InspecPlugins
       option :metadata, required: false, type: :string, aliases: '-m',
                         desc: 'path to JSON file with additional host metadata for the XCCDF file'
       def inspec2xccdf
-        json = File.read(options[:inspec_json])
+        io = File.open(options[:inspec_json], 'rb')
+        io.set_encoding_by_bom
         metadata = options[:metadata] ? JSON.parse(File.read(options[:metadata])) : {}
-        inspec_tool = InspecTools::Inspec.new(json, metadata)
+        inspec_tool = InspecTools::Inspec.new(io.read, metadata)
         attr_hsh = YAML.load_file(options[:attributes])
         xccdf = inspec_tool.to_xccdf(attr_hsh)
         File.write(options[:output], xccdf)
