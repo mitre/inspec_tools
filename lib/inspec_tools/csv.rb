@@ -74,7 +74,11 @@ module InspecTools
         control['tags']['nist'] = nist unless nist.nil? || nist.include?(nil)
         @mapping['control.tags'].each do |tag|
           if tag.first == 'cci'
-            control['tags'][tag.first] = cci_number
+            if cci_number.is_a? Array
+              control['tags'][tag.first] = cci_number
+            else
+              control['tags'][tag.first] = [cci_number]
+            end
             next
           end
           control['tags'][tag.first] = row[tag.last] unless row[tag.last].nil?
