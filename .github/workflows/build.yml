@@ -58,7 +58,7 @@ jobs:
           inspec_tools inspec2ckl -j test/data/inspec_1.json -o test/data/inspec2ckl_test_2.ckl
           inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a lib/data/attributes.yml -o inspec2xccdf_test.xml
           inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a examples/inspec2xccdf/xccdf_compliant_attribute.json -m examples/inspec2xccdf/metadata.json -o inspec2xccdf_11_1.xml
-          inspec_tools inspec2xccdf -j examples/inspec-v4.28.0.json -a examples/inspec2xccdf/xccdf_compliant_attribute.json -o inspec2xccdf_11_2.xml
+          inspec_tools inspec2xccdf -j examples/sample_json/inspec-v4.28.0.json -a examples/inspec2xccdf/xccdf_compliant_attribute.json -o inspec2xccdf_11_2.xml
           inspec_tools compliance -j examples/sample_json/single_control_results.json -f examples/sample_yaml/threshold.yaml
         env:
           CHEF_LICENSE: "accept"
