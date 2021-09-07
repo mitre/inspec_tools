@@ -3,9 +3,9 @@ name: Build and test inspec_tools
 
 on:
   push:
-    branches: [ #177_BuildGemOnce ]
+    branches: [ master ]
   pull_request:
-    branches: [ #177_BuildGemOnce ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
-      - name: Fetch all tags for versioning
+      - name: Fetch all tags for versioning 
         run: git fetch origin +refs/tags/*:refs/tags/*
       - name: Setup Ruby 2.7
         uses: ruby/setup-ruby@v1
