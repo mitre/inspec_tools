@@ -52,6 +52,10 @@ jobs:
         ruby: [ 2.7 ]
     runs-on: ${{ matrix.platform }}
     steps:
+      - name: Setup Ruby ${{matrix.ruby}}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{matrix.ruby}}
       - uses: actions/checkout@v2
         with:
           lfs: true
