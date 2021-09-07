@@ -7,19 +7,14 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
-  buildPlatforms: [ ubuntu-latest ]
-  testPlatforms: [ ubuntu-latest, macos-latest, windows-latest ]
-  rubyVersions: [ 2.7 ]
-
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        platform: $(buildPlatforms)
-        ruby: $(rubyVersions)
-    runs-on: ${{matrix.platform}}
+        buildPlatform: [ ubuntu-latest ]
+        ruby: [ 2.7 ]
+    runs-on: ${{matrix.buildPlatform}}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -55,10 +50,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: $(testPlatforms)
-        ruby: $(rubyVersions)
-        buildPlatform: $(buildPlatforms)
-    runs-on: ${{ matrix.platform }}
+        testPlatform: [ ubuntu-latest, macos-latest, windows-latest ]
+        ruby: [ 2.7 ]
+        buildPlatform: [ ubuntu-latest ]
+    runs-on: ${{ matrix.testPlatform }}
     steps:
       - name: Setup Ruby ${{matrix.ruby}}
         uses: ruby/setup-ruby@v1
