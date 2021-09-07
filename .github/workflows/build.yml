@@ -7,15 +7,22 @@ on:
   pull_request:
     branches: [ master ]
 
+variables:
+  - name: buildPlatforms
+    value: [ ubuntu-latest ]
+  - name: testPlatforms
+    value: [ ubuntu-latest, macos-latest, windows-latest ]
+  - name: rubyVersions
+    value: [ 2.7 ]
+
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ ubuntu-latest ]
-        ruby: [ 2.7 ]
+        platform: [ $(buildPlatforms) ]
+        ruby: [ $(rubyVersions) ]
     runs-on: ${{matrix.platform}}
-
     steps:
       - uses: actions/checkout@v2
         with:
@@ -43,7 +50,7 @@ jobs:
         run: gem build inspec_tools.gemspec
       - uses: actions/upload-artifact@v2
         with:
-          name: inspec_tools_gem
+          name: inspec_tools_${{matrix.platform}}-${{matrix.ruby}}_gem
           path: inspec_tools-*.gem
 
   test:
@@ -51,8 +58,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ ubuntu-latest, macos-latest, windows-latest ]
-        ruby: [ 2.7 ]
+        platform: [ $(testPlatforms) ]
+        ruby: [ $(rubyVersions) ]
+        buildPlatform: [ $(buildPlatforms) ]
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Setup Ruby ${{matrix.ruby}}
@@ -65,7 +73,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/download-artifact@v2
         with:
-          name: inspec_tools_gem
+          name: inspec_tools_${{matrix.buildPlatform}}-${{matrix.ruby}}_gem
       - name: Install inspec_tools gem
         run: gem install inspec_tools-*.gem
       - name: Run installed inspec_tools
