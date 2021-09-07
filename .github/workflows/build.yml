@@ -42,7 +42,7 @@ jobs:
         run: gem build inspec_tools.gemspec
       - uses: actions/upload-artifact@v2
         with:
-          name: inspec_tools_${{matrix.platform}}-${{matrix.ruby}}_gem
+          name: inspec_tools_${{matrix.buildPlatform}}-${{matrix.ruby}}_gem
           path: inspec_tools-*.gem
 
   test:
