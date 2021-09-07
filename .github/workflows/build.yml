@@ -17,8 +17,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ $(buildPlatforms) ]
-        ruby: [ $(rubyVersions) ]
+        platform: $(buildPlatforms)
+        ruby: $(rubyVersions)
     runs-on: ${{matrix.platform}}
     steps:
       - uses: actions/checkout@v2
@@ -55,9 +55,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ $(testPlatforms) ]
-        ruby: [ $(rubyVersions) ]
-        buildPlatform: [ $(buildPlatforms) ]
+        platform: $(testPlatforms)
+        ruby: $(rubyVersions)
+        buildPlatform: $(buildPlatforms)
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Setup Ruby ${{matrix.ruby}}
