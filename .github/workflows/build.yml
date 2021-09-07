@@ -7,13 +7,10 @@ on:
   pull_request:
     branches: [ master ]
 
-variables:
-  - name: buildPlatforms
-    value: [ ubuntu-latest ]
-  - name: testPlatforms
-    value: [ ubuntu-latest, macos-latest, windows-latest ]
-  - name: rubyVersions
-    value: [ 2.7 ]
+env:
+  buildPlatforms: [ ubuntu-latest ]
+  testPlatforms: [ ubuntu-latest, macos-latest, windows-latest ]
+  rubyVersions: [ 2.7 ]
 
 jobs:
   build:
