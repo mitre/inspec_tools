@@ -11,7 +11,10 @@ jobs:
   build:
     strategy:
       fail-fast: false
-    runs-on: ubuntu-latest
+      matrix:
+        platform: [ ubuntu-latest ]
+        ruby: [ 2.7 ]
+    runs-on: ${{matrix.platform}}
 
     steps:
       - uses: actions/checkout@v2
@@ -20,10 +23,10 @@ jobs:
           fetch-depth: 0
       - name: Fetch all tags for versioning 
         run: git fetch origin +refs/tags/*:refs/tags/*
-      - name: Setup Ruby 2.7
+      - name: Setup Ruby ${{matrix.ruby}}
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: ${{matrix.ruby}}
       - name: Install bundler and git-lite-version-bump
         run: gem install bundler git-lite-version-bump
       - name: Run bundle install
