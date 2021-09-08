@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  - testPlatforms: ubuntu-latest, macos-latest, windows-latest
+
 jobs:
   build:
     strategy:
@@ -50,7 +53,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        testPlatform: [ ubuntu-latest, macos-latest, windows-latest ]
+        testPlatform: [ $(testPlatforms) ]
         ruby: [ 2.7 ]
         buildPlatform: [ ubuntu-latest ]
     runs-on: ${{ matrix.testPlatform }}
