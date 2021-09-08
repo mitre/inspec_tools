@@ -11,18 +11,23 @@ jobs:
   define-matrix:
     runs-on: ubuntu-latest
     outputs:
-      buildMatrix: ${{ steps.set-build-matrix.outputs.buildMatrix }}
-      testMatrix: ${{ steps.set-test-matrix.outputs.testMatrix }}
+      buildPlatform: ${{ steps.set-build-platforms.outputs.buildPlatform }}
+      testPlatform: ${{ steps.set-test-platforms.outputs.testPlatform }}
+      rubyVersion: ${{ steps.set-ruby-version.outputs.rubyVersion }}
     steps:
-      - id: set-build-matrix
-        run: echo "::set-output name=buildMatrix::{\"include\":[{\"buildPlatform\":[\"ubuntu-latest\"]},{\"ruby\":[\"2.7\"]}]}"
-      - id: set-test-matrix
-        run: echo "::set-output name=testMatrix::{\"include\":[{\"testPlatform\":[\"ubuntu-latest\",\"macos-latest\",\"windows-latest\"]}]}"
+      - id: set-build-platforms
+        run: echo "::set-output name=buildPlatform::{[\"ubuntu-latest\"]}"
+      - id: set-test-platforms
+        run: echo "::set-output name=testPlatform::{[\"ubuntu-latest\",\"macos-latest\",\"windows-latest\"]}"
+      - id: set-ruby-versions
+        run: echo "::set-output name=rubyVersion::{[\"2.7\"]}"
   build:
     needs: define-matrix
     strategy:
       fail-fast: false
-      matrix: ${{fromJSON(needs.define-matrix.outputs.buildMatrix)}}
+      matrix:
+        buildPlatform: ${{fromJSON(needs.define-matrix.outputs.buildPlatform)}}
+        ruby: ${{fromJSON(needs.define-matrix.outputs.rubyVersion)}}
     runs-on: ${{matrix.buildPlatform}}
     steps:
       - uses: actions/checkout@v2
@@ -58,8 +63,10 @@ jobs:
     needs: build
     strategy:
       fail-fast: false
-      matrix: ${{fromJSON(needs.define-matrix.outputs.buildMatrix)}}
-        ${{fromJSON(needs.define-matrix.outputs.testMatrix)}}
+      matrix:
+        testPlatform: ${{fromJSON(needs.build.needs.define-matrix.outputs.testPlatform)}}
+        ruby: ${{fromJSON(needs.build.needs.define-matrix.outputs.rubyVersion)}}
+        buildPlatform: ${{fromJSON(needs.build.needs.define-matrix.outputs.buildPlatform)}}
     runs-on: ${{ matrix.testPlatform }}
     steps:
       - name: Setup Ruby ${{matrix.ruby}}
