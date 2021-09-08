@@ -13,7 +13,7 @@ jobs:
     outputs:
       buildPlatform: ${{ steps.set-build-platforms.outputs.buildPlatform }}
       testPlatform: ${{ steps.set-test-platforms.outputs.testPlatform }}
-      rubyVersion: ${{ steps.set-ruby-version.outputs.rubyVersion }}
+      rubyVersion: ${{ steps.set-ruby-versions.outputs.rubyVersion }}
     steps:
       - id: set-build-platforms
         run: echo "::set-output name=buildPlatform::{[\"ubuntu-latest\"]}"
@@ -26,8 +26,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix: 
-        buildPlatform: ${{needs.define-matrix.outputs.buildPlatform}}
-        ruby: ${{needs.define-matrix.outputs.rubyVersion}}
+        buildPlatform: ${{fromJSON(needs.define-matrix.outputs.buildPlatform)}}
+        ruby: ${{fromJSON(needs.define-matrix.outputs.rubyVersion)}}
     runs-on: ${{matrix.buildPlatform}}
     steps:
       - uses: actions/checkout@v2
