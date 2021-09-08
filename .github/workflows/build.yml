@@ -15,7 +15,7 @@ jobs:
       testMatrix: ${{ steps.set-test-matrix.outputs.testMatrix }}
     steps:
       - id: set-build-matrix
-        run: echo "::set-output name=buildMatrix::{\"buildPlatform\":[\"ubuntu-latest\"]},{\"ruby\":[\"2.7\"]}"
+        run: echo "::set-output name=buildMatrix::{\"include\":[{\"buildPlatform\":[\"ubuntu-latest\"]},{\"ruby\":[\"2.7\"]}]}"
       - id: set-test-matrix
         run: echo "::set-output name=testMatrix::{\"include\":[{\"testPlatform\":[\"ubuntu-latest\",\"macos-latest\",\"windows-latest\"]}]}"
   build:
