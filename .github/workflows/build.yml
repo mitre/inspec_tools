@@ -8,25 +8,8 @@ on:
     branches: [ master ]
 
 jobs:
-  define-matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      buildPlatform: ${{ steps.set-build-platforms.outputs.buildPlatform }}
-      testPlatform: ${{ steps.set-test-platforms.outputs.testPlatform }}
-      rubyVersion: ${{ steps.set-ruby-versions.outputs.rubyVersion }}
-    steps:
-      - id: set-build-platforms
-        run: echo "::set-output name=buildPlatform::{\"include\":[{\"buildPlatform\":[\"ubuntu-latest\"]},{\"ruby\":[\"2.7\"]}]}"
-      - id: set-test-platforms
-        run: echo "::set-output name=testPlatform::{\"include\":[{\"testPlatform\":[\"ubuntu-latest\",\"macos-latest\",\"windows-latest\"]},{\"ruby\":[\"2.7\"]},{\"buildPlatform\":[\"ubuntu-latest\"]}]}"
-      - id: set-ruby-versions
-        run: echo "::set-output name=rubyVersion::{\"ruby\":[\"2.7\"]}"
   build:
-    needs: define-matrix
-    strategy:
-      fail-fast: false
-      matrix: ${{fromJSON(needs.define-matrix.outputs.buildPlatform)}}
-    runs-on: ${{matrix.buildPlatform}}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -34,10 +17,10 @@ jobs:
           fetch-depth: 0
       - name: Fetch all tags for versioning 
         run: git fetch origin +refs/tags/*:refs/tags/*
-      - name: Setup Ruby ${{matrix.ruby}}
+      - name: Setup Ruby 2.7
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{matrix.ruby}}
+          ruby-version: 2.7
       - name: Install bundler and git-lite-version-bump
         run: gem install bundler git-lite-version-bump
       - name: Run bundle install
@@ -54,15 +37,17 @@ jobs:
         run: gem build inspec_tools.gemspec
       - uses: actions/upload-artifact@v2
         with:
-          name: inspec_tools_${{matrix.buildPlatform}}-${{matrix.ruby}}_gem
+          name: inspec_tools_gem
           path: inspec_tools-*.gem
 
   test:
     needs: build
     strategy:
       fail-fast: false
-      matrix: ${{fromJSON(needs.build.needs.define-matrix.outputs.testPlatform)}}
-    runs-on: ${{ matrix.testPlatform }}
+      matrix: 
+        - platform: [ubuntu-latest, macos-latest, windows-latest]
+        - ruby: [2.7]
+    runs-on: ${{ matrix.platform }}
     steps:
       - name: Setup Ruby ${{matrix.ruby}}
         uses: ruby/setup-ruby@v1
@@ -74,7 +59,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/download-artifact@v2
         with:
-          name: inspec_tools_${{matrix.buildPlatform}}-${{matrix.ruby}}_gem
+          name: inspec_tools_gem
       - name: Install inspec_tools gem
         run: gem install inspec_tools-*.gem
       - name: Run installed inspec_tools
