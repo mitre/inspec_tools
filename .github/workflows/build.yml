@@ -16,11 +16,11 @@ jobs:
       rubyVersion: ${{ steps.set-ruby-versions.outputs.rubyVersion }}
     steps:
       - id: set-build-platforms
-        run: echo "::set-output name=buildPlatform::[ubuntu-latest]"
+        run: echo "::set-output name=buildPlatform::[ ubuntu-latest ]"
       - id: set-test-platforms
         run: echo "::set-output name=testPlatform::{[\"ubuntu-latest,\"macos-latest\",\"windows-latest\"]}"
       - id: set-ruby-versions
-        run: echo "::set-output name=rubyVersion::[2.7]"
+        run: echo "::set-output name=rubyVersion::[ 2.7 ]"
   build:
     needs: define-matrix
     strategy:
