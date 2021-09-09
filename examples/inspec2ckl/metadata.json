@@ -1,7 +1,16 @@
 {
-	"stigid" : "RHEL_7_STIG",
-	"hostname" : "myawesome",
-	"ip" : "10.10.10.10",
-	"fqdn" : "myawesome.host.com",
-	"mac" : "aa:aa:99:99:99:99"
+  "hostname" : "myawesome",
+  "ip" : "10.10.10.10",
+  "fqdn" : "myawesome.host.com",
+  "mac": "aa:aa:99:99:99:99",
+  "identity": {
+    "identity": "userabc",
+    "privileged": true
+  },
+  "benchmark": {
+    "title": "SI_DATA title, STIG_DATA STIGRef",
+    "plaintext": "SI_DATA releaseinfo, STIG_DATA STIGRef",
+    "version": "SI_DATA version, STIG_DATA STIGRef"
+  },
+  "organization": "MITRE Corporation"
 }
