@@ -27,6 +27,12 @@ module HappyMapperTools
     # Class Asset maps from the 'SI_DATA' from Checklist XML file using HappyMapper
     class SiData
       include HappyMapper
+
+      def initialize(name, data)
+        @name = name
+        @data = data
+      end
+
       tag 'SI_DATA'
       element :name, String, tag: 'SID_NAME'
       element :data, String, tag: 'SID_DATA'

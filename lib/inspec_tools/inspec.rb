@@ -20,15 +20,14 @@ module InspecTools
     end
 
     # converts an InSpec JSON to a Checklist file
-    # @param attributes [Hash] Optional input attributes
-    def to_ckl(attributes = {}, cklist = nil)
+    def to_ckl(cklist = nil)
       @data = Utils::InspecUtil.parse_data_for_ckl(@json)
       @platform = Utils::InspecUtil.get_platform(@json)
-      @title = generate_title attributes, @json
+      @title = generate_title(@metdata, @json)
       @cklist = cklist
       @checklist = HappyMapperTools::StigChecklist::Checklist.new
       if @cklist.nil?
-        generate_ckl(attributes)
+        generate_ckl
       else
         update_ckl
       end
@@ -112,8 +111,7 @@ module InspecTools
       end
     end
 
-    # @param attributes [Hash] Optional input attributes
-    def generate_ckl(attributes)
+    def generate_ckl
       stigs = HappyMapperTools::StigChecklist::Stigs.new
       istig = HappyMapperTools::StigChecklist::IStig.new
 
@@ -123,10 +121,10 @@ module InspecTools
       end
 
       si_data = []
-      si_data << generate_si_data('stigid', @metadata['stigid'] || '')
-      si_data << generate_si_data('version', attributes['benchmark.version']) if attributes['benchmark.version']
-      si_data << generate_si_data('releaseinfo', attributes['benchmark.plaintext']) if attributes['benchmark.plaintext']
-      si_data << generate_si_data('title', attributes['benchmark.title']) if attributes['benchmark.title']
+      si_data << HappyMapperTools::StigChecklist::SiData.new('stigid', @metadata['stigid'] || '')
+      si_data << HappyMapperTools::StigChecklist::SiData.new('version', @metdata['benchmark']['version']) if @metdata['benchmark']['version']
+      si_data << HappyMapperTools::StigChecklist::SiData.new('releaseinfo',  @metadata['benchmark']['plaintext']) if @metadata['benchmark']['plaintext']
+      si_data << HappyMapperTools::StigChecklist::SiData.new('title', @metadata['benchmark']['title']) if @metadata['benchmark']['title']
 
       stig_info = HappyMapperTools::StigChecklist::StigInfo.new
       stig_info.si_data = si_data
@@ -137,14 +135,6 @@ module InspecTools
       @checklist.stig = stigs
 
       @checklist.asset = generate_asset
-    end
-
-    # Create SI_DATA portion of checklist file
-    def generate_si_data(name, data)
-      si_data = HappyMapperTools::StigChecklist::SiData.new
-      si_data.name = name
-      si_data.data = data
-      si_data
     end
 
     def generate_vuln_data(control)
@@ -230,17 +220,12 @@ module InspecTools
       ip
     end
 
-    # @param attributes XCCDF attributes from source specification
-    def generate_title(attributes, json)
-      version = attributes['benchmark.version'].nil? ? 'Unknown' : attributes['benchmark.version']
-      plaintext = attributes['benchmark.plaintext'].nil? ? 'Unknown' : attributes['benchmark.plaintext']
-
-      return "#{attributes['benchmark.title']} :: Version #{version}, #{plaintext}" if attributes['benchmark.title']
-
-      profile_names = json['profiles'].map { |x| x['name'] }.join(' | ')
-
-      title ||= "Untitled - Checklist Created from Automated InSpec Results JSON; Profiles: #{profile_names}"
-      title + " Checklist Date: #{Date.today}"
+    def generate_title(json)
+      if @metadata['benchmark']['version'] && @metadata['benchmark']['plaintext'] && @metadata['benchmark']['title']
+        return "#{@metadata['benchmark']['title']} :: Version #{metadata['benchmark']['version']}, #{@metadata['benchmark']['plaintext']}"
+      else
+        return "Unknown - Checklist Created from Automated InSpec Results JSON at #{DateTime.now}"
+      end
     end
 
     def create_stig_data_element(attribute, control)
