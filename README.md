@@ -118,6 +118,8 @@ Examples:
 
 ### YAML file or In-line threshold definition styles:
 
+All available configurations can be found in [threshold.yml](https://github.com/mitre/inspec_tools/blob/master/lib/data/threshold.yaml)
+
 #### File Examples
 ```
 failed:
