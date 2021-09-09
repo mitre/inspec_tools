@@ -616,7 +616,7 @@ module InspecTools
 
       if !@metadata.empty?
         si_data << HappyMapperTools::StigChecklist::SiData.new('version', @metadata['benchmark']['version']) if @metadata['benchmark']['version']
-        si_data << HappyMapperTools::StigChecklist::SiData.new('releaseinfo',  @metadata['benchmark']['plaintext']) if @metadata['benchmark']['plaintext']
+        si_data << HappyMapperTools::StigChecklist::SiData.new('releaseinfo', @metadata['benchmark']['plaintext']) if @metadata['benchmark']['plaintext']
         si_data << HappyMapperTools::StigChecklist::SiData.new('title', @metadata['benchmark']['title']) if @metadata['benchmark']['title']
       end
 
@@ -713,9 +713,9 @@ module InspecTools
 
     def generate_title
       if !@metadata.empty? && @metadata['benchmark']['version'] && @metadata['benchmark']['plaintext'] && @metadata['benchmark']['title']
-        return "#{@metadata['benchmark']['title']} :: Version #{@metadata['benchmark']['version']}, #{@metadata['benchmark']['plaintext']}"
+        "#{@metadata['benchmark']['title']} :: Version #{@metadata['benchmark']['version']}, #{@metadata['benchmark']['plaintext']}"
       else
-        return "Unknown - Checklist Created from Automated InSpec Results JSON at #{DateTime.now}"
+        "Unknown - Checklist Created from Automated InSpec Results JSON at #{DateTime.now}"
       end
     end
 

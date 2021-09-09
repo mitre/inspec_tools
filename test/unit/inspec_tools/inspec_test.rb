@@ -2,6 +2,7 @@ require_relative '../test_helper'
 require_relative '../../../lib/happy_mapper_tools/stig_checklist'
 require 'json'
 
+# rubocop:disable Metrics/ClassLength
 class InspecTest < Minitest::Test
   def test_that_xccdf_exists
     refute_nil ::InspecTools::Inspec
@@ -65,9 +66,9 @@ class InspecTest < Minitest::Test
     version_data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'version' }
     releaseinfo_data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'releaseinfo' }
     title_info = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'title' }
-    assert_equal(version_data.data, 'SI_DATA version, STIG_DATA STIGRef')
-    assert_equal(releaseinfo_data.data, 'SI_DATA releaseinfo, STIG_DATA STIGRef')
-    assert_equal(title_info.data, 'SI_DATA title, STIG_DATA STIGRef')
+    assert_equal('SI_DATA version, STIG_DATA STIGRef', version_data.data)
+    assert_equal('SI_DATA releaseinfo, STIG_DATA STIGRef', releaseinfo_data.data)
+    assert_equal('SI_DATA title, STIG_DATA STIGRef', title_info.data)
   end
 
   def test_inspec_to_ckl_generate_title
@@ -641,3 +642,4 @@ class InspecTest < Minitest::Test
     assert_equal 'MITRE Corporation', results_benchmark.organization
   end
 end
+# rubocop:enable Metrics/ClassLength
