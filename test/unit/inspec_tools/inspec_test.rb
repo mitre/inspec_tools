@@ -1,4 +1,5 @@
 require_relative '../test_helper'
+require_relative '../../../lib/happy_mapper_tools/stig_checklist'
 
 class InspecTest < Minitest::Test
   def test_that_xccdf_exists
@@ -51,84 +52,28 @@ class InspecTest < Minitest::Test
     csv = inspec_tools.to_csv
     assert(csv)
   end
-end
 
-describe InspecTools::Inspec do
-  let(:dci) { InspecTools::Inspec.new(inspec_json) }
-  let(:inspec_json) do
-    {
-      'profiles' => [{ 'controls' => controls }]
-    }.to_json
-  end
-  let(:controls) do
-    [{ 'id': 'V-221652' }]
-  end
-
-  describe '#generate_ckl' do
-    let(:subject) { dci.send(:generate_ckl, attributes) }
-    let(:attributes) { {} }
-    let(:checklist) { HappyMapperTools::StigChecklist::Checklist.new }
-
-    before do
-      dci.instance_variable_set(:@data, {})
-      dci.instance_variable_set(:@checklist, checklist)
-      dci.instance_variable_set(:@platform, nil)
-    end
-
-    describe 'when a benchmark version is available' do
-      let(:attributes) { { 'benchmark.version' => 2 } }
-
-      it 'sets the SI_DATA version' do
-        subject
-        data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'version' }
-        assert_equal data.data, 2
-      end
-    end
-
-    describe 'when a benchmark plaintext is available' do
-      let(:attributes) { { 'benchmark.plaintext' => 'Release 2020' } }
-
-      it 'sets the SI_DATA releaseinfo' do
-        subject
-        data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'releaseinfo' }
-        assert_equal data.data, 'Release 2020'
-      end
-    end
-
-    describe 'when a benchmark title is available' do
-      let(:attributes) { { 'benchmark.title' => 'STIG Testing' } }
-
-      it 'sets the SI_DATA releaseinfo' do
-        subject
-        data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'title' }
-        assert_equal data.data, 'STIG Testing'
-      end
-    end
+  def test_inspec_to_ckl_generate_ckl
+    inspec_json = { profiles: [{ controls: [{ id: 'V-221652' }] }] }.to_json
+    metadata = JSON.parse(File.read('examples/inspec2ckl/metadata.json'))
+    checklist = ::HappyMapperTools::StigChecklist::Checklist.new
+    inspec_tools = InspecTools::Inspec.new(inspec_json, metadata)
+    inspec_tools.instance_variable_set(:@data, {})
+    inspec_tools.instance_variable_set(:@checklist, checklist)
+    inspec_tools.send(:generate_ckl)
+    version_data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'version' }
+    releaseinfo_data = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'releaseinfo' }
+    title_info = checklist.stig.istig.stig_info.si_data.find { |d| d.name == 'title' }
+    assert_equal(version_data.data, 'SI_DATA version, STIG_DATA STIGRef')
+    assert_equal(releaseinfo_data.data, 'SI_DATA releaseinfo, STIG_DATA STIGRef')
+    assert_equal(title_info.data, 'SI_DATA title, STIG_DATA STIGRef')
   end
 
-  describe '#generate_title' do
-    let(:subject) { dci.send(:generate_title, attributes, inspec_json) }
-    let(:attributes) { {} }
-    let(:checklist) { HappyMapperTools::StigChecklist::Checklist.new }
+  def test_inspec_to_ckl_generate_title
+    inspec_json = { profiles: [{ controls: [{ id: 'V-221652' }] }] }.to_json
+    metadata = JSON.parse(File.read('examples/inspec2ckl/metadata.json'))
+    inspec_tools = InspecTools::Inspec.new(inspec_json, metadata)
 
-    before do
-      dci.instance_variable_set(:@data, {})
-      dci.instance_variable_set(:@checklist, checklist)
-      dci.instance_variable_set(:@platform, nil)
-    end
-
-    describe 'when a benchmark.title attribute is provided' do
-      let(:attributes) do
-        {
-          'benchmark.plaintext' => 'Release 2020',
-          'benchmark.title' => 'STIG Testing',
-          'benchmark.version' => 2
-        }
-      end
-
-      it 'creates the title from attribute data' do
-        assert_equal subject, 'STIG Testing :: Version 2, Release 2020'
-      end
-    end
+    assert_equal('SI_DATA title, STIG_DATA STIGRef :: Version SI_DATA version, STIG_DATA STIGRef, SI_DATA releaseinfo, STIG_DATA STIGRef', inspec_tools.send(:generate_title))
   end
 end

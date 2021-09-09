@@ -127,7 +127,7 @@ module Utils
 
       # Each rule identifier is a different element
       idents.map do |identifier|
-        ident = HappyMapperTools::Benchmark::Ident.new identifier
+        HappyMapperTools::Benchmark::Ident.new(identifier)
       end
     end
 

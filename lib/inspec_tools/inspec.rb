@@ -23,7 +23,7 @@ module InspecTools
     def to_ckl(cklist = nil)
       @data = Utils::InspecUtil.parse_data_for_ckl(@json)
       @platform = Utils::InspecUtil.get_platform(@json)
-      @title = generate_title(@metdata, @json)
+      @title = generate_title
       @cklist = cklist
       @checklist = HappyMapperTools::StigChecklist::Checklist.new
       if @cklist.nil?
@@ -122,9 +122,12 @@ module InspecTools
 
       si_data = []
       si_data << HappyMapperTools::StigChecklist::SiData.new('stigid', @metadata['stigid'] || '')
-      si_data << HappyMapperTools::StigChecklist::SiData.new('version', @metdata['benchmark']['version']) if @metdata['benchmark']['version']
-      si_data << HappyMapperTools::StigChecklist::SiData.new('releaseinfo',  @metadata['benchmark']['plaintext']) if @metadata['benchmark']['plaintext']
-      si_data << HappyMapperTools::StigChecklist::SiData.new('title', @metadata['benchmark']['title']) if @metadata['benchmark']['title']
+
+      if !@metadata.empty?
+        si_data << HappyMapperTools::StigChecklist::SiData.new('version', @metadata['benchmark']['version']) if @metadata['benchmark']['version']
+        si_data << HappyMapperTools::StigChecklist::SiData.new('releaseinfo',  @metadata['benchmark']['plaintext']) if @metadata['benchmark']['plaintext']
+        si_data << HappyMapperTools::StigChecklist::SiData.new('title', @metadata['benchmark']['title']) if @metadata['benchmark']['title']
+      end
 
       stig_info = HappyMapperTools::StigChecklist::StigInfo.new
       stig_info.si_data = si_data
@@ -220,9 +223,9 @@ module InspecTools
       ip
     end
 
-    def generate_title(json)
-      if @metadata['benchmark']['version'] && @metadata['benchmark']['plaintext'] && @metadata['benchmark']['title']
-        return "#{@metadata['benchmark']['title']} :: Version #{metadata['benchmark']['version']}, #{@metadata['benchmark']['plaintext']}"
+    def generate_title
+      if !@metadata.empty? && @metadata['benchmark']['version'] && @metadata['benchmark']['plaintext'] && @metadata['benchmark']['title']
+        return "#{@metadata['benchmark']['title']} :: Version #{@metadata['benchmark']['version']}, #{@metadata['benchmark']['plaintext']}"
       else
         return "Unknown - Checklist Created from Automated InSpec Results JSON at #{DateTime.now}"
       end
