@@ -118,6 +118,8 @@ Examples:
 
 ### YAML file or In-line threshold definition styles:
 
+All available configurations can be found in [threshold.yml](https://github.com/mitre/inspec_tools/blob/master/lib/data/threshold.yaml)
+
 #### File Examples
 ```
 failed:
@@ -218,6 +220,7 @@ FLAGS:
 	-s --separate-files [true | false] : output the resulting controls as one or mutiple files (default: true) [optional]
 	-m --metadata <metadata-json>      : path to json file with additional metadata for the inspec.yml file [optional]
 	-r --replace-tags <array>          : A case-sensitive, space separated list to replace tags with a $ if found in a group rules description tag [optional]
+	-c --control-id [vulnID | ruleID]  : use either legacy Vuln ID (ex. 'V-XXXXX') or Rule ID (ex. 'SV-XXXXX') as the overall Control ID (default: vulnID) [optional]
 
 example: inspec_tools xccdf2inspec -x xccdf_file.xml -a attributes.yml -o myprofile -f ruby -s false
 ```
@@ -343,7 +346,7 @@ xlsx2inspec translates CIS Benchmarks in XLSX format to Inspec controls using a 
 
 See examples/xlsx2inspec/mapping.cis.yml for an example mapping file
 
-example: bundle exec inspec_tools xlsx2inspec -m examples/xlsx2inspec/mapping.cis.yml -p azure-cis-foundations -x examples/cis.xlsx
+example: inspec_tools xlsx2inspec -m examples/xlsx2inspec/mapping.cis.yml -p azure-cis-foundations -x examples/cis.xlsx
 ```
 
 ## version

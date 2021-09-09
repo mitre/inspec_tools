@@ -1,9 +1,11 @@
 *.gem
 *.rbc
+*.swp
 .bundle
 .config
 .idea
 .yardoc
+.rake_tasks~
 _yardoc
 Gemfile.lock
 coverage
@@ -23,3 +25,4 @@ tmp
 profile/
 lib/data/cis_to_nist_mapping
 lib/data/cis_to_nist_critical_controls
+vendor/*

@@ -6,10 +6,6 @@ require_relative '../utilities/inspec_util'
 require_relative '../utilities/cci_xml'
 require_relative '../utilities/mapping_validator'
 
-# rubocop:disable Metrics/AbcSize
-# rubocop:disable Metrics/PerceivedComplexity
-# rubocop:disable Metrics/CyclomaticComplexity
-
 module InspecTools
   # Methods for converting from CSV to various formats
   class CSVTool
@@ -46,8 +42,8 @@ module InspecTools
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-        'name': 'inspec_tools',
-        'version': VERSION
+        name: 'inspec_tools',
+        version: VERSION
       }
     end
 
@@ -78,7 +74,11 @@ module InspecTools
         control['tags']['nist'] = nist unless nist.nil? || nist.include?(nil)
         @mapping['control.tags'].each do |tag|
           if tag.first == 'cci'
-            control['tags'][tag.first] = cci_number
+            if cci_number.is_a? Array
+              control['tags'][tag.first] = cci_number
+            else
+              control['tags'][tag.first] = [cci_number]
+            end
             next
           end
           control['tags'][tag.first] = row[tag.last] unless row[tag.last].nil?
@@ -98,7 +98,3 @@ module InspecTools
     end
   end
 end
-
-# rubocop:enable Metrics/AbcSize
-# rubocop:enable Metrics/PerceivedComplexity
-# rubocop:enable Metrics/CyclomaticComplexity

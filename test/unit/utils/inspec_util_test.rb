@@ -3,92 +3,92 @@ require 'fileutils'
 require_relative '../test_helper'
 require_relative '../../../lib/utilities/inspec_util'
 
-class InspecUtilTest < Minitest::Test # rubocop:disable Metrics/ClassLength
+class InspecUtilTest < Minitest::Test
   def test_inspec_util_exists
     refute_nil Utils::InspecUtil
   end
 
   def test_string_to_impact
     # CVSS Terms True
-    ['none' 'na' 'n/a' 'N/A' 'NONE' 'not applicable' 'not_applicable' 'NOT_APPLICABLE'].each do |word|
-      assert_equal(0.0, Utils::InspecUtil.get_impact(word))
+    ['none', 'na', 'n/a', 'N/A', 'NONE', 'not applicable', 'not_applicable', 'NOT_APPLICABLE'].each do |word|
+      assert_in_delta(0.0, Utils::InspecUtil.get_impact(word))
     end
 
     ['low', 'cat iii', 'cat   iii', 'CATEGORY III', 'cat 3'].each do |word|
-      assert_equal(0.3, Utils::InspecUtil.get_impact(word))
+      assert_in_delta(0.3, Utils::InspecUtil.get_impact(word))
     end
 
     ['medium', 'med', 'cat ii', 'cat   ii', 'CATEGORY II', 'cat 2'].each do |word|
-      assert_equal(0.5, Utils::InspecUtil.get_impact(word))
+      assert_in_delta(0.5, Utils::InspecUtil.get_impact(word))
     end
 
     ['high', 'cat i', 'cat   i', 'CATEGORY I', 'cat 1'].each do |word|
-      assert_equal(0.7, Utils::InspecUtil.get_impact(word))
+      assert_in_delta(0.7, Utils::InspecUtil.get_impact(word))
     end
 
-    ['critical', 'crit', 'severe'].each do |word|
-      assert_equal(0.7, Utils::InspecUtil.get_impact(word))
+    %w{critical crit severe}.each do |word|
+      assert_in_delta(0.7, Utils::InspecUtil.get_impact(word))
     end
 
     # CVSS Terms False
 
-    ['none' 'na' 'n/a' 'N/A' 'NONE' 'not applicable' 'not_applicable' 'NOT_APPLICABLE'].each do |word|
-      assert_equal(0.0, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
+    ['none', 'na', 'n/a', 'N/A', 'NONE', 'not applicable', 'not_applicable', 'NOT_APPLICABLE'].each do |word|
+      assert_in_delta(0.0, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
     end
 
     ['low', 'cat iii', 'cat   iii', 'CATEGORY III', 'cat 3'].each do |word|
-      assert_equal(0.3, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
+      assert_in_delta(0.3, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
     end
 
     ['medium', 'med', 'cat ii', 'cat   ii', 'CATEGORY II', 'cat 2'].each do |word|
-      assert_equal(0.5, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
+      assert_in_delta(0.5, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
     end
 
     ['high', 'cat i', 'cat   i', 'CATEGORY I', 'cat 1'].each do |word|
-      assert_equal(0.7, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
+      assert_in_delta(0.7, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
     end
 
-    ['critical', 'crit', 'severe'].each do |word|
-      assert_equal(1.0, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
+    %w{critical crit severe}.each do |word|
+      assert_in_delta(1.0, Utils::InspecUtil.get_impact(word, use_cvss_terms: false))
     end
   end
 
   def test_float_to_impact
     # CVSS Terms True
-    assert_equal(0.0, Utils::InspecUtil.get_impact(0.01))
-    assert_equal(0.3, Utils::InspecUtil.get_impact(0.1))
-    assert_equal(0.3, Utils::InspecUtil.get_impact(0.2))
-    assert_equal(0.3, Utils::InspecUtil.get_impact(0.3))
-    assert_equal(0.5, Utils::InspecUtil.get_impact(0.4))
-    assert_equal(0.5, Utils::InspecUtil.get_impact(0.5))
-    assert_equal(0.5, Utils::InspecUtil.get_impact(0.6))
-    assert_equal(0.7, Utils::InspecUtil.get_impact(0.7))
-    assert_equal(0.7, Utils::InspecUtil.get_impact(0.8))
-    assert_equal(0.7, Utils::InspecUtil.get_impact(0.9))
+    assert_in_delta(0.0, Utils::InspecUtil.get_impact(0.01))
+    assert_in_delta(0.3, Utils::InspecUtil.get_impact(0.1))
+    assert_in_delta(0.3, Utils::InspecUtil.get_impact(0.2))
+    assert_in_delta(0.3, Utils::InspecUtil.get_impact(0.3))
+    assert_in_delta(0.5, Utils::InspecUtil.get_impact(0.4))
+    assert_in_delta(0.5, Utils::InspecUtil.get_impact(0.5))
+    assert_in_delta(0.5, Utils::InspecUtil.get_impact(0.6))
+    assert_in_delta(0.7, Utils::InspecUtil.get_impact(0.7))
+    assert_in_delta(0.7, Utils::InspecUtil.get_impact(0.8))
+    assert_in_delta(0.7, Utils::InspecUtil.get_impact(0.9))
 
     # CVSS Terms False
-    assert_equal(0.0, Utils::InspecUtil.get_impact(0.01, use_cvss_terms: false))
-    assert_equal(0.3, Utils::InspecUtil.get_impact(0.1, use_cvss_terms: false))
-    assert_equal(0.3, Utils::InspecUtil.get_impact(0.2, use_cvss_terms: false))
-    assert_equal(0.3, Utils::InspecUtil.get_impact(0.3, use_cvss_terms: false))
-    assert_equal(0.5, Utils::InspecUtil.get_impact(0.4, use_cvss_terms: false))
-    assert_equal(0.5, Utils::InspecUtil.get_impact(0.5, use_cvss_terms: false))
-    assert_equal(0.5, Utils::InspecUtil.get_impact(0.6, use_cvss_terms: false))
-    assert_equal(0.7, Utils::InspecUtil.get_impact(0.7, use_cvss_terms: false))
-    assert_equal(0.7, Utils::InspecUtil.get_impact(0.8, use_cvss_terms: false))
-    assert_equal(1.0, Utils::InspecUtil.get_impact(0.9, use_cvss_terms: false))
+    assert_in_delta(0.0, Utils::InspecUtil.get_impact(0.01, use_cvss_terms: false))
+    assert_in_delta(0.3, Utils::InspecUtil.get_impact(0.1, use_cvss_terms: false))
+    assert_in_delta(0.3, Utils::InspecUtil.get_impact(0.2, use_cvss_terms: false))
+    assert_in_delta(0.3, Utils::InspecUtil.get_impact(0.3, use_cvss_terms: false))
+    assert_in_delta(0.5, Utils::InspecUtil.get_impact(0.4, use_cvss_terms: false))
+    assert_in_delta(0.5, Utils::InspecUtil.get_impact(0.5, use_cvss_terms: false))
+    assert_in_delta(0.5, Utils::InspecUtil.get_impact(0.6, use_cvss_terms: false))
+    assert_in_delta(0.7, Utils::InspecUtil.get_impact(0.7, use_cvss_terms: false))
+    assert_in_delta(0.7, Utils::InspecUtil.get_impact(0.8, use_cvss_terms: false))
+    assert_in_delta(1.0, Utils::InspecUtil.get_impact(0.9, use_cvss_terms: false))
   end
 
   def test_get_impact_error
-    assert_raises(Utils::InspecUtil::SeverityInputError) {
+    assert_raises(Utils::InspecUtil::SeverityInputError) do
       Utils::InspecUtil.get_impact('bad value')
-    }
-    assert_raises(Utils::InspecUtil::SeverityInputError) {
+    end
+    assert_raises(Utils::InspecUtil::SeverityInputError) do
       Utils::InspecUtil.get_impact(9001)
-    }
-    assert_raises(Utils::InspecUtil::SeverityInputError) {
+    end
+    assert_raises(Utils::InspecUtil::SeverityInputError) do
       Utils::InspecUtil.get_impact(9001.1)
-    }
+    end
   end
 
   def test_get_impact_string
@@ -99,7 +99,7 @@ class InspecUtilTest < Minitest::Test # rubocop:disable Metrics/ClassLength
     assert_equal('low', Utils::InspecUtil.get_impact_string(0.2))
     assert_equal('low', Utils::InspecUtil.get_impact_string(0.3))
     assert_equal('medium', Utils::InspecUtil.get_impact_string(0.4))
-    assert_equal('medium' ,Utils::InspecUtil.get_impact_string(0.5))
+    assert_equal('medium', Utils::InspecUtil.get_impact_string(0.5))
     assert_equal('medium', Utils::InspecUtil.get_impact_string(0.6))
     assert_equal('high', Utils::InspecUtil.get_impact_string(0.7))
     assert_equal('high', Utils::InspecUtil.get_impact_string(0.8))
@@ -114,7 +114,7 @@ class InspecUtilTest < Minitest::Test # rubocop:disable Metrics/ClassLength
     assert_equal('low', Utils::InspecUtil.get_impact_string(0.2, use_cvss_terms: false))
     assert_equal('low', Utils::InspecUtil.get_impact_string(0.3, use_cvss_terms: false))
     assert_equal('medium', Utils::InspecUtil.get_impact_string(0.4, use_cvss_terms: false))
-    assert_equal('medium' ,Utils::InspecUtil.get_impact_string(0.5, use_cvss_terms: false))
+    assert_equal('medium', Utils::InspecUtil.get_impact_string(0.5, use_cvss_terms: false))
     assert_equal('medium', Utils::InspecUtil.get_impact_string(0.6, use_cvss_terms: false))
     assert_equal('high', Utils::InspecUtil.get_impact_string(0.7, use_cvss_terms: false))
     assert_equal('high', Utils::InspecUtil.get_impact_string(0.8, use_cvss_terms: false))
@@ -124,17 +124,17 @@ class InspecUtilTest < Minitest::Test # rubocop:disable Metrics/ClassLength
   end
 
   def test_get_impact_string_error
-    assert_raises(Utils::InspecUtil::ImpactInputError) {
+    assert_raises(Utils::InspecUtil::ImpactInputError) do
       Utils::InspecUtil.get_impact_string(9001)
-    }
+    end
 
-    assert_raises(Utils::InspecUtil::ImpactInputError) {
+    assert_raises(Utils::InspecUtil::ImpactInputError) do
       Utils::InspecUtil.get_impact_string(9001.1)
-    }
+    end
 
-    assert_raises(Utils::InspecUtil::ImpactInputError) {
+    assert_raises(Utils::InspecUtil::ImpactInputError) do
       Utils::InspecUtil.get_impact_string(-1)
-    }
+    end
   end
 
   def test_unpack_inspec_json
@@ -142,10 +142,10 @@ class InspecUtilTest < Minitest::Test # rubocop:disable Metrics/ClassLength
     dir = Dir.mktmpdir
     begin
       Utils::InspecUtil.unpack_inspec_json(dir, json, false, 'ruby')
-      assert(File.exist?(dir + '/inspec.yml'))
-      assert(File.exist?(dir + '/README.md'))
-      assert(Dir.exist?(dir + '/libraries'))
-      assert(Dir.exist?(dir + '/controls'))
+      assert_path_exists("#{dir}/inspec.yml")
+      assert_path_exists("#{dir}/README.md")
+      assert(Dir.exist?("#{dir}/libraries"))
+      assert(Dir.exist?("#{dir}/controls"))
     ensure
       FileUtils.rm_rf dir
     end

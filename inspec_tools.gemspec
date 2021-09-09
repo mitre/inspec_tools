@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
       '0.0.0.1.ENOGVB'
     end
   spec.authors       = ['Robert Thew', 'Matthew Dromazos', 'Rony Xavier', 'Aaron Lippold']
-  spec.email         = ['rthew@mitre.org']
+  spec.email         = ['saf@mitre.org']
   spec.summary       = 'Converter utils for Inspec'
   spec.description   = 'Converter utils for Inspec that can be included as a gem or used from the command line'
   spec.homepage      = 'https://inspec-tools.mitre.org/'
@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.executables   << 'inspec_tools'
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.5'
+  spec.required_ruby_version = '>= 2.7'
 
   spec.add_runtime_dependency 'colorize', '~> 0'
   spec.add_runtime_dependency 'git-lite-version-bump', '>= 0.17.3'
@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'OptionParser', '~> 0'
   spec.add_runtime_dependency 'pdf-reader', '~> 2.1'
   spec.add_runtime_dependency 'roo', '~> 2.8'
-  spec.add_runtime_dependency 'rubocop'
+  spec.add_runtime_dependency 'rubocop', '~> 1.11'
   spec.add_runtime_dependency 'word_wrap', '~> 1.0'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'bundler-audit'
@@ -47,5 +47,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-reporters', '~> 1.4'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rubocop-minitest', '~> 0.12.1'
   spec.add_development_dependency 'simplecov'
 end

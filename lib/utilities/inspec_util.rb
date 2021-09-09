@@ -14,7 +14,7 @@ require 'overrides/string'
 require 'rubocop'
 
 module Utils
-  class InspecUtil # rubocop:disable Metrics/ClassLength
+  class InspecUtil
     WIDTH = 80
     IMPACT_SCORES = {
       'none' => 0.0,
@@ -24,7 +24,7 @@ module Utils
       'critical' => 0.9
     }.freeze
 
-    def self.parse_data_for_ckl(json) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def self.parse_data_for_ckl(json)
       data = {}
 
       # Parse for inspec profile results json
@@ -88,7 +88,7 @@ module Utils
       hash.each_with_object({}) do |(k, v), ret|
         key = recursive_key + k.to_s
         if v.is_a? Hash
-          ret.merge! to_dotted_hash(v, key + '.')
+          ret.merge! to_dotted_hash(v, "#{key}.")
         else
           ret[key] = v
         end
@@ -165,15 +165,16 @@ module Utils
     end
 
     private_class_method def self.string_to_impact(severity, use_cvss_terms)
-      if %r{none|na|n/a|not[_|(\s*)]?applicable}i.match?(severity)
+      case severity
+      when %r{none|na|n/a|not[_|(\s*)]?applicable}i
         impact = 0.0 # Informative
-      elsif /low|cat(egory)?\s*(iii|3)/i.match?(severity)
+      when /low|cat(egory)?\s*(iii|3)/i
         impact = 0.3 # Low Impact
-      elsif /med(ium)?|cat(egory)?\s*(ii|2)/i.match?(severity)
+      when /med(ium)?|cat(egory)?\s*(ii|2)/i
         impact = 0.5 # Medium Impact
-      elsif /high|cat(egory)?\s*(i|1)/i.match?(severity)
+      when /high|cat(egory)?\s*(i|1)/i
         impact = 0.7 # High Impact
-      elsif /crit(ical)?|severe/i.match?(severity)
+      when /crit(ical)?|severe/i
         impact = 1.0 # Critical Controls
       else
         raise SeverityInputError, "'#{severity}' is not a valid severity value. It should be a Float between 0.0 and " \
@@ -218,7 +219,7 @@ module Utils
       WordWrap.ww(str.to_s, width)
     end
 
-    private_class_method def self.generate_controls(inspec_json) # rubocop:disable Metrics/AbcSize,  Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    private_class_method def self.generate_controls(inspec_json)
       controls = []
       inspec_json['controls'].each do |json_control|
         control = ::Inspec::Object::Control.new
@@ -246,7 +247,7 @@ module Utils
         control.add_tag(::Inspec::Object::Tag.new('stig_id',  json_control['tags']['stig_id']))
         control.add_tag(::Inspec::Object::Tag.new('fix_id', json_control['tags']['fix_id']))
         control.add_tag(::Inspec::Object::Tag.new('cci', json_control['tags']['cci']))
-        control.add_tag(::Inspec::Object::Tag.new('legacy', json_control['tags']['legacy']))
+        control.add_tag(::Inspec::Object::Tag.new('legacy', json_control['tags']['legacy'])) unless json_control['tags']['legacy'].blank?
         control.add_tag(::Inspec::Object::Tag.new('nist', json_control['tags']['nist']))
         control.add_tag(::Inspec::Object::Tag.new('cis_level', json_control['tags']['cis_level'])) unless json_control['tags']['cis_level'].blank?
         control.add_tag(::Inspec::Object::Tag.new('cis_controls', json_control['tags']['cis_controls'])) unless json_control['tags']['cis_controls'].blank?
@@ -326,7 +327,7 @@ module Utils
       myfile.puts readme_contents
     end
 
-    private_class_method def self.unpack_profile(directory, controls, separated, output_format) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    private_class_method def self.unpack_profile(directory, controls, separated, output_format)
       FileUtils.rm_rf(directory) if Dir.exist?(directory)
       Dir.mkdir directory unless Dir.exist?(directory)
       Dir.mkdir "#{directory}/controls" unless Dir.exist?("#{directory}/controls")
@@ -337,7 +338,7 @@ module Utils
             file_name = control.id.to_s
             myfile = File.new("#{directory}/controls/#{file_name}.rb", 'w')
             myfile.puts "# encoding: UTF-8\n\n"
-            myfile.puts wrap(control.to_ruby, WIDTH) + "\n"
+            myfile.puts "#{wrap(control.to_ruby, WIDTH)}\n"
             myfile.close
           end
         else
@@ -353,7 +354,7 @@ module Utils
         if output_format == 'ruby'
           controls.each do |control|
             myfile.puts "# encoding: UTF-8\n\n"
-            myfile.puts wrap(control.to_ruby.gsub('"', "\'"), WIDTH) + "\n"
+            myfile.puts "#{wrap(control.to_ruby.gsub('"', "\'"), WIDTH)}\n"
           end
         else
           controls.each do |control|

@@ -1,5 +1,5 @@
 class String
   def blank?
-    self.strip.empty?
+    strip.empty?
   end
 end

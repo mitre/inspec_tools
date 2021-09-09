@@ -3,7 +3,7 @@ require 'json'
 
 require 'inspec-objects'
 require 'inspec'
-require_relative './plugin_cli.rb'
+require_relative './plugin_cli'
 
 # This tells the ruby cli app to use the same argument parsing as the plugin
 module InspecTools

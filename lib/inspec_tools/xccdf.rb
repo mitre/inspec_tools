@@ -6,19 +6,15 @@ require 'digest'
 require 'json'
 
 module InspecTools
-  # rubocop:disable Metrics/ClassLength
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/BlockLength
   class XCCDF
-    def initialize(xccdf, replace_tags = nil)
+    def initialize(xccdf, use_vuln_id, replace_tags = nil)
       @xccdf = xccdf
       @xccdf = replace_tags_in_xccdf(replace_tags, @xccdf) unless replace_tags.nil?
       cci_list_path = File.join(File.dirname(__FILE__), '../data/U_CCI_List.xml')
       @cci_items = HappyMapperTools::CCIAttributes::CCI_List.parse(File.read(cci_list_path))
       register_after_parse_callbacks
       @benchmark = HappyMapperTools::StigAttributes::Benchmark.parse(@xccdf)
+      @use_vuln_id = use_vuln_id
     end
 
     def to_ckl
@@ -42,7 +38,7 @@ module InspecTools
     # extracts non-InSpec attributes
     ###
     # TODO there may be more attributes we want to extract, see data/attributes.yml for example
-    def to_attributes # rubocop:disable Metrics/AbcSize
+    def to_attributes
       @attribute = {}
 
       @attribute['benchmark.title'] = @benchmark.title
@@ -116,8 +112,8 @@ module InspecTools
       @profile['supports'] = []
       @profile['attributes'] = []
       @profile['generator'] = {
-        'name': 'inspec_tools',
-        'version': VERSION
+        name: 'inspec_tools',
+        version: VERSION
       }
       @profile['plaintext'] = @benchmark.plaintext.plaintext
       @profile['status'] = "#{@benchmark.status} on #{@benchmark.release_date.release_date}"
@@ -129,7 +125,7 @@ module InspecTools
     def insert_controls
       @benchmark.group.each do |group|
         control = {}
-        control['id'] = group.id
+        control['id'] = @use_vuln_id ? group.id : group.rule.id.split('r').first
         control['title'] = group.rule.title
         control['desc'] = group.rule.description.vuln_discussion.split('Satisfies: ')[0]
         control['impact'] = Utils::InspecUtil.get_impact(group.rule.severity)
@@ -141,8 +137,9 @@ module InspecTools
         control['tags']['rid'] = group.rule.id
         control['tags']['stig_id'] = group.rule.version
         control['tags']['fix_id'] = group.rule.fix.id
-        control['tags']['cci'] = group.rule.idents.select { |i| i.cci }.map { |i| i.ident }
-        control['tags']['legacy'] = group.rule.idents.select { |i| i.legacy}.map { |i| i.ident }
+        control['tags']['cci'] = group.rule.idents.select(&:cci).map(&:ident)
+        legacy_tags = group.rule.idents.select(&:legacy)
+        control['tags']['legacy'] = legacy_tags.map(&:ident) unless legacy_tags.empty?
         control['tags']['nist'] = @cci_items.fetch_nists(control['tags']['cci'])
         control['tags']['false_negatives'] = group.rule.description.false_negatives if group.rule.description.false_negatives != ''
         control['tags']['false_positives'] = group.rule.description.false_positives if group.rule.description.false_positives != ''

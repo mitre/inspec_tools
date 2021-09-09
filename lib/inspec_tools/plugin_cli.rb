@@ -16,10 +16,9 @@ module InspecTools
   autoload :GenerateMap, 'inspec_tools/generate_map'
 end
 
-# rubocop:disable Style/GuardClause
 module InspecPlugins
   module InspecToolsPlugin
-    class CliCommand < Inspec.plugin(2, :cli_command) # rubocop:disable Metrics/ClassLength
+    class CliCommand < Inspec.plugin(2, :cli_command)
       POSSIBLE_LOG_LEVELS = %w{debug info warn error fatal}.freeze
 
       class_option :log_directory, type: :string, aliases: :l, desc: 'Provide log location'
@@ -36,8 +35,9 @@ module InspecPlugins
       option :separate_files, required: false, type: :boolean, default: true, aliases: '-s'
       option :replace_tags, type: :array, required: false, aliases: '-r'
       option :metadata, required: false, aliases: '-m'
+      option :control_id, required: false, enum: %w{ruleID vulnID}, aliases: '-c', default: 'vulnID'
       def xccdf2inspec
-        xccdf = InspecTools::XCCDF.new(File.read(options[:xccdf]), options[:replace_tags])
+        xccdf = InspecTools::XCCDF.new(File.read(options[:xccdf]), options[:control_id] == 'vulnID', options[:replace_tags])
         profile = xccdf.to_inspec
 
         if !options[:metadata].nil?
@@ -62,9 +62,10 @@ module InspecPlugins
       option :metadata, required: false, type: :string, aliases: '-m',
                         desc: 'path to JSON file with additional host metadata for the XCCDF file'
       def inspec2xccdf
-        json = File.read(options[:inspec_json])
+        io = File.open(options[:inspec_json], 'rb')
+        io.set_encoding_by_bom
         metadata = options[:metadata] ? JSON.parse(File.read(options[:metadata])) : {}
-        inspec_tool = InspecTools::Inspec.new(json, metadata)
+        inspec_tool = InspecTools::Inspec.new(io.read, metadata)
         attr_hsh = YAML.load_file(options[:attributes])
         xccdf = inspec_tool.to_xccdf(attr_hsh)
         File.write(options[:output], xccdf)
@@ -243,5 +244,3 @@ if help_commands.any? { |cmd| ARGV.include? cmd }
     end
   end
 end
-
-# rubocop:enable Style/GuardClause
