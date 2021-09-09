@@ -112,28 +112,21 @@ module InspecPlugins
         Utils::CSVUtil.unpack_csv(csv, options[:output])
       end
 
-      desc 'inspec2ckl', 'inspec2ckl translates an inspec json file to a Checklist file'
+      desc 'inspec2ckl', 'inspec2ckl translates an Inspec results JSON file to a Checklist file'
       long_desc InspecTools::Help.text(:inspec2ckl)
-      option :attributes,  required: false, aliases: '-a',
-                           desc: 'path to yml file that provides additional attributes for the Checklist document. These attributes are parts of XCCDF document which do not fit into the InSpec schema.'
       option :inspec_json, required: true, aliases: '-j',
                            desc: 'path to InSpec results JSON file'
       option :output, required: true, aliases: '-o',
                       desc: 'path to output checklist file'
       option :metadata, required: false, aliases: '-m',
-                        desc: 'path to JSON file with additional host metadata for the Checklist file'
+                        desc: 'path to JSON file with additional metadata for the Checklist file'
       option :verbose, type: :boolean, aliases: '-V'
       def inspec2ckl
         metadata = '{}'
         if !options[:metadata].nil?
           metadata = JSON.parse(File.read(options[:metadata]))
         end
-
-        attr_hsh = {}
-        if !options[:attributes].nil?
-          attr_hsh = YAML.load_file(options[:attributes])
-        end
-        ckl = InspecTools::Inspec.new(File.read(options[:inspec_json]), metadata).to_ckl(attr_hsh)
+        ckl = InspecTools::Inspec.new(File.read(options[:inspec_json]), metadata).to_ckl
         File.write(options[:output], ckl)
       end
 
