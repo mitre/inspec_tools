@@ -611,7 +611,8 @@ module InspecTools
       end
 
       si_data = []
-      si_data << HappyMapperTools::StigChecklist::SiData.new('stigid', @metadata['stigid'] || '')
+      si_data_data = @metadata['stigid'] || topmost_profile_name || ''
+      si_data << HappyMapperTools::StigChecklist::SiData.new('stigid', si_data_data)
 
       if !@metadata.empty?
         si_data << HappyMapperTools::StigChecklist::SiData.new('version', @metadata['benchmark']['version']) if @metadata['benchmark']['version']
@@ -619,7 +620,7 @@ module InspecTools
         si_data << HappyMapperTools::StigChecklist::SiData.new('title', @metadata['benchmark']['title']) if @metadata['benchmark']['title']
       end
 
-      stig_info = HappyMapperTools::StigChecklist::StigInfo.new([si_data_stigid, si_data_title])
+      stig_info = HappyMapperTools::StigChecklist::StigInfo.new(si_data)
 
       istig = HappyMapperTools::StigChecklist::IStig.new(stig_info, vuln_list)
       @checklist.stig = HappyMapperTools::StigChecklist::Stigs.new(istig)
