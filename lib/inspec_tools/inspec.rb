@@ -232,9 +232,14 @@ module InspecTools
 
     # @param attributes XCCDF attributes from source specification
     def generate_title(attributes, json)
-      return "#{attributes['benchmark.title']} :: Version #{attributes['benchmark.version']}, #{attributes['benchmark.plaintext']}" if attributes['benchmark.title']
+      version = attributes['benchmark.version'].nil? ? 'Unknown' : attributes['benchmark.version']
+      plaintext = attributes['benchmark.plaintext'].nil? ? 'Unknown' : attributes['benchmark.plaintext']
 
-      title ||= "Untitled - Checklist Created from Automated InSpec Results JSON; Profiles: #{json['profiles'].map { |x| x['name'] }.join(' | ')}"
+      return "#{attributes['benchmark.title']} :: Version #{version}, #{plaintext}" if attributes['benchmark.title']
+
+      profile_names = json['profiles'].map { |x| x['name'] }.join(' | ')
+
+      title ||= "Untitled - Checklist Created from Automated InSpec Results JSON; Profiles: #{profile_names}"
       title + " Checklist Date: #{Date.today}"
     end
 
