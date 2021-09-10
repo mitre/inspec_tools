@@ -295,14 +295,24 @@ example: inspec_tools inspec2ckl -j results.json -o output.ckl
 ### inspec2ckl Usage Information
 
 The InSpec to Checklist Parser scans and extracts the results defined in the Inspec JSON results and converts them into a
-Checklist XML file (.ckl or CKL). Checklist XML files are commonly used with the STIG Viewer application.
+Checklist XML file (.ckl or CKL). Checklist XML files are commonly used with the STIG Viewer application but can also be
+uploaded to eMASS.
 
 #### Inclusion of STIG and host information within the Checklist output.
 
 Inspec is unable to produce certain data that is required for conversion into a fully populated checklist. `inspec_tools` provides
 a `-m` metadata option to supplement.
 
-Metadata can be created with the `generate_ckl_metadata` command.
+Host metadata can be created with the `generate_ckl_metadata` command. Fill out the following: `hostname`, `ip`, `mac`, `fqdn`.
+
+#### Inclusion of Benchmark information within the Checklist output.
+
+When uploading to eMASS certain metdata is required to be present within the CKL to align
+the contents of the CKL with existing systems. `inspec_tools` provides a `-m` metadata
+option to supplement.
+
+
+Benchmark information can be created with the `genereate_ckl_metdata` command. Fill out the following: `benchmark.title`, `benchmark.version`, `benchmark.plaintext`.
 
 ## pdf2inspec
 
