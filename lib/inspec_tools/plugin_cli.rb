@@ -167,6 +167,9 @@ module InspecPlugins
         metadata['web_or_database'] = ask('Web or Database: ')
         metadata['web_db_site'] = ask('Web DB Site: ')
         metadata['web_db_instance'] = ask('Web DB Instance: ')
+        metadata['benchmark']['title'] = ask('Benchmark title: ')
+        metadata['benchmark']['version'] = ask('Benchmark version: ')
+        metadata['benchmark']['plaintext'] = ask('Benchmark revision/release information: ')
 
         metadata.delete_if { |_key, value| value.empty? }
         File.open('metadata.json', 'w') do |f|
