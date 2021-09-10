@@ -123,12 +123,13 @@ module InspecPlugins
                         desc: 'path to JSON file with additional metadata for the Checklist file'
       option :verbose, type: :boolean, aliases: '-V'
       def inspec2ckl
-        metadata = '{}'
-        if !options[:metadata].nil?
-          metadata = JSON.parse(File.read(options[:metadata]))
-        end
-        ckl = InspecTools::Inspec.new(File.read(options[:inspec_json]), metadata).to_ckl
-        File.write(options[:output], ckl)
+        inspec_tools =
+          if options[:metadata].nil?
+            InspecTools::Inspec.new(File.read(options[:inspec_json]))
+          else
+            InspecTools::Inspec.new(File.read(options[:inspec_json]), JSON.parse(File.read(options[:metadata])))
+          end
+        File.write(options[:output], inspec_tools.to_ckl)
       end
 
       desc 'pdf2inspec', 'pdf2inspec translates a PDF Security Control Speficication to Inspec Security Profile'
