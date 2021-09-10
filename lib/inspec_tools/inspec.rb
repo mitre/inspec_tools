@@ -20,10 +20,11 @@ module InspecTools
       @metadata = metadata
     end
 
-    def to_ckl(title = nil, date = nil, cklist = nil)
+    # converts an InSpec JSON to a Checklist file
+    def to_ckl(cklist = nil)
       @data = Utils::InspecUtil.parse_data_for_ckl(@json)
       @platform = Utils::InspecUtil.get_platform(@json)
-      @title = generate_title title, @json, date
+      @title = generate_title
       @cklist = cklist
       @checklist = HappyMapperTools::StigChecklist::Checklist.new
       if @cklist.nil?
@@ -609,11 +610,17 @@ module InspecTools
         vuln_list.push(generate_vuln_data(@data[control_id]))
       end
 
+      si_data = []
       si_data_data = @metadata['stigid'] || topmost_profile_name || ''
-      si_data_stigid = HappyMapperTools::StigChecklist::SiData.new('stigid', si_data_data)
-      si_data_title = HappyMapperTools::StigChecklist::SiData.new('title', si_data_data)
+      si_data << HappyMapperTools::StigChecklist::SiData.new('stigid', si_data_data)
 
-      stig_info = HappyMapperTools::StigChecklist::StigInfo.new([si_data_stigid, si_data_title])
+      if !@metadata.empty?
+        si_data << HappyMapperTools::StigChecklist::SiData.new('version', @metadata['benchmark']['version']) if @metadata['benchmark']['version']
+        si_data << HappyMapperTools::StigChecklist::SiData.new('releaseinfo', @metadata['benchmark']['plaintext']) if @metadata['benchmark']['plaintext']
+        si_data << HappyMapperTools::StigChecklist::SiData.new('title', @metadata['benchmark']['title']) if @metadata['benchmark']['title']
+      end
+
+      stig_info = HappyMapperTools::StigChecklist::StigInfo.new(si_data)
 
       istig = HappyMapperTools::StigChecklist::IStig.new(stig_info, vuln_list)
       @checklist.stig = HappyMapperTools::StigChecklist::Stigs.new(istig)
@@ -704,9 +711,12 @@ module InspecTools
       ip
     end
 
-    def generate_title(title, json, date)
-      title ||= "Untitled - Checklist Created from Automated InSpec Results JSON; Profiles: #{json['profiles'].map { |x| x['name'] }.join(' | ')}"
-      title + " Checklist Date: #{date || Date.today.to_s}"
+    def generate_title
+      if !@metadata.empty? && @metadata['benchmark']['version'] && @metadata['benchmark']['plaintext'] && @metadata['benchmark']['title']
+        "#{@metadata['benchmark']['title']} :: Version #{@metadata['benchmark']['version']}, #{@metadata['benchmark']['plaintext']}"
+      else
+        "Unknown - Checklist Created from Automated InSpec Results JSON at #{DateTime.now}"
+      end
     end
 
     def create_stig_data_element(attribute, control)

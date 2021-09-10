@@ -29,9 +29,10 @@ module HappyMapperTools
       include HappyMapper
 
       def initialize(name, data)
-        self.name = name
-        self.data = data
+        @name = name
+        @data = data
       end
+
       tag 'SI_DATA'
       element :name, String, tag: 'SID_NAME'
       element :data, String, tag: 'SID_DATA'

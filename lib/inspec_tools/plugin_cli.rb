@@ -113,19 +113,23 @@ module InspecPlugins
         Utils::CSVUtil.unpack_csv(csv, options[:output])
       end
 
-      desc 'inspec2ckl', 'inspec2ckl translates an inspec json file to a Checklist file'
+      desc 'inspec2ckl', 'inspec2ckl translates an Inspec results JSON file to a Checklist file'
       long_desc InspecTools::Help.text(:inspec2ckl)
-      option :inspec_json, required: true, aliases: '-j'
-      option :output, required: true, aliases: '-o'
+      option :inspec_json, required: true, aliases: '-j',
+                           desc: 'path to InSpec results JSON file'
+      option :output, required: true, aliases: '-o',
+                      desc: 'path to output checklist file'
+      option :metadata, required: false, aliases: '-m',
+                        desc: 'path to JSON file with additional metadata for the Checklist file'
       option :verbose, type: :boolean, aliases: '-V'
-      option :metadata, required: false, aliases: '-m'
       def inspec2ckl
-        metadata = '{}'
-        if !options[:metadata].nil?
-          metadata = File.read(options[:metadata])
-        end
-        ckl = InspecTools::Inspec.new(File.read(options[:inspec_json]), metadata).to_ckl
-        File.write(options[:output], ckl)
+        inspec_tools =
+          if options[:metadata].nil?
+            InspecTools::Inspec.new(File.read(options[:inspec_json]))
+          else
+            InspecTools::Inspec.new(File.read(options[:inspec_json]), JSON.parse(File.read(options[:metadata])))
+          end
+        File.write(options[:output], inspec_tools.to_ckl)
       end
 
       desc 'pdf2inspec', 'pdf2inspec translates a PDF Security Control Speficication to Inspec Security Profile'
@@ -163,6 +167,9 @@ module InspecPlugins
         metadata['web_or_database'] = ask('Web or Database: ')
         metadata['web_db_site'] = ask('Web DB Site: ')
         metadata['web_db_instance'] = ask('Web DB Instance: ')
+        metadata['benchmark']['title'] = ask('Benchmark title: ')
+        metadata['benchmark']['version'] = ask('Benchmark version: ')
+        metadata['benchmark']['plaintext'] = ask('Benchmark revision/release information: ')
 
         metadata.delete_if { |_key, value| value.empty? }
         File.open('metadata.json', 'w') do |f|

@@ -284,13 +284,25 @@ example: inspec_tools inspec2csv -j inspec_profile.json -o mycsv.csv
 USAGE: inspec_tools inspec2ckl [OPTIONS] -j <inspec-json> -o <results-ckl>
 
 FLAGS:
-	-j --inspec-json <inspec-json> : path to InSpec results json file
-	-o --output <results-ckl>      : path to output checklist file
-	-m --metadata <metadata-json>  : path to json file with additional metadata for the checklist file [optional]
-	-V --verbose                   : verbose run [optional]
+  -j, --inspec-json=INSPEC_JSON       : path to InSpec results JSON file
+  -o, --output=OUTPUT                 : path to output checklist file
+  -m, [--metadata=METADATA]           : path to JSON file with additional metadata for the checklist file
+	-V --verbose                        : verbose run [optional]
 
 example: inspec_tools inspec2ckl -j results.json -o output.ckl
 ```
+
+### inspec2ckl Usage Information
+
+The InSpec to Checklist Parser scans and extracts the results defined in the Inspec JSON results and converts them into a
+Checklist XML file (.ckl or CKL). Checklist XML files are commonly used with the STIG Viewer application.
+
+#### Inclusion of STIG and host information within the Checklist output.
+
+Inspec is unable to produce certain data that is required for conversion into a fully populated checklist. `inspec_tools` provides
+a `-m` metadata option to supplement.
+
+Metadata can be created with the `generate_ckl_metadata` command.
 
 ## pdf2inspec
 
