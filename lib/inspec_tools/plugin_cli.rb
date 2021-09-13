@@ -154,6 +154,7 @@ module InspecPlugins
       desc 'generate_ckl_metadata', 'Generate metadata file that can be passed to inspec2ckl'
       def generate_ckl_metadata
         metadata = {}
+        metadata['benchmark'] = {}
 
         metadata['stigid'] = ask('STID ID: ')
         metadata['role'] = ask('Role: ')
@@ -171,7 +172,14 @@ module InspecPlugins
         metadata['benchmark']['version'] = ask('Benchmark version: ')
         metadata['benchmark']['plaintext'] = ask('Benchmark revision/release information: ')
 
-        metadata.delete_if { |_key, value| value.empty? }
+        recursive_compact = Proc.new do |_k, value|
+          value.delete_if(&:recursive_compact) if value.is_a?(Hash)
+
+          value.empty?
+        end
+
+        metadata.delete_if(&:recursive_compact)
+
         File.open('metadata.json', 'w') do |f|
           f.write(metadata.to_json)
         end
