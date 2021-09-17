@@ -173,12 +173,12 @@ module InspecPlugins
         metadata['benchmark']['plaintext'] = ask('Benchmark revision/release information: ')
 
         recursive_compact = Proc.new do |_k, value|
-          value.delete_if(&:recursive_compact) if value.is_a?(Hash)
+          value.delete_if(&recursive_compact) if value.is_a?(Hash)
 
           value.empty?
         end
 
-        metadata.delete_if(&:recursive_compact)
+        metadata.delete_if(&recursive_compact)
 
         File.open('metadata.json', 'w') do |f|
           f.write(metadata.to_json)
