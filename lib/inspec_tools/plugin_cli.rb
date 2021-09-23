@@ -187,11 +187,12 @@ module InspecPlugins
         print('Benchmark revision/release information: ')
         metadata['benchmark']['plaintext'] = $stdin.gets.chomp
 
-        recursive_compact = Proc.new do |_k, value|
-          value.delete_if(&recursive_compact) if value.is_a?(Hash)
+        recursive_compact =
+          proc do |_k, value|
+            value.delete_if(&recursive_compact) if value.is_a?(Hash)
 
-          value.empty?
-        end
+            value.empty?
+          end
 
         metadata.delete_if(&recursive_compact)
 
