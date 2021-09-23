@@ -87,21 +87,21 @@ jobs:
         if: matrix.platform == 'windows-latest'
         run: |
           yes|inspec_tools generate_inspec_metadata
-          cat metadata.json|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          cat metadata.json|ruby test/unit/inspec_tools/metadata_test.rb
           yes|inspec_tools generate_ckl_metadata
-          cat metadata.json|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          cat metadata.json|ruby test/unit/inspec_tools/metadata_test.rb
           inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -m metadata.json -o inspec2ckl_metadata_test.ckl
-          cat inspec2ckl_metadata_test.ckl|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          cat inspec2ckl_metadata_test.ckl|ruby test/unit/inspec_tools/metadata_test.rb
         shell: cmd
       - name: Run & Test Metadata - Ubuntu & MacOS
         if: matrix.platform != 'windows-latest'
         run: |
           yes|inspec_tools generate_inspec_metadata
-          cat metadata.json|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          cat metadata.json|ruby test/unit/inspec_tools/metadata_test.rb
           yes|inspec_tools generate_ckl_metadata
-          cat metadata.json|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          cat metadata.json|ruby test/unit/inspec_tools/metadata_test.rb
           inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -m metadata.json -o inspec2ckl_metadata_test.ckl
-          cat inspec2ckl_metadata_test.ckl|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          cat inspec2ckl_metadata_test.ckl|ruby test/unit/inspec_tools/metadata_test.rb
       - name: Validate Output Profiles with inspec check
         run: |
           gem install inspec-bin
