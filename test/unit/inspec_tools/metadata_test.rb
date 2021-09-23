@@ -7,10 +7,10 @@ if metadata == ckl_expected
     # print("good ckl.json")
     exit(0)
 elsif metadata == inspec_expected
-     print("good inspec.json")
+    # print("good inspec.json")
     exit(0)
-elsif metadata = '<?xml version="1.0" encoding="UTF-8"?>'
-    expected = ["<CHECKLIST>", "  <ASSET>", "    <ROLE>y</ROLE>", "    <ASSET_TYPE>y</ASSET_TYPE>", "    <HOST_NAME>y</HOST_NAME>", "    <HOST_IP>y</HOST_IP>", "    <HOST_MAC>y</HOST_MAC>", "    <HOST_FQDN>y</HOST_FQDN>", "    <TECH_AREA>y</TECH_AREA>", "    <TARGET_KEY>y</TARGET_KEY>", "    <WEB_OR_DATABASE>y</WEB_OR_DATABASE>", "    <WEB_DB_SITE>y</WEB_DB_SITE>", "    <WEB_DB_INSTANCE>y</WEB_DB_INSTANCE>", "  </ASSET>", "  <STIGS>", "    <iSTIG>", "      <STIG_INFO>", "        <SI_DATA>", "          <SID_NAME>stigid</SID_NAME>", "          <SID_DATA>y</SID_DATA>", "        </SI_DATA>", "        <SI_DATA>", "          <SID_NAME>version</SID_NAME>", "          <SID_DATA>y</SID_DATA>", "        </SI_DATA>", "        <SI_DATA>", "          <SID_NAME>releaseinfo</SID_NAME>", "          <SID_DATA>y</SID_DATA>", "        </SI_DATA>", "        <SI_DATA>", "          <SID_NAME>title</SID_NAME>", "          <SID_DATA>y</SID_DATA>", "        </SI_DATA>", "      </STIG_INFO>"]
+elsif metadata == '<?xml version="1.0" encoding="UTF-8"?>'
+    expected = ['<CHECKLIST>', '  <ASSET>', '    <ROLE>y</ROLE>', '    <ASSET_TYPE>y</ASSET_TYPE>', '    <HOST_NAME>y</HOST_NAME>', '    <HOST_IP>y</HOST_IP>', '    <HOST_MAC>y</HOST_MAC>', '    <HOST_FQDN>y</HOST_FQDN>', '    <TECH_AREA>y</TECH_AREA>', '    <TARGET_KEY>y</TARGET_KEY>', '    <WEB_OR_DATABASE>y</WEB_OR_DATABASE>', '    <WEB_DB_SITE>y</WEB_DB_SITE>', '    <WEB_DB_INSTANCE>y</WEB_DB_INSTANCE>', '  </ASSET>', '  <STIGS>', '    <iSTIG>', '      <STIG_INFO>', '        <SI_DATA>', '          <SID_NAME>stigid</SID_NAME>', '          <SID_DATA>y</SID_DATA>', '        </SI_DATA>', '        <SI_DATA>', '          <SID_NAME>version</SID_NAME>', '          <SID_DATA>y</SID_DATA>', '        </SI_DATA>', '        <SI_DATA>', '          <SID_NAME>releaseinfo</SID_NAME>', '          <SID_DATA>y</SID_DATA>', '        </SI_DATA>', '        <SI_DATA>', '          <SID_NAME>title</SID_NAME>', '          <SID_DATA>y</SID_DATA>', '        </SI_DATA>', '      </STIG_INFO>']
     for i in 0..33 do
         input = $stdin.gets.chomp()
         # print('"'+input+'"'+"\n")
@@ -22,5 +22,5 @@ elsif metadata = '<?xml version="1.0" encoding="UTF-8"?>'
     # print("good inspec2ckl.ckl")
     exit(0)
 end
- print("bad ckl.json or inspec.json")
+# print("bad ckl.json or inspec.json")
 exit(-1)
