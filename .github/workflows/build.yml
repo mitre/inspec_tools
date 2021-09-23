@@ -35,7 +35,8 @@ jobs:
         run: bundle-audit check --update
       - name: Build inspec_tools gem
         run: gem build inspec_tools.gemspec
-      - uses: actions/upload-artifact@v2
+      - name: Upload inspec_tools gem
+        uses: actions/upload-artifact@v2
         with:
           name: inspec_tools_gem
           path: inspec_tools-*.gem
@@ -57,7 +58,8 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
-      - uses: actions/download-artifact@v2
+      - name: Download inspec_tools gem
+        uses: actions/download-artifact@v2
         with:
           name: inspec_tools_gem
       - name: Install inspec_tools gem
@@ -69,13 +71,11 @@ jobs:
           inspec_tools xlsx2inspec -m examples/xlsx2inspec/mapping.cis.yml -x examples/cis.xlsx -p xlsx2inspec_test -o xlsx2inspec_test
           inspec_tools summary -j examples/sample_json/rhel-simp.json
           inspec_tools csv2inspec -c examples/csv2inspec/stig.csv -m examples/csv2inspec/mapping.yml -o csv2inspec_test
-          cmd /c "yes|inspec_tools generate_inspec_metadata"
-          inspec_tools xccdf2inspec -x examples/xccdf2inspec/xccdf.xml -a lib/data/attributes.yml -m metadata.json -o xccdf2inspec_test
+          inspec_tools xccdf2inspec -x examples/xccdf2inspec/xccdf.xml -a lib/data/attributes.yml -o xccdf2inspec_test
           inspec_tools xccdf2inspec -x examples/xccdf2inspec/data/U_JBOSS_EAP_6-3_STIG_V1R2_Manual-xccdf.xml -o xccdf2inspec_replace_test -r JBOSS_HOME
           inspec_tools pdf2inspec -p examples/CIS_Ubuntu_Linux_16.04_LTS_Benchmark_v1.0.0.pdf -o pdf2inspec_test
           inspec_tools inspec2csv -j examples/sample_json/rhel-simp.json -o inspec2csv_test.csv
-          cmd /c "yes|inspec_tools generate_ckl_metadata"
-          inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -m metadata.json -o inspec2ckl_test_1.ckl
+          inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -o inspec2ckl_test_1.ckl
           inspec_tools inspec2ckl -j test/data/inspec_1.json -o test/data/inspec2ckl_test_2.ckl
           inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a lib/data/attributes.yml -o inspec2xccdf_test.xml
           inspec_tools inspec2xccdf -j examples/sample_json/rhel-simp.json -a examples/inspec2xccdf/xccdf_compliant_attribute.json -m examples/inspec2xccdf/metadata.json -o inspec2xccdf_11_1.xml
@@ -83,6 +83,25 @@ jobs:
           inspec_tools compliance -j examples/sample_json/single_control_results.json -f examples/sample_yaml/threshold.yaml
         env:
           CHEF_LICENSE: "accept"
+      - name: Run & Test Metadata - Windows
+        if: matrix.platform == 'windows-latest'
+        run: |
+          yes|inspec_tools generate_inspec_metadata
+          cat metadata.json|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          yes|inspec_tools generate_ckl_metadata
+          cat metadata.json|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -m metadata.json -o inspec2ckl_metadata_test.ckl
+          cat inspec2ckl_metadata_test.ckl|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+        shell: cmd
+      - name: Run & Test Metadata - Ubuntu & MacOS
+        if: matrix.platform != 'windows-latest'
+        run: |
+          yes|inspec_tools generate_inspec_metadata
+          cat metadata.json|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          yes|inspec_tools generate_ckl_metadata
+          cat metadata.json|ruby test/unit/inspec_tools/ckl_metadata_test.rb
+          inspec_tools inspec2ckl -j examples/sample_json/rhel-simp.json -m metadata.json -o inspec2ckl_metadata_test.ckl
+          cat inspec2ckl_metadata_test.ckl|ruby test/unit/inspec_tools/ckl_metadata_test.rb
       - name: Validate Output Profiles with inspec check
         run: |
           gem install inspec-bin
