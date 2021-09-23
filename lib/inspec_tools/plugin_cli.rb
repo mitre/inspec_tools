@@ -157,35 +157,35 @@ module InspecPlugins
         metadata['benchmark'] = {}
 
         print('STIG ID: ')
-        metadata['stigid'] = $stdin.gets.chomp()
+        metadata['stigid'] = $stdin.gets.chomp
         print('Role: ')
-        metadata['role'] = $stdin.gets.chomp()
+        metadata['role'] = $stdin.gets.chomp
         print('Type: ')
-        metadata['type'] = $stdin.gets.chomp()
+        metadata['type'] = $stdin.gets.chomp
         print('Hostname: ')
-        metadata['hostname'] = $stdin.gets.chomp()
+        metadata['hostname'] = $stdin.gets.chomp
         print('IP Address: ')
-        metadata['ip'] = $stdin.gets.chomp()
+        metadata['ip'] = $stdin.gets.chomp
         print('MAC Address: ')
-        metadata['mac'] = $stdin.gets.chomp()
+        metadata['mac'] = $stdin.gets.chomp
         print('FQDN: ')
-        metadata['fqdn'] = $stdin.gets.chomp()
+        metadata['fqdn'] = $stdin.gets.chomp
         print('Tech Area: ')
-        metadata['tech_area'] = $stdin.gets.chomp()
+        metadata['tech_area'] = $stdin.gets.chomp
         print('Target Key: ')
-        metadata['target_key'] = $stdin.gets.chomp()
+        metadata['target_key'] = $stdin.gets.chomp
         print('Web or Database: ')
-        metadata['web_or_database'] = $stdin.gets.chomp()
+        metadata['web_or_database'] = $stdin.gets.chomp
         print('Web DB Site: ')
-        metadata['web_db_site'] = $stdin.gets.chomp()
+        metadata['web_db_site'] = $stdin.gets.chomp
         print('Web DB Instance: ')
-        metadata['web_db_instance'] = $stdin.gets.chomp()
+        metadata['web_db_instance'] = $stdin.gets.chomp
         print('Benchmark title: ')
-        metadata['benchmark']['title'] = $stdin.gets.chomp()
+        metadata['benchmark']['title'] = $stdin.gets.chomp
         print('Benchmark version: ')
-        metadata['benchmark']['version'] = $stdin.gets.chomp()
+        metadata['benchmark']['version'] = $stdin.gets.chomp
         print('Benchmark revision/release information: ')
-        metadata['benchmark']['plaintext'] = $stdin.gets.chomp()
+        metadata['benchmark']['plaintext'] = $stdin.gets.chomp
 
         recursive_compact = Proc.new do |_k, value|
           value.delete_if(&recursive_compact) if value.is_a?(Hash)
@@ -205,15 +205,15 @@ module InspecPlugins
         metadata = {}
 
         print('Maintainer: ')
-        metadata['maintainer'] = $stdin.gets.chomp()
+        metadata['maintainer'] = $stdin.gets.chomp
         print('Copyright: ')
-        metadata['copyright'] = $stdin.gets.chomp()
+        metadata['copyright'] = $stdin.gets.chomp
         print('Copyright Email: ')
-        metadata['copyright_email'] = $stdin.gets.chomp()
+        metadata['copyright_email'] = $stdin.gets.chomp
         print('License: ')
-        metadata['license'] = $stdin.gets.chomp()
+        metadata['license'] = $stdin.gets.chomp
         print('Version: ')
-        metadata['version'] = $stdin.gets.chomp()
+        metadata['version'] = $stdin.gets.chomp
 
         metadata.delete_if { |_key, value| value.empty? }
         File.open('metadata.json', 'w') do |f|
