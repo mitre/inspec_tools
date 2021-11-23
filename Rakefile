@@ -16,7 +16,8 @@ namespace :test do
       'test/unit/inspec_tools/inspec_test.rb',
       'test/unit/inspec_tools/xccdf_test.rb',
       'test/unit/utils/inspec_util_test.rb',
-      'test/unit/inspec_tools_test.rb'
+      'test/unit/inspec_tools_test.rb',
+      'test/unit/inspec_tools/metadata_test.rb'
     ])
   end
 

@@ -76,7 +76,7 @@ Minitest/AssertionInLifecycleHook: # (new in 0.10)
 Minitest/AssertKindOf: # (new in 0.10)
   Enabled: true
 Minitest/AssertOutput: # (new in 0.10)
-  Enabled: true
+  Enabled: false
 Minitest/AssertPathExists: # (new in 0.10)
   Enabled: true
 Minitest/AssertSilent: # (new in 0.10)
